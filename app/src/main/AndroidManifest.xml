@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.home.asharemedy">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.home.asharemedy.chat.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.quickblox.sample.messages.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
+
+    <application
+        android:name=".AshaRemedyApp"
+        android:allowBackup="true"
+        android:icon="@drawable/asha"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/asha"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".view.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".view.LoginActivity" />
+        <activity
+            android:name=".view.RegistrationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.DashboardActivity" />
+        <activity android:name=".view.MyVitalsActivity" />
+        <activity android:name=".view.MyProfile" />
+        <activity android:name=".view.HealthRecordActivity" />
+        <activity android:name=".view.ListActivity" />
+        <activity android:name=".view.ListItemDetailActivity" />
+        <activity android:name=".view.AppointmentSlotActivity" />
+        <activity android:name=".view.AddAppointmentListActivity" />
+
+        <activity
+            android:name=".chat.ui.activity.AppInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ui.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ui.activity.SelectUsersActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ui.activity.DialogsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ui.activity.NewGroupActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ui.activity.ChatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".chat.ui.activity.ForwardToActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ui.activity.ChatInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ui.activity.MessageInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ui.activity.AttachmentImageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ui.activity.AttachmentVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".video.activities.AppInfoActivity" />
+        <activity android:name=".video.activities.CallActivity" />
+        <activity android:name=".chat.ui.activity.ChatLoginActivity" />
+        <activity android:name=".video.activities.LoginActivity" />
+        <activity android:name=".video.activities.SettingsActivity" />
+        <activity android:name=".video.activities.ChatSplashActivity" />
+
+        <!-- <service android:name=".fcm.PushListenerService">
+             <intent-filter>
+                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+             </intent-filter>
+         </service>-->
+
+        <service android:name="com.quickblox.messages.services.fcm.QBFcmPushInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".chat.fcm.PushListenerService" />
+
+        <meta-data
+            android:name="com.quickblox.messages.TYPE"
+            android:value="GCM" />
+
+        <meta-data
+            android:name="com.quickblox.messages.SENDER_ID"
+            android:value="@string/sender_id" />
+
+        <meta-data
+            android:name="com.quickblox.messages.QB_ENVIRONMENT"
+            android:value="DEVELOPMENT" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4b96a3f33893a42103eae91d2166d0c517b833d3" />
+    </application>
+
+</manifest>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.home.asharemedy.model.DashboardViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvProfileDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:background="@drawable/drawable_round_corner"
+        android:elevation="@dimen/dp_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_5"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_emoticon_50dp" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3">
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_2"
+                    android:text="Anna Johanson (F)"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/patientID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/dp_2"
+                    android:text="MRN: THB888868"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dobLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/userName"
+                    android:padding="@dimen/dp_2"
+                    android:text="DOB:"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/dobValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/userName"
+                    android:layout_toEndOf="@+id/dobLabel"
+                    android:padding="@dimen/dp_2"
+                    android:text="02 June, 1991"
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/brandPartnerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/patientID"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/dp_2"
+                    android:text="DXH Smartcare"
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/phoneNumberLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dobLabel"
+                    android:padding="@dimen/dp_2"
+                    android:text="Phone No: "
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/phoneNumberValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dobLabel"
+                    android:layout_toEndOf="@+id/phoneNumberLabel"
+                    android:text="+971-55-123-1234"
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/emailLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/phoneNumberLabel"
+                    android:padding="@dimen/dp_2"
+                    android:text="Email: "
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/emailValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/phoneNumberLabel"
+                    android:layout_toEndOf="@+id/emailLabel"
+                    android:padding="@dimen/dp_2"
+                    android:text="anna.j@thbglobal.com"
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/emergencyContactLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/emailLabel"
+                    android:padding="@dimen/dp_2"
+                    android:text="Emergency Contact: "
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/emergencyContactValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/emailLabel"
+                    android:layout_toEndOf="@+id/emergencyContactLabel"
+                    android:padding="@dimen/dp_2"
+                    android:text="+971-55-123-1234"
+                    android:textColor="@color/colorLightBlack"
+                    android:textSize="@dimen/sp_13" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/viewProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@+id/emergencyContactLabel"
+                    android:layout_marginStart="@dimen/dp_30"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_30"
+                    android:layout_marginBottom="@dimen/dp_15"
+                    android:background="@drawable/drawable_round_corner"
+                    android:fontFamily="@font/roboto"
+                    android:padding="@dimen/dp_5"
+                    android:text="View Profile"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gridItemBackgroundGredientDark"
+                    android:textSize="@dimen/sp_13" />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

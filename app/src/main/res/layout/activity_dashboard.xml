@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.home.asharemedy.model.DashboardViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+
+        <include
+            android:id="@+id/topbar"
+            layout="@layout/topbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50" />
+
+        <include
+            android:id="@+id/profileDetails"
+            layout="@layout/item_profile_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topbar"
+            android:layout_margin="@dimen/dp_5" />
+
+        <GridView
+            android:id="@+id/gvDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/profileDetails"
+            android:layout_margin="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_50"
+            android:columnWidth="150dp"
+            android:horizontalSpacing="@dimen/dp_10"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="@dimen/dp_10" />
+
+        <include
+            android:id="@+id/bottomBar"
+            layout="@layout/bottombar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+</layout>

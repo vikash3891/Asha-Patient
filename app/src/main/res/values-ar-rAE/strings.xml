@@ -1,0 +1,189 @@
+<resources>
+    <string name="app_name">علاج آشا</string>
+
+    <!--Login-->
+    <string name="login_title">مرحبًا بكم</string>
+    <string name="remember_me">تذكرنى</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="email_address">البريد الإلكتروني</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمه السر</string>
+    <string name="forgot_password">هل نسيت كلمة المرور؟</string>
+    <string name="register_now">Register Now</string>
+    <string name="pay_bill">Pay Bill</string>
+    <string name="connect_with_utility">Connect with Agency</string>
+    <string name="powered_by">Powered by</string>
+    <string name="usage_notification">Usage Notification</string>
+
+    <!--Forgot Password-->
+    <string name="step1">Step 1</string>
+    <string name="step2">Step 2</string>
+    <string name="step3">Step 3</string>
+    <string name="validate_email">Please validate your Email</string>
+    <string name="change_password_header">Please enter new password and confirm it.</string>
+    <string name="submit">Submit</string>
+    <string name="update">Update</string>
+    <string name="security_answer">Security Answer</string>
+    <string name="question_eg">What was the name of your elementary / primary school?</string>
+    <string name="answer_security_ques">Please answer security questions to verify your identity.</string>
+
+    <!--Register User-->
+    <string name="registration_title">Registration</string>
+    <string name="registration_title_new">Create your Account</string>
+    <string name="utility">Water District/Agency</string>
+    <string name="select_country">Select Country</string>
+    <string name="select_waterdistrict">Select Water District/Agency</string>
+    <string name="select_topic">Select Report Type</string>
+    <string name="mandatory">Mandatory</string>
+    <string name="acc_no">Account Number</string>
+    <string name="meter_no">Meter Number</string>
+    <string name="service_zip_code">Service Zip Code</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="security_ques1">Security Question 1</string>
+    <string name="security_ques2">Security Question 2</string>
+    <string name="security_ans1">Security Answer 1</string>
+    <string name="security_ans2">Security Answer 2</string>
+
+    <!--Dashboard-->
+    <string name="welcome_text">Welcome DES JARDINS ROBERT</string>
+    <string name="my_account">Account Details</string>
+    <string name="compare_spending">Compare Spending</string>
+    <string name="billing">View and Pay Bill</string>
+    <string name="track_usage">Track Usage</string>
+    <string name="compare">Compare Water Use</string>
+    <string name="water_conversation">Water Conversation</string>
+
+
+    <!--Profile-->
+    <string name="home_phone_number">Home Number</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="business_phone_number">Work Number</string>
+    <string name="security_questions">Security Questions</string>
+    <string name="address">Communication Address</string>
+    <string name="mailing_address">Mailing Address</string>
+    <string name="add_account">Add Account</string>
+    <string name="billing_preference">Billing Preference</string>
+
+
+    <!--Navigation Menu-->
+    <string name="nav_menu_1">Connect with East Orange County Water District</string>
+    <string name="nav_menu_2">Company Website</string>
+    <string name="nav_menu_3">Payment Locations</string>
+    <string name="nav_menu_4">Visit Facebook</string>
+    <string name="nav_menu_5">Visit Twitter</string>
+    <string name="nav_menu_6">Privacy Policy</string>
+    <string name="nav_menu_7">Logout</string>
+    <string name="version">2019 Aquatrax Water Solutions \nVersion: 1.0(1)</string>
+
+    <string name="loading">Loading…</string>
+    <string name="internet">Please Check Internet Connection</string>
+
+    <string name="utility_bill">Utility Bill</string>
+    <string name="history">History</string>
+    <string name="budget_my_bill">Budget My Bill</string>
+    <string name="history_detail">View you billing history</string>
+    <string name="budget_my_bill_detail">Configure your utility bill…</string>
+    <string name="amount_paid_this_period">Amount Paid this Period</string>
+    <string name="previous_balance">Previous Balance</string>
+    <string name="current_charges">Current Charges</string>
+    <string name="total_due">Total Due</string>
+    <string name="penalty_charges_adjustments">Penalty Charges/Adjustments</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="contactus_description">If you need assistance please use the below contact information to reach our customer service staff.   </string>
+    <string name="usagenotification_description">You will be notified if you exceed your Daily/Monthly threshold limit. </string>
+    <string name="usagenotification_description2">We recommend to set 50% of water budget as your threshold limit.</string>
+
+
+    <string name="contactus_phone">Phone</string>
+    <string name="contactus_online">Online : Please visit us at <u>www.eocwd.com/contact</u></string>
+    <string name="contactus_address">Address</string>
+    <string name="contactus_opentime">Open Time</string>
+    <string name="conservation_tip1">THINK. You can\'t do anything wiouth water. Save it. Every Drop Counts !</string>
+    <string name="conservation_tip2">Water Conservation is our Nature, Habit, Groove, Style, Thing, Save our water Be Water Wise !</string>
+    <string name="conservation_tip3">Water is Life. Don\'t Waste it. Save Water Save Life !</string>
+    <string name="previous_meter_reading">Previous Meter Reading</string>
+    <string name="total_water_bill_this_period">Total water bill this period</string>
+    <string name="meter_number">Meter Number</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="billing_period">Billing Period</string>
+    <string name="billing_period_from">Billing Period From</string>
+    <string name="billing_period_to">Billing Period To</string>
+    <string name="account_information">Profile Information</string>
+    <string name="n_a">N/A</string>
+    <string name="current_meter_reading">Current Meter Reading</string>
+    <string name="total_water_usage">Total Water Usage</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="consumption_charge">Consumption Charge</string>
+    <string name="meter_service_charge">Meter Service Charge</string>
+    <string name="capital_project_charge">Capital Project Charge</string>
+    <string name="total_payable_amount">Account Total</string>
+    <string name="lowest_this_period">Lowest Usage</string>
+    <string name="highest_this_period">Highest Usage</string>
+    <string name="utility_account_number">Utility Account Number</string>
+    <string name="add_account_header">Please enter below details to add account</string>
+    <string name="postal_code">Service Zip Code</string>
+    <string name="usage_forecast">Usage Forecast</string>
+    <string name="current_usage">Current Usage</string>
+    <string name="usage_disclaimer">Disclaimer : 1 CFF (100 CU. FT.) = 1 HCF = 748 Gallons</string>
+    <string name="report_an_issue">Report an issue</string>
+    <string name="compare_me">My Comparison</string>
+    <string name="compare_zip">Compare Neighbours</string>
+    <string name="compare_utility">Compare with Everyone</string>
+    <string name="compare_all">Composite View</string>
+    <string name="view_ccf">View CCF</string>
+    <string name="view_dollar">View $</string>
+    <string name="view_gallon">View Gallon</string>
+    <string name="bi_monthly">Bi Monthly</string>
+    <string name="monthly">Monthly</string>
+    <string name="daily">Daily</string>
+    <string name="hourly">Hourly</string>
+    <string name="daily_limit">Daily Limit</string>
+    <string name="monthly_limit">Monthly Limit</string>
+    <string name="topic">Topic</string>
+    <string name="subject">Subject</string>
+    <string name="billing_history_link">Billing History >></string>
+    <string name="billing_disclaimer">The billing information on this page is informational only and may not display total of all charges currently due. To pay your bill please log into EOCWD online bill payment system or visit our payment location.</string>
+
+    <string name="next">Next</string>
+    <string name="step_1_account_information">Step 1: Account Information</string>
+    <string name="step_2_security_questions">Step 2: Security Questions</string>
+
+    <string name="compare_ccf">Water Units Consumed (CCF)</string>
+    <string name="compare_gallon">Water Units Consumed (Gallon)</string>
+    <string name="compare_dollar">Water Consumed (Dollar)</string>
+    <string name="usage_ccf">Usage (CCF)</string>
+    <string name="usage_gallon">Usage (Gallon)</string>
+    <string name="usage_dollar">Usage (Dollar)</string>
+    <string name="c_this_year">This year</string>
+    <string name="c_previous_year">Previous year</string>
+    <string name="c_zip">Zip</string>
+    <string name="c_utility">Utility</string>
+    <string name="u_allocation">Allocation</string>
+    <string name="u_usage">Usage</string>
+    <string name="u_dollar_disclaimer">Disclaimer : The billing information on this page includes only water usage/consumption charges and not the total of all other charges currently due such as water service charges, capital project charges, penalty or late fees.</string>
+    <string name="customer_service_hour">Customer Service Hours</string>
+    <string name="emergency_number">Emergency Number</string>
+    <string name="connect_address">Address</string>
+    <string name="password_validation_message">Password must be atleast 8 characters(1 special letter, 1 number, 1 capital letter.</string>
+    <string name="error_message_enter_email">Please enter Email</string>
+
+
+    <string name="name">Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="contactus_email">Email</string>
+    <string name="country">Country</string>
+    <string name="referral_code">Referral Code (optional)</string>
+    <string name="i_m_a">I\'m</string>
+    <string name="doctor">Doctor</string>
+    <string name="patient">Patient</string>
+    <string name="sign_up">Not a user? Sign Up Now `</string>
+    <string name="privacy_plicy_terms_conditions">Privacy Policy | Terms and Conditions</string>
+    <string name="username">Username</string>
+    <string name="my_vitals">My Vitals</string>
+    <string name="ent">ENT</string>
+    <string name="frequent_vomiting">Frequent Vomiting</string>
+    <string name="test_remarks">Test Remarks</string>
+    <string name="perennail_allergy">Perennail Allergy</string>
+
+
+</resources>
