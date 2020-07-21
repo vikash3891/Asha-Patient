@@ -25,6 +25,7 @@ import com.home.asharemedy.chat.utils.isFullNameValid
 import com.home.asharemedy.chat.utils.isLoginValid
 import com.quickblox.users.QBUsers
 import com.quickblox.users.model.QBUser
+import kotlinx.android.synthetic.main.activity_chat_login.*
 import java.util.*
 
 
@@ -44,7 +45,8 @@ class ChatLoginActivity : BaseActivity() {
     private lateinit var hidableHolder: LinearLayout
 
     companion object {
-        fun start(context: Context) = context.startActivity(Intent(context, ChatLoginActivity::class.java))
+        fun start(context: Context) =
+            context.startActivity(Intent(context, ChatLoginActivity::class.java))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +56,8 @@ class ChatLoginActivity : BaseActivity() {
         prepareListeners()
         fillViews()
         defineFocusedBehavior()
+
+        setValues()
     }
 
     private fun initViews() {
@@ -64,7 +68,6 @@ class ChatLoginActivity : BaseActivity() {
         loginEt = findViewById(R.id.et_login)
         usernameEt = findViewById(R.id.et_user_name)
         chbSave = findViewById(R.id.chb_login_save)
-        btnLogin = findViewById(R.id.tv_btn_login)
         hidableHolder = findViewById(R.id.ll_hidable_holder)
         rootView = findViewById(R.id.root_view_login_activity)
     }
@@ -127,6 +130,9 @@ class ChatLoginActivity : BaseActivity() {
         })
 
         btnLogin.setOnClickListener {
+
+            et_login.setText("test")
+            et_user_name.setText("test")
             if (btnLogin.isActivated) {
                 showProgressDialog(R.string.dlg_login)
                 prepareUser()
@@ -135,6 +141,15 @@ class ChatLoginActivity : BaseActivity() {
 
         loginEt.addTextChangedListener(TextWatcherListener(loginEt))
         usernameEt.addTextChangedListener(TextWatcherListener(usernameEt))
+    }
+
+    fun setValues() {
+        et_login.setText("test")
+        et_user_name.setText("test")
+        //if (btnLogin.isActivated) {
+            showProgressDialog(R.string.dlg_login)
+            prepareUser()
+        //}
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -166,7 +181,11 @@ class ChatLoginActivity : BaseActivity() {
             usernameHint.visibility = View.VISIBLE
         }
 
-        if (isLoginValid(this@ChatLoginActivity, loginEt) && isFullNameValid(this@ChatLoginActivity, usernameEt)) {
+        if (isLoginValid(this@ChatLoginActivity, loginEt) && isFullNameValid(
+                this@ChatLoginActivity,
+                usernameEt
+            )
+        ) {
             btnLogin.isActivated = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 btnLogin.elevation = 0F
@@ -219,7 +238,10 @@ class ChatLoginActivity : BaseActivity() {
                     signUp(user)
                 } else {
                     hideProgressDialog()
-                    showErrorSnackbar(R.string.login_chat_login_error, e, View.OnClickListener { signIn(user) })
+                    showErrorSnackbar(
+                        R.string.login_chat_login_error,
+                        e,
+                        View.OnClickListener { signIn(user) })
                 }
             }
         })
@@ -278,11 +300,21 @@ class ChatLoginActivity : BaseActivity() {
 
         private var timer = Timer()
 
-        override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
+        override fun beforeTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
 
         }
 
-        override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+        override fun onTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            before: Int,
+            count: Int
+        ) {
             val text = charSequence.toString().replace("  ", " ")
             if (editText.text.toString() != text) {
                 editText.setText(text)

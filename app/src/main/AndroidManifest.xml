@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="com.quickblox.sample.messages.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.home.asharemedy.messages.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -140,6 +140,7 @@
         <activity
             android:name=".video.activities.AppInfoActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view._247ConnectActivity" />
 
 
         <service android:name=".video.services.LoginService" />
@@ -186,7 +187,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="4b96a3f33893a42103eae91d2166d0c517b833d3" />
+            android:value="AIzaSyCUqSz5JsUPH6xi3q5TibpzgTRbRrAxhM8" />
     </application>
 
 </manifest>

@@ -1,149 +1,34 @@
 {
   "project_info": {
-    "project_number": "247738611464",
-    "firebase_url": "https://qb-prod-samples.firebaseio.com",
-    "project_id": "qb-prod-samples",
-    "storage_bucket": "qb-prod-samples.appspot.com"
+    "project_number": "847180219435",
+    "firebase_url": "https://asha-patient.firebaseio.com",
+    "project_id": "asha-patient",
+    "storage_bucket": "asha-patient.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:247738611464:android:beb270faa2c3a789",
+        "mobilesdk_app_id": "1:847180219435:android:ad72199d357199dfb6966e",
         "android_client_info": {
-          "package_name": "com.quickblox.sample.chat.java"
+          "package_name": "com.home.asharemedy"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "847180219435-gg6agrbl290knmo7bc0qshljm85qs6rv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyBFXAfVr6kkFJdDNOm8U-c7iju0qIUkc_A"
+          "current_key": "AIzaSyCUqSz5JsUPH6xi3q5TibpzgTRbRrAxhM8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "247738611464-v2nvd29bmqum7niosnfuh28oq3beh9f6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:247738611464:android:1cdc72e9ffd29448",
-        "android_client_info": {
-          "package_name": "com.quickblox.sample.chat.kotlin"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBFXAfVr6kkFJdDNOm8U-c7iju0qIUkc_A"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "247738611464-v2nvd29bmqum7niosnfuh28oq3beh9f6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:247738611464:android:06cb0de4c719ad84",
-        "android_client_info": {
-          "package_name": "com.quickblox.sample.pushnotifications.java"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBFXAfVr6kkFJdDNOm8U-c7iju0qIUkc_A"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "247738611464-v2nvd29bmqum7niosnfuh28oq3beh9f6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:247738611464:android:c2749661061637f0",
-        "android_client_info": {
-          "package_name": "com.quickblox.sample.pushnotifications.kotlin"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBFXAfVr6kkFJdDNOm8U-c7iju0qIUkc_A"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "247738611464-v2nvd29bmqum7niosnfuh28oq3beh9f6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:247738611464:android:99e5b55a490c901c",
-        "android_client_info": {
-          "package_name": "com.quickblox.sample.videochat.java"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBFXAfVr6kkFJdDNOm8U-c7iju0qIUkc_A"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "247738611464-v2nvd29bmqum7niosnfuh28oq3beh9f6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:247738611464:android:ac22e0d1b3a3e86b",
-        "android_client_info": {
-          "package_name": "com.quickblox.sample.videochat.kotlin"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBFXAfVr6kkFJdDNOm8U-c7iju0qIUkc_A"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "247738611464-v2nvd29bmqum7niosnfuh28oq3beh9f6.apps.googleusercontent.com",
+              "client_id": "847180219435-gg6agrbl290knmo7bc0qshljm85qs6rv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

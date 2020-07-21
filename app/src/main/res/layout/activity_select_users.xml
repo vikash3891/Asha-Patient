@@ -51,7 +51,7 @@
         </com.home.asharemedy.chat.ui.adapter.ScrollViewWithMaxHeight>
     </RelativeLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_select_users"
         style="@style/ListViewWithoutDividerStyle"
         android:layout_below="@+id/search_group" />

@@ -80,14 +80,19 @@ class CallService  : Service() {
     }
 
     override fun onCreate() {
-        currentSession = WebRtcSessionManager.getCurrentSession()
-        clearButtonsState()
-        initNetworkChecker()
-        initRTCClient()
-        initListeners()
-        initAudioManager()
-        ringtonePlayer = RingtonePlayer(this, R.raw.beep)
         super.onCreate()
+        try {
+            currentSession = WebRtcSessionManager.getCurrentSession()
+            clearButtonsState()
+            initNetworkChecker()
+            initRTCClient()
+            initListeners()
+            initAudioManager()
+            ringtonePlayer = RingtonePlayer(this, R.raw.beep)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

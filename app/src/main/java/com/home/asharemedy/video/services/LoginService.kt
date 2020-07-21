@@ -113,51 +113,67 @@ class LoginService : Service() {
     }
 
     private fun loginToChat(qbUser: QBUser) {
-        chatService.login(qbUser, object : QBEntityCallback<QBUser> {
-            override fun onSuccess(qbUser: QBUser?, bundle: Bundle) {
-                Log.d(TAG, "login onSuccess")
-                startActionsOnSuccessLogin()
-            }
-
-            override fun onError(e: QBResponseException) {
-                Log.d(TAG, "login onError " + e.message)
-                val errorMessage = if (e.message != null) {
-                    e.message
-                } else {
-                    "Login error"
+        try {
+            chatService.login(qbUser, object : QBEntityCallback<QBUser> {
+                override fun onSuccess(qbUser: QBUser?, bundle: Bundle) {
+                    Log.d(TAG, "login onSuccess")
+                    startActionsOnSuccessLogin()
                 }
-                sendResultToActivity(false, errorMessage)
-            }
-        })
+
+                override fun onError(e: QBResponseException) {
+                    Log.d(TAG, "login onError " + e.message)
+                    val errorMessage = if (e.message != null) {
+                        e.message
+                    } else {
+                        "Login error"
+                    }
+                    sendResultToActivity(false, errorMessage)
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun startActionsOnSuccessLogin() {
-        initPingListener()
-        initQBRTCClient()
-        sendResultToActivity(true, null)
+        try {
+            initPingListener()
+            initQBRTCClient()
+            sendResultToActivity(true, null)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun initPingListener() {
-        ChatPingAlarmManager.onCreate(this)
-        ChatPingAlarmManager.addPingListener(PingFailedListener { Log.d(TAG, "Ping chat server failed") })
+        try {
+            ChatPingAlarmManager.onCreate(this)
+            ChatPingAlarmManager.addPingListener(PingFailedListener { Log.d(TAG, "Ping chat server failed") })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun initQBRTCClient() {
-        rtcClient = QBRTCClient.getInstance(applicationContext)
-        // Add signalling manager
-        chatService.videoChatWebRTCSignalingManager?.addSignalingManagerListener { qbSignaling, createdLocally ->
-            if (!createdLocally) {
-                rtcClient.addSignaling(qbSignaling)
+        try {
+            rtcClient = QBRTCClient.getInstance(applicationContext)
+            // Add signalling manager
+            chatService.videoChatWebRTCSignalingManager?.addSignalingManagerListener { qbSignaling, createdLocally ->
+                if (!createdLocally) {
+                    rtcClient.addSignaling(qbSignaling)
+                }
             }
+
+            // Configure
+            QBRTCConfig.setDebugEnabled(true)
+            configRTCTimers(this)
+
+            // Add service as callback to RTCClient
+            rtcClient.addSessionCallbacksListener(WebRtcSessionManager)
+            rtcClient.prepareToProcessCalls()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        // Configure
-        QBRTCConfig.setDebugEnabled(true)
-        configRTCTimers(this)
-
-        // Add service as callback to RTCClient
-        rtcClient.addSessionCallbacksListener(WebRtcSessionManager)
-        rtcClient.prepareToProcessCalls()
     }
 
     private fun sendResultToActivity(isSuccess: Boolean, errorMessage: String?) {
@@ -180,21 +196,25 @@ class LoginService : Service() {
     }
 
     private fun destroyRtcClientAndChat() {
-        if (::rtcClient.isInitialized) {
-            rtcClient.destroy()
-        }
-        ChatPingAlarmManager.onDestroy()
-        chatService.logout(object : QBEntityCallback<Void?> {
-            override fun onSuccess(aVoid: Void?, bundle: Bundle) {
-                chatService.destroy()
+        try {
+            if (::rtcClient.isInitialized) {
+                rtcClient.destroy()
             }
+            ChatPingAlarmManager.onDestroy()
+            chatService.logout(object : QBEntityCallback<Void?> {
+                override fun onSuccess(aVoid: Void?, bundle: Bundle) {
+                    chatService.destroy()
+                }
 
-            override fun onError(e: QBResponseException) {
-                Log.d(TAG, "logout onError " + e.message)
-                chatService.destroy()
-            }
-        })
-        stopSelf()
+                override fun onError(e: QBResponseException) {
+                    Log.d(TAG, "logout onError " + e.message)
+                    chatService.destroy()
+                }
+            })
+            stopSelf()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onDestroy() {

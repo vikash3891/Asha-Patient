@@ -66,6 +66,7 @@ class AshaRemedyApp : Application() {
         instance = this
         registerActivityLifecycleCallbacks(ActivityLifecycle)
         initFabric()
+        dbHelper = DbHelper(this)
         checkAppCredentials()
         checkChatSettings()
         initCredentials()

@@ -497,11 +497,9 @@ class CallActivity : BaseActivity(), IncomeCallFragmentCallbackListener,
         hangUpCurrentSession()
     }
 
-    @TargetApi(21)
+
     override fun onStartScreenSharing() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return
-        }
+
         QBRTCScreenCapturer.requestPermissions(this)
     }
 

@@ -16,7 +16,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
 repositories {
     google()
     jcenter()
@@ -134,5 +133,8 @@ dependencies {
     //*****************************************************88
     //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycleViewmodelAndroidXVersion"
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
 }
 apply from: "../artifacts.gradle"
