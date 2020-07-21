@@ -52,13 +52,13 @@ class DashboardGridAapter(context: Context, var gridList: ArrayList<DashboardGri
                         context!!.startActivity(Intent(context, MyProfile::class.java))
 
                     context!!.getString(R.string.talk_to_thb) ->
-                        context!!.startActivity(Intent(context, LoginActivity::class.java))
+                        context!!.startActivity(Intent(context, ChatLoginActivity::class.java))
 
                     context!!.getString(R.string.health_info) ->
                         context!!.startActivity(Intent(context, MyProfile::class.java))
 
                     context!!.getString(R.string.more_thb) ->
-                        context!!.startActivity(Intent(context, MyProfile::class.java))
+                        context!!.startActivity(Intent(context, LoginActivity::class.java))
 
 
                     context!!.getString(R.string.my_vitals) ->

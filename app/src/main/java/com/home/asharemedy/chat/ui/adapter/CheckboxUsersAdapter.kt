@@ -54,6 +54,6 @@ class CheckboxUsersAdapter(context: Context, users: List<QBUser>) : UsersAdapter
     }
 
     override fun isAvailableForSelection(user: QBUser): Boolean {
-        return super.isAvailableForSelection(user) && !initiallySelectedUsers.contains(user.id)
+        return true//super.isAvailableForSelection(user) && !initiallySelectedUsers.contains(user.id)
     }
 }

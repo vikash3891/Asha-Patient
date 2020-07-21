@@ -41,7 +41,7 @@ const val SERVICE_ID = 787
 const val CHANNEL_ID = "Quickblox channel"
 const val CHANNEL_NAME = "Quickblox background service"
 
-class CallService : Service() {
+class CallService  : Service() {
     private var TAG = CallService::class.java.simpleName
 
     private val callServiceBinder: CallServiceBinder = CallServiceBinder()
@@ -123,7 +123,7 @@ class CallService : Service() {
         }
 
         val notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationTitle = getString(R.string.notification_title)
         var notificationText = getString(R.string.notification_text, "")
@@ -513,8 +513,8 @@ class CallService : Service() {
         override fun connectionClosedOnError(e: Exception?) {
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
             val reconnectHangUpTimeMillis = getPreferenceInt(sharedPref, applicationContext,
-                    R.string.pref_disconnect_time_interval_key,
-                    R.string.pref_disconnect_time_interval_default_value) * 1000
+                R.string.pref_disconnect_time_interval_key,
+                R.string.pref_disconnect_time_interval_default_value) * 1000
             expirationReconnectionTime = System.currentTimeMillis() + reconnectHangUpTimeMillis
         }
 

@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
 
-class LoginActivity : BaseActivity() {
+class AppLoginActivity : BaseActivity() {
 
     var tanentId = "0"
     var isArabic = false
@@ -96,15 +96,15 @@ class LoginActivity : BaseActivity() {
             }*/
 
             txtRegister.setOnClickListener {
-                startActivity(Intent(this@LoginActivity, RegistrationActivity::class.java))
+                startActivity(Intent(this@AppLoginActivity, RegistrationActivity::class.java))
             }
             appLogo.setOnClickListener {
                 if (!isArabic) {
                     isArabic = true
-                    LocaleManagerMew.setNewLocale(this@LoginActivity, LocaleManagerMew.mArabicFlag)
+                    LocaleManagerMew.setNewLocale(this@AppLoginActivity, LocaleManagerMew.mArabicFlag)
                 } else {
                     isArabic = false
-                    LocaleManagerMew.setNewLocale(this@LoginActivity, LocaleManagerMew.mEnglishFlag)
+                    LocaleManagerMew.setNewLocale(this@AppLoginActivity, LocaleManagerMew.mEnglishFlag)
                 }
             }
 
@@ -140,7 +140,7 @@ class LoginActivity : BaseActivity() {
             btnLogin.setOnClickListener {
                 //validationFields()
 
-                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+                startActivity(Intent(this@AppLoginActivity, DashboardActivity::class.java))
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -158,7 +158,7 @@ class LoginActivity : BaseActivity() {
 
     private fun startWebActivity(title: String, url: String) {
         try {
-            intent = Intent(this@LoginActivity, WebViewActivity::class.java)
+            intent = Intent(this@AppLoginActivity, WebViewActivity::class.java)
             intent.putExtra("contentTitle", title)
             intent.putExtra("contentUrl", "https://eocwd.epayub.com")
             startActivity(intent)

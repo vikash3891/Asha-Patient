@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.AppLoginActivity" />
         <activity
             android:name=".view.RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -58,7 +58,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".chat.ui.activity.LoginActivity"
+            android:name=".chat.ui.activity.ChatLoginActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -67,56 +67,96 @@
 
         <activity
             android:name=".chat.ui.activity.DialogsActivity"
+            android:theme="@style/AppTheme1"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.NewGroupActivity"
+            android:theme="@style/AppTheme1"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.ChatActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme1"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
             android:name=".chat.ui.activity.ForwardToActivity"
+            android:theme="@style/AppTheme1"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.ChatInfoActivity"
+            android:theme="@style/AppTheme1"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.MessageInfoActivity"
+            android:theme="@style/AppTheme1"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.AttachmentImageActivity"
+            android:theme="@style/AppTheme1"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.AttachmentVideoActivity"
+            android:theme="@style/AppTheme1"
             android:screenOrientation="portrait" />
-        <activity android:name=".video.activities.AppInfoActivity" />
-        <activity android:name=".video.activities.CallActivity" />
-        <activity android:name=".chat.ui.activity.ChatLoginActivity" />
-        <activity android:name=".video.activities.LoginActivity" />
-        <activity android:name=".video.activities.SettingsActivity" />
+
         <activity android:name=".video.activities.ChatSplashActivity" />
 
-        <!-- <service android:name=".fcm.PushListenerService">
-             <intent-filter>
-                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
-             </intent-filter>
-         </service>-->
+        <activity
+            android:name=".video.activities.LoginActivity"
+            android:theme="@style/AppTheme1"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".video.activities.SettingsActivity"
+            android:theme="@style/AppTheme1"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".video.activities.OpponentsActivity"
+            android:theme="@style/AppTheme1"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".video.activities.PermissionsActivity"
+            android:theme="@style/AppTheme1"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".video.activities.CallActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme" />
+
+        <activity
+            android:name=".video.activities.AppInfoActivity"
+            android:screenOrientation="portrait" />
+
+
+        <service android:name=".video.services.LoginService" />
+
+        <service android:name=".video.services.CallService" />
+
+        <service android:name=".video.services.fcm.PushListenerService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <service android:name="com.quickblox.messages.services.fcm.QBFcmPushInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".chat.fcm.PushListenerService" />
 
         <meta-data
             android:name="com.quickblox.messages.TYPE"

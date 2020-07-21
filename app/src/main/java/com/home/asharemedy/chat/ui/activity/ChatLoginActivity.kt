@@ -15,6 +15,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.home.asharemedy.DEFAULT_USER_PASSWORD
 import com.quickblox.core.QBEntityCallback
 import com.quickblox.core.exception.QBResponseException
 import com.home.asharemedy.R
@@ -196,7 +197,7 @@ class ChatLoginActivity : BaseActivity() {
         val qbUser = QBUser()
         qbUser.login = loginEt.text.toString().trim { it <= ' ' }
         qbUser.fullName = usernameEt.text.toString().trim { it <= ' ' }
-        qbUser.password = "1234"
+        qbUser.password = DEFAULT_USER_PASSWORD
         signIn(qbUser)
     }
 
@@ -239,7 +240,7 @@ class ChatLoginActivity : BaseActivity() {
 
     private fun loginToChat(user: QBUser) {
         //Need to set password, because the server will not register to chat without password
-        user.password = "1234"
+        user.password = DEFAULT_USER_PASSWORD
         ChatHelper.loginToChat(user, object : QBEntityCallback<Void> {
             override fun onSuccess(void: Void?, bundle: Bundle?) {
                 SharedPrefsHelper.saveQbUser(user)

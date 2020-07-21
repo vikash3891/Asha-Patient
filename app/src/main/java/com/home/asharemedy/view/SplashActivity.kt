@@ -14,7 +14,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed(Runnable {
 
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, AppLoginActivity::class.java))
             finish()
             /*if (AppPrefences.getLogin(this)!! && AppPrefences.getRememberMe(this)!!) {
                 startActivity(Intent(this, AshaRemedyApp::class.java))
