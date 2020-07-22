@@ -3,19 +3,16 @@ package com.home.asharemedy.video.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
 import com.home.asharemedy.DEFAULT_USER_PASSWORD
 import com.home.asharemedy.R
-import com.quickblox.core.QBEntityCallback
-import com.quickblox.core.exception.QBResponseException
 import com.home.asharemedy.video.services.LoginService
 import com.home.asharemedy.video.util.signInUser
 import com.home.asharemedy.video.util.signUp
 import com.home.asharemedy.video.utils.*
+import com.quickblox.core.QBEntityCallback
+import com.quickblox.core.exception.QBResponseException
 import com.quickblox.users.QBUsers
 import com.quickblox.users.model.QBUser
 import kotlinx.android.synthetic.main.activity_video_login.*
@@ -24,13 +21,11 @@ const val ERROR_LOGIN_ALREADY_TAKEN_HTTP_STATUS = 422
 
 class LoginActivity : BaseActivity() {
 
-    private lateinit var userLoginEditText: EditText
-    private lateinit var userFullNameEditText: EditText
-
     private lateinit var user: QBUser
 
     companion object {
-        fun start(context: Context) = context.startActivity(Intent(context, LoginActivity::class.java))
+        fun start(context: Context) =
+            context.startActivity(Intent(context, LoginActivity::class.java))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,19 +36,13 @@ class LoginActivity : BaseActivity() {
 
     private fun initUI() {
         supportActionBar?.title = "Login"
-        userLoginEditText = findViewById(R.id.userLoginEditText)
-        userLoginEditText.addTextChangedListener(LoginEditTextWatcher(userLoginEditText))
 
-        userFullNameEditText = findViewById(R.id.userFullNameEditText)
-        userFullNameEditText.addTextChangedListener(LoginEditTextWatcher(userFullNameEditText))
+        val user = createUserWithEnteredData()
+        signUpNewUser(user)
+        /*btnLogin.setOnClickListener() {
 
-        btnLogin.setOnClickListener(){
-            if (isEnteredUserNameValid() && isEnteredRoomNameValid()) {
-                hideKeyboard()
-                val user = createUserWithEnteredData()
-                signUpNewUser(user)
-            }
-        }
+
+        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -64,28 +53,14 @@ class LoginActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_login_user_done -> {
-                if (isEnteredUserNameValid() && isEnteredRoomNameValid()) {
-                    hideKeyboard()
-                    val user = createUserWithEnteredData()
-                    signUpNewUser(user)
-                }
+
+                val user = createUserWithEnteredData()
+                signUpNewUser(user)
+
                 return true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun isEnteredUserNameValid(): Boolean {
-        return isLoginValid(this, userLoginEditText)
-    }
-
-    private fun isEnteredRoomNameValid(): Boolean {
-        return isFoolNameValid(this, userFullNameEditText)
-    }
-
-    private fun hideKeyboard() {
-        hideKeyboard(userLoginEditText)
-        hideKeyboard(userFullNameEditText)
     }
 
     private fun signUpNewUser(newUser: QBUser) {
@@ -108,15 +83,15 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun loginToChat(qbUser: QBUser) {
-        qbUser.password =  DEFAULT_USER_PASSWORD
+        qbUser.password = DEFAULT_USER_PASSWORD
         user = qbUser
         startLoginService(qbUser)
     }
 
     private fun createUserWithEnteredData(): QBUser {
         val qbUser = QBUser()
-        val userLogin = userLoginEditText.text.toString()
-        val userFullName = userFullNameEditText.text.toString()
+        val userLogin = "test"
+        val userFullName = "test"
         qbUser.login = userLogin
         qbUser.fullName = userFullName
         qbUser.password = DEFAULT_USER_PASSWORD
@@ -189,18 +164,4 @@ class LoginActivity : BaseActivity() {
         LoginService.start(this, qbUser, pendingIntent)
     }
 
-    private inner class LoginEditTextWatcher internal constructor(private val editText: EditText) : TextWatcher {
-
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            editText.error = null
-        }
-
-        override fun afterTextChanged(s: Editable) {
-
-        }
-    }
 }

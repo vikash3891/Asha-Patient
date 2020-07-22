@@ -20,6 +20,12 @@ class MyVitalsActivity : AppCompatActivity() {
         selectedVital.setOnClickListener {
             showDialogAliment()
         }
+        initView()
+    }
+
+    fun initView()
+    {
+
     }
 
     fun showDialogAliment() {

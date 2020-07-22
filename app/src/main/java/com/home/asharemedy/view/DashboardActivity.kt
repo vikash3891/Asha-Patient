@@ -22,12 +22,6 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        /*viewDataBinding = ActivityDashboardBinding.inflate(inflater, container, false).apply {
-            viewmodel = ViewModelProviders.of(this@RepoListFragment).get(RepoListViewModel::class.java)
-            setLifecycleOwner(viewLifecycleOwner)
-        }
-        return viewDataBinding.root*/
-
         topbar.screenName.text = getString(R.string.dashboard)
         topbar.imageBack.visibility = View.GONE
         try {

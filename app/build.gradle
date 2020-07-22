@@ -3,6 +3,7 @@ buildscript {
         google()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.kotlinGradlePluginVersion"
@@ -23,6 +24,7 @@ repositories {
         url "https://github.com/QuickBlox/quickblox-android-sdk-releases/raw/master/"
     }
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://jitpack.io' }
     flatDir { dirs 'libs' }
 }
 
@@ -136,5 +138,7 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycleViewmodelAndroidXVersion"
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
 apply from: "../artifacts.gradle"

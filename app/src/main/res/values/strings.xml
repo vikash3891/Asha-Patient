@@ -541,5 +541,15 @@
     <string name="error_attachment_count">You can send 1 attachment per message</string>
     <string name="loading_users_error">Loading users error. Error</string>
     <string name="text_welcoming_message">Please enter username and chat room name. \nYou can join existed chat room.</string>
+    <string name="nationality">Nationality :</string>
+    <string name="religion">Religion :</string>
+    <string name="membership">Membership :</string>
+    <string name="address_">Address :</string>
+    <string name="communication">Communication :</string>
+    <string name="insurance">Insurance:</string>
+    <string name="emirates_id">Emirates ID :</string>
+    <string name="basic_details">Basic Details</string>
+    <string name="edit">Edit</string>
+    <string name="habits">Habits</string>
 
 </resources>

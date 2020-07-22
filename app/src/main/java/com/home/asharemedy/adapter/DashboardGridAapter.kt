@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.home.asharemedy.R
 import com.home.asharemedy.chat.ui.activity.ChatLoginActivity
-import com.home.asharemedy.view.HealthRecordActivity
 import com.home.asharemedy.model.DashboardGridModel
 import com.home.asharemedy.video.activities.LoginActivity
-import com.home.asharemedy.view.MyProfile
-import com.home.asharemedy.view.ListActivity
-import com.home.asharemedy.view.MyVitalsActivity
+import com.home.asharemedy.view.*
 import kotlinx.android.synthetic.main.item_dashboard_grid.view.*
 
 class DashboardGridAapter(context: Context, var gridList: ArrayList<DashboardGridModel>) :
@@ -49,16 +46,16 @@ class DashboardGridAapter(context: Context, var gridList: ArrayList<DashboardGri
                         )
 
                     context!!.getString(R.string._247_doctor) ->
-                        context!!.startActivity(Intent(context, MyProfile::class.java))
+                        context!!.startActivity(Intent(context, _247ConnectActivity::class.java))
 
-                    context!!.getString(R.string.talk_to_thb) ->
-                        context!!.startActivity(Intent(context, ChatLoginActivity::class.java))
+                    /*context!!.getString(R.string.talk_to_thb) ->
+                        context!!.startActivity(Intent(context, ChatLoginActivity::class.java))*/
 
                     context!!.getString(R.string.health_info) ->
                         context!!.startActivity(Intent(context, MyProfile::class.java))
 
-                    context!!.getString(R.string.more_thb) ->
-                        context!!.startActivity(Intent(context, LoginActivity::class.java))
+                    /*context!!.getString(R.string.more_thb) ->
+                        context!!.startActivity(Intent(context, LoginActivity::class.java))*/
 
 
                     context!!.getString(R.string.my_vitals) ->

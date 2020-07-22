@@ -1,48 +1,26 @@
 package com.home.asharemedy.chat.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.Vibrator
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
 import com.home.asharemedy.DEFAULT_USER_PASSWORD
-import com.quickblox.core.QBEntityCallback
-import com.quickblox.core.exception.QBResponseException
 import com.home.asharemedy.R
 import com.home.asharemedy.chat.utils.SharedPrefsHelper
 import com.home.asharemedy.chat.utils.chat.ChatHelper
-import com.home.asharemedy.chat.utils.isFullNameValid
-import com.home.asharemedy.chat.utils.isLoginValid
+import com.quickblox.core.QBEntityCallback
+import com.quickblox.core.exception.QBResponseException
 import com.quickblox.users.QBUsers
 import com.quickblox.users.model.QBUser
 import kotlinx.android.synthetic.main.activity_chat_login.*
-import java.util.*
-
 
 private const val UNAUTHORIZED = 401
 private const val DRAFT_LOGIN = "draft_login"
 private const val DRAFT_USERNAME = "draft_username"
 
 class ChatLoginActivity : BaseActivity() {
-
-    private lateinit var loginEt: EditText
-    private lateinit var usernameEt: EditText
-    private lateinit var loginHint: TextView
-    private lateinit var usernameHint: TextView
-    private lateinit var btnLogin: TextView
-    private lateinit var chbSave: CheckBox
-    private lateinit var rootView: LinearLayout
-    private lateinit var hidableHolder: LinearLayout
 
     companion object {
         fun start(context: Context) =
@@ -52,104 +30,20 @@ class ChatLoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_login)
-        initViews()
-        prepareListeners()
-        fillViews()
-        defineFocusedBehavior()
 
+        tvBtnLogin.setOnClickListener {
+
+            showProgressDialog(R.string.dlg_login)
+            prepareUser()
+
+        }
         setValues()
     }
 
-    private fun initViews() {
-        supportActionBar?.elevation = 20f
-        loginHint = findViewById(R.id.tv_login_hint)
-        usernameHint = findViewById(R.id.tv_username_hint)
-        btnLogin = findViewById(R.id.tv_btn_login)
-        loginEt = findViewById(R.id.et_login)
-        usernameEt = findViewById(R.id.et_user_name)
-        chbSave = findViewById(R.id.chb_login_save)
-        hidableHolder = findViewById(R.id.ll_hidable_holder)
-        rootView = findViewById(R.id.root_view_login_activity)
-    }
-
-    private fun fillViews() {
-        if (!SharedPrefsHelper.get<String>(DRAFT_LOGIN).isNullOrEmpty()) {
-            loginEt.setText(SharedPrefsHelper.get<String>(DRAFT_LOGIN))
-        }
-        if (!SharedPrefsHelper.get<String>(DRAFT_USERNAME).isNullOrEmpty()) {
-            usernameEt.setText(SharedPrefsHelper.get<String>(DRAFT_USERNAME))
-        }
-        validateFields()
-    }
-
-    @SuppressLint("NewApi")
-    private fun defineFocusedBehavior() {
-        loginHint.visibility = View.GONE
-        usernameHint.visibility = View.GONE
-
-        loginEt.setOnFocusChangeListener { view, hasFocus ->
-            if (hasFocus) {
-                loginEt.translationZ = 10f
-            } else {
-                loginEt.translationZ = 0f
-            }
-            if (isLoginValid(this, loginEt)) {
-                loginHint.visibility = View.GONE
-            } else {
-                loginHint.visibility = View.VISIBLE
-            }
-        }
-
-        usernameEt.setOnFocusChangeListener { view, hasFocus ->
-            if (hasFocus) {
-                usernameEt.translationZ = 10f
-            } else {
-                usernameEt.translationZ = 0f
-            }
-            if (isFullNameValid(this, usernameEt)) {
-                usernameHint.visibility = View.GONE
-            } else {
-                usernameHint.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    private fun prepareListeners() {
-        rootView.setOnLongClickListener(object : View.OnLongClickListener {
-            override fun onLongClick(v: View?): Boolean {
-                val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                vibrator.vibrate(80)
-
-                if (hidableHolder.visibility == View.GONE) {
-                    hidableHolder.visibility = View.VISIBLE
-                } else {
-                    hidableHolder.visibility = View.GONE
-                }
-                return true
-            }
-        })
-
-        btnLogin.setOnClickListener {
-
-            et_login.setText("test")
-            et_user_name.setText("test")
-            if (btnLogin.isActivated) {
-                showProgressDialog(R.string.dlg_login)
-                prepareUser()
-            }
-        }
-
-        loginEt.addTextChangedListener(TextWatcherListener(loginEt))
-        usernameEt.addTextChangedListener(TextWatcherListener(usernameEt))
-    }
-
     fun setValues() {
-        et_login.setText("test")
-        et_user_name.setText("test")
-        //if (btnLogin.isActivated) {
-            showProgressDialog(R.string.dlg_login)
-            prepareUser()
-        //}
+
+        showProgressDialog(R.string.dlg_login)
+        prepareUser()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -168,45 +62,6 @@ class ChatLoginActivity : BaseActivity() {
         }
     }
 
-    private fun validateFields(): Boolean {
-        if (isLoginValid(this@ChatLoginActivity, loginEt)) {
-            loginHint.visibility = View.GONE
-        } else {
-            loginHint.visibility = View.VISIBLE
-        }
-
-        if (isFullNameValid(this@ChatLoginActivity, usernameEt)) {
-            usernameHint.visibility = View.GONE
-        } else {
-            usernameHint.visibility = View.VISIBLE
-        }
-
-        if (isLoginValid(this@ChatLoginActivity, loginEt) && isFullNameValid(
-                this@ChatLoginActivity,
-                usernameEt
-            )
-        ) {
-            btnLogin.isActivated = true
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                btnLogin.elevation = 0F
-                btnLogin.translationZ = 10F
-            }
-            return true
-        } else {
-            btnLogin.isActivated = false
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                btnLogin.elevation = 0F
-                btnLogin.translationZ = 0F
-            }
-            return false
-        }
-    }
-
-    private fun saveDrafts() {
-        SharedPrefsHelper.save(DRAFT_LOGIN, loginEt.text.toString())
-        SharedPrefsHelper.save(DRAFT_USERNAME, usernameEt.text.toString())
-    }
-
     private fun clearDrafts() {
         SharedPrefsHelper.save(DRAFT_LOGIN, "")
         SharedPrefsHelper.save(DRAFT_USERNAME, "")
@@ -214,8 +69,8 @@ class ChatLoginActivity : BaseActivity() {
 
     private fun prepareUser() {
         val qbUser = QBUser()
-        qbUser.login = loginEt.text.toString().trim { it <= ' ' }
-        qbUser.fullName = usernameEt.text.toString().trim { it <= ' ' }
+        qbUser.login = "test"
+        qbUser.fullName = "test"
         qbUser.password = DEFAULT_USER_PASSWORD
         signIn(qbUser)
     }
@@ -266,7 +121,7 @@ class ChatLoginActivity : BaseActivity() {
         ChatHelper.loginToChat(user, object : QBEntityCallback<Void> {
             override fun onSuccess(void: Void?, bundle: Bundle?) {
                 SharedPrefsHelper.saveQbUser(user)
-                if (!chbSave.isChecked) {
+                if (!true) {
                     clearDrafts()
                 }
                 DialogsActivity.start(this@ChatLoginActivity)
@@ -296,41 +151,5 @@ class ChatLoginActivity : BaseActivity() {
         })
     }
 
-    private inner class TextWatcherListener(private var editText: EditText) : TextWatcher {
 
-        private var timer = Timer()
-
-        override fun beforeTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            count: Int,
-            after: Int
-        ) {
-
-        }
-
-        override fun onTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            before: Int,
-            count: Int
-        ) {
-            val text = charSequence.toString().replace("  ", " ")
-            if (editText.text.toString() != text) {
-                editText.setText(text)
-                editText.setSelection(text.length)
-            }
-            validateFields()
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            timer.cancel()
-            timer = Timer()
-            timer.schedule(object : TimerTask() {
-                override fun run() {
-                    saveDrafts()
-                }
-            }, 300)
-        }
-    }
 }

@@ -52,11 +52,7 @@ class AppLoginActivity : BaseActivity() {
     private fun validationFields() {
         try {
             var isValid = true
-            if (!radioDoctor.isChecked && !radioPatient.isChecked) {
-                showSuccessPopup("Please select your Profile")
-                !isValid
-                return
-            } else
+
                 if (editUserName.text!!.isEmpty() && editUserPass.text!!.isEmpty()) {
                     showSuccessPopup("Please enter Email/Password")
                     !isValid
@@ -98,7 +94,7 @@ class AppLoginActivity : BaseActivity() {
             txtRegister.setOnClickListener {
                 startActivity(Intent(this@AppLoginActivity, RegistrationActivity::class.java))
             }
-            appLogo.setOnClickListener {
+           /* appLogo.setOnClickListener {
                 if (!isArabic) {
                     isArabic = true
                     LocaleManagerMew.setNewLocale(this@AppLoginActivity, LocaleManagerMew.mArabicFlag)
@@ -106,7 +102,7 @@ class AppLoginActivity : BaseActivity() {
                     isArabic = false
                     LocaleManagerMew.setNewLocale(this@AppLoginActivity, LocaleManagerMew.mEnglishFlag)
                 }
-            }
+            }*/
 
             txtForgotPassword.setOnClickListener {
                 //startActivity(Intent(this@LoginActivity, FilterActivity::class.java))

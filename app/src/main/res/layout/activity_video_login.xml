@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_view_login_activity"
     style="@style/MatchParent"
+    android:visibility="gone"
     android:layout_marginLeft="@dimen/padding_start"
     android:orientation="vertical">
 
