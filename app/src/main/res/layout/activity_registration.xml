@@ -130,6 +130,109 @@
                 android:layout_marginBottom="@dimen/dp_3"
                 android:background="@color/colorLightGray100" />
 
+            <!--DOB-->
+            <LinearLayout
+                android:id="@+id/layoutDOB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textDOB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/date_of_birth"
+                    android:textColor="@color/colorBlack" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/editDOB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_border"
+                android:fontFamily="@font/roboto"
+                android:hint="@string/select"
+                android:maxLength="50"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginStart="@dimen/dp_6"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:layout_marginBottom="@dimen/dp_3"
+                android:background="@color/colorLightGray100" />
+
+            <!--Gender-->
+            <LinearLayout
+                android:id="@+id/layoutGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/gender"
+                    android:textColor="@color/colorBlack" />
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/radioGroupGender"
+                android:layout_width="match_parent"
+                android:background="@drawable/edittext_border"
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:padding="@dimen/dp_3"
+                    android:text="Male"
+                    android:textSize="@dimen/sp_12" />
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/dp_3"
+                    android:text="Female"
+                    android:textSize="@dimen/sp_12" />
+
+                <RadioButton
+                    android:id="@+id/other"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/dp_3"
+                    android:text="Other"
+                    android:textSize="@dimen/sp_12" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginStart="@dimen/dp_6"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:layout_marginBottom="@dimen/dp_3"
+                android:background="@color/colorLightGray100" />
+
             <!--Mobile Number-->
             <LinearLayout
                 android:id="@+id/layoutMobileNumber"

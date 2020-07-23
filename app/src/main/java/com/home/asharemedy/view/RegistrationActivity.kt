@@ -1,17 +1,44 @@
 package com.home.asharemedy.view
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.TextView
 import com.home.asharemedy.R
+import com.home.asharemedy.api.ApiClient
+import com.home.asharemedy.api.ApiInterface
+import com.home.asharemedy.api.RequestModel
+import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.android.synthetic.main.custom_action_bar.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import android.widget.RadioGroup
+
 
 class RegistrationActivity : BaseActivity() {
 
     private var utilityID = ""
+    var name = ""
+    var DOB = ""
+    var mobile = ""
+    var email = ""
+    var password = ""
+    var cDate = ""
+    var city = ""
+    var state = ""
+    var country = ""
+    var refCode = ""
+    var gender = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,12 +50,28 @@ class RegistrationActivity : BaseActivity() {
                 finish()
             }
 
-            getUtilityList(false, txtUtilityName)
+            getCountryList(false, txtUtilityName)
 
             clickPerform()
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun initView() {
+        radioGroupGender.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.male -> {
+                    gender = "Male"
+                }
+                R.id.female -> {
+                    gender = "Female"
+                }
+                R.id.other -> {
+                    gender = "Other"
+                }
+            }
+        })
     }
 
     override fun onResume() {
@@ -43,46 +86,20 @@ class RegistrationActivity : BaseActivity() {
                 /*if (UtilitiesData.getCount() > 0) {
                     openDialog(getString(R.string.select_utility), txtUtilityName)
                 } else {
-                    getUtilityList(true, txtUtilityName)
+                    getCountryList(true, txtUtilityName)
 
                 }*/
             }
 
-            /*imgUtility.setOnClickListener {
-                showInfoMessage("Your Account Number is located next to the ACCOUNT NUMBER label, at the top right ACCOUNT INFORMATION section of the EOCWD Bill.")
-            }*/
-            /*imgAcc.setOnClickListener {
-                showInfoMessage("Your Account Number is located next to the ACCOUNT NUMBER label, at the top right ACCOUNT INFORMATION section of the EOCWD Bill.")
-            }
-            imgMeter.setOnClickListener {
-                showInfoMessage("Your Meter Number is located next to the METER NUMBER label, at the top right ACCOUNT INFORMATION section of the EOCWD Bill.")
-            }
-            imgSerciveZip.setOnClickListener {
-                showInfoMessage("Service Zip Code is the zip code of the premise.")
-            }*/
-            /*imgEmail.setOnClickListener {
-                showInfoMessage("Your Account Number is located next to the ACCOUNT NUMBER label, at the top right ACCOUNT INFORMATION section of the EOCWD Bill.")
-            }*/
-
-
             btnSubmitRegister.setOnClickListener {
                 validationField()
+            }
+            editDOB.setOnClickListener {
+                openCalendar(editDOB)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
-
-    private fun showInfoMessage(infoMessage: String) {
-        var alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle(getString(R.string.app_name))
-        alertDialog.setMessage(infoMessage)
-
-        alertDialog.setPositiveButton("OK") { dialog, which ->
-            dialog.dismiss()
-        }
-
-        alertDialog.show()
     }
 
     private fun validationField() {
@@ -104,13 +121,19 @@ class RegistrationActivity : BaseActivity() {
                 showSuccessPopup("Please enter valid Email")
                 !allValid
                 return
-            }
-            else if (txtUtilityName.text!!.isEmpty()) {
+            } else if (editCity.text!!.isEmpty()) {
+                showSuccessPopup("Please enter City")
+                !allValid
+                return
+            } else if (editState.text!!.isEmpty()) {
+                showSuccessPopup("Please enter State")
+                !allValid
+                return
+            } else if (txtUtilityName.text!!.isEmpty()) {
                 showSuccessPopup("Please select Country")
                 !allValid
                 return
-            }
-            else if (editPassword.text!!.isEmpty() || !isPasswordValid(editPassword.text)) {
+            } else if (editPassword.text!!.isEmpty() || !isPasswordValid(editPassword.text)) {
                 showSuccessPopup(getString(R.string.password_validation_message))
                 !allValid
                 return
@@ -124,30 +147,95 @@ class RegistrationActivity : BaseActivity() {
                 showSuccessPopup("Password doesn't match")
                 !allValid
                 return
+            } else if (editReferralCode.text!!.isNotEmpty() && editReferralCode.length() < 8) {
+                showSuccessPopup("Please enter valid Referral Code")
+                !allValid
+                return
             } else if (allValid) {
-                /*val intent =
-                    Intent(this@SignupStepOneActivity, SignupStepTwoActivity::class.java)
-                intent.putExtra(ApiUrls.CustomerUtilityId, utilityID)
-                intent.putExtra(ApiUrls.AccountNumber, editAccountNo.text.toString())
-                intent.putExtra(ApiUrls.MeterNumber, editMeterNo.text.toString())
-                intent.putExtra(ApiUrls.ServiceZipCode, editServiceZipCode.text.toString())
-                intent.putExtra(ApiUrls.EmailID, editEmail.text.toString())
-                intent.putExtra(ApiUrls.Password, editPassword.text.toString())
-
-                startActivity(intent)*/
+                registerUser()
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    private fun getUtilityList(dialogOpen: Boolean = false, textView: TextView) =
+    private fun registerUser() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            name = editName.text!!.toString()
+            DOB = editDOB.text!!.toString()
+            mobile = editMobileNumber.text!!.toString()
+            email = editEmail.text!!.toString()
+            password = editPassword.text!!.toString()
+            city = editCity.text!!.toString()
+            state = editState.text!!.toString()
+            country = txtUtilityName.text!!.toString()
+            refCode = editReferralCode.text!!.toString()
+
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ResponseModelClasses.RegistrationResponse> =
+                apiService.registerUser(
+                    RequestModel.getRegistrationRequestModel(
+                        name, DOB, gender, email,
+                        mobile, password, refCode, city, state, country
+                    )
+                )
+            call.enqueue(object : Callback<ResponseModelClasses.RegistrationResponse> {
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.RegistrationResponse>,
+                    response: Response<ResponseModelClasses.RegistrationResponse>
+                ) {
+                    try {
+                        dismissDialog()
+
+                        if (response.body() != null) {
+                            if (response.body()!!.status == "0") {
+                                showSuccessPopup(response.body()!!.message)
+                            } else {
+
+                                var alertDialog = AlertDialog.Builder(this@RegistrationActivity)
+                                alertDialog.setTitle(getString(R.string.app_name))
+                                alertDialog.setMessage("User Registered Successfully")
+
+                                alertDialog.setPositiveButton("OK") { dialog, _ ->
+                                    dialog.dismiss()
+                                    finish()
+                                }
+
+                                alertDialog.show()
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.RegistrationResponse>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        showToast(getString(R.string.internet))
+    }
+
+    private fun getCountryList(dialogOpen: Boolean = false, textView: TextView) =
         if (Utils.isConnected(this)) {
 //        showDialog()
             /*try {
                 val apiService =
                     ApiClient.getClient(ApiUrls.getBasePathUrl()).create(ApiInterface::class.java)
-                val call = apiService.getUtilityList(*//*ApiUrls.AuthKey*//*)
+                val call = apiService.getCountryList(*//*ApiUrls.AuthKey*//*)
                 call.enqueue(object : Callback<ResponseModelClasses.UtilityListResponseModel> {
                     override fun onResponse(
                         call: Call<ResponseModelClasses.UtilityListResponseModel>,
@@ -189,38 +277,33 @@ class RegistrationActivity : BaseActivity() {
             showToast(getString(R.string.internet))
         }
 
-    private fun openDialog(title: String, textView: TextView) {
-        /*try {
-            val dialog = Dialog(this@RegistrationActivity)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setContentView(R.layout.dialog_layout)
-            dialog.window!!.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.setCancelable(true)
-            dialog.show()
-            dialog.txtTitleTop.text = title
+    fun openCalendar(selectedView: View) {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
 
-            val layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-            dialog.dialogRecycleView.layoutManager = layoutManager
-            val itemDecor = DividerItemDecoration(
-                this,
-                DividerItemDecoration.VERTICAL
-            )
-            dialog.dialogRecycleView.addItemDecoration(itemDecor)
-            val mAdapter = UtilitiesListAdapter() { position ->
-                val data = UtilitiesData.getArrayItem(position)
-                utilityID = data.UtilityId.toString()
-                textView.text = data.Name
-                textView.setTextColor(resources.getColor(R.color.colorBlack))
-                dialog.dismiss()
-            }
-            dialog.dialogRecycleView.adapter = mAdapter
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }*/
+        val dpd = DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
+                try {
+                    val date = Date(year - 1900, monthOfYear, dayOfMonth)
+                    val formatter = SimpleDateFormat("yyyy-MM-dd")
+                    cDate = formatter.format(date)
+
+                    editDOB.text =
+                        "" + dayOfMonth + " " + Utils.setMonth(monthOfYear + 1) + ", " + year
+
+                } catch (e1: ParseException) {
+                    e1.printStackTrace()
+                }
+            },
+            year,
+            month,
+            day
+        )
+        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+        dpd.show()
     }
 }

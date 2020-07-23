@@ -33,7 +33,7 @@
     <string name="utility">Water District/Agency</string>
     <string name="select_country">Select Country</string>
     <string name="select_waterdistrict">Select Water District/Agency</string>
-    <string name="select_topic">Select Report Type</string>
+    <string name="select">Select</string>
     <string name="mandatory">Mandatory</string>
     <string name="acc_no">Account Number</string>
     <string name="meter_no">Meter Number</string>
@@ -199,7 +199,7 @@
     <string name="weight">Weight</string>
     <string name="pulse_rate">Pulse Rate</string>
     <string name="blood_pressure">Blood Pressure</string>
-    <string name="select_category"> Category</string>
+    <string name="select_category">Select Vital</string>
     <string name="_03_june_2020">03-June-2020</string>
     <string name="american_hospital">American Hospital</string>
     <string name="dr_anna_johnson">Dr. Anna Johnson</string>
@@ -340,7 +340,6 @@
     <string name="action_start_audio_call">Audio call</string>
     <string name="action_start_broadcast_call">Join to broadcast</string>
     <string name="action_update_opponens_list">Update opponents list</string>
-    <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
     <string name="action_screen_share">Screen share</string>
     <string name="action_dialogs_app_info">App Info</string>
@@ -551,5 +550,43 @@
     <string name="basic_details">Basic Details</string>
     <string name="edit">Edit</string>
     <string name="habits">Habits</string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="action_exit">Exit</string>
+    <string name="action_next">Next</string>
+    <string name="action_demo">Demo</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_net_banking">NetBankingActivity</string>
+    <string name="title_activity_cash_card">CashCardActivity</string>
+    <string name="title_activity_emi">EmiActivity</string>
+    <string name="title_activity_card">CardActivity</string>
+    <string name="title_activity_user_cards">UserCardsActivity</string>
+    <string name="title_activity_payments">PaymentsActivity</string>
+    <string name="pay">Pay</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="click_here">Click here</string>
+    <string name="if_cvv_and_expiry_on_card"> &#160;if you have CVV and Expiry on your card</string>
+    <string name="if_dont_cvv_and_expiry_on_card"> &#160;if you don\'t have CVV and Expiry on your card</string>
+    <string name="net_banking">Net Banking</string>
+    <string name="title_activity_merchant_payment">MerchantPaymentActivity</string>
+    <string name="title_activity_verify_api">VerifyApiActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="test">Test</string>
+    <string name="production">Production</string>
+
+    <string-array name="environment_array">
+        <item>@string/test</item>
+        <item>@string/production</item>
+    </string-array>
+
+    <string name="use_live_key_in_production_environment">Please use your live merchant key in production environment</string>
+    <string name="could_not_receive_data">Could not receive data</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="gender">Gender</string>
 
 </resources>

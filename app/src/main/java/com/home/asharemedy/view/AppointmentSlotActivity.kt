@@ -1,6 +1,7 @@
 package com.home.asharemedy.view
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -38,6 +39,9 @@ class AppointmentSlotActivity : BaseActivity() {
         try {
             topbarAppointment.imageBack.setOnClickListener {
                 finish()
+            }
+            proceedToPay.setOnClickListener {
+                startActivity(Intent(this@AppointmentSlotActivity, ActivityPayUMain::class.java))
             }
 
             slotCalendar.setOnClickListener() {

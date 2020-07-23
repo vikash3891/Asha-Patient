@@ -2,7 +2,6 @@ package com.home.asharemedy.utils
 
 import android.content.Context
 import android.content.res.Configuration
-import android.os.Build
 import java.util.*
 
 object LocaleManagerMew {

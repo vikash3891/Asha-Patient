@@ -33,7 +33,7 @@
     <string name="utility">Water District/Agency</string>
     <string name="select_country">Select Country</string>
     <string name="select_waterdistrict">Select Water District/Agency</string>
-    <string name="select_topic">Select Report Type</string>
+    <string name="select">Select Report Type</string>
     <string name="mandatory">Mandatory</string>
     <string name="acc_no">Account Number</string>
     <string name="meter_no">Meter Number</string>

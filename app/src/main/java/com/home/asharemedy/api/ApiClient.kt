@@ -1,54 +1,45 @@
 package com.home.asharemedy.api
 
-import com.home.asharemedy.utils.Constants.Companion.BASE_URL
-import com.home.asharemedy.utils.Constants.Companion.DEBUG
-import com.home.asharemedy.utils.Constants.Companion.REQUEST_TIMEOUT_DURATION
-import com.google.gson.GsonBuilder
-import okhttp3.Interceptor
+import android.provider.SyncStateContract
+import android.util.Log
+import com.home.asharemedy.utils.Constants
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
 
-    val instance: ApiService = Retrofit.Builder().run {
-        val gson = GsonBuilder()
-                .enableComplexMapKeySerialization()
-                .setPrettyPrinting()
-                .create()
 
-        baseUrl(BASE_URL)
-        addConverterFactory(GsonConverterFactory.create(gson))
-        client(createRequestInterceptorClient())
-        build()
-    }.create(ApiService::class.java)
+    private var retrofit: Retrofit? = null
 
 
-    private fun createRequestInterceptorClient(): OkHttpClient {
-        val interceptor = Interceptor { chain ->
-            val original = chain.request()
-            val requestBuilder = original.newBuilder()
-            val request = requestBuilder.build()
-            chain.proceed(request)
+    fun getClient(): Retrofit? {
+        if (retrofit == null) {
+            retrofit = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build()
         }
-
-        return if (DEBUG) {
-            OkHttpClient.Builder()
-                    .addInterceptor(interceptor)
-                    .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                    .connectTimeout(REQUEST_TIMEOUT_DURATION.toLong(), TimeUnit.SECONDS)
-                    .readTimeout(REQUEST_TIMEOUT_DURATION.toLong(), TimeUnit.SECONDS)
-                    .writeTimeout(REQUEST_TIMEOUT_DURATION.toLong(), TimeUnit.SECONDS)
-                    .build()
-        } else {
-            OkHttpClient.Builder()
-                    .addInterceptor(interceptor)
-                    .connectTimeout(REQUEST_TIMEOUT_DURATION.toLong(), TimeUnit.SECONDS)
-                    .readTimeout(REQUEST_TIMEOUT_DURATION.toLong(), TimeUnit.SECONDS)
-                    .writeTimeout(REQUEST_TIMEOUT_DURATION.toLong(), TimeUnit.SECONDS)
-                    .build()
-        }
+        return retrofit
     }
+
+    @JvmStatic
+    fun getClient(url: String): Retrofit {
+        Log.d("URL: ", url)
+        return Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
+
+
+    var okHttpClient = OkHttpClient().newBuilder()
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
+        .build()
+
 }

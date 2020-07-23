@@ -3,9 +3,9 @@ package com.home.asharemedy.base
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.view.MotionEvent
@@ -16,8 +16,13 @@ import android.widget.EditText
 import android.widget.Toast
 import com.home.asharemedy.R
 import com.home.asharemedy.utils.AppLog
+import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.LocaleManagerMew
 import com.home.asharemedy.utils.Utils
+import com.home.asharemedy.video.activities.LoginActivity
+import com.home.asharemedy.view.AppLoginActivity
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -28,6 +33,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseFragment.Callback {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(LocaleManagerMew.setLocale(base))
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -39,6 +45,27 @@ abstract class BaseActivity : AppCompatActivity(), BaseFragment.Callback {
         }*/
 
         AppLog.printLog("StatusBarHeight", getStatusBarHeight().toString())
+
+    }
+
+     fun logoutAlertDialog() {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle(getString(R.string.app_name))
+        alertDialog.setMessage("Are you sure you want to logout? ")
+        alertDialog.setNeutralButton("Cancel") { _, _ ->
+        }
+
+        alertDialog.setPositiveButton("Yes") { dialog, which ->
+            dialog.dismiss()
+            //AppPrefences.clearAll(this)
+
+            AppPrefences.setLogin(this, false)
+
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
+        alertDialog.show()
 
     }
 
@@ -137,12 +164,23 @@ abstract class BaseActivity : AppCompatActivity(), BaseFragment.Callback {
         }
     }
 
-    fun showSnackBar(layout: View, msg: String) {
-        Snackbar.make(layout, msg, Snackbar.LENGTH_LONG).show()
-    }
 
     fun getHeader(): String {
         return ""//AppPrefences.getLoginUserInfo(this).token_type + " " + AppPrefences.getLoginUserInfo(this).access_token
+    }
+
+    fun getTime(): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val date = Date()
+        println("Current Time is: $date.time")
+        return inputFormat.format(date.time)
+    }
+
+    fun getDate(): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val date = Date()
+        println("Current Date is: $date.date")
+        return inputFormat.format(date.time)
     }
 
 }

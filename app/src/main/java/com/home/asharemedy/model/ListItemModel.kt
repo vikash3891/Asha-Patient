@@ -14,6 +14,7 @@ class ListItemModel {
     var recordPdf: String? = null
     var status: String? = null
 
+    constructor()
     constructor(
         date: String,
         time: String,

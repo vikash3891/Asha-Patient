@@ -1,7 +1,7 @@
 package com.home.asharemedy.utils
 
 object AppLog {
-    val TAG = "AshaRemedy_logs"
+    val TAG = "Traker_logs"
 
     val LOG_ENABLED = true
 

@@ -33,37 +33,37 @@ class HealthRecordActivity : AppCompatActivity() {
         foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_vitals),
-                R.drawable.ic_health_record_balck_24dp
+                R.drawable.ic_vitals
             )
         )
         foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_clinical_visits),
-                R.drawable.ic_appointment_black_50dp
+                R.drawable.ic_clinical_visits
             )
         )
         foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_medications),
-                R.drawable.ic_call_black_50dp
+                R.drawable.ic_medication
             )
         )
         foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_records),
-                R.drawable.ic_dialer_sip_black_50dp
+                R.drawable.ic_records
             )
         )
         foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_care_plan),
-                R.drawable.ic_timeline_black_50dp
+                R.drawable.ic_care_plan
             )
         )
         foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_tele_consult),
-                R.drawable.ic_group_black_50dp
+                R.drawable.ic_tele_consult
             )
         )
         adapter = DashboardGridAapter(this, foodsList)
