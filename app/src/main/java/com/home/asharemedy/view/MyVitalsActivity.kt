@@ -163,7 +163,7 @@ class MyVitalsActivity : BaseActivity() {
 
             val builder = AlertDialog.Builder(this)
 
-            builder.setTitle("Select Category")
+            builder.setTitle("Select Vital")
 
             builder.setSingleChoiceItems(arrayColors, selectedVitalIndex) { _, which ->
 
@@ -186,7 +186,7 @@ class MyVitalsActivity : BaseActivity() {
         }
     }
 
-    private fun loginApi() = if (Utils.isConnected(this)) {
+    /*private fun loginApi() = if (Utils.isConnected(this)) {
         showDialog()
         try {
             val apiService =
@@ -234,7 +234,7 @@ class MyVitalsActivity : BaseActivity() {
     } else {
         dismissDialog()
         showToast(getString(R.string.internet))
-    }
+    }*/
 
     private fun openCalendar(dateID: Int) {
         val c = Calendar.getInstance()

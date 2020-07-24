@@ -516,7 +516,7 @@ public class CreditDebitFragment extends Fragment implements GetOfferStatusApiLi
         merchantWebService.setVar5(cardNumberEditText.getText().toString().replace(" ",""));
         merchantWebService.setVar6(cardNameEditText.getText().toString());
         merchantWebService.setVar7("abc");
-        merchantWebService.setVar8("abc@gmail.com");
+        merchantWebService.setVar8("shubh24aug.work@gmail.com");
 
         postData = new MerchantWebServicePostParams(merchantWebService).getMerchantWebServicePostParams();
 

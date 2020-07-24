@@ -1,4 +1,4 @@
-package com.home.asharemedy.view;
+package com.home.asharemedy.payu;
 
 import android.os.Bundle;
 import android.widget.TextView;

@@ -37,6 +37,9 @@ class Constants {
         const val PATIENT_PASSWORD = "patient_password"
         const val PATIENT_REFCODE = "patient_refcode"
         const val COUNTRY = "COUNTRY"
+        const val MERCHANT_KEY = "CLAMB2ZM"
+        const val MERCHANT_SALT = "DEWA5PQd0s"
+        const val MERCHANT_EMAIL = "shubh24aug.work@gmail.com"
 
 
     }

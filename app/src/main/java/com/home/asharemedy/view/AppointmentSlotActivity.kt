@@ -8,9 +8,8 @@ import androidx.core.content.ContextCompat
 import com.home.asharemedy.R
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.databinding.ActivityAppointmentSlotsBinding
+import com.home.asharemedy.payu.ActivityPayUMain
 import kotlinx.android.synthetic.main.activity_appointment_slots.*
-import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.activity_dashboard.topbar
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -116,7 +115,6 @@ class AppointmentSlotActivity : BaseActivity() {
                     R.drawable.rounded_corner_blue
                 )
             )
-            slotsMorningButton.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
 
             slotsAfternoonButton.setBackground(
                 ContextCompat.getDrawable(
@@ -124,7 +122,6 @@ class AppointmentSlotActivity : BaseActivity() {
                     R.drawable.drawable_round_blue_stroke
                 )
             )
-            slotsAfternoonButton.setTextColor(ContextCompat.getColor(this, R.color.colorAppGray))
 
             slotsEveningButton.setBackground(
                 ContextCompat.getDrawable(
@@ -132,7 +129,6 @@ class AppointmentSlotActivity : BaseActivity() {
                     R.drawable.drawable_round_blue_stroke
                 )
             )
-            slotsEveningButton.setTextColor(ContextCompat.getColor(this, R.color.colorAppGray))
 
         }
 
@@ -143,7 +139,6 @@ class AppointmentSlotActivity : BaseActivity() {
                     R.drawable.drawable_round_blue_stroke
                 )
             )
-            slotsMorningButton.setTextColor(ContextCompat.getColor(this, R.color.colorAppGray))
 
             slotsAfternoonButton.setBackground(
                 ContextCompat.getDrawable(
@@ -151,7 +146,6 @@ class AppointmentSlotActivity : BaseActivity() {
                     R.drawable.rounded_corner_blue
                 )
             )
-            slotsAfternoonButton.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
 
             slotsEveningButton.setBackground(
                 ContextCompat.getDrawable(
@@ -159,7 +153,7 @@ class AppointmentSlotActivity : BaseActivity() {
                     R.drawable.drawable_round_blue_stroke
                 )
             )
-            slotsEveningButton.setTextColor(ContextCompat.getColor(this, R.color.colorAppGray))
+
         }
 
         if (selectedView == slotsEveningButton) {
@@ -169,7 +163,6 @@ class AppointmentSlotActivity : BaseActivity() {
                     R.drawable.drawable_round_blue_stroke
                 )
             )
-            slotsMorningButton.setTextColor(ContextCompat.getColor(this, R.color.colorAppGray))
 
             slotsAfternoonButton.setBackground(
                 ContextCompat.getDrawable(
@@ -177,7 +170,6 @@ class AppointmentSlotActivity : BaseActivity() {
                     R.drawable.drawable_round_blue_stroke
                 )
             )
-            slotsAfternoonButton.setTextColor(ContextCompat.getColor(this, R.color.colorAppGray))
 
             slotsEveningButton.setBackground(
                 ContextCompat.getDrawable(
@@ -185,7 +177,6 @@ class AppointmentSlotActivity : BaseActivity() {
                     R.drawable.rounded_corner_blue
                 )
             )
-            slotsEveningButton.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
 
         }
     }

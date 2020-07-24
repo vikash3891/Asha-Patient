@@ -18,6 +18,7 @@
         android:id="@+id/menu_dialogs_action_logout"
         android:icon="@drawable/ic_exit"
         android:title="@string/menu_dialogs_logout"
+        android:visible="false"
         app:showAsAction="never" />
 
 </menu>
