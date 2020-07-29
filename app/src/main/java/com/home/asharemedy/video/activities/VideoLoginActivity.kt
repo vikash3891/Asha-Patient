@@ -19,13 +19,13 @@ import kotlinx.android.synthetic.main.activity_video_login.*
 
 const val ERROR_LOGIN_ALREADY_TAKEN_HTTP_STATUS = 422
 
-class LoginActivity : BaseActivity() {
+class VideoLoginActivity : BaseActivity() {
 
     private lateinit var user: QBUser
 
     companion object {
         fun start(context: Context) =
-            context.startActivity(Intent(context, LoginActivity::class.java))
+            context.startActivity(Intent(context, VideoLoginActivity::class.java))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,10 +39,7 @@ class LoginActivity : BaseActivity() {
 
         val user = createUserWithEnteredData()
         signUpNewUser(user)
-        /*btnLogin.setOnClickListener() {
 
-
-        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -143,7 +140,7 @@ class LoginActivity : BaseActivity() {
         QBUsers.updateUser(user).performAsync(object : QBEntityCallback<QBUser> {
             override fun onSuccess(updUser: QBUser?, params: Bundle?) {
                 hideProgressDialog()
-                OpponentsActivity.start(this@LoginActivity)
+                OpponentsActivity.start(this@VideoLoginActivity)
                 finish()
             }
 

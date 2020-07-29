@@ -80,4 +80,59 @@ object ResponseModelClasses {
         }
     }
 
+    data class GetPatientProfileResponseModel(
+        val age: String,
+        val allergies: String,
+        val birth_date: String,
+        val emergency_contact_name: String,
+        val emergency_contact_number: String,
+        val emergency_contact_relation: String,
+        val gender: String,
+        val insurance_company_name: String,
+        val insurance_validity: String,
+        val insured: String,
+        val membership_number: String,
+        val parent_id: String,
+        val patient_address1: String,
+        val patient_address2: String,
+        val patient_city: String,
+        val patient_country: String,
+        val patient_dob: String,
+        val patient_email: String,
+        val patient_gender: String,
+        val patient_id: String,
+        val patient_mobile: String,
+        val patient_name: String,
+        val patient_refcode: String,
+        val photo: String,
+        val primary_health_issue: String
+    )
+
+    data class GetAilmentResponseModel(
+        val status: String,
+        val message: String,
+        val data: ArrayList<TableData1>
+    ) {
+        data class TableData1(
+            val ailment: String,
+            val ailment_id: String
+        )
+    }
+
+    data class GetHabitResponseModel(
+        val data: ArrayList<TableData1>
+    ) {
+        data class TableData1(
+
+            val habit_frequency: String,
+            val habit_frequency_unit: String,
+            val habit_name: String,
+            val patient_habit_id: String,
+            val patient_id: String,
+            val status: String
+        )
+    }
+
+
+
 }

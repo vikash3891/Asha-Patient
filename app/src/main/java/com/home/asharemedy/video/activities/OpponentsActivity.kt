@@ -395,7 +395,7 @@ class OpponentsActivity : BaseActivity() {
     }
 
     private fun startLoginActivity() {
-        LoginActivity.start(this)
+        VideoLoginActivity.start(this)
         finish()
     }
 

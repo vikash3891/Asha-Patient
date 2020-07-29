@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.home.asharemedy.R
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.chat.ui.activity.ChatLoginActivity
-import com.home.asharemedy.video.activities.LoginActivity
+import com.home.asharemedy.video.activities.VideoLoginActivity
 import kotlinx.android.synthetic.main.activity_247_connect.*
 
 class _247ConnectActivity : BaseActivity() {
@@ -18,7 +18,7 @@ class _247ConnectActivity : BaseActivity() {
             startActivity(Intent(this@_247ConnectActivity, ChatLoginActivity::class.java))
         }
         audioVideo.setOnClickListener {
-            startActivity(Intent(this@_247ConnectActivity, LoginActivity::class.java))
+            startActivity(Intent(this@_247ConnectActivity, VideoLoginActivity::class.java))
         }
 
     }

@@ -40,7 +40,7 @@ class DashboardActivity : BaseActivity() {
         }
     }
 
-    fun initView() {
+    private fun initView() {
         topbar.screenName.text = getString(R.string.dashboard)
         topbar.imageBack.visibility = View.GONE
 
@@ -65,7 +65,7 @@ class DashboardActivity : BaseActivity() {
         gvDashboard.adapter = adapter
     }
 
-    fun checkClicks() {
+    private fun checkClicks() {
         try {
             profileDetails.viewProfile.setOnClickListener {
                 startActivity(Intent(this@DashboardActivity, MyProfile::class.java))
@@ -75,7 +75,7 @@ class DashboardActivity : BaseActivity() {
         }
     }
 
-    private fun getProductList() = if (Utils.isConnected(this)) {
+    /*private fun getProductList() = if (Utils.isConnected(this)) {
         showDialog()
         try {
             val apiService =
@@ -120,6 +120,6 @@ class DashboardActivity : BaseActivity() {
     } else {
         dismissDialog()
         showToast(getString(R.string.internet))
-    }
+    }*/
 
 }

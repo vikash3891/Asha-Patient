@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.home.asharemedy.R
-import com.home.asharemedy.chat.ui.activity.ChatLoginActivity
 import com.home.asharemedy.model.DashboardGridModel
-import com.home.asharemedy.video.activities.LoginActivity
 import com.home.asharemedy.view.*
 import kotlinx.android.synthetic.main.item_dashboard_grid.view.*
 

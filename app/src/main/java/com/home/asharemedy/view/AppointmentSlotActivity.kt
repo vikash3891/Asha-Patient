@@ -3,13 +3,22 @@ package com.home.asharemedy.view
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.home.asharemedy.R
+import com.home.asharemedy.adapter.AppointSlotListAdapter
+import com.home.asharemedy.adapter.DashboardGridAapter
+import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.databinding.ActivityAppointmentSlotsBinding
+import com.home.asharemedy.model.AppointSlotListModel
+import com.home.asharemedy.model.DashboardGridModel
 import com.home.asharemedy.payu.ActivityPayUMain
+import com.home.asharemedy.utils.Utils
+import com.home.asharemedy.utils.Utils.appointmentSlotList
 import kotlinx.android.synthetic.main.activity_appointment_slots.*
+import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -17,6 +26,7 @@ import java.util.*
 
 class AppointmentSlotActivity : BaseActivity() {
 
+    var adapter: AppointSlotListAdapter? = null
     private lateinit var viewDataBinding: ActivityAppointmentSlotsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +35,7 @@ class AppointmentSlotActivity : BaseActivity() {
 
         try {
             topbarAppointment.screenName.text = "Appointment"
-
+            initView()
             checkClicks()
 
         } catch (e: Exception) {
@@ -34,12 +44,43 @@ class AppointmentSlotActivity : BaseActivity() {
 
     }
 
-    fun checkClicks() {
+    private fun initView() {
+
+        for (i in 0..15) {
+            when {
+                i % 2 == 0 -> appointmentSlotList.add(
+                    AppointSlotListModel(
+                        "available", "2020-12-13", "02:00", "05:00"
+                    )
+                )
+                i % 3 == 0 -> appointmentSlotList.add(
+                    AppointSlotListModel(
+                        "booked", "2020-12-13", "02:00", "05:00"
+                    )
+                )
+                else -> appointmentSlotList.add(
+                    AppointSlotListModel(
+                        "completed", "2020-12-13", "02:00", "05:00"
+                    )
+                )
+            }
+
+        }
+
+        adapter = AppointSlotListAdapter(this, appointmentSlotList)
+
+        gvSlots.adapter = adapter
+    }
+
+    private fun checkClicks() {
         try {
             topbarAppointment.imageBack.setOnClickListener {
                 finish()
             }
             proceedToPay.setOnClickListener {
+                for (i in 0..Utils.appointmentSlotList.size-1) {
+                    Log.d("SelSlotList", Utils.appointmentSlotList[i].isSelected.toString())
+                }
                 startActivity(Intent(this@AppointmentSlotActivity, ActivityPayUMain::class.java))
             }
 
@@ -107,26 +148,26 @@ class AppointmentSlotActivity : BaseActivity() {
         }
     }
 
-    fun changeSlotButtonBackgroundSlot(selectedView: View) {
+    private fun changeSlotButtonBackgroundSlot(selectedView: View) {
         if (selectedView == slotsMorningButton) {
             slotsMorningButton.setBackground(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.rounded_corner_blue
+                    R.drawable.drawable_selected
                 )
             )
 
             slotsAfternoonButton.setBackground(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.drawable_round_blue_stroke
+                    R.drawable.drawable_unselected
                 )
             )
 
             slotsEveningButton.setBackground(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.drawable_round_blue_stroke
+                    R.drawable.drawable_unselected
                 )
             )
 
@@ -136,21 +177,21 @@ class AppointmentSlotActivity : BaseActivity() {
             slotsMorningButton.setBackground(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.drawable_round_blue_stroke
+                    R.drawable.drawable_unselected
                 )
             )
 
             slotsAfternoonButton.setBackground(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.rounded_corner_blue
+                    R.drawable.drawable_selected
                 )
             )
 
             slotsEveningButton.setBackground(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.drawable_round_blue_stroke
+                    R.drawable.drawable_unselected
                 )
             )
 
@@ -160,21 +201,21 @@ class AppointmentSlotActivity : BaseActivity() {
             slotsMorningButton.setBackground(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.drawable_round_blue_stroke
+                    R.drawable.drawable_unselected
                 )
             )
 
             slotsAfternoonButton.setBackground(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.drawable_round_blue_stroke
+                    R.drawable.drawable_unselected
                 )
             )
 
             slotsEveningButton.setBackground(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.rounded_corner_blue
+                    R.drawable.drawable_selected
                 )
             )
 

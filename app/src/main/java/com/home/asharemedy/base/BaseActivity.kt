@@ -4,22 +4,19 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.home.asharemedy.R
 import com.home.asharemedy.utils.AppLog
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.LocaleManagerMew
 import com.home.asharemedy.utils.Utils
-import com.home.asharemedy.video.activities.LoginActivity
 import com.home.asharemedy.view.AppLoginActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,7 +58,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseFragment.Callback {
 
             AppPrefences.setLogin(this, false)
 
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, AppLoginActivity::class.java))
             finish()
         }
 

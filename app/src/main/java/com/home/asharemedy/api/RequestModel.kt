@@ -16,6 +16,7 @@ object RequestModel {
 
         map.put(Constants.MOBILE, userid)
         map.put(Constants.PASSWORD, password)
+        map.put("usertype", "patients")
         Log.d("Login Request: ", "" + Gson().toJson(map))
         return map;
     }
@@ -58,9 +59,9 @@ object RequestModel {
         map.put(Constants.PATIENT_MOBILE, patient_mobile)
         map.put(Constants.PATIENT_PASSWORD, patient_password)
         map.put(Constants.PATIENT_REFCODE, patient_refcode)
-        //map.put(Constants.CITY, city)
-        //map.put(Constants.STATE, state)
-       // map.put(Constants.COUNTRY, country)
+        map.put(Constants.CITY, city)
+        map.put(Constants.STATE, state)
+        map.put(Constants.COUNTRY, country)
 
         Log.d("Reg Request: ", "" + Gson().toJson(map))
         return map;

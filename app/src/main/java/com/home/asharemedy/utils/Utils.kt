@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ResponseModelClasses
+import com.home.asharemedy.model.AppointSlotListModel
 import com.home.asharemedy.model.ListItemModel
 import com.home.asharemedy.model.LoginModel
 import java.text.SimpleDateFormat
@@ -36,6 +37,8 @@ object Utils {
     var selectedCategory = 0
     var isOrderToCart = false
     var selectedOrderID = ""
+
+    var appointmentSlotList = java.util.ArrayList<AppointSlotListModel>()
 
     /*
     For Checking the Internet Connectivity

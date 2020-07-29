@@ -188,7 +188,7 @@
                         android:text="@string/basic_details"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/edit"
@@ -255,7 +255,8 @@
                         android:id="@+id/layoutReligion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/religionLabel"
@@ -507,12 +508,13 @@
                         android:id="@+id/layoutSmoking"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/smokingLabel"
                             android:layout_width="0dp"
-                            android:layout_height="44dp"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="2"
                             android:gravity="center"
@@ -525,9 +527,9 @@
                             android:id="@+id/radioGroupSmoking"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="start"
+                            android:layout_gravity="start|center"
                             android:layout_weight="4"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <RadioButton
@@ -547,6 +549,19 @@
                                 android:text="NO"
                                 android:textSize="@dimen/sp_12" />
                         </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/smokingFrequency"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dimen_30dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/edittext_border"
+                            android:hint=" per Day"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:padding="@dimen/dp_2"
+                            android:textSize="@dimen/sp_13"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <!--Drinking-->
@@ -554,6 +569,7 @@
                         android:id="@+id/layoutDrinking"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <TextView
@@ -572,8 +588,9 @@
                             android:id="@+id/radioGroupDrinking"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/dp_40"
+                            android:layout_gravity="start|center"
                             android:layout_weight="4"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <RadioButton
@@ -594,6 +611,18 @@
                                 android:textSize="@dimen/sp_12" />
                         </RadioGroup>
 
+                        <EditText
+                            android:id="@+id/drinkingFrequency"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dimen_30dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/edittext_border"
+                            android:hint=" per Day"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:padding="@dimen/dp_2"
+                            android:textSize="@dimen/sp_13"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <!--Exercise-->
@@ -620,35 +649,42 @@
                             android:id="@+id/radioGroupExercise"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/dp_40"
+                            android:layout_gravity="start|center"
                             android:layout_weight="4"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/exerciseRegular"
+                                android:id="@+id/exerciseYes"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dp_3"
-                                android:text="High"
+                                android:text="Yes"
                                 android:textSize="@dimen/sp_12" />
 
                             <RadioButton
-                                android:id="@+id/exerciseNormal"
+                                android:id="@+id/exerciseNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:checked="true"
                                 android:padding="@dimen/dp_3"
-                                android:text="Medium"
-                                android:textSize="@dimen/sp_12" />
-
-                            <RadioButton
-                                android:id="@+id/exerciseLow"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/dp_3"
-                                android:text="Low"
+                                android:text="NO"
                                 android:textSize="@dimen/sp_12" />
                         </RadioGroup>
+
+                        <EditText
+                            android:id="@+id/exerciseFrequency"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dimen_30dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/edittext_border"
+                            android:hint=" per Day"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:padding="@dimen/dp_2"
+                            android:textSize="@dimen/sp_13"
+                            android:visibility="gone" />
+
                     </LinearLayout>
 
                 </LinearLayout>

@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.home.asharemedy.R
+import com.home.asharemedy.chat.ui.activity.ChatLoginActivity
 import com.home.asharemedy.video.services.LoginService
 import com.home.asharemedy.video.utils.SharedPrefsHelper
 import com.home.asharemedy.video.utils.isMiUi
@@ -43,7 +44,7 @@ class ChatSplashActivity : BaseActivity() {
             OpponentsActivity.start(this)
         } else {
             Handler().postDelayed({
-                LoginActivity.start(this)
+                ChatLoginActivity.start(this)
                 finish()
             }, SPLASH_DELAY.toLong())
         }

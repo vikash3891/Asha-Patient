@@ -43,14 +43,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="start">
+                    android:gravity="start|center">
 
                     <TextView
                         android:id="@+id/searchByLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_2"
-                        android:text="Search By:"
+                        android:text="Search By Aliment: "
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/sp_14"
                         android:textStyle="bold" />
@@ -68,13 +68,16 @@
                         android:paddingBottom="@dimen/dp_5"
                         android:text="Aliment"
                         android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/sp_14" />
+                        android:textSize="@dimen/sp_14"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/alimentSelectedValues"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_30dp"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginEnd="@dimen/dp_10"
+                        android:background="@drawable/edittext_border"
                         android:ellipsize="end"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
@@ -119,8 +122,8 @@
                     android:gravity="center"
                     android:paddingTop="@dimen/dp_5"
                     android:paddingBottom="@dimen/dp_5"
-                    android:text="Institution" />
-
+                    android:text="Institution"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/appointmentForFacility"

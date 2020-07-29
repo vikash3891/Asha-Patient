@@ -23,7 +23,8 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.RadioGroup
-
+import com.home.asharemedy.model.UtilitiesData
+import com.home.asharemedy.utils.AppLog
 
 class RegistrationActivity : BaseActivity() {
 
@@ -32,6 +33,8 @@ class RegistrationActivity : BaseActivity() {
     var DOB = ""
     var mobile = ""
     var email = ""
+    var address = ""
+    var street = ""
     var password = ""
     var cDate = ""
     var city = ""
@@ -39,19 +42,14 @@ class RegistrationActivity : BaseActivity() {
     var country = ""
     var refCode = ""
     var gender = ""
+    var pincode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
         try {
-            txtCABtitle.text = getString(R.string.registration_title_new)
-            imgCABback.setOnClickListener {
-                finish()
-            }
-
-            getCountryList(false, txtUtilityName)
-
+            initView()
             clickPerform()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -59,6 +57,10 @@ class RegistrationActivity : BaseActivity() {
     }
 
     fun initView() {
+
+        txtCABtitle.text = getString(R.string.registration_title_new)
+        //getCountryList(false, txtUtilityName)
+        gender = "Male"
         radioGroupGender.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.male -> {
@@ -97,6 +99,10 @@ class RegistrationActivity : BaseActivity() {
             editDOB.setOnClickListener {
                 openCalendar(editDOB)
             }
+
+            imgCABback.setOnClickListener {
+                finish()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -121,6 +127,18 @@ class RegistrationActivity : BaseActivity() {
                 showSuccessPopup("Please enter valid Email")
                 !allValid
                 return
+            } else if (editAddress.text!!.isEmpty()) {
+                showSuccessPopup("Please enter Address")
+                !allValid
+                return
+            } else if (editStreet.text!!.isEmpty()) {
+                showSuccessPopup("Please enter Street")
+                !allValid
+                return
+            } else if (editPincode.text!!.isEmpty()) {
+                showSuccessPopup("Please enter Pincode")
+                !allValid
+                return
             } else if (editCity.text!!.isEmpty()) {
                 showSuccessPopup("Please enter City")
                 !allValid
@@ -129,15 +147,15 @@ class RegistrationActivity : BaseActivity() {
                 showSuccessPopup("Please enter State")
                 !allValid
                 return
-            } else if (txtUtilityName.text!!.isEmpty()) {
+            } /*else if (txtUtilityName.text!!.isEmpty()) {
                 showSuccessPopup("Please select Country")
                 !allValid
                 return
-            } else if (editPassword.text!!.isEmpty() || !isPasswordValid(editPassword.text)) {
+            }*/ else if (editPassword.text!!.isEmpty()) {// || !isPasswordValid(editPassword.text)
                 showSuccessPopup(getString(R.string.password_validation_message))
                 !allValid
                 return
-            } else if (editCPassword.text!!.isEmpty() || !isPasswordValid(editCPassword.text)) {
+            } else if (editCPassword.text!!.isEmpty()) {// || !isPasswordValid(editCPassword.text)
                 showSuccessPopup("Please enter Confirm Password")
                 !allValid
                 return
@@ -147,7 +165,7 @@ class RegistrationActivity : BaseActivity() {
                 showSuccessPopup("Password doesn't match")
                 !allValid
                 return
-            } else if (editReferralCode.text!!.isNotEmpty() && editReferralCode.length() < 8) {
+            } else if (editReferralCode.text!!.isEmpty()) {
                 showSuccessPopup("Please enter valid Referral Code")
                 !allValid
                 return
@@ -163,14 +181,17 @@ class RegistrationActivity : BaseActivity() {
         showDialog()
         try {
             name = editName.text!!.toString()
-            DOB = editDOB.text!!.toString()
+            DOB = cDate//editDOB.text!!.toString()
             mobile = editMobileNumber.text!!.toString()
             email = editEmail.text!!.toString()
+            address = editAddress.text!!.toString()
+            street = editStreet.text!!.toString()
             password = editPassword.text!!.toString()
             city = editCity.text!!.toString()
             state = editState.text!!.toString()
             country = txtUtilityName.text!!.toString()
             refCode = editReferralCode.text!!.toString()
+            pincode = editPincode.text!!.toString()
 
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
@@ -229,13 +250,13 @@ class RegistrationActivity : BaseActivity() {
         showToast(getString(R.string.internet))
     }
 
-    private fun getCountryList(dialogOpen: Boolean = false, textView: TextView) =
+    /*private fun getCountryList(dialogOpen: Boolean = false, textView: TextView) =
         if (Utils.isConnected(this)) {
-//        showDialog()
-            /*try {
+        showDialog()
+            try {
                 val apiService =
                     ApiClient.getClient(ApiUrls.getBasePathUrl()).create(ApiInterface::class.java)
-                val call = apiService.getCountryList(*//*ApiUrls.AuthKey*//*)
+                val call = apiService.getCountryList(ApiUrls.AuthKey)
                 call.enqueue(object : Callback<ResponseModelClasses.UtilityListResponseModel> {
                     override fun onResponse(
                         call: Call<ResponseModelClasses.UtilityListResponseModel>,
@@ -271,11 +292,11 @@ class RegistrationActivity : BaseActivity() {
                 })
             } catch (e: Exception) {
                 e.printStackTrace()
-//            dismissDialog()
-            }*/
+            dismissDialog()
+            }
         } else {
             showToast(getString(R.string.internet))
-        }
+        }*/
 
     fun openCalendar(selectedView: View) {
         val c = Calendar.getInstance()
@@ -289,7 +310,7 @@ class RegistrationActivity : BaseActivity() {
 
                 try {
                     val date = Date(year - 1900, monthOfYear, dayOfMonth)
-                    val formatter = SimpleDateFormat("yyyy-MM-dd")
+                    val formatter = SimpleDateFormat("dd-MM-yyyy")
                     cDate = formatter.format(date)
 
                     editDOB.text =
