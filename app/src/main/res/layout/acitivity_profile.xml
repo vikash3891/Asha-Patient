@@ -61,7 +61,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
-                            android:text="Anna Johanson (F)"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
                             android:textSize="@dimen/sp_13"
                             android:textStyle="bold" />
@@ -72,7 +72,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:padding="@dimen/dp_2"
-                            android:text="MRN: THB888868"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
                             android:textSize="@dimen/sp_13"
                             android:textStyle="bold" />
@@ -94,7 +94,7 @@
                             android:layout_below="@+id/userName"
                             android:layout_toEndOf="@+id/dobLabel"
                             android:padding="@dimen/dp_2"
-                            android:text="02 June, 1991"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
                             android:textSize="@dimen/sp_13" />
 
@@ -105,7 +105,7 @@
                             android:layout_below="@+id/patientID"
                             android:layout_alignParentEnd="true"
                             android:padding="@dimen/dp_2"
-                            android:text="DXH Smartcare"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
                             android:textSize="@dimen/sp_13" />
 
@@ -125,7 +125,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/dobLabel"
                             android:layout_toEndOf="@+id/phoneNumberLabel"
-                            android:text="+971-55-123-1234"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
                             android:textSize="@dimen/sp_13" />
 
@@ -146,7 +146,7 @@
                             android:layout_below="@+id/phoneNumberLabel"
                             android:layout_toEndOf="@+id/emailLabel"
                             android:padding="@dimen/dp_2"
-                            android:text="anna.j@thbglobal.com"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
                             android:textSize="@dimen/sp_13" />
 
@@ -240,7 +240,7 @@
                                 android:layout_below="@+id/basicDeatailsHeader"
                                 android:layout_toEndOf="@+id/nationalityLabel"
                                 android:padding="@dimen/dp_5"
-                                android:text="Dubai"
+                                android:text=""
                                 android:textColor="@color/colorAppGray"
                                 android:textSize="@dimen/sp_14" />
 
@@ -264,7 +264,7 @@
                                 android:layout_below="@+id/nationalityValue"
                                 android:layout_toEndOf="@+id/religionLabel"
                                 android:padding="@dimen/dp_5"
-                                android:text="Muslim"
+                                android:text=""
                                 android:textColor="@color/colorAppGray"
                                 android:textSize="@dimen/sp_14" />
 
@@ -289,7 +289,7 @@
                                 android:layout_toEndOf="@+id/membershipNumberLabel"
                                 android:gravity="center_vertical"
                                 android:padding="@dimen/dp_3"
-                                android:text="anna.j@thbglobal.com"
+                                android:text=""
                                 android:textColor="@color/colorAppGray"
                                 android:textSize="@dimen/sp_14" />
 
@@ -338,7 +338,7 @@
                                 android:layout_below="@+id/primaryAddressValue"
                                 android:layout_toEndOf="@+id/communicationLabel"
                                 android:padding="@dimen/dp_3"
-                                android:text="+971-55-123-1234"
+                                android:text=""
                                 android:textColor="@color/colorAppGray"
                                 android:textSize="@dimen/sp_14" />
 
@@ -362,7 +362,7 @@
                                 android:layout_below="@+id/communicationValue"
                                 android:layout_toEndOf="@+id/insuranceDetailsLabel"
                                 android:padding="@dimen/dp_3"
-                                android:text="DR234820983032"
+                                android:text=""
                                 android:textColor="@color/colorAppGray"
                                 android:textSize="@dimen/sp_14" />
 
@@ -386,7 +386,7 @@
                                 android:layout_below="@+id/insuranceDetailsValue"
                                 android:layout_toEndOf="@+id/emiratesIDLabel"
                                 android:padding="@dimen/dp_3"
-                                android:text="2971-5353-13223-134234"
+                                android:text=""
                                 android:textColor="@color/colorAppGray"
                                 android:textSize="@dimen/sp_14" />
 

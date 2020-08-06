@@ -5,7 +5,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.TextView
+import android.widget.RadioGroup
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
@@ -22,13 +22,9 @@ import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import android.widget.RadioGroup
-import com.home.asharemedy.model.UtilitiesData
-import com.home.asharemedy.utils.AppLog
 
 class RegistrationActivity : BaseActivity() {
 
-    private var utilityID = ""
     var name = ""
     var DOB = ""
     var mobile = ""
@@ -56,7 +52,7 @@ class RegistrationActivity : BaseActivity() {
         }
     }
 
-    fun initView() {
+    private fun initView() {
 
         txtCABtitle.text = getString(R.string.registration_title_new)
         //getCountryList(false, txtUtilityName)
@@ -85,7 +81,7 @@ class RegistrationActivity : BaseActivity() {
     private fun clickPerform() {
         try {
             r_lyt_utility.setOnClickListener {
-                /*if (UtilitiesData.getCount() > 0) {
+                /*if (AilmentArrayData.getCount() > 0) {
                     openDialog(getString(R.string.select_utility), txtUtilityName)
                 } else {
                     getCountryList(true, txtUtilityName)
@@ -135,10 +131,6 @@ class RegistrationActivity : BaseActivity() {
                 showSuccessPopup("Please enter Street")
                 !allValid
                 return
-            } else if (editPincode.text!!.isEmpty()) {
-                showSuccessPopup("Please enter Pincode")
-                !allValid
-                return
             } else if (editCity.text!!.isEmpty()) {
                 showSuccessPopup("Please enter City")
                 !allValid
@@ -147,11 +139,11 @@ class RegistrationActivity : BaseActivity() {
                 showSuccessPopup("Please enter State")
                 !allValid
                 return
-            } /*else if (txtUtilityName.text!!.isEmpty()) {
-                showSuccessPopup("Please select Country")
+            } else if (editPincode.text!!.isEmpty()) {
+                showSuccessPopup("Please enter Pincode")
                 !allValid
                 return
-            }*/ else if (editPassword.text!!.isEmpty()) {// || !isPasswordValid(editPassword.text)
+            } else if (editPassword.text!!.isEmpty()) {// || !isPasswordValid(editPassword.text)
                 showSuccessPopup(getString(R.string.password_validation_message))
                 !allValid
                 return
@@ -165,10 +157,6 @@ class RegistrationActivity : BaseActivity() {
                 showSuccessPopup("Password doesn't match")
                 !allValid
                 return
-            } else if (editReferralCode.text!!.isEmpty()) {
-                showSuccessPopup("Please enter valid Referral Code")
-                !allValid
-                return
             } else if (allValid) {
                 registerUser()
             }
@@ -180,26 +168,39 @@ class RegistrationActivity : BaseActivity() {
     private fun registerUser() = if (Utils.isConnected(this)) {
         showDialog()
         try {
-            name = editName.text!!.toString()
+            name = editName.text!!.toString().trim()
             DOB = cDate//editDOB.text!!.toString()
-            mobile = editMobileNumber.text!!.toString()
-            email = editEmail.text!!.toString()
-            address = editAddress.text!!.toString()
-            street = editStreet.text!!.toString()
-            password = editPassword.text!!.toString()
-            city = editCity.text!!.toString()
-            state = editState.text!!.toString()
-            country = txtUtilityName.text!!.toString()
-            refCode = editReferralCode.text!!.toString()
-            pincode = editPincode.text!!.toString()
+            mobile = editMobileNumber.text!!.toString().trim()
+            email = editEmail.text!!.toString().trim()
+            address = editAddress.text!!.toString().trim()
+            street = editStreet.text!!.toString().trim()
+            password = editPassword.text!!.toString().trim()
+            city = editCity.text!!.toString().trim()
+            state = editState.text!!.toString().trim()
+            country = txtUtilityName.text!!.toString().trim()
+            refCode = editReferralCode.text!!.toString().trim()
+            pincode = editPincode.text!!.toString().trim()
 
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.RegistrationResponse> =
                 apiService.registerUser(
-                    RequestModel.getRegistrationRequestModel(
-                        name, DOB, gender, email,
-                        mobile, password, refCode, city, state, country
+                    Utils.getJSONRequestBody(
+                        RequestModel.getRegistrationRequestModel(
+                            name,
+                            DOB,
+                            gender,
+                            email,
+                            mobile,
+                            password,
+                            refCode,
+                            city,
+                            state,
+                            country,
+                            address,
+                            street,
+                            pincode
+                        )
                     )
                 )
             call.enqueue(object : Callback<ResponseModelClasses.RegistrationResponse> {
@@ -209,9 +210,9 @@ class RegistrationActivity : BaseActivity() {
                 ) {
                     try {
                         dismissDialog()
-
+                        Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
-                            if (response.body()!!.status == "0") {
+                            if (response.body()!!.message == "0") {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
 
@@ -250,55 +251,7 @@ class RegistrationActivity : BaseActivity() {
         showToast(getString(R.string.internet))
     }
 
-    /*private fun getCountryList(dialogOpen: Boolean = false, textView: TextView) =
-        if (Utils.isConnected(this)) {
-        showDialog()
-            try {
-                val apiService =
-                    ApiClient.getClient(ApiUrls.getBasePathUrl()).create(ApiInterface::class.java)
-                val call = apiService.getCountryList(ApiUrls.AuthKey)
-                call.enqueue(object : Callback<ResponseModelClasses.UtilityListResponseModel> {
-                    override fun onResponse(
-                        call: Call<ResponseModelClasses.UtilityListResponseModel>,
-                        response: Response<ResponseModelClasses.UtilityListResponseModel>
-                    ) {
-                        dismissDialog()
-                        try {
-                            if (response.body() != null)
-                                UtilitiesData.clearArrayList()
-                            UtilitiesData.addArrayList(response.body()!!.Results.Table)
-                            if (dialogOpen) {
-                                openDialog(getString(R.string.select_utility), textView)
-                            }
-                            AppLog.printLog("UtilityList Response- ", response.body().toString())
-
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-
-                    override fun onFailure(
-                        call: Call<ResponseModelClasses.UtilityListResponseModel>,
-                        t: Throwable
-                    ) {
-                        try {
-                            dismissDialog()
-                            AppLog.printLog("Failure()- ", t.message.toString())
-
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-                })
-            } catch (e: Exception) {
-                e.printStackTrace()
-            dismissDialog()
-            }
-        } else {
-            showToast(getString(R.string.internet))
-        }*/
-
-    fun openCalendar(selectedView: View) {
+    private fun openCalendar(selectedView: View) {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)

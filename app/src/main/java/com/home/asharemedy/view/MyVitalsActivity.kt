@@ -2,6 +2,7 @@ package com.home.asharemedy.view
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,7 @@ import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_my_vitals.*
+import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,7 +36,7 @@ class MyVitalsActivity : BaseActivity() {
 
     var cDate = ""
     var selectedVitalName = ""
-
+    var foodsList = ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>()
     var selectedVitalIndex = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,17 +45,17 @@ class MyVitalsActivity : BaseActivity() {
 
         initView()
         checkOnClick()
-        //drawLineChart(lineChart)
         selectedVitalIndex = 0
         selectedVital.text = getString(R.string.blood_pressure)
-        drawBPLineChart(lineChart)
     }
 
     private fun initView() {
 
         topbar.screenName.text = getString(R.string.my_vitals)
         lineChart.setTouchEnabled(true)
-        lineChart.setPinchZoom(true)
+        lineChart.setPinchZoom(false)
+
+        getPatientVitalList()
     }
 
     private fun checkOnClick() {
@@ -61,13 +63,26 @@ class MyVitalsActivity : BaseActivity() {
             finish()
         }
         selectedVital.setOnClickListener {
-            showDialogAliment()
+            showDialogAilment()
         }
         startDate.setOnClickListener {
             openCalendar(1)
         }
         endDate.setOnClickListener {
             openCalendar(2)
+        }
+
+        bottomBar.layoutSettings.setOnClickListener {
+            logoutAlertDialog()
+        }
+        bottomBar.layoutHome.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MyVitalsActivity,
+                    DashboardActivity::class.java
+                )
+            )
+            finish()
         }
     }
 
@@ -76,16 +91,27 @@ class MyVitalsActivity : BaseActivity() {
         var xAxisValues = ArrayList<String>()
         var yAxisValues = ArrayList<Entry>()
 
-        for (i in 0 until 15) {
-
-            yAxisValues.add(Entry(i.toFloat(), i.toFloat()))
-            xAxisValues.add(i.toString())
+        for (i in 0 until foodsList.size) {
+/*Entry(
+                    foodsList[i].vital_reading!!.toFloat(),
+                    foodsList[i].vital_reading!!.toFloat()
+                )*/
+            yAxisValues.add(
+                Entry(
+                    i.toFloat(),
+                    i.toFloat()
+                )
+            )
+            xAxisValues.add(foodsList[i].vital_date!!)
         }
         val xAxis = lineChart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.granularity = 1f
+        xAxis.setDrawGridLines(false)
         xAxis.isGranularityEnabled = true
+        xAxis.textSize = 7f
+        xAxis.labelRotationAngle = -45f
 
         var lds = LineDataSet(yAxisValues, selectedVitalName)
         lds.lineWidth = 2f
@@ -99,10 +125,19 @@ class MyVitalsActivity : BaseActivity() {
         lineChart.xAxis.textColor = Color.BLACK
         lineChart.axisLeft.textColor = Color.BLACK
         lineChart.description.text = ""
+        lineChart.moveViewToX(5F);
         lineChart.axisRight.textColor = Color.BLACK
         lineChart.legend.isEnabled = false
         lineChart.data.setValueTextColor(Color.BLACK)
         lineChart.isEnabled = true
+        lineChart.axisRight.isEnabled = false
+        lineChart.setVisibleXRangeMaximum(5f)
+        lineChart.isHorizontalScrollBarEnabled = true
+        lineChart.canScrollHorizontally(1)
+        val leftAxis = lineChart.axisLeft
+        leftAxis.setDrawGridLines(false)
+        leftAxis.spaceTop = 35f
+        leftAxis.axisMinimum = 0f
         lineChart.invalidate()
         lineChart.refreshDrawableState()
 
@@ -126,6 +161,9 @@ class MyVitalsActivity : BaseActivity() {
         xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.granularity = 1f
+        xAxis.textSize = 7f
+        xAxis.labelRotationAngle = -45f
+
         xAxis.isGranularityEnabled = true
         var lDataSet1 = LineDataSet(entries, selectedVitalName)
         lDataSet1.setDrawFilled(true)
@@ -139,15 +177,19 @@ class MyVitalsActivity : BaseActivity() {
         lineChart.xAxis.textColor = Color.BLACK
         lineChart.axisLeft.textColor = Color.BLACK
         lineChart.description.text = ""
+        lineChart.moveViewToX(5F);
         lineChart.axisRight.isEnabled = false
         lineChart.legend.isEnabled = false
         lineChart.data.setValueTextColor(Color.BLACK)
         lineChart.isEnabled = true
+        lineChart.setVisibleXRangeMaximum(5f)
+        lineChart.isHorizontalScrollBarEnabled = true
+        lineChart.canScrollHorizontally(1)
         lineChart.invalidate()
         lineChart.refreshDrawableState()
     }
 
-    private fun showDialogAliment() {
+    private fun showDialogAilment() {
         try {
 
             var arrayColors = arrayOf(
@@ -186,56 +228,6 @@ class MyVitalsActivity : BaseActivity() {
         }
     }
 
-    /*private fun loginApi() = if (Utils.isConnected(this)) {
-        showDialog()
-        try {
-            val apiService =
-                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ResponseModelClasses.LoginResponseModel> =
-                apiService.getVitalAPI(
-                    "1","1", RequestModel.getVitalDetailRequestModel(
-                        "1", "Pulse", startDate.text.toString(),endDate.text.toString()
-                    )
-                )
-            call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
-                override fun onResponse(
-                    call: Call<ResponseModelClasses.LoginResponseModel>,
-                    response: Response<ResponseModelClasses.LoginResponseModel>
-                ) {
-                    try {
-                        dismissDialog()
-                        Log.d("Response:", response.body().toString())
-                        if (response.body() != null) {
-                            if (response.body()!!.status == "fail") {
-                                showSuccessPopup(response.body()!!.message)
-                            } else {
-
-                            }
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                override fun onFailure(
-                    call: Call<ResponseModelClasses.LoginResponseModel>,
-                    t: Throwable
-                ) {
-                    Log.d("Throws:", t.message.toString())
-                    dismissDialog()
-                }
-            })
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            dismissDialog()
-        }
-
-    } else {
-        dismissDialog()
-        showToast(getString(R.string.internet))
-    }*/
-
     private fun openCalendar(dateID: Int) {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -271,4 +263,51 @@ class MyVitalsActivity : BaseActivity() {
         dpd.show()
     }
 
+    private fun getPatientVitalList() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>> =
+                apiService.getPatientVitalsList(
+                    "13",
+                    "temperature"
+                )//AppPrefences.getUserID(this))
+            call.enqueue(object :
+                Callback<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>> {
+                override fun onResponse(
+                    call: Call<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>>,
+                    response: Response<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("VitalResponse: ", response.body().toString())
+                        if (response.body() != null) {
+                            foodsList = response.body()!!
+                            drawLineChart(lineChart)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
     }
+
+}

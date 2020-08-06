@@ -3,15 +3,24 @@ package com.home.asharemedy.view
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.home.asharemedy.R
 import com.home.asharemedy.adapter.ListItemAdapter
+import com.home.asharemedy.api.ApiClient
+import com.home.asharemedy.api.ApiInterface
+import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.model.ListItemModel
+import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_clinic_visit.*
+import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,7 +29,7 @@ import kotlin.collections.ArrayList
 class ListActivity : BaseActivity() {
 
     var adapter: ListItemAdapter? = null
-    var foodsList = ArrayList<ListItemModel>()
+    var appointmentList = ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>()
     var cDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,49 +41,10 @@ class ListActivity : BaseActivity() {
     }
 
     private fun initView() {
-        topbar.screenName.text = getString(R.string.app_name)
+        topbar.screenName.text = getString(R.string.appointments)
 
         floatingActionButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
-
-        var status = ""
-        var time = ""
-        for (i in 0..10) {
-            if (i % 2 == 0) {
-                status = "Scheduled"
-                time = "01:00 AM"
-            } else if (i % 3 == 0) {
-                status = "Pending"
-                time = "08:00 AM"
-            } else {
-                status = "Confirmed"
-                time = "10:10 AM"
-            }
-            foodsList.add(
-                ListItemModel(
-                    getString(R.string._03_june_2020),
-                    time,
-                    getString(R.string.american_hospital),
-                    getString(R.string.dr_anna_johnson),
-                    getString(R.string.ent),
-                    getString(R.string.frequent_vomiting),
-                    getString(R.string.test_remarks),
-                    getString(R.string.perennail_allergy),
-                    getString(R.string.none),
-                    getString(R.string.record_pdf),
-                    status
-                )
-            )
-        }
-        adapter = ListItemAdapter(this, foodsList)
-
-        listRecyc.apply {
-            // set a LinearLayoutManager to handle Android
-            // RecyclerView behavior
-            layoutManager = LinearLayoutManager(this@ListActivity)
-            // set the custom adapter to the RecyclerView
-            adapter = ListItemAdapter(this@ListActivity, foodsList)
-        }
-
+        getAppointmentList()
     }
 
     private fun checkOnClick() {
@@ -92,6 +62,19 @@ class ListActivity : BaseActivity() {
         }
         endDate.setOnClickListener {
             openCalendar(2)
+        }
+
+        bottomBar.layoutSettings.setOnClickListener {
+            logoutAlertDialog()
+        }
+        bottomBar.layoutHome.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@ListActivity,
+                    DashboardActivity::class.java
+                )
+            )
+            finish()
         }
 
     }
@@ -129,5 +112,68 @@ class ListActivity : BaseActivity() {
         )
         dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
         dpd.show()
+    }
+
+    private fun getAppointmentList() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>> =
+                apiService.getMyAppointmentList()//"7")//AppPrefences.getUserID(this))
+            call.enqueue(object :
+                Callback<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>> {
+                override fun onResponse(
+                    call: Call<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>>,
+                    response: Response<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("MyAppointmentResponse: ", response.body().toString())
+
+                        if (response.body() != null) {
+                            appointmentList.clear()
+                            appointmentList = response.body()!!
+
+                            loadList()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
+    private fun loadList() {
+        try {
+            adapter = ListItemAdapter(this, appointmentList)
+
+            listRecyc.apply {
+
+                layoutManager = LinearLayoutManager(this@ListActivity)
+
+                adapter =
+                    ListItemAdapter(this@ListActivity, appointmentList)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

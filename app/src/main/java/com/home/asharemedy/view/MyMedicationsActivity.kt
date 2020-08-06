@@ -3,17 +3,24 @@ package com.home.asharemedy.view
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.home.asharemedy.R
 import com.home.asharemedy.adapter.MyMedicationListAdapter
+import com.home.asharemedy.api.ApiClient
+import com.home.asharemedy.api.ApiInterface
+import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
-import com.home.asharemedy.model.ListItemModel
-import com.home.asharemedy.model.MedicationItemModel
+import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_clinic_visit.*
+import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,7 +29,7 @@ import kotlin.collections.ArrayList
 class MyMedicationsActivity : BaseActivity() {
 
     var adapter: MyMedicationListAdapter? = null
-    var foodsList = ArrayList<MedicationItemModel>()
+    var medicationsList = ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>()
     var cDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,29 +41,12 @@ class MyMedicationsActivity : BaseActivity() {
     }
 
     private fun initView() {
-        topbar.screenName.text = getString(R.string.app_name)
-
+        topbar.screenName.text = getString(R.string.my_medications)
+        layoutDates.visibility = View.GONE
         floatingActionButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
         floatingActionButton.visibility = View.GONE
 
-        for (i in 0..10) {
-
-            foodsList.add(
-                MedicationItemModel(
-                    "Paracetamol", "10", "2", "14", "For Fever"
-                )
-            )
-        }
-        adapter = MyMedicationListAdapter(this, foodsList)
-
-        listRecyc.apply {
-            // set a LinearLayoutManager to handle Android
-            // RecyclerView behavior
-            layoutManager = LinearLayoutManager(this@MyMedicationsActivity)
-            // set the custom adapter to the RecyclerView
-            adapter = MyMedicationListAdapter(this@MyMedicationsActivity, foodsList)
-        }
-
+        getMyMedicationsList()
     }
 
     private fun checkOnClick() {
@@ -76,6 +66,18 @@ class MyMedicationsActivity : BaseActivity() {
             openCalendar(2)
         }
 
+        bottomBar.layoutSettings.setOnClickListener {
+            logoutAlertDialog()
+        }
+        bottomBar.layoutHome.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MyMedicationsActivity,
+                    DashboardActivity::class.java
+                )
+            )
+            finish()
+        }
     }
 
     private fun openCalendar(dateID: Int) {
@@ -86,7 +88,7 @@ class MyMedicationsActivity : BaseActivity() {
 
         val dpd = DatePickerDialog(
             this,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
 
                 try {
                     val date = Date(year - 1900, monthOfYear, dayOfMonth)
@@ -112,4 +114,63 @@ class MyMedicationsActivity : BaseActivity() {
         dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
         dpd.show()
     }
+
+    private fun getMyMedicationsList() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>> =
+                apiService.getMyMedicationsList(
+                    "13"
+                )//AppPrefences.getUserID(this))
+            call.enqueue(object :
+                Callback<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>> {
+                override fun onResponse(
+                    call: Call<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>>,
+                    response: Response<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("MedicationResponse: ", response.body().toString())
+                        if (response.body() != null) {
+                            medicationsList = response.body()!!
+                            loadList()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
+    private fun loadList() {
+        adapter = MyMedicationListAdapter(this, medicationsList)
+
+        listRecyc.apply {
+
+            layoutManager = LinearLayoutManager(this@MyMedicationsActivity)
+
+            adapter =
+                MyMedicationListAdapter(this@MyMedicationsActivity, medicationsList)
+        }
+    }
+
 }

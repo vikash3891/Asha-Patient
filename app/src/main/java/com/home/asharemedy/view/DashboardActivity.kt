@@ -16,6 +16,7 @@ import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.item_profile_details.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
@@ -44,6 +45,8 @@ class DashboardActivity : BaseActivity() {
         topbar.screenName.text = getString(R.string.dashboard)
         topbar.imageBack.visibility = View.GONE
 
+        getPatientProfile()
+
         foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_health_record),
@@ -57,9 +60,13 @@ class DashboardActivity : BaseActivity() {
             )
         )
         foodsList.add(DashboardGridModel(getString(R.string._247_doctor), R.drawable.ic_call))
-        foodsList.add(DashboardGridModel(getString(R.string.talk_to_thb), R.drawable.ic_dialer_sip))
-        foodsList.add(DashboardGridModel(getString(R.string.health_info), R.drawable.ic_timeline))
-        foodsList.add(DashboardGridModel(getString(R.string.more_thb), R.drawable.ic_more_thb))
+        foodsList.add(
+            DashboardGridModel(
+                getString(R.string.payment_history),
+                R.drawable.ic_records
+            )
+        )
+
         adapter = DashboardGridAapter(this, foodsList)
 
         gvDashboard.adapter = adapter
@@ -70,33 +77,31 @@ class DashboardActivity : BaseActivity() {
             profileDetails.viewProfile.setOnClickListener {
                 startActivity(Intent(this@DashboardActivity, MyProfile::class.java))
             }
+            bottomBar.layoutSettings.setOnClickListener {
+                logoutAlertDialog()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    /*private fun getProductList() = if (Utils.isConnected(this)) {
+    private fun getPatientProfile() = if (Utils.isConnected(this)) {
         showDialog()
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ResponseModelClasses.ProductListResponseModel> =
-                apiService.getAllProduct()
-            call.enqueue(object : Callback<ResponseModelClasses.ProductListResponseModel> {
+            val call: Call<ResponseModelClasses.GetPatientProfileResponseModel> =
+                apiService.getPatientProfile("15")//AppPrefences.getUserID(this))
+            call.enqueue(object : Callback<ResponseModelClasses.GetPatientProfileResponseModel> {
                 override fun onResponse(
-                    call: Call<ResponseModelClasses.ProductListResponseModel>,
-                    response: Response<ResponseModelClasses.ProductListResponseModel>
+                    call: Call<ResponseModelClasses.GetPatientProfileResponseModel>,
+                    response: Response<ResponseModelClasses.GetPatientProfileResponseModel>
                 ) {
                     try {
                         dismissDialog()
-
+                        Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
-                            if (response.body()!!.status == "0") {
-                                //showSuccessPopup(response.body()!!.message)
-                            } else {
-                                Utils.foodsList = response.body()!!.data
-
-                            }
+                            updateView(response.body()!!)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -104,7 +109,7 @@ class DashboardActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseModelClasses.ProductListResponseModel>,
+                    call: Call<ResponseModelClasses.GetPatientProfileResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())
@@ -120,6 +125,17 @@ class DashboardActivity : BaseActivity() {
     } else {
         dismissDialog()
         showToast(getString(R.string.internet))
-    }*/
+    }
+
+    fun updateView(data: ResponseModelClasses.GetPatientProfileResponseModel) {
+        profileDetails.userName.text = data.patient_name
+        profileDetails.patientID.text = data.patient_id
+        profileDetails.dobValue.text = data.patient_dob
+        profileDetails.brandPartnerName.text = data.insurance_company_name
+        profileDetails.phoneNumberValue.text = data.patient_mobile
+        profileDetails.emailValue.text = data.patient_email
+        profileDetails.emergencyContactValue.text = data.emergency_contact_number
+
+    }
 
 }

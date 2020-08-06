@@ -46,11 +46,11 @@ class DashboardGridAapter(context: Context, var gridList: ArrayList<DashboardGri
                     context!!.getString(R.string._247_doctor) ->
                         context!!.startActivity(Intent(context, _247ConnectActivity::class.java))
 
-                    /*context!!.getString(R.string.talk_to_thb) ->
-                        context!!.startActivity(Intent(context, ChatLoginActivity::class.java))*/
+                    context!!.getString(R.string.payment_history) ->
+                        context!!.startActivity(Intent(context, ActivityPaymentHistory::class.java))
 
-                    context!!.getString(R.string.health_info) ->
-                        context!!.startActivity(Intent(context, MyProfile::class.java))
+                    /*context!!.getString(R.string.health_info) ->
+                        context!!.startActivity(Intent(context, MyProfile::class.java))*/
 
                     /*context!!.getString(R.string.more_thb) ->
                         context!!.startActivity(Intent(context, LoginActivity::class.java))*/
@@ -66,10 +66,10 @@ class DashboardGridAapter(context: Context, var gridList: ArrayList<DashboardGri
                         context!!.startActivity(Intent(context, MyMedicationsActivity::class.java))
 
                     context!!.getString(R.string.my_records) ->
-                        context!!.startActivity(Intent(context, ListActivity::class.java))
+                        context!!.startActivity(Intent(context, MyRecordsActivity::class.java))
 
                     context!!.getString(R.string.my_care_plan) ->
-                        context!!.startActivity(Intent(context, MyProfile::class.java))
+                        context!!.startActivity(Intent(context, MyCarePlansActivity::class.java))
 
                     context!!.getString(R.string.my_tele_consult) ->
                         context!!.startActivity(Intent(context, MyProfile::class.java))

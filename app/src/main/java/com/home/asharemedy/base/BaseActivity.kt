@@ -45,7 +45,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseFragment.Callback {
 
     }
 
-     fun logoutAlertDialog() {
+    fun logoutAlertDialog() {
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle(getString(R.string.app_name))
         alertDialog.setMessage("Are you sure you want to logout? ")
@@ -57,8 +57,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseFragment.Callback {
             //AppPrefences.clearAll(this)
 
             AppPrefences.setLogin(this, false)
-
-            startActivity(Intent(this, AppLoginActivity::class.java))
+            val intent = Intent(this, AppLoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP and Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            //startActivity(Intent(this, AppLoginActivity::class.java))
             finish()
         }
 
@@ -148,7 +150,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseFragment.Callback {
     }
 
     fun showDialog() {
-        mProgressDialog = Utils.showProgressDialog1(this)
+        if (mProgressDialog == null || !mProgressDialog!!.isShowing())
+            mProgressDialog = Utils.showProgressDialog1(this)
     }
 
     fun dismissDialog() {

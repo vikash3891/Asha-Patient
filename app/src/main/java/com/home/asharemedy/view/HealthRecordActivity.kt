@@ -1,15 +1,18 @@
 package com.home.asharemedy.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.home.asharemedy.R
 import com.home.asharemedy.databinding.ActivityHealthRecordDashboardBinding
 import com.home.asharemedy.model.DashboardGridModel
 import com.home.asharemedy.adapter.DashboardGridAapter
+import com.home.asharemedy.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 
-class HealthRecordActivity : AppCompatActivity() {
+class HealthRecordActivity : BaseActivity() {
 
     var adapter: DashboardGridAapter? = null
     var foodsList = ArrayList<DashboardGridModel>()
@@ -18,13 +21,11 @@ class HealthRecordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_health_record_dashboard)
+        initView()
+        checkClick()
+    }
 
-        /*viewDataBinding = ActivityDashboardBinding.inflate(inflater, container, false).apply {
-            viewmodel = ViewModelProviders.of(this@RepoListFragment).get(RepoListViewModel::class.java)
-            setLifecycleOwner(viewLifecycleOwner)
-        }
-        return viewDataBinding.root*/
-
+    private fun initView() {
         topbar.screenName.text = getString(R.string.my_health_record)
         topbar.imageBack.setOnClickListener {
             finish()
@@ -36,12 +37,12 @@ class HealthRecordActivity : AppCompatActivity() {
                 R.drawable.ic_vitals
             )
         )
-        foodsList.add(
+        /*foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_clinical_visits),
                 R.drawable.ic_clinical_visits
             )
-        )
+        )*/
         foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_medications),
@@ -60,16 +61,34 @@ class HealthRecordActivity : AppCompatActivity() {
                 R.drawable.ic_care_plan
             )
         )
-        foodsList.add(
+        /*foodsList.add(
             DashboardGridModel(
                 getString(R.string.my_tele_consult),
                 R.drawable.ic_tele_consult
             )
-        )
+        )*/
         adapter = DashboardGridAapter(this, foodsList)
 
         gvDashboard.adapter = adapter
+    }
 
+    private fun checkClick() {
+
+        topbar.imageBack.setOnClickListener {
+            finish()
+        }
+        bottomBar.layoutSettings.setOnClickListener {
+            logoutAlertDialog()
+        }
+        bottomBar.layoutHome.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@HealthRecordActivity,
+                    DashboardActivity::class.java
+                )
+            )
+            finish()
+        }
     }
 
 }

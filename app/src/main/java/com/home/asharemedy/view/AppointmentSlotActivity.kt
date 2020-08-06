@@ -9,17 +9,23 @@ import androidx.core.content.ContextCompat
 import com.home.asharemedy.R
 import com.home.asharemedy.adapter.AppointSlotListAdapter
 import com.home.asharemedy.adapter.DashboardGridAapter
+import com.home.asharemedy.api.ApiClient
+import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.databinding.ActivityAppointmentSlotsBinding
 import com.home.asharemedy.model.AppointSlotListModel
 import com.home.asharemedy.model.DashboardGridModel
 import com.home.asharemedy.payu.ActivityPayUMain
+import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.appointmentSlotList
 import kotlinx.android.synthetic.main.activity_appointment_slots.*
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,6 +34,7 @@ class AppointmentSlotActivity : BaseActivity() {
 
     var adapter: AppointSlotListAdapter? = null
     private lateinit var viewDataBinding: ActivityAppointmentSlotsBinding
+    var slotList = ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,39 +53,30 @@ class AppointmentSlotActivity : BaseActivity() {
 
     private fun initView() {
 
-        for (i in 0..15) {
-            when {
-                i % 2 == 0 -> appointmentSlotList.add(
-                    AppointSlotListModel(
-                        "available", "2020-12-13", "02:00", "05:00"
-                    )
-                )
-                i % 3 == 0 -> appointmentSlotList.add(
-                    AppointSlotListModel(
-                        "booked", "2020-12-13", "02:00", "05:00"
-                    )
-                )
-                else -> appointmentSlotList.add(
-                    AppointSlotListModel(
-                        "completed", "2020-12-13", "02:00", "05:00"
-                    )
-                )
-            }
+        slotCalendar.text = Utils.getDate()
+        doctorName.text = Utils.doctorFacilityList[0].name
+        doctorSpeciality.text = Utils.doctorFacilityList[0].type
+        address.text =
+            Utils.doctorFacilityList[0].address1 + " " + Utils.doctorFacilityList[0].address2
 
-        }
+        getSlotList()
 
+    }
+
+    fun loadList() {
         adapter = AppointSlotListAdapter(this, appointmentSlotList)
 
         gvSlots.adapter = adapter
     }
 
+    var cdate = ""
     private fun checkClicks() {
         try {
             topbarAppointment.imageBack.setOnClickListener {
                 finish()
             }
             proceedToPay.setOnClickListener {
-                for (i in 0..Utils.appointmentSlotList.size-1) {
+                for (i in 0 until Utils.appointmentSlotList.size) {
                     Log.d("SelSlotList", Utils.appointmentSlotList[i].isSelected.toString())
                 }
                 startActivity(Intent(this@AppointmentSlotActivity, ActivityPayUMain::class.java))
@@ -92,16 +90,15 @@ class AppointmentSlotActivity : BaseActivity() {
 
                 val dpd = DatePickerDialog(
                     this,
-                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
 
                         try {
                             val date = Date(year - 1900, monthOfYear, dayOfMonth)
-                            val formatter = SimpleDateFormat("dd-MM-yyyy")
-                            val cdate = formatter.format(date)
+                            val formatter = SimpleDateFormat("yyyy-MM-dd")
+                            cdate = formatter.format(date)
 
-                            // Display Selected date in textbox
-                            slotCalendar.setText("" + setMonth(monthOfYear + 1) + " " + dayOfMonth + ", " + year)
-                            //getDatesBetweenStartAndFinish(cdate.toString())
+                            slotCalendar.text =
+                                "" + setMonth(monthOfYear + 1) + " " + dayOfMonth + ", " + year
                         } catch (e1: ParseException) {
                             e1.printStackTrace()
                         }
@@ -220,5 +217,53 @@ class AppointmentSlotActivity : BaseActivity() {
             )
 
         }
+    }
+
+    private fun getSlotList() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+
+            val call: Call<ArrayList<ResponseModelClasses.GetSlotListResponseModel>> =
+                apiService.getSlotList("7", "2020-08-05")//Utils.selectedDoctorFacitiyID,cdate
+            call.enqueue(object :
+                Callback<ArrayList<ResponseModelClasses.GetSlotListResponseModel>> {
+                override fun onResponse(
+                    call: Call<ArrayList<ResponseModelClasses.GetSlotListResponseModel>>,
+                    response: Response<ArrayList<ResponseModelClasses.GetSlotListResponseModel>>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("SlotResponse: ", response.body().toString())
+
+                        if (response.body() != null) {
+                            appointmentSlotList.clear()
+                            appointmentSlotList = response.body()!!
+
+                            loadList()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ArrayList<ResponseModelClasses.GetSlotListResponseModel>>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
     }
 }

@@ -78,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/dp_2"
-                            android:text="02 June, 1991"
+                            android:text=""
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
 
@@ -393,7 +393,7 @@
             </LinearLayout>
 
             <include
-                android:id="@+id/bottombar_layout"
+                android:id="@+id/bottomBar"
                 layout="@layout/bottombar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"

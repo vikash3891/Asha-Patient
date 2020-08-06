@@ -32,7 +32,8 @@
             android:paddingBottom="@dimen/dp_5"
             android:text="@string/select_category"
             android:textColor="@color/colorAppGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_20"
+            android:visibility="gone" />
 
         <RadioGroup
             android:id="@+id/radioGroupVitalCategory"
@@ -101,6 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_10"
             android:background="@drawable/drawable_round_corner"
@@ -131,7 +133,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/drawable_round_corner"
                     android:gravity="center_horizontal"
-                    android:hint="@string/_03_june_2020"
+                    android:hint="Start Date"
                     android:padding="@dimen/dp_5"
                     android:textSize="@dimen/sp_14" />
 
@@ -143,9 +145,10 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center_horizontal"
                     android:padding="@dimen/dp_2"
-                    android:text="Start Date"
+                    android:text=""
                     android:textColor="@color/colorAppGray"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <!--Layout End Date-->
@@ -162,7 +165,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/drawable_round_corner"
                     android:gravity="center_horizontal"
-                    android:hint="@string/_03_june_2020"
+                    android:hint="End Date"
                     android:padding="@dimen/dp_5"
                     android:textSize="@dimen/sp_14" />
 
@@ -174,9 +177,10 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center_horizontal"
                     android:padding="@dimen/dp_2"
-                    android:text="End Date"
+                    android:text=""
                     android:textColor="@color/colorAppGray"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
@@ -202,6 +206,7 @@
     </LinearLayout>
 
     <include
+        android:id="@+id/bottomBar"
         layout="@layout/bottombar_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.R
+import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.model.ListItemModel
 import com.home.asharemedy.model.MedicationItemModel
 import com.home.asharemedy.view.ListItemDetailActivity
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.item_clinic_visit.view.*
 
 class MyMedicationListAdapter(
     private val context: Context,
-    private val list: List<MedicationItemModel>
+    private val list: List<ResponseModelClasses.GetMyMedicationResponseModel>
 ) :
     RecyclerView.Adapter<MyMedicationViewHolder>() {
 
@@ -33,7 +34,7 @@ class MyMedicationListAdapter(
     }
 
     override fun onBindViewHolder(holder: MyMedicationViewHolder, position: Int) {
-        val movie: MedicationItemModel = list[position]
+        val movie: ResponseModelClasses.GetMyMedicationResponseModel = list[position]
         holder.bind(movie)
 
         holder.itemView.listItemLayout.setOnClickListener {

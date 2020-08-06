@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.R
+import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.model.ListItemModel
 
 class AppointmentItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -21,10 +22,10 @@ class AppointmentItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         address = itemView.findViewById(R.id.address)
     }
 
-    fun bind(movie: ListItemModel) {
-        doctorName?.text = movie.clinician
-        doctorSpeciality?.text = movie.spec
-        address?.text = movie.clinician + " " + movie.spec
+    fun bind(movie: ResponseModelClasses.GetFacilityListResponseModel) {
+        doctorName?.text = movie.name
+        doctorSpeciality?.text = movie.city
+        address?.text = movie.address1 + " " + movie.address2
         /*complaint?.text = movie.complaints
         appointmentTime?.text = movie.time
         appointmentStatus?.text = movie.status

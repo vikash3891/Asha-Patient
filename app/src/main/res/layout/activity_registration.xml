@@ -564,6 +564,7 @@
                     android:fontFamily="@font/roboto"
                     android:hint="Dubai"
                     android:padding="@dimen/dp_10"
+                    android:text="India"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/sp_14" />
 
@@ -681,13 +682,6 @@
                         android:text="@string/referral_code"
                         android:textColor="@color/colorBlack" />
 
-                    <ImageView
-                        android:id="@+id/imageReferralCode"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
-                        android:layout_gravity="center_vertical"
-                        android:paddingStart="@dimen/dp_5"
-                        android:src="@drawable/ic_info" />
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -697,7 +691,7 @@
                     android:layout_below="@id/layoutReferralCode"
                     android:background="@drawable/edittext_border"
                     android:fontFamily="@font/roboto"
-                    android:hint="@string/mandatory"
+                    android:hint="Optional"
                     android:imeOptions="actionNext"
                     android:maxLength="7"
                     android:padding="@dimen/dp_10"

@@ -71,7 +71,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:background="@drawable/drawable_round_corner"
                                 android:gravity="center_horizontal"
-                                android:hint="@string/_03_june_2020"
+                                android:hint="Start Date"
                                 android:padding="@dimen/dp_5"
                                 android:textSize="@dimen/sp_14" />
 
@@ -83,9 +83,10 @@
                                 android:layout_centerHorizontal="true"
                                 android:gravity="center_horizontal"
                                 android:padding="@dimen/dp_2"
-                                android:text="Start Date"
+                                android:text=""
                                 android:textColor="@color/colorAppGray"
-                                android:textSize="@dimen/sp_14" />
+                                android:textSize="@dimen/sp_14"
+                                android:visibility="gone" />
                         </RelativeLayout>
 
                         <!--Layout End Date-->
@@ -102,7 +103,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:background="@drawable/drawable_round_corner"
                                 android:gravity="center_horizontal"
-                                android:hint="03-June-2020"
+                                android:hint="End Date"
                                 android:padding="@dimen/dp_5"
                                 android:textSize="@dimen/sp_14" />
 
@@ -114,9 +115,10 @@
                                 android:layout_centerHorizontal="true"
                                 android:gravity="center_horizontal"
                                 android:padding="@dimen/dp_2"
-                                android:text="End Date"
+                                android:text=""
                                 android:textColor="@color/colorAppGray"
-                                android:textSize="@dimen/sp_14" />
+                                android:textSize="@dimen/sp_14"
+                                android:visibility="gone" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -126,7 +128,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/layoutDates"
                         android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <EditText
                             android:layout_width="0dp"
@@ -189,6 +192,7 @@
         </FrameLayout>
 
         <include
+            android:id="@+id/bottomBar"
             layout="@layout/bottombar_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"

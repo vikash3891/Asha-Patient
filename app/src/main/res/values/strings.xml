@@ -172,7 +172,7 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="contactus_email">Email</string>
     <string name="country">Country</string>
-    <string name="referral_code">Referral Code (optional)</string>
+    <string name="referral_code">Referral Code</string>
     <string name="i_m_a">I\'m</string>
     <string name="doctor">Doctor</string>
     <string name="patient">Patient</string>
@@ -183,6 +183,7 @@
     <string name="appointments">Appointments</string>
     <string name="_247_doctor">24/7 Doctor</string>
     <string name="talk_to_thb">Talk to THB</string>
+    <string name="payment_history">Payment History</string>
     <string name="health_info">Health Info</string>
     <string name="more_thb">More THB</string>
     <string name="my_vitals">My Vitals</string>
@@ -588,5 +589,6 @@
     <string name="could_not_receive_data">Could not receive data</string>
     <string name="date_of_birth">Date of Birth</string>
     <string name="gender">Gender</string>
+    <string name="communication_details">Communication Details</string>
 
 </resources>

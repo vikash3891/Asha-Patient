@@ -14,6 +14,8 @@
     <color name="colorBlack">#000</color>
     <color name="colorWhite">#ffffff</color>
 
+    <color name="colorListItem">#5df2d6</color>
+
     <color name="colorWhiteGray1">#96a2b5c7</color>
     <color name="colorWhiteGray3">#30a2b5c7</color>
     <color name="colorProgress">#E99543</color>

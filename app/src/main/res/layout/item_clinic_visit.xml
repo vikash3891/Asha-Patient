@@ -13,7 +13,7 @@
     <LinearLayout
         android:id="@+id/listItemLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/dp_80"
         android:layout_marginBottom="@dimen/dp_2"
         android:background="@drawable/drawable_round_corner"
         android:orientation="horizontal">
@@ -30,7 +30,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_3"
-                android:text="30"
+                android:text=""
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/sp_14" />
 
@@ -42,7 +42,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_3"
-                android:text="May"
+                android:text=""
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />
@@ -55,7 +55,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_3"
-                android:text="2020"
+                android:text=""
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/sp_14" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_2"
-                android:text="American Hospital"
+                android:text=""
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />
@@ -93,7 +93,7 @@
                 android:layout_below="@+id/facilityName"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_2"
-                android:text="Dr. Anna Johnson, ENT"
+                android:text=""
                 android:textColor="@color/colorAppGray"
                 android:textSize="@dimen/sp_14" />
 
@@ -104,7 +104,7 @@
                 android:layout_below="@+id/clinicianSpecName"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_2"
-                android:text="Frequent Vomiting"
+                android:text=""
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_14" />
         </RelativeLayout>
@@ -129,7 +129,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_3"
-                android:text="14:30"
+                android:text=""
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_14" />
 
@@ -140,7 +140,7 @@
                 android:layout_below="@+id/appointmentTime"
                 android:layout_centerHorizontal="true"
                 android:padding="@dimen/dp_3"
-                android:text="Scheduled"
+                android:text=""
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_10" />
 

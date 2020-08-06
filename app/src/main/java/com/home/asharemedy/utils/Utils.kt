@@ -16,10 +16,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ResponseModelClasses
-import com.home.asharemedy.model.AppointSlotListModel
 import com.home.asharemedy.model.ListItemModel
 import com.home.asharemedy.model.LoginModel
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import org.json.JSONException
+import org.json.JSONObject
 import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.collections.ArrayList
 
 object Utils {
@@ -27,7 +32,6 @@ object Utils {
     private val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123
     var isRegisterSuccess = false
 
-    var foodsList = ArrayList<ListItemModel>()
     private var orderHistoryList =
         ArrayList<ResponseModelClasses.GetOrderHistoryResponseModel.TableData1>()
     private var userDetails = ArrayList<LoginModel>()
@@ -37,8 +41,11 @@ object Utils {
     var selectedCategory = 0
     var isOrderToCart = false
     var selectedOrderID = ""
+    var isAilmentOrService = true
+    var selectedDoctorFacitiyID = ""
 
-    var appointmentSlotList = java.util.ArrayList<AppointSlotListModel>()
+    var appointmentSlotList = java.util.ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
+    var doctorFacilityList = ArrayList<ResponseModelClasses.GetFacilityListResponseModel>()
 
     /*
     For Checking the Internet Connectivity
@@ -161,6 +168,7 @@ object Utils {
         }
         return when (day % 10) {
             1 -> "st"
+
             2 -> "nd"
             3 -> "rd"
             else -> "th"
@@ -196,4 +204,40 @@ object Utils {
             }
         }
     }
+
+    fun getTime(): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val date = Date()
+        println("Current Time is: $date.time")
+        return inputFormat.format(date.time)
+    }
+
+    fun getDate(): String {
+        /*val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val date = Date()
+        println("Current Date is: $date.date")
+        return inputFormat.format(date.time)*/
+
+        val cal = Calendar.getInstance()
+        val day = cal.get(Calendar.DATE)
+        val month = setMonth(cal.get(Calendar.MONTH) + 1)
+        val year = cal.get(Calendar.YEAR)
+        return "$month $day, $year"
+    }
+
+    fun getJSONRequestBody(stringHashMap: HashMap<String, String>?): RequestBody {
+        val jsonObject = JSONObject()
+        if (stringHashMap != null && stringHashMap.size > 0) {
+            try {
+                for ((key, value) in stringHashMap) {
+                    jsonObject.put(key, value)
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+        return jsonObject.toString()
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+    }
+
 }

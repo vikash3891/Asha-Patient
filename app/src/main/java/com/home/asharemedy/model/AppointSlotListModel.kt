@@ -6,6 +6,7 @@ class AppointSlotListModel {
     var slot_date: String? = null
     var start_time: String? = null
     var end_time: String? = null
+    var slot_id: String? = null
     var isSelected: Boolean? = null
 
     constructor()
@@ -14,5 +15,6 @@ class AppointSlotListModel {
         this.slot_date = slot_date
         this.start_time = start_time
         this.end_time = end_time
+        this.slot_id = slot_id
     }
 }

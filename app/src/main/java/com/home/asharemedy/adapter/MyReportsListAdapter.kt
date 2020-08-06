@@ -6,21 +6,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.api.ResponseModelClasses
-import com.home.asharemedy.model.ListItemModel
 import com.home.asharemedy.view.ListItemDetailActivity
-import com.home.asharemedy.viewHolder.ListItemViewHolder
+import com.home.asharemedy.viewHolder.MyReportViewHolder
 import kotlinx.android.synthetic.main.item_clinic_visit.view.*
 
-class ListItemAdapter(private val context: Context, private val list: List<ResponseModelClasses.GetMyAppointmentsResponseModel>) :
-    RecyclerView.Adapter<ListItemViewHolder>() {
+class MyReportsListAdapter(private val context: Context, private val list: List<ResponseModelClasses.GetMyRecordResponseModel>) :
+    RecyclerView.Adapter<MyReportViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReportViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ListItemViewHolder(inflater, parent)
+        return MyReportViewHolder(inflater, parent)
     }
 
-    override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
-        val movie: ResponseModelClasses.GetMyAppointmentsResponseModel = list[position]
+    override fun onBindViewHolder(holder: MyReportViewHolder, position: Int) {
+        val movie: ResponseModelClasses.GetMyRecordResponseModel = list[position]
         holder.bind(movie)
 
         holder.itemView.listItemLayout.setOnClickListener {

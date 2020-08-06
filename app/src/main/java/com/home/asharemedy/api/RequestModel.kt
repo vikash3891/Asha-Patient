@@ -11,10 +11,10 @@ object RequestModel {
     fun getLoginRequestModel(
         userid: String,
         password: String
-    ): Map<String, String> {
+    ): HashMap<String, String> {
         var map = HashMap<String, String>()
 
-        map.put(Constants.MOBILE, userid)
+        map.put(Constants.USERNAME, userid)
         map.put(Constants.PASSWORD, password)
         map.put("usertype", "patients")
         Log.d("Login Request: ", "" + Gson().toJson(map))
@@ -48,8 +48,11 @@ object RequestModel {
         patient_refcode: String,
         city: String,
         state: String,
-        country: String
-    ): Map<String, String> {
+        country: String,
+        address: String,
+        street: String,
+        pincode: String
+    ): HashMap<String, String> {
 
         var map = HashMap<String, String>()
         map.put(Constants.PATIENT_NAME, patient_name)
@@ -59,9 +62,13 @@ object RequestModel {
         map.put(Constants.PATIENT_MOBILE, patient_mobile)
         map.put(Constants.PATIENT_PASSWORD, patient_password)
         map.put(Constants.PATIENT_REFCODE, patient_refcode)
-        map.put(Constants.CITY, city)
-        map.put(Constants.STATE, state)
-        map.put(Constants.COUNTRY, country)
+        map.put(Constants.PATIENT_CITY, city)
+        map.put(Constants.PATIENT_STATE, state)
+        map.put(Constants.PATIENT_COUNTRY, country)
+        map.put(Constants.PATIENT_ADDRESS1, address)
+        map.put(Constants.PATIENT_ADDRESS2, street)
+        map.put(Constants.PATIENT_PINCODE, pincode)
+
 
         Log.d("Reg Request: ", "" + Gson().toJson(map))
         return map;
@@ -85,7 +92,7 @@ object RequestModel {
     ): Map<String, String> {
 
         var map = HashMap<String, String>()
-        map.put(Constants.NAME, item.name!!)
+        /*map.put(Constants.NAME, item.name!!)
         map.put(Constants.MOBILE, item.mobile!!)
         map.put(Constants.PASSWORD, password)
         map.put(Constants.EMAIL, item.email!!)
@@ -95,7 +102,7 @@ object RequestModel {
         map.put(Constants.CITY, item.city!!)
         map.put(Constants.CREATED_DATE, "")
 
-        Log.d("ProUpdReq.: ", "" + Gson().toJson(map))
+        Log.d("ProUpdReq.: ", "" + Gson().toJson(map))*/
         return map;
     }
 }

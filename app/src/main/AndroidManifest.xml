@@ -26,10 +26,12 @@
         android:allowBackup="true"
         android:icon="@drawable/asha"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/asha"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
-        tools:replace="android:icon,android:allowBackup">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon,android:allowBackup,android:usesCleartextTraffic">
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,55 +44,88 @@
         <activity
             android:name=".view.RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.DashboardActivity" />
-        <activity android:name=".view.MyVitalsActivity" />
-        <activity android:name=".view.MyProfile" />
-        <activity android:name=".view.HealthRecordActivity" />
-        <activity android:name=".view.ListActivity" />
-        <activity android:name=".view.ListItemDetailActivity" />
-        <activity android:name=".view.AppointmentSlotActivity" />
-        <activity android:name=".view.AddAppointmentListActivity" />
+        <activity
+            android:name=".view.DashboardActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.MyVitalsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.MyProfile"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.HealthRecordActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ListItemDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AppointmentSlotActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AddAppointmentListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.AppInfoActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.ChatLoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.SelectUsersActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".chat.ui.activity.DialogsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1" />
 
         <activity
             android:name=".chat.ui.activity.NewGroupActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1" />
 
         <activity
             android:name=".chat.ui.activity.ChatActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
             android:name=".chat.ui.activity.ForwardToActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1" />
 
         <activity
             android:name=".chat.ui.activity.ChatInfoActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1" />
 
         <activity
             android:name=".chat.ui.activity.MessageInfoActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1" />
 
@@ -143,7 +178,22 @@
         <activity android:name=".payu.MerchantCheckoutActivity" />
 
 
-        <activity android:name=".view.MyMedicationsActivity" />
+        <activity
+            android:name=".view.MyMedicationsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ActivityPaymentHistory"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.MyRecordsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.MyCarePlansActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
 
         <service android:name=".video.services.LoginService" />

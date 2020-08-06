@@ -1,48 +1,87 @@
 package com.home.asharemedy.model
 
+import com.home.asharemedy.api.ResponseModelClasses
 
-object UtilitiesData {
-    var utilityArrayList: ArrayList<String>? = null
+
+object AilmentArrayData {
+    private var ailmentArrayList: ArrayList<ResponseModelClasses.GetAilmentResponseModel>? = null
+    var serviceArrayList: ArrayList<ResponseModelClasses.GetServiceResponseModel>? = null
 
     init {
-        if (utilityArrayList == null)
-            utilityArrayList = ArrayList<String>()
+        if (ailmentArrayList == null)
+            ailmentArrayList = ArrayList()
+        if (serviceArrayList == null)
+            serviceArrayList = ArrayList()
     }
 
+    /*Ailment*/
     @Synchronized
     fun getCount(): Int {
         var count = 0
-        count = utilityArrayList!!.size
+        count = ailmentArrayList!!.size
         return count
     }
 
     @Synchronized
-    fun addArrayList(modelList: ArrayList<String>) {
-        utilityArrayList = modelList
+    fun addArrayList(modelList: ArrayList<ResponseModelClasses.GetAilmentResponseModel>) {
+        ailmentArrayList = modelList
     }
 
     @Synchronized
-    fun getArrayList(): ArrayList<String>? {
-        return utilityArrayList
+    fun getArrayList(): ArrayList<ResponseModelClasses.GetAilmentResponseModel>? {
+        return ailmentArrayList
     }
 
     @Synchronized
-    fun getArrayItem(position: Int): String {
-        return utilityArrayList!!.get(position)
+    fun getArrayItem(position: Int): ResponseModelClasses.GetAilmentResponseModel {
+        return ailmentArrayList!!.get(position)
     }
 
     @Synchronized
     fun clearListItem(index: Int) {
-        utilityArrayList!!.removeAt(index)
+        ailmentArrayList!!.removeAt(index)
     }
 
     @Synchronized
     fun clearArrayList() {
-        utilityArrayList!!.removeAll(utilityArrayList!!)
+        ailmentArrayList!!.removeAll(ailmentArrayList!!)
+
+    }
+
+
+    /*Services*/
+    @Synchronized
+    fun getServicesCount(): Int {
+        var count = 0
+        count = ailmentArrayList!!.size
+        return count
+    }
+
+    @Synchronized
+    fun addServicesArrayList(modelList: ArrayList<ResponseModelClasses.GetServiceResponseModel>) {
+        serviceArrayList = modelList
+    }
+
+    @Synchronized
+    fun getServicesArrayList(): ArrayList<ResponseModelClasses.GetServiceResponseModel>? {
+        return serviceArrayList
+    }
+
+    @Synchronized
+    fun getServicesArrayItem(position: Int): ResponseModelClasses.GetServiceResponseModel {
+        return serviceArrayList!!.get(position)
+    }
+
+    @Synchronized
+    fun clearServicesListItem(index: Int) {
+        serviceArrayList!!.removeAt(index)
+    }
+
+    @Synchronized
+    fun clearServicesArrayList() {
+        serviceArrayList!!.removeAll(serviceArrayList!!)
 
     }
 
 
 }
-
-

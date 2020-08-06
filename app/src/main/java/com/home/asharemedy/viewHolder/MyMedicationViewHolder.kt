@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.R
+import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.model.MedicationItemModel
 
 class MyMedicationViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -22,12 +23,12 @@ class MyMedicationViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         medicinePrice = itemView.findViewById(R.id.medicinePrice)
     }
 
-    fun bind(movie: MedicationItemModel) {
+    fun bind(movie: ResponseModelClasses.GetMyMedicationResponseModel) {
 
-        medicineName?.text = movie.medicineName
-        daysCount?.text = movie.daysCount + " days"
-        medicineCourse?.text = movie.medicineCourse + " times"
-        medicinePrice?.text = "$"+movie.medicinePrice
+        medicineName?.text = movie.drug_name
+        daysCount?.text = movie.days + " days"
+        medicineCourse?.text = movie.dosage_instructions
+        //medicinePrice?.text = "$"+movie.medicinePrice
 
     }
 

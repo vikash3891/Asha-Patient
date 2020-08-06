@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.home.asharemedy.model.DashboardViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/listItemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:background="@drawable/drawable_round_corner"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@drawable/round_corner_green"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/paymentDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_3"
+                android:text="30"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_17" />
+
+            <TextView
+                android:id="@+id/paymentMonth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/paymentDate"
+                android:gravity="center"
+                android:padding="@dimen/dp_3"
+                android:text="May"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/visitYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/paymentMonth"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/dp_3"
+                android:text="2020"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_weight="3"
+            android:gravity="center_vertical|start">
+
+            <TextView
+                android:id="@+id/paymentAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/dp_2"
+                android:text=""
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:id="@+id/paymentStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/paymentAmount"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/dp_2"
+                android:text=""
+                android:textColor="@color/colorAppGray"
+                android:textSize="@dimen/sp_15" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/paymentID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|center_horizontal"
+                android:padding="@dimen/dp_3"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

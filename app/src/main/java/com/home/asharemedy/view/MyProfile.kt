@@ -1,6 +1,7 @@
 package com.home.asharemedy.view
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +17,8 @@ import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_profile_editable.*
+import kotlinx.android.synthetic.main.bottombar_layout.view.*
+import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,7 +42,7 @@ class MyProfile : BaseActivity() {
 
     private fun initView() {
         getPatientProfile()
-        getPatientHabit()
+
     }
 
     private fun checkClicks() {
@@ -90,6 +93,23 @@ class MyProfile : BaseActivity() {
             } else if (i == R.id.exerciseNo) {
                 exerciseFrequency.visibility = View.GONE
             }
+        }
+
+        bottomBar.layoutSettings.setOnClickListener {
+            logoutAlertDialog()
+        }
+        bottomBar.layoutHome.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MyProfile,
+                    DashboardActivity::class.java
+                )
+            )
+            finish()
+        }
+
+        topBarLayout.imageBack.setOnClickListener {
+            finish()
         }
     }
 
@@ -147,7 +167,7 @@ class MyProfile : BaseActivity() {
                 ) {
                     try {
                         dismissDialog()
-
+Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
                             if (response.body()!!.status == "fail") {
                                 showSuccessPopup(response.body()!!.message)
@@ -203,7 +223,7 @@ class MyProfile : BaseActivity() {
                 ) {
                     try {
                         dismissDialog()
-
+                        Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
 
                             /*foodsList = response.body()!!.data
@@ -211,6 +231,7 @@ class MyProfile : BaseActivity() {
                             Utils.setOrderHistoryList(foodsList)
 
                             loadList()*/
+                            getPatientHabit()
                             updateView(response.body()!!)
                         }
                     } catch (e: Exception) {
@@ -242,23 +263,18 @@ class MyProfile : BaseActivity() {
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ResponseModelClasses.GetHabitResponseModel> =
-                apiService.getPatientHabits("15")//AppPrefences.getUserID(this))
-            call.enqueue(object : Callback<ResponseModelClasses.GetHabitResponseModel> {
+            val call: Call<ArrayList<ResponseModelClasses.GetHabitResponseModel>> =
+                apiService.getPatientHabits("17")//AppPrefences.getUserID(this))
+            call.enqueue(object : Callback<ArrayList<ResponseModelClasses.GetHabitResponseModel>> {
                 override fun onResponse(
-                    call: Call<ResponseModelClasses.GetHabitResponseModel>,
-                    response: Response<ResponseModelClasses.GetHabitResponseModel>
+                    call: Call<ArrayList<ResponseModelClasses.GetHabitResponseModel>>,
+                    response: Response<ArrayList<ResponseModelClasses.GetHabitResponseModel>>
                 ) {
                     try {
                         dismissDialog()
-
+                        Log.d("HabitResponse: ", response.body().toString())
                         if (response.body() != null) {
 
-                            /*foodsList = response.body()!!.data
-
-                            Utils.setOrderHistoryList(foodsList)
-
-                            loadList()*/
                             updateHabitView(response.body()!!)
                         }
                     } catch (e: Exception) {
@@ -267,7 +283,7 @@ class MyProfile : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseModelClasses.GetHabitResponseModel>,
+                    call: Call<ArrayList<ResponseModelClasses.GetHabitResponseModel>>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())
@@ -303,21 +319,36 @@ class MyProfile : BaseActivity() {
         emiratesIDValue.setText(data.parent_id)
     }
 
-    fun updateHabitView(data: ResponseModelClasses.GetHabitResponseModel) {
-        /*userName.text = data.patient_name
-        patientID.text = data.patient_id
-        dobValue.text = data.birth_date
-        brandPartnerName.text = data.insurance_company_name
-        phoneNumberValue.text = data.patient_mobile
-        emailValue.text = data.patient_email
-        emergencyContactValue.text = data.emergency_contact_number
+    fun updateHabitView(data: ArrayList<ResponseModelClasses.GetHabitResponseModel>) {
 
-        nationalityValue.setText(data.patient_country)
-        religionValue.setText(data.patient_country)
-        membershipValue.setText(data.membership_number)
-        addressValue.setText(data.patient_address1)
-        communicationValue.setText(data.patient_address2)
-        insuranceValue.setText(data.insurance_company_name)
-        emiratesIDValue.setText(data.parent_id)*/
+        for (i in 0 until data.size) {
+            if (data[i].patient_habit_id.equals("4")) {
+                if (data[i].status.equals("active")) {
+                    smokingYes.isChecked = true
+                    smokingNo.isChecked = false
+                    smokingFrequency.visibility = View.VISIBLE
+                    smokingFrequency.setText(data[i].habit_frequency)
+                    smokingFrequency.hint = data[i].habit_frequency_unit
+                } else {
+                    smokingYes.isChecked = false
+                    smokingNo.isChecked = true
+                    smokingFrequency.visibility = View.GONE
+                }
+            } else if (data[i].patient_habit_id.equals("5")) {
+                if (data[i].status.equals("active")) {
+                    exerciseYes.isChecked = true
+                    exerciseNo.isChecked = false
+                    exerciseFrequency.visibility = View.VISIBLE
+                    exerciseFrequency.setText(data[i].habit_frequency)
+                    exerciseFrequency.hint = data[i].habit_frequency_unit
+                } else {
+                    exerciseYes.isChecked = false
+                    exerciseNo.isChecked = true
+                    exerciseFrequency.visibility = View.GONE
+                }
+            } else if (data[i].patient_habit_id.equals("4")) {
+
+            }
+        }
     }
 }

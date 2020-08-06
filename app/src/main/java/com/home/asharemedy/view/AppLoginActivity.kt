@@ -1,18 +1,8 @@
 package com.home.asharemedy.view
 
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
@@ -21,13 +11,11 @@ import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
-import com.home.asharemedy.utils.LocaleManagerMew
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 class AppLoginActivity : BaseActivity() {
 
@@ -36,6 +24,8 @@ class AppLoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
 
         try {
+            editUserName.setText("john@doe.com")
+            editUserPass.setText("password")
             clickPerform()
 
         } catch (e: Exception) {
@@ -64,7 +54,7 @@ class AppLoginActivity : BaseActivity() {
                 !isValid
                 return
             } else if (isValid) {
-                loginApi(false)
+                loginApi()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -82,9 +72,10 @@ class AppLoginActivity : BaseActivity() {
             }
 
             btnLogin.setOnClickListener {
-                //validationFields()
+                validationFields()
 
-                startActivity(Intent(this@AppLoginActivity, DashboardActivity::class.java))
+                /*startActivity(Intent(this@AppLoginActivity, DashboardActivity::class.java))
+                finish()*/
             }
 
         } catch (e: Exception) {
@@ -92,16 +83,18 @@ class AppLoginActivity : BaseActivity() {
         }
     }
 
-    private fun loginApi(isChecked: Boolean) = if (Utils.isConnected(this)) {
+    private fun loginApi() = if (Utils.isConnected(this)) {
         showDialog()
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.LoginResponseModel> =
                 apiService.getAdminLogin(
-                    RequestModel.getLoginRequestModel(
-                        editUserName.text.toString(),
-                        editUserPass.text.toString()
+                    Utils.getJSONRequestBody(
+                        RequestModel.getLoginRequestModel(
+                            editUserName.text.toString(),
+                            editUserPass.text.toString()
+                        )
                     )
                 )
             call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
@@ -113,7 +106,7 @@ class AppLoginActivity : BaseActivity() {
                         dismissDialog()
                         Log.d("Response:", response.body().toString())
                         if (response.body() != null) {
-                            if (response.body()!!.status == "fail") {
+                            if (response.body()!!.message == "fail") {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
 
@@ -121,11 +114,11 @@ class AppLoginActivity : BaseActivity() {
                                 AppPrefences.setRememberMe(this@AppLoginActivity, true)
                                 AppPrefences.setUserName(
                                     this@AppLoginActivity,
-                                    response.body()!!.data[0].name!!
+                                    response.body()!!.data[0].user_name!!
                                 )
                                 AppPrefences.setUserID(
                                     this@AppLoginActivity,
-                                    response.body()!!.data[0].id!!
+                                    response.body()!!.data[0].user_id!!
                                 )
 
                                 Utils.setUserDetails(response.body()!!.data[0])

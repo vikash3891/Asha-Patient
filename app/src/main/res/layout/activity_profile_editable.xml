@@ -10,7 +10,7 @@
             type="com.home.asharemedy.model.DashboardViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/drawable_round_corner"
@@ -20,14 +20,15 @@
             android:id="@+id/topBarLayout"
             layout="@layout/topbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50" />
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentTop="true" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:fadeScrollbars="true"
-            android:fillViewport="true">
+            android:layout_above="@+id/bottomBar"
+            android:layout_below="@+id/topBarLayout"
+            android:fadeScrollbars="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +49,39 @@
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/dp_5"
                         android:src="@drawable/ic_emoticon_50dp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_7">
 
+                        <TextView
+                            android:id="@+id/communicationDeatailsHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="start"
+                            android:text="@string/communication_details"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/communicationEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/round_corner_green"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="center|start"
+                            android:paddingStart="@dimen/dp_30"
+                            android:paddingTop="@dimen/dp_5"
+                            android:paddingEnd="@dimen/dp_30"
+                            android:paddingBottom="@dimen/dp_5"
+                            android:text="@string/edit"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
@@ -60,9 +93,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
-                            android:text="Anna Johanson (F)"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
-                            android:textSize="@dimen/sp_13"
+                            android:textSize="@dimen/sp_16"
                             android:textStyle="bold" />
 
                         <TextView
@@ -71,9 +104,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:padding="@dimen/dp_2"
-                            android:text="MRN: THB888868"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
-                            android:textSize="@dimen/sp_13"
+                            android:textSize="@dimen/sp_15"
                             android:textStyle="bold" />
 
                         <TextView
@@ -83,8 +116,7 @@
                             android:layout_below="@+id/userName"
                             android:padding="@dimen/dp_2"
                             android:text="DOB:"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_13" />
+                            android:textColor="@color/colorAccent" />
 
                         <TextView
                             android:id="@+id/dobValue"
@@ -93,9 +125,8 @@
                             android:layout_below="@+id/userName"
                             android:layout_toEndOf="@+id/dobLabel"
                             android:padding="@dimen/dp_2"
-                            android:text="02 June, 1991"
-                            android:textColor="@color/colorLightBlack"
-                            android:textSize="@dimen/sp_13" />
+                            android:text=""
+                            android:textColor="@color/colorLightBlack"/>
 
                         <TextView
                             android:id="@+id/brandPartnerName"
@@ -104,9 +135,9 @@
                             android:layout_below="@+id/patientID"
                             android:layout_alignParentEnd="true"
                             android:padding="@dimen/dp_2"
-                            android:text="DXH Smartcare"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
-                            android:textSize="@dimen/sp_13" />
+                            android:textSize="@dimen/sp_14" />
 
                         <TextView
                             android:id="@+id/phoneNumberLabel"
@@ -116,7 +147,7 @@
                             android:padding="@dimen/dp_2"
                             android:text="Phone No: "
                             android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_13" />
+                             />
 
                         <TextView
                             android:id="@+id/phoneNumberValue"
@@ -124,9 +155,9 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/dobLabel"
                             android:layout_toEndOf="@+id/phoneNumberLabel"
-                            android:text="+971-55-123-1234"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
-                            android:textSize="@dimen/sp_13" />
+                             />
 
                         <TextView
                             android:id="@+id/emailLabel"
@@ -136,7 +167,7 @@
                             android:padding="@dimen/dp_2"
                             android:text="Email: "
                             android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_13" />
+                             />
 
                         <TextView
                             android:id="@+id/emailValue"
@@ -145,9 +176,9 @@
                             android:layout_below="@+id/phoneNumberLabel"
                             android:layout_toEndOf="@+id/emailLabel"
                             android:padding="@dimen/dp_2"
-                            android:text="anna.j@thbglobal.com"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
-                            android:textSize="@dimen/sp_13" />
+                             />
 
                         <TextView
                             android:id="@+id/emergencyContactLabel"
@@ -157,7 +188,7 @@
                             android:padding="@dimen/dp_2"
                             android:text="Emergency Contact: "
                             android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_13" />
+                             />
 
                         <TextView
                             android:id="@+id/emergencyContactValue"
@@ -166,9 +197,9 @@
                             android:layout_below="@+id/emailLabel"
                             android:layout_toEndOf="@+id/emergencyContactLabel"
                             android:padding="@dimen/dp_2"
-                            android:text="+971-55-123-1234"
+                            android:text=""
                             android:textColor="@color/colorLightBlack"
-                            android:textSize="@dimen/sp_13" />
+                             />
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -301,7 +332,6 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto"
                             android:gravity="start"
-                            android:padding="@dimen/dp_5"
                             android:paddingStart="@dimen/dp_10"
                             android:text="@string/membership"
                             android:textColor="@color/colorAccent" />
@@ -309,7 +339,7 @@
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/membershipValue"
                             android:layout_width="wrap_content"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:background="@null"
                             android:ellipsize="end"
                             android:enabled="false"
@@ -319,7 +349,7 @@
                             android:imeOptions="actionNext|flagNavigateNext"
                             android:maxLength="50"
                             android:maxLines="1"
-                            android:padding="@dimen/dp_10"
+                            android:padding="@dimen/dp_5"
                             android:text="MRN: THB888868"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/sp_14" />
@@ -356,7 +386,7 @@
                             android:imeOptions="actionNext|flagNavigateNext"
                             android:maxLength="50"
                             android:maxLines="3"
-                            android:padding="@dimen/dp_10"
+                            android:padding="@dimen/dp_5"
                             android:text="Dubai"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/sp_14" />
@@ -393,7 +423,7 @@
                             android:imeOptions="actionNext|flagNavigateNext"
                             android:maxLength="50"
                             android:maxLines="1"
-                            android:padding="@dimen/dp_10"
+                            android:padding="@dimen/dp_5"
                             android:text="+971-55-123-1234"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/sp_14" />
@@ -431,7 +461,7 @@
                             android:imeOptions="actionNext|flagNavigateNext"
                             android:maxLength="50"
                             android:maxLines="1"
-                            android:padding="@dimen/dp_10"
+                            android:padding="@dimen/dp_5"
                             android:text="7155123-1234"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/sp_14" />
@@ -468,7 +498,7 @@
                             android:imeOptions="actionNext|flagNavigateNext"
                             android:maxLength="50"
                             android:maxLines="1"
-                            android:padding="@dimen/dp_10"
+                            android:padding="@dimen/dp_5"
                             android:text="9971-923-1234"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/sp_14" />
@@ -493,7 +523,21 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16"
                         android:textStyle="bold" />
-
+                    <TextView
+                        android:id="@+id/habitEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/round_corner_green"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center|start"
+                        android:paddingStart="@dimen/dp_30"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingEnd="@dimen/dp_30"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:text="@string/edit"
+                        android:textColor="@color/white" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -508,7 +552,7 @@
                         android:id="@+id/layoutSmoking"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:gravity="start|center"
                         android:orientation="horizontal">
 
                         <TextView
@@ -529,7 +573,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start|center"
                             android:layout_weight="4"
-                            android:gravity="center"
+                            android:gravity="start|center"
                             android:orientation="horizontal">
 
                             <RadioButton
@@ -556,12 +600,13 @@
                             android:layout_height="@dimen/dimen_30dp"
                             android:layout_weight="2"
                             android:background="@drawable/edittext_border"
+                            android:gravity="center"
                             android:hint=" per Day"
                             android:inputType="number"
                             android:maxLength="3"
                             android:padding="@dimen/dp_2"
                             android:textSize="@dimen/sp_13"
-                            android:visibility="gone" />
+                            android:visibility="invisible" />
                     </LinearLayout>
 
                     <!--Drinking-->
@@ -569,7 +614,7 @@
                         android:id="@+id/layoutDrinking"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:gravity="start|center"
                         android:orientation="horizontal">
 
                         <TextView
@@ -588,9 +633,9 @@
                             android:id="@+id/radioGroupDrinking"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/dp_40"
-                            android:layout_gravity="start|center"
+                            android:layout_gravity="start"
                             android:layout_weight="4"
-                            android:gravity="center"
+                            android:gravity="start|center"
                             android:orientation="horizontal">
 
                             <RadioButton
@@ -617,12 +662,13 @@
                             android:layout_height="@dimen/dimen_30dp"
                             android:layout_weight="2"
                             android:background="@drawable/edittext_border"
+                            android:gravity="center"
                             android:hint=" per Day"
                             android:inputType="number"
                             android:maxLength="3"
                             android:padding="@dimen/dp_2"
                             android:textSize="@dimen/sp_13"
-                            android:visibility="gone" />
+                            android:visibility="invisible" />
                     </LinearLayout>
 
                     <!--Exercise-->
@@ -630,7 +676,7 @@
                         android:id="@+id/layoutExercise"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
+                        android:gravity="start|center"
                         android:orientation="horizontal">
 
                         <TextView
@@ -651,7 +697,7 @@
                             android:layout_height="@dimen/dp_40"
                             android:layout_gravity="start|center"
                             android:layout_weight="4"
-                            android:gravity="center"
+                            android:gravity="start|center"
                             android:orientation="horizontal">
 
                             <RadioButton
@@ -678,17 +724,26 @@
                             android:layout_height="@dimen/dimen_30dp"
                             android:layout_weight="2"
                             android:background="@drawable/edittext_border"
+                            android:gravity="center"
                             android:hint=" per Day"
                             android:inputType="number"
                             android:maxLength="3"
                             android:padding="@dimen/dp_2"
                             android:textSize="@dimen/sp_13"
-                            android:visibility="gone" />
+                            android:visibility="invisible" />
 
                     </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-    </LinearLayout>
+
+        <include
+            android:id="@+id/bottomBar"
+            layout="@layout/bottombar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom" />
+    </RelativeLayout>
 </layout>

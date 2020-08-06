@@ -65,8 +65,8 @@ public class ActivityPayUMain extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                ((EditText) findViewById(R.id.editTextMerchantKey)).setText("D3FnuV");
-                ((EditText) findViewById(R.id.editTextMerchantSalt)).setText("yHJ4HZjB");
+                ((EditText) findViewById(R.id.editTextMerchantKey)).setText("CLAMB2ZM");
+                ((EditText) findViewById(R.id.editTextMerchantSalt)).setText("DEWA5PQd0s");
 
             }
 
@@ -187,10 +187,10 @@ public class ActivityPayUMain extends BaseActivity {
              * should not be used.
              * */
             if (environment == PayuConstants.STAGING_ENV) {
-                salt = "eCwWELxi";
+                salt = "DEWA5PQd0s";
             } else {
                 //Production Env
-                salt = "1b1b0";
+                salt = "DEWA5PQd0s";
             }
            // etSalt.setText(salt);
 
