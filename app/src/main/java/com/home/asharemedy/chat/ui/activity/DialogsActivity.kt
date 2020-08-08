@@ -66,7 +66,8 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
     private lateinit var chatConnectionListener: ConnectionListener
 
     private lateinit var dialogsAdapter: DialogsAdapter
-    private var allDialogsMessagesListener: QBChatDialogMessageListener = AllDialogsMessageListener()
+    private var allDialogsMessagesListener: QBChatDialogMessageListener =
+        AllDialogsMessageListener()
     private var systemMessagesListener: SystemMessagesListener = SystemMessagesListener()
     private lateinit var systemMessagesManager: QBSystemMessagesManager
     private lateinit var incomingMessagesManager: QBIncomingMessagesManager
@@ -125,20 +126,22 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
     private fun reloginToChat() {
         showProgressDialog(R.string.dlg_relogin)
         if (SharedPrefsHelper.hasQbUser()) {
-            ChatHelper.loginToChat(SharedPrefsHelper.getQbUser()!!, object : QBEntityCallback<Void> {
-                override fun onSuccess(aVoid: Void?, bundle: Bundle?) {
-                    Log.d(TAG, "Relogin Successful")
-                    checkPlayServicesAvailable()
-                    registerQbChatListeners()
-                    loadDialogsFromQb(false, false)
-                }
+            ChatHelper.loginToChat(
+                SharedPrefsHelper.getQbUser()!!,
+                object : QBEntityCallback<Void> {
+                    override fun onSuccess(aVoid: Void?, bundle: Bundle?) {
+                        Log.d(TAG, "Relogin Successful")
+                        checkPlayServicesAvailable()
+                        registerQbChatListeners()
+                        loadDialogsFromQb(false, false)
+                    }
 
-                override fun onError(e: QBResponseException) {
-                    Log.d(TAG, "Relogin Failed " + e.message)
-                    hideProgressDialog()
-                    finish()
-                }
-            })
+                    override fun onError(e: QBResponseException) {
+                        Log.d(TAG, "Relogin Failed " + e.message)
+                        hideProgressDialog()
+                        finish()
+                    }
+                })
         }
     }
 
@@ -191,8 +194,10 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
         dialogsManager.addManagingDialogsCallbackListener(this)
 
         pushBroadcastReceiver = PushBroadcastReceiver()
-        LocalBroadcastManager.getInstance(this).registerReceiver(pushBroadcastReceiver,
-                IntentFilter(ACTION_NEW_FCM_EVENT))
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            pushBroadcastReceiver,
+            IntentFilter(ACTION_NEW_FCM_EVENT)
+        )
     }
 
     private fun unregisterQbChatListeners() {
@@ -230,8 +235,12 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
                 return true
             }
             R.id.menu_add_chat -> {
-                showProgressDialog(R.string.dlg_loading)
-                SelectUsersActivity.startForResult(this, REQUEST_SELECT_PEOPLE, null)
+                try {
+                    showProgressDialog(R.string.dlg_loading)
+                    SelectUsersActivity.startForResult(this, REQUEST_SELECT_PEOPLE, null)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -245,11 +254,13 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_SELECT_PEOPLE -> {
-                    val selectedUsers = data?.getSerializableExtra(EXTRA_QB_USERS) as ArrayList<QBUser>
+                    val selectedUsers =
+                        data?.getSerializableExtra(EXTRA_QB_USERS) as ArrayList<QBUser>
                     var chatName = data.getStringExtra(EXTRA_CHAT_NAME)
                     if (isPrivateDialogExist(selectedUsers)) {
                         selectedUsers.remove(ChatHelper.getCurrentUser())
-                        val existingPrivateDialog = QbDialogHolder.getPrivateDialogWithUser(selectedUsers[0])
+                        val existingPrivateDialog =
+                            QbDialogHolder.getPrivateDialogWithUser(selectedUsers[0])
                         isProcessingResultInProgress = false
                         existingPrivateDialog?.let {
                             ChatActivity.startForResult(this, REQUEST_DIALOG_ID_FOR_UPDATE, it)
@@ -334,75 +345,109 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
     }
 
     private fun initUi() {
-        val emptyHintLayout = findViewById<LinearLayout>(R.id.ll_chat_empty)
-        val dialogsListView: ListView = findViewById(R.id.list_dialogs_chats)
-        refreshLayout = findViewById(R.id.swipy_refresh_layout)
-        progress = findViewById(R.id.pb_dialogs)
+        try {
+            val emptyHintLayout = findViewById<LinearLayout>(R.id.ll_chat_empty)
+            val dialogsListView: ListView = findViewById(R.id.list_dialogs_chats)
+            refreshLayout = findViewById(R.id.swipy_refresh_layout)
+            progress = findViewById(R.id.pb_dialogs)
 
-        val dialogs = ArrayList(QbDialogHolder.dialogsMap.values)
-        dialogsAdapter = DialogsAdapter(this, dialogs)
+            val dialogs = ArrayList(QbDialogHolder.dialogsMap.values)
+            dialogsAdapter = DialogsAdapter(this, dialogs)
 
-        dialogsListView.emptyView = emptyHintLayout
-        dialogsListView.adapter = dialogsAdapter
+            dialogsListView.emptyView = emptyHintLayout
+            dialogsListView.adapter = dialogsAdapter
 
-        dialogsListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val selectedDialog = parent.getItemAtPosition(position) as QBChatDialog
-            if (currentActionMode != null) {
-                dialogsAdapter.toggleSelection(selectedDialog)
-                var subtitle = ""
-                if (dialogsAdapter.selectedItems.size != 1) {
-                    subtitle = getString(R.string.dialogs_actionmode_subtitle, dialogsAdapter.selectedItems.size.toString())
-                } else {
-                    subtitle = getString(R.string.dialogs_actionmode_subtitle_single, dialogsAdapter.selectedItems.size.toString())
+            dialogsListView.onItemClickListener =
+                AdapterView.OnItemClickListener { parent, view, position, id ->
+                    val selectedDialog = parent.getItemAtPosition(position) as QBChatDialog
+                    if (currentActionMode != null) {
+                        dialogsAdapter.toggleSelection(selectedDialog)
+                        var subtitle = ""
+                        if (dialogsAdapter.selectedItems.size != 1) {
+                            subtitle = getString(
+                                R.string.dialogs_actionmode_subtitle,
+                                dialogsAdapter.selectedItems.size.toString()
+                            )
+                        } else {
+                            subtitle = getString(
+                                R.string.dialogs_actionmode_subtitle_single,
+                                dialogsAdapter.selectedItems.size.toString()
+                            )
+                        }
+                        currentActionMode!!.subtitle = subtitle
+                        currentActionMode!!.menu.get(0)
+                            .setVisible((dialogsAdapter.selectedItems.size >= 1))
+                    } else if (ChatHelper.isLogged()) {
+                        showProgressDialog(R.string.dlg_loading)
+                        ChatActivity.startForResult(
+                            this,
+                            REQUEST_DIALOG_ID_FOR_UPDATE,
+                            selectedDialog
+                        )
+                    } else {
+                        showProgressDialog(R.string.dlg_login)
+                        ChatHelper.loginToChat(currentUser,
+                            object : QBEntityCallback<Void> {
+                                override fun onSuccess(p0: Void?, p1: Bundle?) {
+                                    hideProgressDialog()
+                                    ChatActivity.startForResult(
+                                        this@DialogsActivity,
+                                        REQUEST_DIALOG_ID_FOR_UPDATE,
+                                        selectedDialog
+                                    )
+                                }
+
+                                override fun onError(e: QBResponseException?) {
+                                    hideProgressDialog()
+                                    shortToast(R.string.login_chat_login_error)
+                                }
+                            })
+                    }
                 }
-                currentActionMode!!.subtitle = subtitle
-                currentActionMode!!.menu.get(0).setVisible((dialogsAdapter.selectedItems.size >= 1))
-            } else if (ChatHelper.isLogged()) {
-                showProgressDialog(R.string.dlg_loading)
-                ChatActivity.startForResult(this, REQUEST_DIALOG_ID_FOR_UPDATE, selectedDialog)
-            } else {
-                showProgressDialog(R.string.dlg_login)
-                ChatHelper.loginToChat(currentUser,
-                        object : QBEntityCallback<Void> {
-                            override fun onSuccess(p0: Void?, p1: Bundle?) {
-                                hideProgressDialog()
-                                ChatActivity.startForResult(this@DialogsActivity, REQUEST_DIALOG_ID_FOR_UPDATE, selectedDialog)
-                            }
 
-                            override fun onError(e: QBResponseException?) {
-                                hideProgressDialog()
-                                shortToast(R.string.login_chat_login_error)
-                            }
-                        })
+            dialogsListView.setOnItemLongClickListener { parent, view, position, id ->
+                val selectedDialog = parent.getItemAtPosition(position) as QBChatDialog
+                startSupportActionMode(DeleteActionModeCallback())
+                dialogsAdapter.selectItem(selectedDialog)
+                return@setOnItemLongClickListener true
             }
-        }
 
-        dialogsListView.setOnItemLongClickListener { parent, view, position, id ->
-            val selectedDialog = parent.getItemAtPosition(position) as QBChatDialog
-            startSupportActionMode(DeleteActionModeCallback())
-            dialogsAdapter.selectItem(selectedDialog)
-            return@setOnItemLongClickListener true
+            refreshLayout.setOnRefreshListener {
+                cancelTasks()
+                loadDialogsFromQb(silentUpdate = true, clearDialogHolder = true)
+            }
+            refreshLayout.setColorSchemeResources(
+                R.color.color_new_blue,
+                R.color.random_color_2,
+                R.color.random_color_3,
+                R.color.random_color_7
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        refreshLayout.setOnRefreshListener {
-            cancelTasks()
-            loadDialogsFromQb(silentUpdate = true, clearDialogHolder = true)
-        }
-        refreshLayout.setColorSchemeResources(R.color.color_new_blue, R.color.random_color_2, R.color.random_color_3, R.color.random_color_7)
     }
 
     private fun createDialog(selectedUsers: ArrayList<QBUser>, chatName: String) {
-        ChatHelper.createDialogWithSelectedUsers(selectedUsers, chatName,
+        try {
+            ChatHelper.createDialogWithSelectedUsers(selectedUsers, chatName,
                 object : QBEntityCallback<QBChatDialog> {
                     override fun onSuccess(dialog: QBChatDialog, args: Bundle?) {
                         Log.d(TAG, "Creating Dialog Successful")
                         isProcessingResultInProgress = false
-                        dialogsManager.sendSystemMessageAboutCreatingDialog(systemMessagesManager, dialog)
+                        dialogsManager.sendSystemMessageAboutCreatingDialog(
+                            systemMessagesManager,
+                            dialog
+                        )
                         val dialogs = ArrayList<QBChatDialog>()
                         dialogs.add(dialog)
                         QbDialogHolder.addDialogs(dialogs)
                         DialogJoinerAsyncTask(this@DialogsActivity, dialogs).execute()
-                        ChatActivity.startForResult(this@DialogsActivity, REQUEST_DIALOG_ID_FOR_UPDATE, dialog, true)
+                        ChatActivity.startForResult(
+                            this@DialogsActivity,
+                            REQUEST_DIALOG_ID_FOR_UPDATE,
+                            dialog,
+                            true
+                        )
                         hideProgressDialog()
                     }
 
@@ -413,52 +458,61 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
                         showErrorSnackbar(R.string.dialogs_creation_error, error, null)
                     }
                 }
-        )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun loadDialogsFromQb(silentUpdate: Boolean, clearDialogHolder: Boolean) {
-        isProcessingResultInProgress = true
-        if (silentUpdate) {
-            progress.visibility = View.VISIBLE
-        } else {
-            showProgressDialog(R.string.dlg_loading)
-        }
-
-        val requestBuilder = QBRequestGetBuilder()
-        requestBuilder.limit = DIALOGS_PER_PAGE
-        requestBuilder.skip = if (clearDialogHolder) {
-            0
-        } else {
-            QbDialogHolder.dialogsMap.size
-        }
-
-        ChatHelper.getDialogs(requestBuilder, object : QBEntityCallback<ArrayList<QBChatDialog>> {
-            override fun onSuccess(dialogs: ArrayList<QBChatDialog>, bundle: Bundle?) {
-                if (dialogs.size < DIALOGS_PER_PAGE) {
-                    hasMoreDialogs = false
-                }
-                if (clearDialogHolder) {
-                    QbDialogHolder.clear()
-                    hasMoreDialogs = true
-                }
-                QbDialogHolder.addDialogs(dialogs)
-                updateDialogsAdapter()
-
-                val joinerTask = DialogJoinerAsyncTask(this@DialogsActivity, dialogs)
-                joinerTasksSet.add(joinerTask)
-                joinerTask.execute()
-
-                disableProgress()
-                if (hasMoreDialogs) {
-                    loadDialogsFromQb(true, false)
-                }
+        try {
+            isProcessingResultInProgress = true
+            if (silentUpdate) {
+                progress.visibility = View.VISIBLE
+            } else {
+                showProgressDialog(R.string.dlg_loading)
             }
 
-            override fun onError(e: QBResponseException) {
-                disableProgress()
-                shortToast(e.message)
+            val requestBuilder = QBRequestGetBuilder()
+            requestBuilder.limit = DIALOGS_PER_PAGE
+            requestBuilder.skip = if (clearDialogHolder) {
+                0
+            } else {
+                QbDialogHolder.dialogsMap.size
             }
-        })
+
+            ChatHelper.getDialogs(
+                requestBuilder,
+                object : QBEntityCallback<ArrayList<QBChatDialog>> {
+                    override fun onSuccess(dialogs: ArrayList<QBChatDialog>, bundle: Bundle?) {
+                        if (dialogs.size < DIALOGS_PER_PAGE) {
+                            hasMoreDialogs = false
+                        }
+                        if (clearDialogHolder) {
+                            QbDialogHolder.clear()
+                            hasMoreDialogs = true
+                        }
+                        QbDialogHolder.addDialogs(dialogs)
+                        updateDialogsAdapter()
+
+                        val joinerTask = DialogJoinerAsyncTask(this@DialogsActivity, dialogs)
+                        joinerTasksSet.add(joinerTask)
+                        joinerTask.execute()
+
+                        disableProgress()
+                        if (hasMoreDialogs) {
+                            loadDialogsFromQb(true, false)
+                        }
+                    }
+
+                    override fun onError(e: QBResponseException) {
+                        disableProgress()
+                        shortToast(e.message)
+                    }
+                })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun disableProgress() {
@@ -469,12 +523,16 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
     }
 
     private fun initConnectionListener() {
-        val rootView: View = findViewById(R.id.layout_root)
-        chatConnectionListener = object : VerboseQbChatConnectionListener(rootView) {
-            override fun reconnectionSuccessful() {
-                super.reconnectionSuccessful()
-                loadDialogsFromQb(false, true)
+        try {
+            val rootView: View = findViewById(R.id.layout_root)
+            chatConnectionListener = object : VerboseQbChatConnectionListener(rootView) {
+                override fun reconnectionSuccessful() {
+                    super.reconnectionSuccessful()
+                    loadDialogsFromQb(false, true)
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -498,17 +556,21 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
     private inner class DeleteActionModeCallback internal constructor() : ActionMode.Callback {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            vibrator.vibrate(80)
+            try {
+                val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                vibrator.vibrate(80)
 
-            mode.title = getString(R.string.dialogs_actionmode_title)
-            mode.subtitle = getString(R.string.dialogs_actionmode_subtitle_single, "1")
+                mode.title = getString(R.string.dialogs_actionmode_title)
+                mode.subtitle = getString(R.string.dialogs_actionmode_subtitle_single, "1")
 
-            mode.menuInflater.inflate(R.menu.menu_activity_dialogs_action_mode, menu)
-            val menuItem = menu.findItem(R.id.menu_dialogs_action_delete)
-            if (menuItem != null && menuItem is TextView) {
+                mode.menuInflater.inflate(R.menu.menu_activity_dialogs_action_mode, menu)
+                val menuItem = menu.findItem(R.id.menu_dialogs_action_delete)
+                if (menuItem != null && menuItem is TextView) {
+                }
+                dialogsAdapter.prepareToSelect()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-            dialogsAdapter.prepareToSelect()
             return true
         }
 
@@ -533,38 +595,44 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
         }
 
         private fun deleteSelectedDialogs() {
-            val selectedDialogs = dialogsAdapter.selectedItems
-            val dialogsToDelete = ArrayList<QBChatDialog>()
-            for (dialog in selectedDialogs) {
-                when {
-                    dialog.type == QBDialogType.PUBLIC_GROUP -> {
-                        shortToast(getString(R.string.dialogs_cannot_delete_chat, dialog.name))
-                    }
-                    dialog.type == QBDialogType.GROUP -> {
-                        dialogsToDelete.add(dialog)
-                        dialogsManager.sendMessageLeftUser(dialog)
-                        dialogsManager.sendSystemMessageLeftUser(systemMessagesManager, dialog)
-                    }
-                    dialog.type == QBDialogType.PRIVATE -> {
-                        dialogsToDelete.add(dialog)
+            try {
+                val selectedDialogs = dialogsAdapter.selectedItems
+                val dialogsToDelete = ArrayList<QBChatDialog>()
+                for (dialog in selectedDialogs) {
+                    when {
+                        dialog.type == QBDialogType.PUBLIC_GROUP -> {
+                            shortToast(getString(R.string.dialogs_cannot_delete_chat, dialog.name))
+                        }
+                        dialog.type == QBDialogType.GROUP -> {
+                            dialogsToDelete.add(dialog)
+                            dialogsManager.sendMessageLeftUser(dialog)
+                            dialogsManager.sendSystemMessageLeftUser(systemMessagesManager, dialog)
+                        }
+                        dialog.type == QBDialogType.PRIVATE -> {
+                            dialogsToDelete.add(dialog)
+                        }
                     }
                 }
-            }
 
-            if (!CollectionUtils.isEmpty(dialogsToDelete)) {
-                ChatHelper.deleteDialogs(dialogsToDelete, object : QBEntityCallback<ArrayList<String>> {
-                    override fun onSuccess(dialogsIds: ArrayList<String>, bundle: Bundle?) {
-                        Log.d(TAG, "Dialogs Deleting Successful")
-                        QbDialogHolder.deleteDialogs(dialogsIds)
-                        updateDialogsAdapter()
-                    }
+                if (!CollectionUtils.isEmpty(dialogsToDelete)) {
+                    ChatHelper.deleteDialogs(
+                        dialogsToDelete,
+                        object : QBEntityCallback<ArrayList<String>> {
+                            override fun onSuccess(dialogsIds: ArrayList<String>, bundle: Bundle?) {
+                                Log.d(TAG, "Dialogs Deleting Successful")
+                                QbDialogHolder.deleteDialogs(dialogsIds)
+                                updateDialogsAdapter()
+                            }
 
-                    override fun onError(e: QBResponseException) {
-                        Log.d(TAG, "Deleting Dialogs Error: " + e.message)
-                        showErrorSnackbar(R.string.dialogs_deletion_error, e,
-                                View.OnClickListener { deleteSelectedDialogs() })
-                    }
-                })
+                            override fun onError(e: QBResponseException) {
+                                Log.d(TAG, "Deleting Dialogs Error: " + e.message)
+                                showErrorSnackbar(R.string.dialogs_deletion_error, e,
+                                    View.OnClickListener { deleteSelectedDialogs() })
+                            }
+                        })
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -589,7 +657,11 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
     }
 
     private inner class AllDialogsMessageListener : QbChatDialogMessageListenerImpl() {
-        override fun processMessage(dialogID: String, qbChatMessage: QBChatMessage, senderID: Int?) {
+        override fun processMessage(
+            dialogID: String,
+            qbChatMessage: QBChatMessage,
+            senderID: Int?
+        ) {
             Log.d(TAG, "Processing received Message: " + qbChatMessage.body)
             if (senderID != currentUser.id) {
                 dialogsManager.onGlobalMessageReceived(dialogID, qbChatMessage)
@@ -597,8 +669,10 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
         }
     }
 
-    private class DialogJoinerAsyncTask internal constructor(dialogsActivity: DialogsActivity,
-                                                             private val dialogs: ArrayList<QBChatDialog>) : BaseAsyncTask<Void, Void, Void>() {
+    private class DialogJoinerAsyncTask internal constructor(
+        dialogsActivity: DialogsActivity,
+        private val dialogs: ArrayList<QBChatDialog>
+    ) : BaseAsyncTask<Void, Void, Void>() {
         private val activityRef: WeakReference<DialogsActivity> = WeakReference(dialogsActivity)
 
         @Throws(Exception::class)

@@ -9,11 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.home.asharemedy.R;
 import com.home.asharemedy.base.BaseActivity;
 import com.home.asharemedy.utils.Constants;
+import com.home.asharemedy.utils.Utils;
 import com.payu.india.Extras.PayUChecksum;
 import com.payu.india.Extras.PayUSdkDetails;
 import com.payu.india.Model.PaymentParams;
@@ -37,6 +39,18 @@ public class ActivityPayUMain extends BaseActivity {
 
     private PayUChecksum checksum;
     private EditText etSalt;
+    private EditText mobileValue;
+    private EditText emailValue;
+    private EditText amountValue;
+
+    private TextView doctorName;
+    private TextView doctorSpeciality;
+    private TextView address;
+
+    private TextView ailmentValue;
+    private TextView dateValue;
+    private TextView timeValue;
+
     private String salt = null;
 
     @Override
@@ -44,6 +58,7 @@ public class ActivityPayUMain extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payu_main);
 
+        initView();
         //TODO Must write below code in your activity to set up initial context for PayU
         Payu.setInstance(this);
 
@@ -75,6 +90,10 @@ public class ActivityPayUMain extends BaseActivity {
 
             }
         });
+    }
+
+    private void initView() {
+        //mobileValue.setText(Utils.doctorFacilityList[0].name);
     }
 
     @Override
@@ -192,7 +211,7 @@ public class ActivityPayUMain extends BaseActivity {
                 //Production Env
                 salt = "DEWA5PQd0s";
             }
-           // etSalt.setText(salt);
+            // etSalt.setText(salt);
 
             generateHashFromSDK(mPaymentParams, salt);
         } catch (Exception e) {

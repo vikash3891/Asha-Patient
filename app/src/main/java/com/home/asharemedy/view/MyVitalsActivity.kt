@@ -84,6 +84,10 @@ class MyVitalsActivity : BaseActivity() {
             )
             finish()
         }
+
+        floatingActionButton.setOnClickListener {
+            startActivity(Intent(this, ActivityAddVitalRecord::class.java))
+        }
     }
 
     private fun drawLineChart(lineChart: LineChart) {
@@ -193,12 +197,21 @@ class MyVitalsActivity : BaseActivity() {
         try {
 
             var arrayColors = arrayOf(
-                getString(R.string.blood_pressure),
-                getString(R.string.pulse_rate),
+                getString(R.string.temperature),
+                getString(R.string.pulse),
+                getString(R.string.height),
                 getString(R.string.weight),
-                getString(R.string.body_composition),
-                getString(R.string.respiratory_rate),
-                getString(R.string.blood_sugar)
+                getString(R.string.respiration_rate),
+                getString(R.string.oxygen_saturation),
+                getString(R.string.pain_scale_score),
+                getString(R.string.lmp),
+                getString(R.string.coma_scale),
+                getString(R.string.bca),
+                getString(R.string.fat),
+                getString(R.string.muscle),
+                getString(R.string.hydration),
+                getString(R.string.steps),
+                getString(R.string.calories_burned)
             )
 
             lateinit var dialog: AlertDialog

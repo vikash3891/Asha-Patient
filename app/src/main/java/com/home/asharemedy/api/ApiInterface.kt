@@ -21,9 +21,8 @@ interface ApiInterface {
     @POST(Constants.PATIENT_REGISTRATION)
     fun registerUser(@Body body: RequestBody): Call<ResponseModelClasses.RegistrationResponse>
 
-    @FormUrlEncoded
-    @POST(Constants.REGISTRATION_USER + "/{userid}")
-    fun updateProfile(@Path("userid") id: String, @FieldMap fieldMap: Map<String, String>): Call<ResponseModelClasses.RegistrationResponse>
+    @PUT(Constants.PATIENT_REG + "{userid}")
+    fun updateProfile(@Path("userid") id: String, @Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
 
     /*Get Patient Profile*/
     @GET(Constants.PATIENT_REG + "/{patientID}")
@@ -82,5 +81,9 @@ interface ApiInterface {
     /*Get PaymentHistory */
     @GET(Constants.PAYMENT_HISTORY)// + "/{patientID}")   //@Path("patientID") id: String
     fun getPaymentHistoryList(): Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>>
+
+
+    @POST(Constants.PATIENT_REG + "/{patientID}" + Constants.HABIT)/*/patients/17/habits*/
+    fun getHabit(@Path("patientID") id: String,@Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
 
 }

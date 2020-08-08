@@ -1,19 +1,18 @@
 package com.home.asharemedy.view
 
-import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.RadioGroup
+import android.view.Window
+import android.widget.*
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
-import com.home.asharemedy.databinding.AcitivityProfileBinding
-import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_profile_editable.*
@@ -23,10 +22,20 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MyProfile : BaseActivity() {
+class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
-    private lateinit var viewDataBinding: AcitivityProfileBinding
     var isEditable = false
+    lateinit var dialog: Dialog
+    var isSmokingAdded = false
+    var isDrinkingAdded = false
+    var isExerciseAdded = false
+    var habitName = ""
+    var habitFrequencyValue = ""
+    var habitFrequencyUnit = ""
+    var habitStatus = ""
+    var data: ResponseModelClasses.GetPatientProfileResponseModel? = null
+
+    var languages = arrayOf("Smoking", "Drinking", "Exercise")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +49,23 @@ class MyProfile : BaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (isSmokingAdded) {
+
+        }
+    }
+
     private fun initView() {
         getPatientProfile()
 
     }
 
     private fun checkClicks() {
-        edit.setOnClickListener {
+        communicationEdit.setOnClickListener {
             if (!isEditable) {
                 isEditable = true
-                edit.text = "Save"
+                communicationEdit.text = "Save"
                 nationalityValue.isEnabled = true
                 religionValue.isEnabled = true
                 membershipValue.isEnabled = true
@@ -58,7 +74,7 @@ class MyProfile : BaseActivity() {
                 insuranceValue.isEnabled = true
                 emiratesIDValue.isEnabled = true
             } else {
-                edit.text = "Edit"
+                communicationEdit.text = "Edit"
                 isEditable = false
                 nationalityValue.isEnabled = false
                 religionValue.isEnabled = false
@@ -67,6 +83,8 @@ class MyProfile : BaseActivity() {
                 communicationValue.isEnabled = false
                 insuranceValue.isEnabled = false
                 emiratesIDValue.isEnabled = false
+
+                validationField()
             }
         }
 
@@ -111,79 +129,88 @@ class MyProfile : BaseActivity() {
         topBarLayout.imageBack.setOnClickListener {
             finish()
         }
+        habitEdit.setOnClickListener {
+            showHabitDialog()
+        }
     }
 
-    /*private fun validationField() {
+    private fun validationField() {
         try {
             var allValid = true
-            if (name.text!!.isEmpty()) {
+            if (userName.text!!.isEmpty()) {
                 showSuccessPopup("Please enter Name")
                 !allValid
                 return
-            } else if (phoneNumber.text!!.isEmpty() || phoneNumber.length() < 10) {
+            } else if (phoneNumberValue.text!!.isEmpty() || phoneNumberValue.length() < 10) {
                 showSuccessPopup("Please enter Mobile Number")
                 !allValid
                 return
-            } else if (editEmail.text!!.isEmpty()) {
+            } else if (emailValue.text!!.isEmpty()) {
                 showSuccessPopup(getString(R.string.error_message_enter_email))
                 !allValid
                 return
-            } else if (!editEmail.text!!.isEmpty() && !Utils.isValidEmail(editEmail.text.toString().trim())) {
+            } else if (!emailValue.text!!.isEmpty() && !Utils.isValidEmail(emailValue.text.toString().trim())) {
                 showSuccessPopup("Please enter valid Email")
                 !allValid
                 return
             } else if (allValid) {
-                item.name = name.text.toString()
-                item.mobile = phoneNumber.text.toString()
-                item.email = editEmail.text.toString()
-                item.address = streetSocietyOffice.text.toString()
-                item.landmark = landmarkValue.text.toString()
-                item.state = stateValue.text.toString()
-                item.city = cityValue.text.toString()
-                item.pin = pinValue.text.toString()
-                updateUserProfile()
+                data!!.patient_name = userName.text.toString()
+                data!!.patient_mobile = phoneNumberValue.text.toString()
+                data!!.patient_email = emailValue.text.toString()
+                data!!.patient_address1 = addressValue.text.toString()
+                data!!.patient_address2 = streetValue.text.toString()
+                data!!.patient_city = cityValue.text.toString()
+                // data!!.pin = pinValue.text.toString()
+                updateProfileApi()
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }*/
+    }
 
-    /*private fun updateUserProfile() = if (Utils.isConnected(this)) {
+    private fun updateProfileApi() = if (Utils.isConnected(this)) {
         showDialog()
         try {
+            data!!.patient_name = userName.text.toString()
+            data!!.patient_dob = dobValue.text.toString()
+            data!!.patient_mobile = phoneNumberValue.text.toString()
+            data!!.patient_address1 = addressValue.text.toString()
+            data!!.patient_address2 = communicationValue.text.toString()
+            data!!.emergency_contact_number = emergencyContactValue.text.toString()
+            data!!.patient_city = cityValue.text.toString()
+
+
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ResponseModelClasses.RegistrationResponse> =
+            val call: Call<ResponseModelClasses.LoginResponseModel> =
                 apiService.updateProfile(
-                    Utils.getUserDetails().get(0).id.orEmpty(),
-                    RequestModel.getUpdateProfileRequestModel(
-                        Utils.getUserDetails().get(0).password.orEmpty(), item
+                    "54",
+                    Utils.getJSONRequestBody(
+                        RequestModel.getUpdateProfileRequestModel(
+                            this@MyProfile, data!!
+                        )
                     )
                 )
-            call.enqueue(object : Callback<ResponseModelClasses.RegistrationResponse> {
+            call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
                 override fun onResponse(
-                    call: Call<ResponseModelClasses.RegistrationResponse>,
-                    response: Response<ResponseModelClasses.RegistrationResponse>
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    response: Response<ResponseModelClasses.LoginResponseModel>
                 ) {
                     try {
                         dismissDialog()
-Log.d("Response: ", response.body().toString())
+                        Log.d("Response:", response.body().toString())
+                        if (response.code() == 400) {
+                            Log.v("Error code 400", response.errorBody().toString())
+                        }
                         if (response.body() != null) {
-                            if (response.body()!!.status == "fail") {
+                            if (response.body()!!.message == "fail") {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
-
-                                var alertDialog = AlertDialog.Builder(this@MyProfile)
-                                alertDialog.setTitle(getString(R.string.app_name))
-                                alertDialog.setMessage("Profile Updated Successfully")
-
-                                alertDialog.setPositiveButton("OK") { dialog, _ ->
-                                    dialog.dismiss()
-                                    Utils.setUserDetails(item)
-                                    finish()
+                                when {
+                                    isSmokingAdded -> layoutSmoking.visibility = View.VISIBLE
+                                    isDrinkingAdded -> layoutDrinking.visibility = View.VISIBLE
+                                    else -> layoutExercise.visibility = View.VISIBLE
                                 }
-
-                                alertDialog.show()
                             }
                         }
                     } catch (e: Exception) {
@@ -192,7 +219,7 @@ Log.d("Response: ", response.body().toString())
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseModelClasses.RegistrationResponse>,
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())
@@ -206,8 +233,9 @@ Log.d("Response: ", response.body().toString())
         }
 
     } else {
+        dismissDialog()
         showToast(getString(R.string.internet))
-    }*/
+    }
 
     private fun getPatientProfile() = if (Utils.isConnected(this)) {
         showDialog()
@@ -222,7 +250,7 @@ Log.d("Response: ", response.body().toString())
                     response: Response<ResponseModelClasses.GetPatientProfileResponseModel>
                 ) {
                     try {
-                        dismissDialog()
+                        //dismissDialog()
                         Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
 
@@ -232,7 +260,8 @@ Log.d("Response: ", response.body().toString())
 
                             loadList()*/
                             getPatientHabit()
-                            updateView(response.body()!!)
+                            data = response.body()!!
+                            updateView(data!!)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -259,7 +288,7 @@ Log.d("Response: ", response.body().toString())
     }
 
     private fun getPatientHabit() = if (Utils.isConnected(this)) {
-        showDialog()
+        //showDialog()
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
@@ -304,11 +333,11 @@ Log.d("Response: ", response.body().toString())
     fun updateView(data: ResponseModelClasses.GetPatientProfileResponseModel) {
         userName.text = data.patient_name
         patientID.text = data.patient_id
-        dobValue.text = data.birth_date
+        dobValue.setText(data.patient_dob)
         brandPartnerName.text = data.insurance_company_name
-        phoneNumberValue.text = data.patient_mobile
-        emailValue.text = data.patient_email
-        emergencyContactValue.text = data.emergency_contact_number
+        phoneNumberValue.setText(data.patient_mobile)
+        emailValue.setText(data.patient_email)
+        emergencyContactValue.setText(data.emergency_contact_number)
 
         nationalityValue.setText(data.patient_country)
         religionValue.setText(data.patient_country)
@@ -317,6 +346,7 @@ Log.d("Response: ", response.body().toString())
         communicationValue.setText(data.patient_address2)
         insuranceValue.setText(data.insurance_company_name)
         emiratesIDValue.setText(data.parent_id)
+        cityValue.setText(data.patient_city)
     }
 
     fun updateHabitView(data: ArrayList<ResponseModelClasses.GetHabitResponseModel>) {
@@ -351,4 +381,142 @@ Log.d("Response: ", response.body().toString())
             }
         }
     }
+
+    private fun showHabitDialog() {
+
+        try {
+            dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.dialog_add_habit)
+            val spinnerHabit = dialog.findViewById(R.id.spinnerHabit) as Spinner
+            val radioGroupHabit = dialog.findViewById(R.id.radioGroupHabit) as RadioGroup
+            val habitFrequency = dialog.findViewById(R.id.habitFrequency) as EditText
+            val habitYes = dialog.findViewById(R.id.habitYes) as RadioButton
+            val habitNo = dialog.findViewById(R.id.habitNo) as RadioButton
+
+            spinnerHabit.onItemSelectedListener = this
+
+            val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, languages)
+            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerHabit.adapter = aa
+
+            radioGroupHabit.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
+
+                if (i == R.id.habitYes) {
+                    habitFrequency.visibility = View.VISIBLE
+                } else if (i == R.id.habitNo) {
+                    habitFrequency.visibility = View.GONE
+                }
+            }
+
+            val cancel = dialog.findViewById(R.id.cancel) as TextView
+            val submit = dialog.findViewById(R.id.submit) as TextView
+
+            cancel.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            submit.setOnClickListener {
+
+                habitFrequencyValue = habitFrequency.text.toString()
+                habitFrequencyUnit = "Per Day"
+
+                habitStatus = if (habitYes.isChecked)
+                    "active"
+                else
+                    "inactive"
+
+                when {
+                    spinnerHabit.selectedItem == "Smoking" -> {
+                        isSmokingAdded = true
+                        habitName = "Smoking"
+                    }
+                    spinnerHabit.selectedItem == "Drinking" -> {
+                        isDrinkingAdded = true
+                        habitName = "Drinking"
+                    }
+                    else -> {
+                        isExerciseAdded = true
+                        habitName = "Exercise"
+                    }
+                }
+                addHabitApi()
+                dialog.dismiss()
+            }
+            dialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
+
+    }
+
+    override fun onNothingSelected(arg0: AdapterView<*>) {
+
+    }
+
+    private fun addHabitApi() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ResponseModelClasses.LoginResponseModel> =
+                apiService.getHabit(
+                    "17",
+                    Utils.getJSONRequestBody(
+                        RequestModel.getHabitRequestModel(
+                            habitName, habitFrequencyValue, habitFrequencyUnit, habitStatus
+                        )
+                    )
+                )
+            call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    response: Response<ResponseModelClasses.LoginResponseModel>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("Response:", response.body().toString())
+                        if (response.code() == 400) {
+                            Log.v("Error code 400", response.errorBody().toString())
+                        }
+                        if (response.body() != null) {
+                            if (response.body()!!.message == "fail") {
+                                showSuccessPopup(response.body()!!.message)
+                            } else {
+                                when {
+                                    isSmokingAdded -> layoutSmoking.visibility = View.VISIBLE
+                                    isDrinkingAdded -> layoutDrinking.visibility = View.VISIBLE
+                                    else -> layoutExercise.visibility = View.VISIBLE
+                                }
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
 }

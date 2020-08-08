@@ -77,7 +77,7 @@ class AppointmentSlotActivity : BaseActivity() {
             }
             proceedToPay.setOnClickListener {
                 for (i in 0 until Utils.appointmentSlotList.size) {
-                    Log.d("SelSlotList", Utils.appointmentSlotList[i].isSelected.toString())
+                    Log.d("SeleSlotList", Utils.appointmentSlotList[i].isSelected.toString())
                 }
                 startActivity(Intent(this@AppointmentSlotActivity, ActivityPayUMain::class.java))
             }

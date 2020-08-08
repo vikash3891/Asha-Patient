@@ -194,6 +194,7 @@
             android:name=".view.MyCarePlansActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.ActivityAddVitalRecord" />
 
 
         <service android:name=".video.services.LoginService" />

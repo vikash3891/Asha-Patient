@@ -40,7 +40,7 @@ class ChatLoginActivity : BaseActivity() {
         setValues()
     }
 
-    fun setValues() {
+    private fun setValues() {
 
         showProgressDialog(R.string.dlg_login)
         prepareUser()

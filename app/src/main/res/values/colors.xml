@@ -12,6 +12,7 @@
     <color name="colorDarkGray">#AEAEAF</color>
     <color name="colorLightBlack">#302e2f</color>
     <color name="colorBlack">#000</color>
+    <color name="colorBlackTransparent">#AA000000</color>
     <color name="colorWhite">#ffffff</color>
 
     <color name="colorListItem">#5df2d6</color>

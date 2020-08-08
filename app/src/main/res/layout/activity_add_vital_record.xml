@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.home.asharemedy.model.DashboardViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/topbar"
+            layout="@layout/topbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50" />
+
+        <RelativeLayout
+            android:id="@+id/layoutVitalHeader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topbar"
+            android:layout_marginBottom="@dimen/dp_50"
+            android:background="@color/colorBlackTransparent">
+
+            <TextView
+                android:id="@+id/vitalName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_60"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:background="@drawable/round_corner_green"
+                android:gravity="center"
+                android:text="Vital Name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_18" />
+
+            <!--Date/Time-->
+            <LinearLayout
+                android:id="@+id/dateTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vitalName"
+                android:layout_marginTop="@dimen/dp_20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/vitalRecordDate"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner_green"
+                    android:gravity="center"
+                    android:text="08/08/2020"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_18" />
+
+                <TextView
+                    android:id="@+id/vitalRecordTime"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner_green"
+                    android:gravity="center"
+                    android:text="11:11:11 PM"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_18" />
+            </LinearLayout>
+
+            <!--Systolic/Daistolic-->
+            <LinearLayout
+                android:id="@+id/bpLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dateTime"
+                android:layout_marginTop="@dimen/dp_20"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/bpSystolic"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_transparent_edittext"
+                    android:gravity="center"
+                    android:hint="@string/systolic"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/sp_15" />
+
+                <EditText
+                    android:id="@+id/bpDaistolic"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_transparent_edittext"
+                    android:gravity="center"
+                    android:hint="@string/daistolic"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/sp_15" />
+            </LinearLayout>
+
+            <!--Pulse Rate-->
+            <LinearLayout
+                android:id="@+id/pulseRateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bpLayout"
+                android:layout_marginTop="@dimen/dp_20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pulseRateLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Pulse Rate(/min) ->"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/sp_15" />
+
+                <EditText
+                    android:id="@+id/pulseRateValue"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_transparent_edittext"
+                    android:gravity="center"
+                    android:hint="PR/min"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/sp_15" />
+            </LinearLayout>
+
+            <!--Respiratory Rate-->
+            <LinearLayout
+                android:id="@+id/respiratoryRateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pulseRateLayout"
+                android:layout_marginTop="@dimen/dp_20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/respiratoryRateLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Respiratory Rate(/min) ->"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/respiratoryRateValue"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_transparent_edittext"
+                    android:gravity="center"
+                    android:hint="PR/min"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/sp_15" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/saveVitalRecord"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_below="@+id/respiratoryRateLayout"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_60"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:background="@drawable/round_corner_green"
+                android:gravity="center"
+                android:text="Save Record"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+        </RelativeLayout>
+
+
+        <include
+            android:id="@+id/bottomBar"
+            layout="@layout/bottombar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom" />
+
+    </RelativeLayout>
+</layout>

@@ -1,8 +1,10 @@
 package com.home.asharemedy.api
 
+import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.home.asharemedy.model.LoginModel
+import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 
 object RequestModel {
@@ -18,6 +20,23 @@ object RequestModel {
         map.put(Constants.PASSWORD, password)
         map.put("usertype", "patients")
         Log.d("Login Request: ", "" + Gson().toJson(map))
+        return map;
+    }
+
+    /*-------Habit-------*/
+    fun getHabitRequestModel(
+        habit_name: String,
+        habit_frequency: String,
+        habit_frequency_unit: String,
+        status: String
+    ): HashMap<String, String> {
+        var map = HashMap<String, String>()
+
+        map.put(Constants.HABIT_NAME, habit_name)
+        map.put(Constants.HABIT_FREQUENCY, habit_frequency)
+        map.put(Constants.HABIT_FREQUENCY_UNIT, habit_frequency_unit)
+        map.put(Constants.STATUS, status)
+        Log.d("Habit Request: ", "" + Gson().toJson(map))
         return map;
     }
 
@@ -57,7 +76,7 @@ object RequestModel {
         var map = HashMap<String, String>()
         map.put(Constants.PATIENT_NAME, patient_name)
         map.put(Constants.PATIENT_DOB, patient_dob)
-        map.put(Constants.PATIENT_GENDER, patient_gender)
+        map.put(Constants.PATIENT_GENDER, patient_gender.toLowerCase())
         map.put(Constants.PATIENT_EMAIL, patient_email)
         map.put(Constants.PATIENT_MOBILE, patient_mobile)
         map.put(Constants.PATIENT_PASSWORD, patient_password)
@@ -88,21 +107,42 @@ object RequestModel {
     }
 
     fun getUpdateProfileRequestModel(
-        password: String, item: LoginModel
-    ): Map<String, String> {
+        context: Context, data: ResponseModelClasses.GetPatientProfileResponseModel
+    ): HashMap<String, String> {
 
         var map = HashMap<String, String>()
-        /*map.put(Constants.NAME, item.name!!)
-        map.put(Constants.MOBILE, item.mobile!!)
-        map.put(Constants.PASSWORD, password)
-        map.put(Constants.EMAIL, item.email!!)
-        map.put(Constants.ADDRESS, item.address.orEmpty())
-        map.put(Constants.ZIP, item.pin.orEmpty())
-        map.put(Constants.STATE, item.state!!)
-        map.put(Constants.CITY, item.city!!)
-        map.put(Constants.CREATED_DATE, "")
 
-        Log.d("ProUpdReq.: ", "" + Gson().toJson(map))*/
+        map.put(Constants.PATIENT_NAME, data.patient_name)
+        map.put(Constants.PATIENT_DOB, data.patient_dob)
+        map.put(Constants.PATIENT_GENDER, data.patient_gender)
+        map.put(Constants.PATIENT_MOBILE, data.patient_mobile)
+        map.put(Constants.PATIENT_PASSWORD, AppPrefences.getPassword(context))
+        map.put(Constants.PATIENT_ADDRESS1, data.patient_address1)
+        map.put(Constants.PATIENT_ADDRESS2, data.patient_address2)
+        map.put(Constants.PATIENT_CITY, data.patient_city)
+        map.put(Constants.PATIENT_STATE, "Delhi")
+        map.put(Constants.PATIENT_PINCODE, "12345")
+        map.put(Constants.PATIENT_COUNTRY, data.patient_country)
+        map.put(Constants.PATIENT_REFCODE, "AE9384SD")
+        map.put(Constants.MEMBERSHIP_NUMBER, "cdj23727Jn")
+        map.put(Constants.EMERGENCY_CONTACT_NAME, "John Doe")
+        map.put(Constants.EMERGENCY_CONTACT_RELATION, "Father")
+        map.put(Constants.EMERGENCY_CONTACT_NUMBER, "911234567890")
+        map.put(Constants.PHOTO, "string")
+        map.put(Constants.ALLERGIES, "string")
+        map.put(Constants.INSURED, "true")
+        map.put(Constants.INSURANCE_COMPANY_NAME, "ABC")
+        map.put(Constants.INSURANCE_VALIDITY, "2020-08-03")
+        map.put(Constants.PRIMARY_HEALTH_ISSUE, "XYZ")
+        map.put(Constants.PARENT_ID, "1")
+        map.put(Constants.VERIFIED, "true")
+        map.put(Constants.VERIFICATION_TOKEN, "dfsgasdgsertgszdf66fdga1dg51a6dga21d1g65adfg")
+        map.put(Constants.VERIFICATION_TOKEN_EXPIRY, "2020-08-16 01:44:00")
+        map.put(Constants.STATUS, "active")
+
+        Log.d("UpProfileReq.: ", "" + Gson().toJson(map))
         return map;
     }
+
+
 }

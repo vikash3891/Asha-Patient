@@ -211,7 +211,7 @@
                             android:padding="@dimen/dp_5">
 
                             <TextView
-                                android:id="@+id/basicDeatailsHeader"
+                                android:id="@+id/basicDetailsHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dp_5"
@@ -225,7 +225,7 @@
                                 android:id="@+id/nationalityLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/basicDeatailsHeader"
+                                android:layout_below="@+id/basicDetailsHeader"
                                 android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                                 android:drawablePadding="@dimen/dp_20"
                                 android:padding="@dimen/dp_5"
@@ -237,7 +237,7 @@
                                 android:id="@+id/nationalityValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/basicDeatailsHeader"
+                                android:layout_below="@+id/basicDetailsHeader"
                                 android:layout_toEndOf="@+id/nationalityLabel"
                                 android:padding="@dimen/dp_5"
                                 android:text=""

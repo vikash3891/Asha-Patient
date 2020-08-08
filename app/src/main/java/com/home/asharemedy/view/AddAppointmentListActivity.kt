@@ -214,7 +214,7 @@ class AddAppointmentListActivity : BaseActivity() {
 
             appointmentForDoctor.setOnClickListener() {
                 ailmentSelectedValues.setText("")
-                ailmentSelectedValues.hint = "Choose Ailment name"
+                ailmentSelectedValues.hint = "Choose Ailment"
                 getDoctorList()
                 changeSlotButtonBackgroundSlot(appointmentForDoctor)
             }
@@ -224,7 +224,7 @@ class AddAppointmentListActivity : BaseActivity() {
 
             appointmentForFacility.setOnClickListener() {
                 ailmentSelectedValues.setText("")
-                ailmentSelectedValues.hint = "Choose name of Service"
+                ailmentSelectedValues.hint = "Choose Service"
                 getFacilityList()
                 changeSlotButtonBackgroundSlot(appointmentForFacility)
             }

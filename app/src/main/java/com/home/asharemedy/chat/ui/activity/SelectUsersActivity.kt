@@ -67,9 +67,13 @@ class SelectUsersActivity : BaseActivity() {
         private const val REQUEST_DIALOG_NAME = 135
 
         fun startForResult(activity: Activity, code: Int, dialog: QBChatDialog?) {
-            val intent = Intent(activity, SelectUsersActivity::class.java)
-            intent.putExtra(EXTRA_QB_DIALOG, dialog)
-            activity.startActivityForResult(intent, code)
+            try {
+                val intent = Intent(activity, SelectUsersActivity::class.java)
+                intent.putExtra(EXTRA_QB_DIALOG, dialog)
+                activity.startActivityForResult(intent, code)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -77,79 +81,96 @@ class SelectUsersActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_users)
 
-        intent.getSerializableExtra(EXTRA_QB_DIALOG)?.let {
-            qbChatDialog = it as QBChatDialog
-        }
-        initUi()
+        try {
+            intent.getSerializableExtra(EXTRA_QB_DIALOG)?.let {
+                qbChatDialog = it as QBChatDialog
+            }
+            initUi()
 
-        if (qbChatDialog != null) {
-            updateDialog()
-        } else {
-            loadUsersFromQB(null)
+            if (qbChatDialog != null) {
+                updateDialog()
+            } else {
+                loadUsersFromQB(null)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     private fun initUi() {
-        progressBar = findViewById(R.id.progress_select_users)
-        usersListView = findViewById(R.id.list_select_users)
-        searchView = findViewById(R.id.search)
-        scrollView = findViewById(R.id.scroll_view)
-        scrollView.setMaxHeight(225)
-        chipGroup = findViewById(R.id.chips)
-        tvNotFound = findViewById(R.id.tv_no_users_found)
-        usersAdapter = CheckboxUsersAdapter(this@SelectUsersActivity, ArrayList())
-        usersListView.adapter = usersAdapter
+        try {
+            progressBar = findViewById(R.id.progress_select_users)
+            usersListView = findViewById(R.id.list_select_users)
+            searchView = findViewById(R.id.search)
+            scrollView = findViewById(R.id.scroll_view)
+            scrollView.setMaxHeight(225)
+            chipGroup = findViewById(R.id.chips)
+            tvNotFound = findViewById(R.id.tv_no_users_found)
+            usersAdapter = CheckboxUsersAdapter(this@SelectUsersActivity, ArrayList())
+            usersListView.adapter = usersAdapter
 
-        searchView.setOnQueryTextListener(SearchQueryListener())
+            searchView.setOnQueryTextListener(SearchQueryListener())
 
-        val editingChat = intent.getSerializableExtra(EXTRA_QB_DIALOG) != null
-        if (editingChat) {
-            supportActionBar?.title = getString(R.string.select_users_edit_chat)
-        } else {
-            supportActionBar?.title = getString(R.string.select_users_create_chat_title)
-            supportActionBar?.subtitle = getString(R.string.select_users_create_chat_subtitle, "0")
-        }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        usersListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            usersAdapter.onItemClicked(position, view, parent)
-            menu.getItem(0).isVisible = (usersAdapter.selectedUsers.size >= 1)
-
-            var subtitle = ""
-            if (usersAdapter.selectedUsers.size != 1) {
-                subtitle = getString(R.string.select_users_create_chat_subtitle, usersAdapter.selectedUsers.size.toString())
+            val editingChat = intent.getSerializableExtra(EXTRA_QB_DIALOG) != null
+            if (editingChat) {
+                supportActionBar?.title = getString(R.string.select_users_edit_chat)
             } else {
-                subtitle = getString(R.string.select_users_create_chat_subtitle_single, "1")
+                supportActionBar?.title = getString(R.string.select_users_create_chat_title)
+                supportActionBar?.subtitle =
+                    getString(R.string.select_users_create_chat_subtitle, "0")
             }
-            supportActionBar?.subtitle = subtitle
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-            chipGroup.removeAllViews()
-            for (user in usersAdapter.selectedUsers) {
-                val chip = Chip(this)
-                chip.text = user.fullName
-                chip.chipIcon = getColorCircleDrawable(user.id.hashCode())
-                chip.isCloseIconVisible = false
-                chip.isCheckable = false
-                chip.isClickable = false
-                chipGroup.addView(chip as View)
-                chipGroup.visibility = View.VISIBLE
-                runOnUiThread {
-                    scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            usersListView.onItemClickListener =
+                AdapterView.OnItemClickListener { parent, view, position, id ->
+                    usersAdapter.onItemClicked(position, view, parent)
+                    menu.getItem(0).isVisible = (usersAdapter.selectedUsers.size >= 1)
+
+                    var subtitle = ""
+                    if (usersAdapter.selectedUsers.size != 1) {
+                        subtitle = getString(
+                            R.string.select_users_create_chat_subtitle,
+                            usersAdapter.selectedUsers.size.toString()
+                        )
+                    } else {
+                        subtitle = getString(R.string.select_users_create_chat_subtitle_single, "1")
+                    }
+                    supportActionBar?.subtitle = subtitle
+
+                    chipGroup.removeAllViews()
+                    for (user in usersAdapter.selectedUsers) {
+                        val chip = Chip(this)
+                        chip.text = user.fullName
+                        chip.chipIcon = getColorCircleDrawable(user.id.hashCode())
+                        chip.isCloseIconVisible = false
+                        chip.isCheckable = false
+                        chip.isClickable = false
+                        chipGroup.addView(chip as View)
+                        chipGroup.visibility = View.VISIBLE
+                        runOnUiThread {
+                            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+                        }
+                    }
+                    if (usersAdapter.selectedUsers.size == 0) {
+                        chipGroup.visibility = View.GONE
+                    }
                 }
-            }
-            if (usersAdapter.selectedUsers.size == 0) {
-                chipGroup.visibility = View.GONE
-            }
-        }
 
-        usersListView.setOnScrollListener(ScrollListener())
+            usersListView.setOnScrollListener(ScrollListener())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        this.menu = menu
-        menuInflater.inflate(R.menu.menu_activity_select_users, menu)
-        if (qbChatDialog != null) {
-            menu.get(0).title = getString(R.string.menu_done)
+        try {
+            this.menu = menu
+            menuInflater.inflate(R.menu.menu_activity_select_users, menu)
+            if (qbChatDialog != null) {
+                menu.get(0).title = getString(R.string.menu_done)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
         return true
     }
@@ -167,7 +188,10 @@ class SelectUsersActivity : BaseActivity() {
                         shortToast(R.string.select_users_choose_users)
                     } else {
                         if (qbChatDialog == null && usersAdapter.selectedUsers.size >= PRIVATE_CHAT_OCCUPANTS_SIZE) {
-                            NewGroupActivity.startForResult(this@SelectUsersActivity, REQUEST_DIALOG_NAME)
+                            NewGroupActivity.startForResult(
+                                this@SelectUsersActivity,
+                                REQUEST_DIALOG_NAME
+                            )
                         } else {
                             passResultToCallerActivity()
                         }
@@ -189,33 +213,44 @@ class SelectUsersActivity : BaseActivity() {
     }
 
     private fun passResultToCallerActivity() {
-        val intent = Intent()
-        intent.putExtra(EXTRA_QB_USERS, usersAdapter.selectedUsers)
-        if (!TextUtils.isEmpty(chatName)) {
-            intent.putExtra(EXTRA_CHAT_NAME, chatName)
+        try {
+            val intent = Intent()
+            intent.putExtra(EXTRA_QB_USERS, usersAdapter.selectedUsers)
+            if (!TextUtils.isEmpty(chatName)) {
+                intent.putExtra(EXTRA_CHAT_NAME, chatName)
+            }
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        setResult(Activity.RESULT_OK, intent)
-        finish()
     }
 
     private fun updateDialog() {
-        showProgressDialog(R.string.dlg_loading)
-        val dialogID = qbChatDialog!!.dialogId
-        ChatHelper.getDialogById(dialogID, object : QBEntityCallback<QBChatDialog> {
-            override fun onSuccess(qbChatDialog: QBChatDialog, bundle: Bundle?) {
-                this@SelectUsersActivity.qbChatDialog = qbChatDialog
-                loadUsersFromDialog()
-            }
+        try {
+            showProgressDialog(R.string.dlg_loading)
+            val dialogID = qbChatDialog!!.dialogId
+            ChatHelper.getDialogById(dialogID, object : QBEntityCallback<QBChatDialog> {
+                override fun onSuccess(qbChatDialog: QBChatDialog, bundle: Bundle?) {
+                    this@SelectUsersActivity.qbChatDialog = qbChatDialog
+                    loadUsersFromDialog()
+                }
 
-            override fun onError(e: QBResponseException) {
-                disableProgress()
-                showErrorSnackbar(R.string.select_users_get_dialog_error, e, View.OnClickListener { updateDialog() })
-            }
-        })
+                override fun onError(e: QBResponseException) {
+                    disableProgress()
+                    showErrorSnackbar(
+                        R.string.select_users_get_dialog_error,
+                        e,
+                        View.OnClickListener { updateDialog() })
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    private fun loadUsersFromDialog () {
-        ChatHelper.getUsersFromDialog(qbChatDialog!!, object : QBEntityCallback<ArrayList<QBUser>>{
+    private fun loadUsersFromDialog() {
+        ChatHelper.getUsersFromDialog(qbChatDialog!!, object : QBEntityCallback<ArrayList<QBUser>> {
             override fun onSuccess(usersFromDialog: ArrayList<QBUser>?, b: Bundle?) {
                 usersFromDialog?.let {
                     existingUsers.addAll(usersFromDialog)
@@ -231,93 +266,113 @@ class SelectUsersActivity : BaseActivity() {
     }
 
     private fun loadUsersFromQB(query: String?) {
-        if (!isProgresDialogShowing()) {
-            enableProgress()
-        }
-        currentPage += 1
-        val rules = ArrayList<GenericQueryRule>()
-        rules.add(GenericQueryRule(ORDER_RULE, ORDER_VALUE_UPDATED_AT))
+        try {
+            if (!isProgresDialogShowing()) {
+                enableProgress()
+            }
+            currentPage += 1
+            val rules = ArrayList<GenericQueryRule>()
+            rules.add(GenericQueryRule(ORDER_RULE, ORDER_VALUE_UPDATED_AT))
 
-        val requestBuilder = QBPagedRequestBuilder()
-        requestBuilder.rules = rules
-        requestBuilder.perPage = USERS_PAGE_SIZE
-        requestBuilder.page = currentPage
+            val requestBuilder = QBPagedRequestBuilder()
+            requestBuilder.rules = rules
+            requestBuilder.perPage = USERS_PAGE_SIZE
+            requestBuilder.page = currentPage
 
-        if (TextUtils.isEmpty(query)) {
-            loadUsersWithoutQuery(requestBuilder)
-        } else {
-            loadUsersByQuery(query!!, requestBuilder)
+            if (TextUtils.isEmpty(query)) {
+                loadUsersWithoutQuery(requestBuilder)
+            } else {
+                loadUsersByQuery(query!!, requestBuilder)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     private fun loadUsersWithoutQuery(requestBuilder: QBPagedRequestBuilder) {
-        QBUsers.getUsers(requestBuilder).performAsync(object : QBEntityCallback<ArrayList<QBUser>> {
-            override fun onSuccess(usersList: ArrayList<QBUser>, params: Bundle?) {
-                tvNotFound.visibility = View.INVISIBLE
-                val totalPagesFromParams = params?.get(TOTAL_PAGES_BUNDLE_PARAM) as Int
-                if (currentPage >= totalPagesFromParams) {
-                    hasNextPage = false
-                }
+        try {
+            QBUsers.getUsers(requestBuilder)
+                .performAsync(object : QBEntityCallback<ArrayList<QBUser>> {
+                    override fun onSuccess(usersList: ArrayList<QBUser>, params: Bundle?) {
+                        tvNotFound.visibility = View.INVISIBLE
+                        val totalPagesFromParams = params?.get(TOTAL_PAGES_BUNDLE_PARAM) as Int
+                        if (currentPage >= totalPagesFromParams) {
+                            hasNextPage = false
+                        }
 
-                if (qbChatDialog != null) {
-                    existingUsers.forEach {
-                        usersList.remove(it)
+                        if (qbChatDialog != null) {
+                            existingUsers.forEach {
+                                usersList.remove(it)
+                            }
+                        }
+                        if (currentPage == 1) {
+                            usersAdapter.addNewList(usersList)
+                        } else {
+                            usersAdapter.addUsers(usersList)
+                        }
+                        disableProgress()
                     }
-                }
-                if (currentPage == 1) {
-                    usersAdapter.addNewList(usersList)
-                } else {
-                    usersAdapter.addUsers(usersList)
-                }
-                disableProgress()
-            }
 
-            override fun onError(e: QBResponseException) {
-                disableProgress()
-                currentPage -= 1
-                showErrorSnackbar(R.string.select_users_get_users_error, e, View.OnClickListener { loadUsersWithoutQuery(requestBuilder) })
-            }
-        })
+                    override fun onError(e: QBResponseException) {
+                        disableProgress()
+                        currentPage -= 1
+                        showErrorSnackbar(
+                            R.string.select_users_get_users_error,
+                            e,
+                            View.OnClickListener { loadUsersWithoutQuery(requestBuilder) })
+                    }
+                })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun loadUsersByQuery(query: String, requestBuilder: QBPagedRequestBuilder) {
-        QBUsers.getUsersByFullName(query, requestBuilder).performAsync(object : QBEntityCallback<ArrayList<QBUser>> {
-            override fun onSuccess(qbUsers: ArrayList<QBUser>?, params: Bundle?) {
-                val totalPagesFromParams = params?.get(TOTAL_PAGES_BUNDLE_PARAM) as Int
-                if (currentPage >= totalPagesFromParams) {
-                    hasNextPage = false
-                }
-                if (qbUsers != null) {
-                    tvNotFound.visibility = View.INVISIBLE
-                    if (qbChatDialog != null) {
-                        existingUsers.forEach { user ->
-                            qbUsers.remove(user)
+        try {
+            QBUsers.getUsersByFullName(query, requestBuilder)
+                .performAsync(object : QBEntityCallback<ArrayList<QBUser>> {
+                    override fun onSuccess(qbUsers: ArrayList<QBUser>?, params: Bundle?) {
+                        val totalPagesFromParams = params?.get(TOTAL_PAGES_BUNDLE_PARAM) as Int
+                        if (currentPage >= totalPagesFromParams) {
+                            hasNextPage = false
+                        }
+                        if (qbUsers != null) {
+                            tvNotFound.visibility = View.INVISIBLE
+                            if (qbChatDialog != null) {
+                                existingUsers.forEach { user ->
+                                    qbUsers.remove(user)
+                                }
+                            }
+                            if (currentPage == 1) {
+                                usersAdapter.addNewList(qbUsers)
+                                usersListView.smoothScrollToPosition(0)
+                            } else {
+                                usersAdapter.addUsers(qbUsers)
+                            }
+                        } else {
+                            usersAdapter.clearList()
+                            tvNotFound.visibility = View.VISIBLE
+                        }
+                        disableProgress()
+                    }
+
+                    override fun onError(e: QBResponseException?) {
+                        disableProgress()
+                        if (e?.httpStatusCode == 404) {
+                            usersAdapter.clearList()
+                            tvNotFound.visibility = View.VISIBLE
+                        } else {
+                            currentPage -= 1
+                            showErrorSnackbar(
+                                R.string.select_users_get_users_error,
+                                e,
+                                View.OnClickListener { loadUsersByQuery(query, requestBuilder) })
                         }
                     }
-                    if (currentPage == 1) {
-                        usersAdapter.addNewList(qbUsers)
-                        usersListView.smoothScrollToPosition(0)
-                    } else {
-                        usersAdapter.addUsers(qbUsers)
-                    }
-                } else {
-                    usersAdapter.clearList()
-                    tvNotFound.visibility = View.VISIBLE
-                }
-                disableProgress()
-            }
-
-            override fun onError(e: QBResponseException?) {
-                disableProgress()
-                if (e?.httpStatusCode == 404) {
-                    usersAdapter.clearList()
-                    tvNotFound.visibility = View.VISIBLE
-                } else {
-                    currentPage -= 1
-                    showErrorSnackbar(R.string.select_users_get_users_error, e, View.OnClickListener { loadUsersByQuery(query, requestBuilder) })
-                }
-            }
-        })
+                })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun enableProgress() {
@@ -340,24 +395,28 @@ class SelectUsersActivity : BaseActivity() {
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-            if (newText != null) {
-                timer.cancel()
-                timer = Timer()
-                timer.schedule(object : TimerTask() {
-                    override fun run() {
-                        runOnUiThread {
-                            currentPage = 0
-                            hasNextPage = true
-                            lastSearchQuery = newText
-                            if (newText.length >= MIN_SEARCH_QUERY_LENGTH) {
-                                loadUsersFromQB(newText)
-                            }
-                            if (newText.isEmpty()) {
-                                loadUsersFromQB(null)
+            try {
+                if (newText != null) {
+                    timer.cancel()
+                    timer = Timer()
+                    timer.schedule(object : TimerTask() {
+                        override fun run() {
+                            runOnUiThread {
+                                currentPage = 0
+                                hasNextPage = true
+                                lastSearchQuery = newText
+                                if (newText.length >= MIN_SEARCH_QUERY_LENGTH) {
+                                    loadUsersFromQB(newText)
+                                }
+                                if (newText.isEmpty()) {
+                                    loadUsersFromQB(null)
+                                }
                             }
                         }
-                    }
-                }, SEARCH_DELAY)
+                    }, SEARCH_DELAY)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
             return false
         }
@@ -365,13 +424,22 @@ class SelectUsersActivity : BaseActivity() {
 
     private inner class ScrollListener : AbsListView.OnScrollListener {
 
-        override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
-            if (!isLoading && totalItemCount > 0 && (firstVisibleItem + visibleItemCount * 3) >= totalItemCount && hasNextPage) {
-                if (TextUtils.isEmpty(lastSearchQuery)) {
-                    loadUsersFromQB(null)
-                } else {
-                    loadUsersFromQB(lastSearchQuery)
+        override fun onScroll(
+            view: AbsListView?,
+            firstVisibleItem: Int,
+            visibleItemCount: Int,
+            totalItemCount: Int
+        ) {
+            try {
+                if (!isLoading && totalItemCount > 0 && (firstVisibleItem + visibleItemCount * 3) >= totalItemCount && hasNextPage) {
+                    if (TextUtils.isEmpty(lastSearchQuery)) {
+                        loadUsersFromQB(null)
+                    } else {
+                        loadUsersFromQB(lastSearchQuery)
+                    }
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
 
