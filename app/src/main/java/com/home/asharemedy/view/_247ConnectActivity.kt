@@ -17,14 +17,13 @@ class _247ConnectActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_247_connect)
 
-
         initView()
         checkClick()
     }
 
     fun initView() {
         try {
-            topbar.screenName.text = getString(R.string.add_vital)
+            topbar.screenName.text = "24*7 Doctor"
             topbar.imageBack.setOnClickListener {
                 finish()
             }

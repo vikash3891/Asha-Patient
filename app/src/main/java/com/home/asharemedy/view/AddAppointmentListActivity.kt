@@ -62,6 +62,7 @@ class AddAppointmentListActivity : BaseActivity() {
         try {
             getAilmentList()
             searchByLabel.text = "Search By Ailment: "
+            ailmentSelectedValues.hint = "Choose Ailment"
         } catch (e: Exception) {
             e.printStackTrace()
         }

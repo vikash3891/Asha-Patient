@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.get
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.quickblox.chat.model.QBChatDialog
@@ -79,7 +80,7 @@ class SelectUsersActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_select_users)
+        setContentView(R.layout.activity_selected_user_chat)
 
         try {
             intent.getSerializableExtra(EXTRA_QB_DIALOG)?.let {

@@ -593,21 +593,21 @@
     <string name="communication_details">Communication Details</string>
 
     <!--Vitals List-->
-    <string name="temperature">temperature</string>
-    <string name="pulse">pulse</string>
-    <string name="height">height</string>
-    <string name="weight">weight</string>
-    <string name="respiration_rate">respiration rate</string>
-    <string name="oxygen_saturation">oxygen_saturation</string>
-    <string name="pain_scale_score">pain_scale_score</string>
-    <string name="lmp">lmp</string>
-    <string name="coma_scale">coma_scale</string>
-    <string name="bca">bca</string>
-    <string name="fat">fat</string>
-    <string name="muscle">muscle</string>
-    <string name="hydration">hydration</string>
-    <string name="steps">steps</string>
-    <string name="calories_burned">calories_burned</string>
+    <string name="temperature">Temperature</string>
+    <string name="pulse">Pulse</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="respiration_rate">Respiration Rate</string>
+    <string name="oxygen_saturation">Oxygen Saturation</string>
+    <string name="pain_scale_score">Pain Scale Score</string>
+    <string name="lmp">LMP</string>
+    <string name="coma_scale">Coma Scale</string>
+    <string name="bca">BCA</string>
+    <string name="fat">Fat</string>
+    <string name="muscle">Muscle</string>
+    <string name="hydration">Hydration</string>
+    <string name="steps">Steps</string>
+    <string name="calories_burned">Calories Burned</string>
     <string name="street">Street</string>
     <string name="city">City</string>
     <string name="state">State</string>

@@ -46,7 +46,7 @@ class MyVitalsActivity : BaseActivity() {
         initView()
         checkOnClick()
         selectedVitalIndex = 0
-        selectedVital.text = getString(R.string.blood_pressure)
+        selectedVital.text = getString(R.string.temperature)
     }
 
     private fun initView() {

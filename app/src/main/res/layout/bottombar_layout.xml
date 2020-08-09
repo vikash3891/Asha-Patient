@@ -18,7 +18,7 @@
             android:id="@+id/imageHome"
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
-            android:padding="@dimen/dp_2"
+            android:padding="@dimen/dp_4"
             android:src="@drawable/ic_home_selected" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:id="@+id/imageNotification"
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
-            android:padding="@dimen/dp_2"
+            android:padding="@dimen/dp_4"
             android:src="@drawable/ic_notification" />
 
         <TextView
@@ -62,7 +62,7 @@
             android:id="@+id/imageSetting"
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
-            android:padding="@dimen/dp_2"
+            android:padding="@dimen/dp_4"
             android:src="@drawable/ic_settings" />
 
         <TextView

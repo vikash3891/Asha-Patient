@@ -431,14 +431,29 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                     spinnerHabit.selectedItem == "Smoking" -> {
                         isSmokingAdded = true
                         habitName = "Smoking"
+                        layoutSmoking.visibility = View.VISIBLE
+                        if (habitYes.isChecked) {
+                            smokingYes.isChecked = true
+                            smokingFrequency.setText(habitFrequencyValue)
+                        }
                     }
                     spinnerHabit.selectedItem == "Drinking" -> {
                         isDrinkingAdded = true
                         habitName = "Drinking"
+                        layoutDrinking.visibility = View.VISIBLE
+                        if (habitYes.isChecked) {
+                            drinkingYes.isChecked = true
+                            drinkingFrequency.setText(habitFrequencyValue)
+                        }
                     }
                     else -> {
                         isExerciseAdded = true
                         habitName = "Exercise"
+                        layoutExercise.visibility = View.VISIBLE
+                        if (habitYes.isChecked) {
+                            exerciseYes.isChecked = true
+                            exerciseFrequency.setText(habitFrequencyValue)
+                        }
                     }
                 }
                 addHabitApi()
