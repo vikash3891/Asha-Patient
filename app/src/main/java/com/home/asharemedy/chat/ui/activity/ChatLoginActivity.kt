@@ -22,6 +22,8 @@ private const val DRAFT_USERNAME = "draft_username"
 
 class ChatLoginActivity : BaseActivity() {
 
+    private var strUser: String = ""
+
     companion object {
         fun start(context: Context) =
             context.startActivity(Intent(context, ChatLoginActivity::class.java))
@@ -29,21 +31,30 @@ class ChatLoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat_login)
+        try {
+            setContentView(R.layout.activity_chat_login)
+            if (intent.hasExtra("Username"))
+                strUser = intent.getStringExtra("Username")
+            tvBtnLogin.setOnClickListener {
 
-        tvBtnLogin.setOnClickListener {
+                showProgressDialog(R.string.dlg_login)
+                prepareUser()
 
-            showProgressDialog(R.string.dlg_login)
-            prepareUser()
-
+            }
+            setValues()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        setValues()
     }
 
     private fun setValues() {
 
-        showProgressDialog(R.string.dlg_login)
-        prepareUser()
+        try {
+            showProgressDialog(R.string.dlg_login)
+            prepareUser()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -68,87 +79,106 @@ class ChatLoginActivity : BaseActivity() {
     }
 
     private fun prepareUser() {
-        val qbUser = QBUser()
-        qbUser.login = "test"
-        qbUser.fullName = "test"
-        qbUser.password = DEFAULT_USER_PASSWORD
-        signIn(qbUser)
+        try {
+            val qbUser = QBUser()
+            qbUser.login = strUser.replace(" ", "")
+            qbUser.fullName = strUser
+            qbUser.password = DEFAULT_USER_PASSWORD
+            signIn(qbUser)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun signIn(user: QBUser) {
-        showProgressDialog(R.string.dlg_login)
-        ChatHelper.login(user, object : QBEntityCallback<QBUser> {
-            override fun onSuccess(userFromRest: QBUser, bundle: Bundle?) {
-                if (userFromRest.fullName == user.fullName) {
-                    loginToChat(user)
-                } else {
-                    //Need to set password NULL, because server will update user only with NULL password
-                    user.password = null
-                    updateUser(user)
+        try {
+            showProgressDialog(R.string.dlg_login)
+            ChatHelper.login(user, object : QBEntityCallback<QBUser> {
+                override fun onSuccess(userFromRest: QBUser, bundle: Bundle?) {
+                    if (userFromRest.fullName == user.fullName) {
+                        loginToChat(user)
+                    } else {
+                        //Need to set password NULL, because server will update user only with NULL password
+                        user.password = null
+                        updateUser(user)
+                    }
                 }
-            }
 
-            override fun onError(e: QBResponseException) {
-                if (e.httpStatusCode == UNAUTHORIZED) {
-                    signUp(user)
-                } else {
-                    hideProgressDialog()
-                    showErrorSnackbar(
-                        R.string.login_chat_login_error,
-                        e,
-                        View.OnClickListener { signIn(user) })
+                override fun onError(e: QBResponseException) {
+                    if (e.httpStatusCode == UNAUTHORIZED) {
+                        signUp(user)
+                    } else {
+                        hideProgressDialog()
+                        showErrorSnackbar(
+                            R.string.login_chat_login_error,
+                            e,
+                            View.OnClickListener { signIn(user) })
+                    }
                 }
-            }
-        })
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun updateUser(user: QBUser) {
-        ChatHelper.updateUser(user, object : QBEntityCallback<QBUser> {
-            override fun onSuccess(qbUser: QBUser, bundle: Bundle?) {
-                loginToChat(user)
-            }
+        try {
+            ChatHelper.updateUser(user, object : QBEntityCallback<QBUser> {
+                override fun onSuccess(qbUser: QBUser, bundle: Bundle?) {
+                    loginToChat(user)
+                }
 
-            override fun onError(e: QBResponseException) {
-                hideProgressDialog()
-                showErrorSnackbar(R.string.login_chat_login_error, e, null)
-            }
-        })
+                override fun onError(e: QBResponseException) {
+                    hideProgressDialog()
+                    showErrorSnackbar(R.string.login_chat_login_error, e, null)
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun loginToChat(user: QBUser) {
-        //Need to set password, because the server will not register to chat without password
-        user.password = DEFAULT_USER_PASSWORD
-        ChatHelper.loginToChat(user, object : QBEntityCallback<Void> {
-            override fun onSuccess(void: Void?, bundle: Bundle?) {
-                SharedPrefsHelper.saveQbUser(user)
-                if (!true) {
-                    clearDrafts()
+        try {//Need to set password, because the server will not register to chat without password
+            user.password = DEFAULT_USER_PASSWORD
+            ChatHelper.loginToChat(user, object : QBEntityCallback<Void> {
+                override fun onSuccess(void: Void?, bundle: Bundle?) {
+                    SharedPrefsHelper.saveQbUser(user)
+                    if (!true) {
+                        clearDrafts()
+                    }
+                    DialogsActivity.start(this@ChatLoginActivity)
+                    finish()
+                    hideProgressDialog()
                 }
-                DialogsActivity.start(this@ChatLoginActivity)
-                finish()
-                hideProgressDialog()
-            }
 
-            override fun onError(e: QBResponseException) {
-                hideProgressDialog()
-                showErrorSnackbar(R.string.login_chat_login_error, e, null)
-            }
-        })
+                override fun onError(e: QBResponseException) {
+                    hideProgressDialog()
+                    showErrorSnackbar(R.string.login_chat_login_error, e, null)
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun signUp(user: QBUser) {
-        SharedPrefsHelper.removeQbUser()
-        QBUsers.signUp(user).performAsync(object : QBEntityCallback<QBUser> {
-            override fun onSuccess(p0: QBUser?, p1: Bundle?) {
-                hideProgressDialog()
-                signIn(user)
-            }
+        try {
+            SharedPrefsHelper.removeQbUser()
+            QBUsers.signUp(user).performAsync(object : QBEntityCallback<QBUser> {
+                override fun onSuccess(p0: QBUser?, p1: Bundle?) {
+                    hideProgressDialog()
+                    signIn(user)
+                }
 
-            override fun onError(exception: QBResponseException?) {
-                hideProgressDialog()
-                showErrorSnackbar(R.string.login_sign_up_error, exception, null)
-            }
-        })
+                override fun onError(exception: QBResponseException?) {
+                    hideProgressDialog()
+                    showErrorSnackbar(R.string.login_sign_up_error, exception, null)
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 

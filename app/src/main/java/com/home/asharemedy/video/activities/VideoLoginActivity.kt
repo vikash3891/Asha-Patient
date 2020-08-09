@@ -22,6 +22,7 @@ const val ERROR_LOGIN_ALREADY_TAKEN_HTTP_STATUS = 422
 class VideoLoginActivity : BaseActivity() {
 
     private lateinit var user: QBUser
+    private var strUser: String = ""
 
     companion object {
         fun start(context: Context) =
@@ -30,15 +31,25 @@ class VideoLoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video_login)
-        initUI()
+        try {
+            setContentView(R.layout.activity_video_login)
+            if (intent.hasExtra("Username"))
+                strUser = intent.getStringExtra("Username")
+            initUI()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun initUI() {
-        supportActionBar?.title = "Login"
+        try {
+            supportActionBar?.title = "Login"
 
-        val user = createUserWithEnteredData()
-        signUpNewUser(user)
+            val user = createUserWithEnteredData()
+            signUpNewUser(user)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 
@@ -61,94 +72,118 @@ class VideoLoginActivity : BaseActivity() {
     }
 
     private fun signUpNewUser(newUser: QBUser) {
-        showProgressDialog(R.string.dlg_creating_new_user)
-        signUp(newUser, object : QBEntityCallback<QBUser> {
-            override fun onSuccess(result: QBUser, params: Bundle) {
-                SharedPrefsHelper.saveQbUser(newUser)
-                loginToChat(result)
-            }
-
-            override fun onError(e: QBResponseException) {
-                if (e.httpStatusCode == ERROR_LOGIN_ALREADY_TAKEN_HTTP_STATUS) {
-                    signInCreatedUser(newUser)
-                } else {
-                    hideProgressDialog()
-                    longToast(R.string.sign_up_error)
+        try {
+            showProgressDialog(R.string.dlg_creating_new_user)
+            signUp(newUser, object : QBEntityCallback<QBUser> {
+                override fun onSuccess(result: QBUser, params: Bundle) {
+                    SharedPrefsHelper.saveQbUser(newUser)
+                    loginToChat(result)
                 }
-            }
-        })
+
+                override fun onError(e: QBResponseException) {
+                    if (e.httpStatusCode == ERROR_LOGIN_ALREADY_TAKEN_HTTP_STATUS) {
+                        signInCreatedUser(newUser)
+                    } else {
+                        hideProgressDialog()
+                        longToast(R.string.sign_up_error)
+                    }
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun loginToChat(qbUser: QBUser) {
-        qbUser.password = DEFAULT_USER_PASSWORD
-        user = qbUser
-        startLoginService(qbUser)
+        try {
+            qbUser.password = DEFAULT_USER_PASSWORD
+            user = qbUser
+            startLoginService(qbUser)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun createUserWithEnteredData(): QBUser {
         val qbUser = QBUser()
-        val userLogin = "test"
-        val userFullName = "test"
-        qbUser.login = userLogin
-        qbUser.fullName = userFullName
-        qbUser.password = DEFAULT_USER_PASSWORD
+        try {
+            val userLogin = strUser.replace(" ", "")
+            val userFullName = strUser
+            qbUser.login = userLogin
+            qbUser.fullName = userFullName
+            qbUser.password = DEFAULT_USER_PASSWORD
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         return qbUser
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == EXTRA_LOGIN_RESULT_CODE) {
-            hideProgressDialog()
+        try {
+            if (resultCode == EXTRA_LOGIN_RESULT_CODE) {
+                hideProgressDialog()
 
-            var isLoginSuccess = false
-            data?.let {
-                isLoginSuccess = it.getBooleanExtra(EXTRA_LOGIN_RESULT, false)
-            }
+                var isLoginSuccess = false
+                data?.let {
+                    isLoginSuccess = it.getBooleanExtra(EXTRA_LOGIN_RESULT, false)
+                }
 
-            var errorMessage = getString(R.string.unknown_error)
-            data?.let {
-                errorMessage = it.getStringExtra(EXTRA_LOGIN_ERROR_MESSAGE)
-            }
+                var errorMessage = getString(R.string.unknown_error)
+                data?.let {
+                    errorMessage = it.getStringExtra(EXTRA_LOGIN_ERROR_MESSAGE)
+                }
 
-            if (isLoginSuccess) {
-                SharedPrefsHelper.saveQbUser(user)
-                signInCreatedUser(user)
-            } else {
-                longToast(getString(R.string.login_chat_login_error) + errorMessage)
-                userLoginEditText.setText(user.login)
-                userFullNameEditText.setText(user.fullName)
+                if (isLoginSuccess) {
+                    SharedPrefsHelper.saveQbUser(user)
+                    signInCreatedUser(user)
+                } else {
+                    longToast(getString(R.string.login_chat_login_error) + errorMessage)
+                    userLoginEditText.setText(user.login)
+                    userFullNameEditText.setText(user.fullName)
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     private fun signInCreatedUser(user: QBUser) {
-        signInUser(user, object : QBEntityCallback<QBUser> {
-            override fun onSuccess(result: QBUser, params: Bundle) {
-                SharedPrefsHelper.saveQbUser(user)
-                updateUserOnServer(user)
-            }
+        try {
+            signInUser(user, object : QBEntityCallback<QBUser> {
+                override fun onSuccess(result: QBUser, params: Bundle) {
+                    SharedPrefsHelper.saveQbUser(user)
+                    updateUserOnServer(user)
+                }
 
-            override fun onError(responseException: QBResponseException) {
-                hideProgressDialog()
-                longToast(R.string.sign_in_error)
-            }
-        })
+                override fun onError(responseException: QBResponseException) {
+                    hideProgressDialog()
+                    longToast(R.string.sign_in_error)
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun updateUserOnServer(user: QBUser) {
-        user.password = null
-        QBUsers.updateUser(user).performAsync(object : QBEntityCallback<QBUser> {
-            override fun onSuccess(updUser: QBUser?, params: Bundle?) {
-                hideProgressDialog()
-                OpponentsActivity.start(this@VideoLoginActivity)
-                finish()
-            }
+        try {
+            user.password = null
+            QBUsers.updateUser(user).performAsync(object : QBEntityCallback<QBUser> {
+                override fun onSuccess(updUser: QBUser?, params: Bundle?) {
+                    hideProgressDialog()
+                    OpponentsActivity.start(this@VideoLoginActivity)
+                    finish()
+                }
 
-            override fun onError(responseException: QBResponseException?) {
-                hideProgressDialog()
-                longToast(R.string.update_user_error)
-            }
-        })
+                override fun onError(responseException: QBResponseException?) {
+                    hideProgressDialog()
+                    longToast(R.string.update_user_error)
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onBackPressed() {
@@ -156,9 +191,13 @@ class VideoLoginActivity : BaseActivity() {
     }
 
     private fun startLoginService(qbUser: QBUser) {
-        val tempIntent = Intent(this, LoginService::class.java)
-        val pendingIntent = createPendingResult(EXTRA_LOGIN_RESULT_CODE, tempIntent, 0)
-        LoginService.start(this, qbUser, pendingIntent)
+        try {
+            val tempIntent = Intent(this, LoginService::class.java)
+            val pendingIntent = createPendingResult(EXTRA_LOGIN_RESULT_CODE, tempIntent, 0)
+            LoginService.start(this, qbUser, pendingIntent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }
