@@ -195,6 +195,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name=".view.ActivityAddVitalRecord" />
+        <activity android:name=".view.AddMedicalRecordActivity" />
 
 
         <service android:name=".video.services.LoginService" />

@@ -240,4 +240,19 @@ object Utils {
             .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
     }
 
+    fun getJSONRequestBodyAny(stringHashMap: HashMap<String, Any>?): RequestBody {
+        val jsonObject = JSONObject()
+        if (stringHashMap != null && stringHashMap.size > 0) {
+            try {
+                for ((key, value) in stringHashMap) {
+                    jsonObject.put(key, value)
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+        return jsonObject.toString()
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+    }
+
 }

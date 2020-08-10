@@ -48,7 +48,7 @@ class MyRecordsActivity : BaseActivity() {
         }
 
         floatingActionButton.setOnClickListener {
-            //startActivity(Intent(this, AddAppointmentListActivity::class.java))
+            startActivity(Intent(this, AddMedicalRecordActivity::class.java))
         }
 
         bottomBar.layoutSettings.setOnClickListener {

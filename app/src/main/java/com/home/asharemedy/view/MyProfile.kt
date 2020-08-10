@@ -1,5 +1,6 @@
 package com.home.asharemedy.view
 
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.*
+import androidx.core.content.ContextCompat
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
@@ -21,6 +23,10 @@ import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
@@ -30,10 +36,11 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     var isDrinkingAdded = false
     var isExerciseAdded = false
     var habitName = ""
-    var habitFrequencyValue = ""
+    var habitFrequencyValue = 0
     var habitFrequencyUnit = ""
     var habitStatus = ""
     var data: ResponseModelClasses.GetPatientProfileResponseModel? = null
+    var cDate = ""
 
     var languages = arrayOf("Smoking", "Drinking", "Exercise")
 
@@ -65,24 +72,96 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         communicationEdit.setOnClickListener {
             if (!isEditable) {
                 isEditable = true
-                communicationEdit.text = "Save"
+                communicationEdit.text = getString(R.string.save)
+
+                dobValue.isEnabled = true
+                phoneNumberValue.isEnabled = true
+                phoneNumberValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+                emailValue.isEnabled = true
+                emailValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+                emergencyContactValue.isEnabled = true
+                emergencyContactValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
                 nationalityValue.isEnabled = true
+                nationalityValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
                 religionValue.isEnabled = true
+                religionValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
                 membershipValue.isEnabled = true
+                membershipValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
                 addressValue.isEnabled = true
+                addressValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+                streetValue.isEnabled = true
+                streetValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+                cityValue.isEnabled = true
+                cityValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
                 communicationValue.isEnabled = true
+                communicationValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
                 insuranceValue.isEnabled = true
+                insuranceValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
                 emiratesIDValue.isEnabled = true
+                emiratesIDValue.background =
+                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
             } else {
-                communicationEdit.text = "Edit"
                 isEditable = false
+                communicationEdit.text = getString(R.string.menu_message_edit)
+
+                dobValue.isEnabled = false
+                phoneNumberValue.isEnabled = false
+                phoneNumberValue.background = null
+
+                emailValue.isEnabled = false
+                emailValue.background = null
+
+                emergencyContactValue.isEnabled = false
+                emergencyContactValue.background = null
+
                 nationalityValue.isEnabled = false
+                nationalityValue.background = null
+
                 religionValue.isEnabled = false
+                religionValue.background = null
+
                 membershipValue.isEnabled = false
+                membershipValue.background = null
+
                 addressValue.isEnabled = false
+                addressValue.background = null
+
+                streetValue.isEnabled = false
+                streetValue.background = null
+
+                cityValue.isEnabled = false
+                cityValue.background = null
+
                 communicationValue.isEnabled = false
+                communicationValue.background = null
+
                 insuranceValue.isEnabled = false
+                insuranceValue.background = null
+
                 emiratesIDValue.isEnabled = false
+                emiratesIDValue.background = null
 
                 validationField()
             }
@@ -132,6 +211,10 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         habitEdit.setOnClickListener {
             showHabitDialog()
         }
+
+        dobValue.setOnClickListener {
+            openCalendar(dobValue)
+        }
     }
 
     private fun validationField() {
@@ -179,13 +262,12 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             data!!.emergency_contact_number = emergencyContactValue.text.toString()
             data!!.patient_city = cityValue.text.toString()
 
-
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.LoginResponseModel> =
                 apiService.updateProfile(
                     "54",
-                    Utils.getJSONRequestBody(
+                    Utils.getJSONRequestBodyAny(
                         RequestModel.getUpdateProfileRequestModel(
                             this@MyProfile, data!!
                         )
@@ -254,11 +336,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                         Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
 
-                            /*foodsList = response.body()!!.data
-
-                            Utils.setOrderHistoryList(foodsList)
-
-                            loadList()*/
                             getPatientHabit()
                             data = response.body()!!
                             updateView(data!!)
@@ -419,7 +496,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
             submit.setOnClickListener {
 
-                habitFrequencyValue = habitFrequency.text.toString()
+                habitFrequencyValue = habitFrequency.text.toString().toInt()
                 habitFrequencyUnit = "Per Day"
 
                 habitStatus = if (habitYes.isChecked)
@@ -482,7 +559,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             val call: Call<ResponseModelClasses.LoginResponseModel> =
                 apiService.getHabit(
                     "17",
-                    Utils.getJSONRequestBody(
+                    Utils.getJSONRequestBodyAny(
                         RequestModel.getHabitRequestModel(
                             habitName, habitFrequencyValue, habitFrequencyUnit, habitStatus
                         )
@@ -532,6 +609,36 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     } else {
         dismissDialog()
         showToast(getString(R.string.internet))
+    }
+
+    private fun openCalendar(selectedView: View) {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                try {
+                    val date = Date(year - 1900, monthOfYear, dayOfMonth)
+                    val formatter = SimpleDateFormat("dd-MM-yyyy")
+                    cDate = formatter.format(date)
+
+                    dobValue.text =
+                        "" + dayOfMonth + " " + Utils.setMonth(monthOfYear + 1) + ", " + year
+
+                } catch (e1: ParseException) {
+                    e1.printStackTrace()
+                }
+            },
+            year,
+            month,
+            day
+        )
+        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+        dpd.show()
     }
 
 }

@@ -616,5 +616,6 @@
     <string name="add_habit">Add Habit</string>
     <string name="systolic">Systolic</string>
     <string name="daistolic">Diastolic</string>
+    <string name="save">Save</string>
 
 </resources>

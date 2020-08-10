@@ -26,11 +26,11 @@ object RequestModel {
     /*-------Habit-------*/
     fun getHabitRequestModel(
         habit_name: String,
-        habit_frequency: String,
+        habit_frequency: Int,
         habit_frequency_unit: String,
         status: String
-    ): HashMap<String, String> {
-        var map = HashMap<String, String>()
+    ): HashMap<String, Any> {
+        var map = HashMap<String, Any>()
 
         map.put(Constants.HABIT_NAME, habit_name)
         map.put(Constants.HABIT_FREQUENCY, habit_frequency)
@@ -108,9 +108,9 @@ object RequestModel {
 
     fun getUpdateProfileRequestModel(
         context: Context, data: ResponseModelClasses.GetPatientProfileResponseModel
-    ): HashMap<String, String> {
+    ): HashMap<String, Any> {
 
-        var map = HashMap<String, String>()
+        var map = HashMap<String, Any>()
 
         map.put(Constants.PATIENT_NAME, data.patient_name)
         map.put(Constants.PATIENT_DOB, data.patient_dob)
@@ -129,13 +129,13 @@ object RequestModel {
         map.put(Constants.EMERGENCY_CONTACT_RELATION, "Father")
         map.put(Constants.EMERGENCY_CONTACT_NUMBER, "911234567890")
         map.put(Constants.PHOTO, "string")
-        map.put(Constants.ALLERGIES, "string")
-        map.put(Constants.INSURED, "true")
+        map.put(Constants.ALLERGIES, data.allergies)
+        map.put(Constants.INSURED, true)
         map.put(Constants.INSURANCE_COMPANY_NAME, "ABC")
         map.put(Constants.INSURANCE_VALIDITY, "2020-08-03")
         map.put(Constants.PRIMARY_HEALTH_ISSUE, "XYZ")
-        map.put(Constants.PARENT_ID, "1")
-        map.put(Constants.VERIFIED, "true")
+        map.put(Constants.PARENT_ID, 1)
+        map.put(Constants.VERIFIED, true)
         map.put(Constants.VERIFICATION_TOKEN, "dfsgasdgsertgszdf66fdga1dg51a6dga21d1g65adfg")
         map.put(Constants.VERIFICATION_TOKEN_EXPIRY, "2020-08-16 01:44:00")
         map.put(Constants.STATUS, "active")

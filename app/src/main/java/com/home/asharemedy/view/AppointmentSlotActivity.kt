@@ -33,8 +33,6 @@ import java.util.*
 class AppointmentSlotActivity : BaseActivity() {
 
     var adapter: AppointSlotListAdapter? = null
-    private lateinit var viewDataBinding: ActivityAppointmentSlotsBinding
-    var slotList = ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +75,7 @@ class AppointmentSlotActivity : BaseActivity() {
             }
             proceedToPay.setOnClickListener {
                 for (i in 0 until Utils.appointmentSlotList.size) {
-                    Log.d("SeleSlotList", Utils.appointmentSlotList[i].isSelected.toString())
+                    Log.d("SelSlotList", Utils.appointmentSlotList[i].isSelected.toString())
                 }
                 startActivity(Intent(this@AppointmentSlotActivity, ActivityPayUMain::class.java))
             }
@@ -107,17 +105,17 @@ class AppointmentSlotActivity : BaseActivity() {
                     month,
                     day
                 )
-                dpd.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                dpd.datePicker.minDate = System.currentTimeMillis() - 1000;
                 dpd.show()
             }
 
-            slotsMorningButton.setOnClickListener() {
+            slotsMorningButton.setOnClickListener {
                 changeSlotButtonBackgroundSlot(slotsMorningButton)
             }
-            slotsAfternoonButton.setOnClickListener() {
+            slotsAfternoonButton.setOnClickListener {
                 changeSlotButtonBackgroundSlot(slotsAfternoonButton)
             }
-            slotsEveningButton.setOnClickListener() {
+            slotsEveningButton.setOnClickListener {
                 changeSlotButtonBackgroundSlot(slotsEveningButton)
             }
         } catch (e: Exception) {
@@ -147,73 +145,55 @@ class AppointmentSlotActivity : BaseActivity() {
 
     private fun changeSlotButtonBackgroundSlot(selectedView: View) {
         if (selectedView == slotsMorningButton) {
-            slotsMorningButton.setBackground(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.drawable_selected
-                )
+            slotsMorningButton.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.drawable_selected
             )
 
-            slotsAfternoonButton.setBackground(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.drawable_unselected
-                )
+            slotsAfternoonButton.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.drawable_unselected
             )
 
-            slotsEveningButton.setBackground(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.drawable_unselected
-                )
+            slotsEveningButton.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.drawable_unselected
             )
 
         }
 
         if (selectedView == slotsAfternoonButton) {
-            slotsMorningButton.setBackground(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.drawable_unselected
-                )
+            slotsMorningButton.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.drawable_unselected
             )
 
-            slotsAfternoonButton.setBackground(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.drawable_selected
-                )
+            slotsAfternoonButton.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.drawable_selected
             )
 
-            slotsEveningButton.setBackground(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.drawable_unselected
-                )
+            slotsEveningButton.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.drawable_unselected
             )
 
         }
 
         if (selectedView == slotsEveningButton) {
-            slotsMorningButton.setBackground(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.drawable_unselected
-                )
+            slotsMorningButton.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.drawable_unselected
             )
 
-            slotsAfternoonButton.setBackground(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.drawable_unselected
-                )
+            slotsAfternoonButton.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.drawable_unselected
             )
 
-            slotsEveningButton.setBackground(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.drawable_selected
-                )
+            slotsEveningButton.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.drawable_selected
             )
 
         }

@@ -65,7 +65,7 @@ object ResponseModelClasses {
     /*Patient Profile*/
     data class GetPatientProfileResponseModel(
         var age: String,
-        var allergies: String,
+        var allergies: Any,
         var birth_date: String,
         var emergency_contact_name: String,
         var emergency_contact_number: String,
