@@ -42,7 +42,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     var data: ResponseModelClasses.GetPatientProfileResponseModel? = null
     var cDate = ""
 
-    var languages = arrayOf("Smoking", "Drinking", "Exercise")
+    var languages = arrayOf("Smoking", "Exercise")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,8 +103,8 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 addressValue.background =
                     ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-                streetValue.isEnabled = true
-                streetValue.background =
+                stateValue.isEnabled = true
+                stateValue.background =
                     ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
                 cityValue.isEnabled = true
@@ -148,8 +148,8 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 addressValue.isEnabled = false
                 addressValue.background = null
 
-                streetValue.isEnabled = false
-                streetValue.background = null
+                stateValue.isEnabled = false
+                stateValue.background = null
 
                 cityValue.isEnabled = false
                 cityValue.background = null
@@ -241,7 +241,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 data!!.patient_mobile = phoneNumberValue.text.toString()
                 data!!.patient_email = emailValue.text.toString()
                 data!!.patient_address1 = addressValue.text.toString()
-                data!!.patient_address2 = streetValue.text.toString()
+                data!!.patient_address2 = stateValue.text.toString()
                 data!!.patient_city = cityValue.text.toString()
                 // data!!.pin = pinValue.text.toString()
                 updateProfileApi()
@@ -261,6 +261,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             data!!.patient_address2 = communicationValue.text.toString()
             data!!.emergency_contact_number = emergencyContactValue.text.toString()
             data!!.patient_city = cityValue.text.toString()
+            data!!.patient_state = stateValue.text.toString()
 
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
@@ -288,6 +289,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                             if (response.body()!!.message == "fail") {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
+                                showSuccessPopup("Profile Updated Successfully")
                                 when {
                                     isSmokingAdded -> layoutSmoking.visibility = View.VISIBLE
                                     isDrinkingAdded -> layoutDrinking.visibility = View.VISIBLE
@@ -424,6 +426,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         insuranceValue.setText(data.insurance_company_name)
         emiratesIDValue.setText(data.parent_id)
         cityValue.setText(data.patient_city)
+        stateValue.setText(data.patient_state)
     }
 
     fun updateHabitView(data: ArrayList<ResponseModelClasses.GetHabitResponseModel>) {
@@ -464,7 +467,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         try {
             dialog = Dialog(this)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setCancelable(false)
+            dialog.setCancelable(true)
             dialog.setContentView(R.layout.dialog_add_habit)
             val spinnerHabit = dialog.findViewById(R.id.spinnerHabit) as Spinner
             val radioGroupHabit = dialog.findViewById(R.id.radioGroupHabit) as RadioGroup
@@ -480,10 +483,14 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
             radioGroupHabit.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
 
-                if (i == R.id.habitYes) {
-                    habitFrequency.visibility = View.VISIBLE
-                } else if (i == R.id.habitNo) {
-                    habitFrequency.visibility = View.GONE
+                try {
+                    if (i == R.id.habitYes) {
+                        habitFrequency.visibility = View.VISIBLE
+                    } else if (i == R.id.habitNo) {
+                        habitFrequency.visibility = View.GONE
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
 
@@ -496,51 +503,58 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
             submit.setOnClickListener {
 
-                habitFrequencyValue = habitFrequency.text.toString().toInt()
-                habitFrequencyUnit = "Per Day"
+                try {
+                    habitFrequencyValue = habitFrequency.text.toString().toInt()
+                    Log.e("Frequency: ", habitFrequencyValue.toString())
+                    habitFrequencyUnit = "Per Day"
 
-                habitStatus = if (habitYes.isChecked)
-                    "active"
-                else
-                    "inactive"
+                    habitStatus = if (habitYes.isChecked)
+                        "active"
+                    else
+                        "inactive"
 
-                when {
-                    spinnerHabit.selectedItem == "Smoking" -> {
-                        isSmokingAdded = true
-                        habitName = "Smoking"
-                        layoutSmoking.visibility = View.VISIBLE
-                        if (habitYes.isChecked) {
-                            smokingYes.isChecked = true
-                            smokingFrequency.setText(habitFrequencyValue)
-                        }
-                    }
-                    spinnerHabit.selectedItem == "Drinking" -> {
-                        isDrinkingAdded = true
-                        habitName = "Drinking"
-                        layoutDrinking.visibility = View.VISIBLE
-                        if (habitYes.isChecked) {
-                            drinkingYes.isChecked = true
-                            drinkingFrequency.setText(habitFrequencyValue)
-                        }
-                    }
-                    else -> {
-                        isExerciseAdded = true
-                        habitName = "Exercise"
-                        layoutExercise.visibility = View.VISIBLE
-                        if (habitYes.isChecked) {
-                            exerciseYes.isChecked = true
-                            exerciseFrequency.setText(habitFrequencyValue)
-                        }
-                    }
+                    updateAddHabitView(spinnerHabit.selectedItem.toString(), habitYes.isChecked)
+                    dialog.dismiss()
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-                addHabitApi()
-                dialog.dismiss()
             }
             dialog.show()
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
+    }
+
+    private fun updateAddHabitView(selectedHabit: String, isChecked: Boolean) {
+        try {
+            addHabitApi()
+            when (selectedHabit) {
+                "Smoking" -> {
+                    isSmokingAdded = isChecked
+                    habitName = "Smoking"
+                    layoutSmoking.visibility = View.VISIBLE
+                    this.smokingYes.isChecked = isChecked
+                    this.smokingFrequency.setText(habitFrequencyValue)
+                }
+                "Drinking" -> {
+                    isDrinkingAdded = isChecked
+                    habitName = "Drinking"
+                    layoutDrinking.visibility = View.VISIBLE
+                    this.drinkingYes.isChecked = isChecked
+                    this.drinkingFrequency.setText(habitFrequencyValue)
+                }
+                else -> {
+                    isExerciseAdded = isChecked
+                    habitName = "Exercise"
+                    layoutExercise.visibility = View.VISIBLE
+                    this.exerciseYes.isChecked = isChecked
+                    this.exerciseFrequency.setText(habitFrequencyValue)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
@@ -580,11 +594,16 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                             if (response.body()!!.message == "fail") {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
-                                when {
-                                    isSmokingAdded -> layoutSmoking.visibility = View.VISIBLE
-                                    isDrinkingAdded -> layoutDrinking.visibility = View.VISIBLE
-                                    else -> layoutExercise.visibility = View.VISIBLE
+
+                                if (isSmokingAdded) {
+                                    layoutSmoking.visibility = View.VISIBLE
+                                } else if (isDrinkingAdded) {
+                                    layoutDrinking.visibility = View.VISIBLE
+                                } else if (isExerciseAdded) {
+                                    layoutExercise.visibility = View.VISIBLE
                                 }
+
+                                showSuccessPopup("Habit added Successfully.")
                             }
                         }
                     } catch (e: Exception) {

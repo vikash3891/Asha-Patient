@@ -79,6 +79,7 @@ object ResponseModelClasses {
         var patient_address1: String,
         var patient_address2: String,
         var patient_city: String,
+        var patient_state: String,
         var patient_country: String,
         var patient_dob: String,
         var patient_email: String,
