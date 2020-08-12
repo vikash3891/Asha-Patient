@@ -41,6 +41,10 @@ class Constants {
         const val START_DATE = "startDate"
         const val END_DATE = "endDate"
 
+        const val VITAL_DATE = "vital_date"
+        const val VITAL_READING = "vital_reading"
+        const val VITAL_UNIT = "vital_unit"
+
         const val PATIENT_NAME = "patient_name"
         const val PATIENT_DOB = "patient_dob"
         const val PATIENT_GENDER = "patient_gender"

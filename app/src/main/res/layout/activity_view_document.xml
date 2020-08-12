@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.home.asharemedy.model.DashboardViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/topbar"
+                layout="@layout/topbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50" />
+
+            <RelativeLayout
+                android:id="@+id/layoutList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/topbar"
+                android:layout_marginBottom="@dimen/dp_50">
+
+                <ImageView
+                    android:id="@+id/imageDocument"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_15"
+                    android:layout_marginBottom="@dimen/dp_50"
+                    android:src="@drawable/gallery" />
+
+                <TextView
+                    android:id="@+id/appointmentDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:text="Gallery"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/bottomBar"
+            layout="@layout/bottombar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom" />
+
+    </RelativeLayout>
+</layout>

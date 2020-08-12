@@ -1,6 +1,7 @@
 package com.home.asharemedy.view
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -31,6 +32,10 @@ class MyRecordsActivity : BaseActivity() {
         setContentView(R.layout.activity_my_records)
         initView()
         checkOnClick()
+
+    }
+
+    fun showImage(bitmap: Bitmap){
 
     }
 

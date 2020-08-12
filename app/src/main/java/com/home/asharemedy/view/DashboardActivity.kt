@@ -15,6 +15,7 @@ import com.home.asharemedy.model.DashboardGridModel
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.utils.AppPrefences
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.item_profile_details.view.*
@@ -91,7 +92,7 @@ class DashboardActivity : BaseActivity() {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.GetPatientProfileResponseModel> =
-                apiService.getPatientProfile("15")//AppPrefences.getUserID(this))
+                apiService.getPatientProfile(AppPrefences.getUserID(this))
             call.enqueue(object : Callback<ResponseModelClasses.GetPatientProfileResponseModel> {
                 override fun onResponse(
                     call: Call<ResponseModelClasses.GetPatientProfileResponseModel>,

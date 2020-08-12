@@ -2,11 +2,13 @@ package com.home.asharemedy.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.api.ResponseModelClasses
-import com.home.asharemedy.view.ListItemDetailActivity
+import com.home.asharemedy.view.ViewDocumentActivity
 import com.home.asharemedy.viewHolder.MyReportViewHolder
 import kotlinx.android.synthetic.main.item_clinic_visit.view.*
 
@@ -23,7 +25,10 @@ class MyReportsListAdapter(private val context: Context, private val list: List<
         holder.bind(movie)
 
         holder.itemView.listItemLayout.setOnClickListener {
-            context.startActivity(Intent(context, ListItemDetailActivity::class.java))
+
+            val intent = Intent(context, ViewDocumentActivity::class.java)
+            intent.putExtra("fileContent", list[position].file_content)
+            context.startActivity(intent)
         }
     }
 

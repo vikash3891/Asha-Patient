@@ -196,6 +196,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".view.ActivityAddVitalRecord" />
         <activity android:name=".view.AddMedicalRecordActivity" />
+        <activity android:name=".view.ViewDocumentActivity" />
 
 
         <service android:name=".video.services.LoginService" />

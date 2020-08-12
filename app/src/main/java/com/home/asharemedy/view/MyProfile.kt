@@ -15,6 +15,7 @@ import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_profile_editable.*
@@ -327,7 +328,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.GetPatientProfileResponseModel> =
-                apiService.getPatientProfile("15")//AppPrefences.getUserID(this))
+                apiService.getPatientProfile(AppPrefences.getUserID(this))
             call.enqueue(object : Callback<ResponseModelClasses.GetPatientProfileResponseModel> {
                 override fun onResponse(
                     call: Call<ResponseModelClasses.GetPatientProfileResponseModel>,
@@ -506,7 +507,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 try {
                     habitFrequencyValue = habitFrequency.text.toString().toInt()
                     Log.e("Frequency: ", habitFrequencyValue.toString())
-                    habitFrequencyUnit = "Per Day"
+                    habitFrequencyUnit = "per Day"
 
                     habitStatus = if (habitYes.isChecked)
                         "active"
@@ -528,12 +529,13 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     private fun updateAddHabitView(selectedHabit: String, isChecked: Boolean) {
         try {
-            addHabitApi()
+
             when (selectedHabit) {
                 "Smoking" -> {
                     isSmokingAdded = isChecked
                     habitName = "Smoking"
                     layoutSmoking.visibility = View.VISIBLE
+                    addHabitApi()
                     this.smokingYes.isChecked = isChecked
                     this.smokingFrequency.setText(habitFrequencyValue)
                 }
@@ -541,6 +543,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                     isDrinkingAdded = isChecked
                     habitName = "Drinking"
                     layoutDrinking.visibility = View.VISIBLE
+                    addHabitApi()
                     this.drinkingYes.isChecked = isChecked
                     this.drinkingFrequency.setText(habitFrequencyValue)
                 }
@@ -548,6 +551,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                     isExerciseAdded = isChecked
                     habitName = "Exercise"
                     layoutExercise.visibility = View.VISIBLE
+                    addHabitApi()
                     this.exerciseYes.isChecked = isChecked
                     this.exerciseFrequency.setText(habitFrequencyValue)
                 }
@@ -572,7 +576,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.LoginResponseModel> =
                 apiService.getHabit(
-                    "17",
+                    AppPrefences.getUserID(this),
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getHabitRequestModel(
                             habitName, habitFrequencyValue, habitFrequencyUnit, habitStatus

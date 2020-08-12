@@ -196,23 +196,7 @@ class MyVitalsActivity : BaseActivity() {
     private fun showDialogAilment() {
         try {
 
-            var arrayColors = arrayOf(
-                getString(R.string.temperature),
-                getString(R.string.pulse),
-                getString(R.string.height),
-                getString(R.string.weight),
-                getString(R.string.respiration_rate),
-                getString(R.string.oxygen_saturation),
-                getString(R.string.pain_scale_score),
-                getString(R.string.lmp),
-                getString(R.string.coma_scale),
-                getString(R.string.bca),
-                getString(R.string.fat),
-                getString(R.string.muscle),
-                getString(R.string.hydration),
-                getString(R.string.steps),
-                getString(R.string.calories_burned)
-            )
+
 
             lateinit var dialog: AlertDialog
 
@@ -220,11 +204,11 @@ class MyVitalsActivity : BaseActivity() {
 
             builder.setTitle("Select Vital")
 
-            builder.setSingleChoiceItems(arrayColors, selectedVitalIndex) { _, which ->
+            builder.setSingleChoiceItems(Utils.arrayColors, selectedVitalIndex) { _, which ->
 
                 selectedVitalIndex = which
-                selectedVital.text = arrayColors[which]
-                selectedVitalName = arrayColors[which]
+                selectedVital.text = Utils.arrayColors[which]
+                selectedVitalName = Utils.arrayColors[which]
                 if (selectedVitalName.equals("Blood Pressure"))
                     drawBPLineChart(lineChart)
                 else {

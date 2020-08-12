@@ -33,6 +33,7 @@ import java.util.*
 class AppointmentSlotActivity : BaseActivity() {
 
     var adapter: AppointSlotListAdapter? = null
+    var cdate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +57,7 @@ class AppointmentSlotActivity : BaseActivity() {
         doctorSpeciality.text = Utils.doctorFacilityList[0].type
         address.text =
             Utils.doctorFacilityList[0].address1 + " " + Utils.doctorFacilityList[0].address2
-
+        cdate = Utils.getDate()
         getSlotList()
 
     }
@@ -67,7 +68,7 @@ class AppointmentSlotActivity : BaseActivity() {
         gvSlots.adapter = adapter
     }
 
-    var cdate = ""
+
     private fun checkClicks() {
         try {
             topbarAppointment.imageBack.setOnClickListener {
@@ -206,7 +207,10 @@ class AppointmentSlotActivity : BaseActivity() {
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
 
             val call: Call<ArrayList<ResponseModelClasses.GetSlotListResponseModel>> =
-                apiService.getSlotList("7", "2020-08-05")//Utils.selectedDoctorFacitiyID,cdate
+                apiService.getSlotList(
+                    Utils.selectedDoctorFacitiyID,
+                    cdate
+                )//Utils.selectedDoctorFacitiyID,cdate
             call.enqueue(object :
                 Callback<ArrayList<ResponseModelClasses.GetSlotListResponseModel>> {
                 override fun onResponse(

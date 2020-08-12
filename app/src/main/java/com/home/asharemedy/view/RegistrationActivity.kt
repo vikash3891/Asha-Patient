@@ -171,7 +171,7 @@ class RegistrationActivity : BaseActivity() {
             name = editName.text!!.toString().trim()
             DOB = cDate//editDOB.text!!.toString()
             mobile = editMobileNumber.text!!.toString().trim()
-            email = editEmail.text!!.toString().trim()
+            email = editEmail.text!!.toString().toLowerCase().trim()
             address = editAddress.text!!.toString().trim()
             street = editStreet.text!!.toString().trim()
             password = editPassword.text!!.toString().trim()

@@ -84,6 +84,9 @@ interface ApiInterface {
 
 
     @POST(Constants.PATIENT_REG + "/{patientID}" + Constants.HABIT)/*/patients/17/habits*/
-    fun getHabit(@Path("patientID") id: String,@Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
+    fun getHabit(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
+
+    @POST(Constants.PATIENT_REG + "/{patientID}" + Constants.VITALS + "{vitalName}" + "?")/*patients/13/vitals/temperature?*/
+    fun getSingleUnitVital(@Path("patientID") id: String,@Path("vitalName") vitalName: String, @Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
 
 }

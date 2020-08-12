@@ -18,11 +18,13 @@ import com.home.asharemedy.R
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.model.ListItemModel
 import com.home.asharemedy.model.LoginModel
+import com.home.asharemedy.video.utils.getString
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -205,24 +207,36 @@ object Utils {
         }
     }
 
+    var arrayColors = arrayOf(
+        getString(R.string.temperature),
+        getString(R.string.blood_pressure),
+        getString(R.string.pulse),
+        getString(R.string.height),
+        getString(R.string.weight),
+        getString(R.string.respiration_rate),
+        getString(R.string.calories_burned),
+        getString(R.string.blood_sugar),
+        getString(R.string.oxygen_saturation)
+    )
+
     fun getTime(): String {
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("HH:mm a", Locale.getDefault())
         val date = Date()
         println("Current Time is: $date.time")
         return inputFormat.format(date.time)
     }
 
     fun getDate(): String {
-        /*val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date = Date()
         println("Current Date is: $date.date")
-        return inputFormat.format(date.time)*/
+        return inputFormat.format(date.time)
 
-        val cal = Calendar.getInstance()
-        val day = cal.get(Calendar.DATE)
-        val month = setMonth(cal.get(Calendar.MONTH) + 1)
-        val year = cal.get(Calendar.YEAR)
-        return "$month $day, $year"
+        /* val cal = Calendar.getInstance()
+         val day = cal.get(Calendar.DATE)
+         val month = setMonth(cal.get(Calendar.MONTH) + 1)
+         val year = cal.get(Calendar.YEAR)
+         return "$month $day, $year"*/
     }
 
     fun getJSONRequestBody(stringHashMap: HashMap<String, String>?): RequestBody {
@@ -253,6 +267,29 @@ object Utils {
         }
         return jsonObject.toString()
             .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+    }
+
+    /*Kotlin Encode File/Image to Base64*/
+    fun encoder(filePath: String): String {
+        val bytes = File(filePath).readBytes()
+        val base64 = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Base64.getEncoder().encodeToString(bytes)
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+        return base64
+    }
+
+    /* Kotlin Decode Base64 to File/Image*/
+    fun decoder(base64Str: String, pathFile: String): Unit {
+        val imageByteArray = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Base64.getDecoder().decode(base64Str)
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+        File(pathFile).run {
+            writeBytes(imageByteArray)
+        }
     }
 
 }

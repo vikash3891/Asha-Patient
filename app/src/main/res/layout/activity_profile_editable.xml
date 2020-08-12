@@ -750,7 +750,7 @@
                         android:paddingTop="@dimen/dp_5"
                         android:paddingEnd="@dimen/dp_30"
                         android:paddingBottom="@dimen/dp_5"
-                        android:text="@string/add"
+                        android:text="@string/edit"
                         android:textColor="@color/white" />
                 </RelativeLayout>
 
@@ -885,7 +885,7 @@
                             android:maxLength="2"
                             android:maxLines="1"
                             android:padding="@dimen/dp_2"
-                            android:textSize="@dimen/sp_13"
+                            android:textSize="@dimen/sp_11"
                             android:visibility="invisible" />
                     </LinearLayout>
 
@@ -949,7 +949,7 @@
                             android:maxLength="2"
                             android:maxLines="1"
                             android:padding="@dimen/dp_2"
-                            android:textSize="@dimen/sp_13"
+                            android:textSize="@dimen/sp_11"
                             android:visibility="invisible" />
 
                     </LinearLayout>

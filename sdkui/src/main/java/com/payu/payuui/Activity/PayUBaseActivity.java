@@ -104,10 +104,6 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
 
         bundle = getIntent().getExtras();
 
-
-
-
-
         if (bundle != null) {
             payuConfig = bundle.getParcelable(PayuConstants.PAYU_CONFIG);
             payuConfig = null != payuConfig ? payuConfig : new PayuConfig();
@@ -118,7 +114,6 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
             mPayUHashes = bundle.getParcelable(PayuConstants.PAYU_HASHES);
             merchantKey = mPaymentParams.getKey();
             userCredentials = mPaymentParams.getUserCredentials();
-
 
          // Call back method of PayU custom browser to check availability of Samsung Pay
 

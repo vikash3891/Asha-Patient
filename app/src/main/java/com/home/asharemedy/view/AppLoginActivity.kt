@@ -24,8 +24,8 @@ class AppLoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
 
         try {
-            editUserName.setText("john@doe.com")
-            editUserPass.setText("password")
+            editUserName.setText("John@doe.com")
+            editUserPass.setText("12345")
             clickPerform()
 
         } catch (e: Exception) {
@@ -120,7 +120,7 @@ class AppLoginActivity : BaseActivity() {
                                     this@AppLoginActivity,
                                     response.body()!!.data[0].user_id!!
                                 )
-
+                                Log.e("UserID: ", AppPrefences.getUserID(this@AppLoginActivity))
                                 Utils.setUserDetails(response.body()!!.data[0])
 
                                 AppPrefences.setPassword(

@@ -3,31 +3,28 @@ package com.home.asharemedy.view
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import com.home.asharemedy.R
 import com.home.asharemedy.adapter.AddMedicalRecordAdapter
-import com.home.asharemedy.api.ApiClient
-import com.home.asharemedy.api.ApiInterface
-import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.databinding.ActivityDashboardBinding
 import com.home.asharemedy.model.DashboardGridModel
-import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_add_medical_record.*
-import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_dashboard.bottomBar
 import kotlinx.android.synthetic.main.activity_dashboard.gvDashboard
 import kotlinx.android.synthetic.main.activity_dashboard.topbar
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
-import kotlinx.android.synthetic.main.item_profile_details.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import java.io.IOException
+import android.graphics.BitmapFactory
+import android.util.Base64
+import java.io.ByteArrayOutputStream
+
 
 class AddMedicalRecordActivity : BaseActivity() {
 
@@ -35,6 +32,7 @@ class AddMedicalRecordActivity : BaseActivity() {
     var foodsList = ArrayList<DashboardGridModel>()
     private lateinit var viewDataBinding: ActivityDashboardBinding
     val REQUEST_CODE = 100
+    val DOCUMENT_REQUEST_CODE = 111
     val CAMERA_REQUEST_CODE = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,9 +51,11 @@ class AddMedicalRecordActivity : BaseActivity() {
         topbar.screenName.text = getString(R.string.dashboard)
         topbar.imageBack.visibility = View.GONE
 
-        // getPatientProfile()
+        loadList()
+    }
 
-        for (i in 0..6) {
+    private fun loadList() {
+        for (i in 0..1) {
             foodsList.add(
                 DashboardGridModel(
                     "Document " + i + 1,
@@ -97,7 +97,11 @@ class AddMedicalRecordActivity : BaseActivity() {
                 startActivityForResult(intent, REQUEST_CODE)
             }
             layoutCloud.setOnClickListener {
-                finish()
+                val intent = Intent()
+                    .setType("*/*")
+                    .setAction(Intent.ACTION_GET_CONTENT)
+
+                startActivityForResult(Intent.createChooser(intent, "Select a file"), 111)
             }
 
         } catch (e: Exception) {
@@ -108,70 +112,43 @@ class AddMedicalRecordActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (resultCode == Activity.RESULT_OK && requestCode == CAMERA_REQUEST_CODE && data != null){
+            if (resultCode == Activity.RESULT_OK && requestCode == CAMERA_REQUEST_CODE && data != null) {
                 layoutPreview.visibility = View.VISIBLE
                 imagePreview.setImageBitmap(data.extras?.get("data") as Bitmap)
             }
-            if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+            if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
                 layoutPreview.visibility = View.VISIBLE
                 imagePreview.setImageURI(data?.data) // handle chosen image
+
+
+                val bm = BitmapFactory.decodeFile("/path/to/image.jpg")
+                val baos = ByteArrayOutputStream()
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos) // bm is the bitmap object
+                val b = baos.toByteArray()
+
+                val encodedImage = Base64.encodeToString(b, Base64.DEFAULT)
+
+                /* var fileBase64 = Utils.encoder(data?.data.toString())*/
+                Log.d("FileBase64", encodedImage)
+            }
+            if (resultCode == Activity.RESULT_OK && requestCode == DOCUMENT_REQUEST_CODE) {
+                val selectedFile = data?.data //The uri with the location of the file
+
+                try {
+                    val bitmap = MediaStore.Images.Media.getBitmap(
+                        this@AddMedicalRecordActivity.contentResolver,
+                        selectedFile
+                    )
+                    val thumbBitmap = ThumbnailUtils.extractThumbnail(bitmap, 120, 120)
+                    imagePreview.setImageBitmap(thumbBitmap);
+                } catch (ex: IOException) {
+                    ex.printStackTrace()
+                }
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    /* private fun getPatientProfile() = if (Utils.isConnected(this)) {
-         showDialog()
-         try {
-             val apiService =
-                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-             val call: Call<ResponseModelClasses.GetPatientProfileResponseModel> =
-                 apiService.getPatientProfile("15")//AppPrefences.getUserID(this))
-             call.enqueue(object : Callback<ResponseModelClasses.GetPatientProfileResponseModel> {
-                 override fun onResponse(
-                     call: Call<ResponseModelClasses.GetPatientProfileResponseModel>,
-                     response: Response<ResponseModelClasses.GetPatientProfileResponseModel>
-                 ) {
-                     try {
-                         dismissDialog()
-                         Log.d("Response: ", response.body().toString())
-                         if (response.body() != null) {
-                             updateView(response.body()!!)
-                         }
-                     } catch (e: Exception) {
-                         e.printStackTrace()
-                     }
-                 }
-
-                 override fun onFailure(
-                     call: Call<ResponseModelClasses.GetPatientProfileResponseModel>,
-                     t: Throwable
-                 ) {
-                     Log.d("Throws:", t.message.toString())
-                     dismissDialog()
-                 }
-             })
-
-         } catch (e: Exception) {
-             e.printStackTrace()
-             dismissDialog()
-         }
-
-     } else {
-         dismissDialog()
-         showToast(getString(R.string.internet))
-     }*/
-
-    /*fun updateView(data: ResponseModelClasses.GetPatientProfileResponseModel) {
-        profileDetails.userName.text = data.patient_name
-        profileDetails.patientID.text = data.patient_id
-        profileDetails.dobValue.text = data.patient_dob
-        profileDetails.brandPartnerName.text = data.insurance_company_name
-        profileDetails.phoneNumberValue.text = data.patient_mobile
-        profileDetails.emailValue.text = data.patient_email
-        profileDetails.emergencyContactValue.text = data.emergency_contact_number
-
-    }
-*/
 }

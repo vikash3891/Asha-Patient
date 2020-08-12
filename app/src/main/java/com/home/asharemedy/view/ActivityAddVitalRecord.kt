@@ -3,23 +3,36 @@ package com.home.asharemedy.view
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.util.Log
+import android.view.View
 import com.home.asharemedy.R
 import com.home.asharemedy.adapter.PaymentListAdapter
+import com.home.asharemedy.api.ApiClient
+import com.home.asharemedy.api.ApiInterface
+import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.utils.AppPrefences
+import com.home.asharemedy.utils.Constants
+import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_add_vital_record.*
-import kotlinx.android.synthetic.main.activity_clinic_visit.*
 import kotlinx.android.synthetic.main.activity_clinic_visit.bottomBar
 import kotlinx.android.synthetic.main.activity_clinic_visit.topbar
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ActivityAddVitalRecord : BaseActivity() {
 
     var adapter: PaymentListAdapter? = null
     var selectedVitalIndex = -1
     var selectedVitalName = ""
+
+    var vital_date = ""
+    var vital_reading = ""
+    var vital_unit = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +49,17 @@ class ActivityAddVitalRecord : BaseActivity() {
             topbar.imageBack.setOnClickListener {
                 finish()
             }
+            vitalRecordDate.text = Utils.getDate()
+            vitalRecordTime.text = Utils.getTime()
+
+            vital_unit = "C"
+
+            bpLayout.visibility = View.GONE
+            heightWeightLayout.visibility = View.VISIBLE
+
+            vitalName.text = getString(R.string.temperature)
+            heightWeightLabel.text = getString(R.string.temperature)
+            heightWeightValue.hint = getString(R.string.celsius)
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -48,11 +72,10 @@ class ActivityAddVitalRecord : BaseActivity() {
                 finish()
             }
             saveVitalRecord.setOnClickListener {
-                Toast.makeText(
-                    this,
-                    "Work In Progress. Please try again later.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                vital_date = vitalRecordDate.text.toString()
+                vital_reading = heightWeightValue.text.toString()
+
+                updateVital()
             }
 
             vitalName.setOnClickListener() {
@@ -77,40 +100,18 @@ class ActivityAddVitalRecord : BaseActivity() {
 
     private fun showDialogAilment() {
         try {
-
-            var arrayColors = arrayOf(
-                getString(R.string.temperature),
-                getString(R.string.pulse),
-                getString(R.string.height),
-                getString(R.string.weight),
-                getString(R.string.respiration_rate),
-                getString(R.string.oxygen_saturation),
-                getString(R.string.pain_scale_score),
-                getString(R.string.lmp),
-                getString(R.string.coma_scale),
-                getString(R.string.bca),
-                getString(R.string.fat),
-                getString(R.string.muscle),
-                getString(R.string.hydration),
-                getString(R.string.steps),
-                getString(R.string.calories_burned)
-            )
-
             lateinit var dialog: AlertDialog
 
             val builder = AlertDialog.Builder(this)
 
             builder.setTitle("Select Vital")
 
-            builder.setSingleChoiceItems(arrayColors, selectedVitalIndex) { _, which ->
+            builder.setSingleChoiceItems(Utils.arrayColors, selectedVitalIndex) { _, which ->
 
                 selectedVitalIndex = which
-                vitalName.text = arrayColors[which]
-                selectedVitalName = arrayColors[which]
-                if (selectedVitalName.equals("Blood Pressure"))
-                else {
-
-                }
+                vitalName.text = Utils.arrayColors[which]
+                selectedVitalName = Utils.arrayColors[which]
+                updateInputView(selectedVitalName)
 
                 dialog.dismiss()
             }
@@ -121,5 +122,161 @@ class ActivityAddVitalRecord : BaseActivity() {
             e.printStackTrace()
         }
     }
+
+    private fun updateInputView(vitalName: String) {
+
+        when (vitalName) {
+            getString(R.string.temperature) -> {
+
+                vital_unit = "C"
+
+                bpLayout.visibility = View.GONE
+                heightWeightLayout.visibility = View.VISIBLE
+
+                heightWeightLabel.text = getString(R.string.temperature)
+                heightWeightValue.hint = getString(R.string.celsius)
+            }
+            getString(R.string.blood_pressure) -> {
+                vital_unit = getString(R.string.blood_sugar_unit)
+
+                bpLayout.visibility = View.VISIBLE
+                heightWeightLayout.visibility = View.GONE
+
+                heightWeightLabel.text = getString(R.string.blood_pressure)
+                heightWeightValue.hint = getString(R.string.blood_sugar_unit)
+            }
+            getString(R.string.pulse) -> {
+                vital_unit = getString(R.string.pr_min)
+
+                bpLayout.visibility = View.GONE
+                heightWeightLayout.visibility = View.VISIBLE
+
+                heightWeightLabel.text = getString(R.string.pulse)
+                heightWeightValue.hint = getString(R.string.pr_min)
+            }
+            getString(R.string.height) -> {
+                vital_unit = "ft.inch"
+
+                bpLayout.visibility = View.GONE
+                heightWeightLayout.visibility = View.VISIBLE
+
+                heightWeightLabel.text = getString(R.string.height)
+                heightWeightValue.hint = getString(R.string.height_in_ft_inchs)
+
+            }
+            getString(R.string.weight) -> {
+                vital_unit = "kg"
+
+                bpLayout.visibility = View.GONE
+                heightWeightLayout.visibility = View.VISIBLE
+
+                heightWeightLabel.text = getString(R.string.weight)
+                heightWeightValue.hint = getString(R.string.weight_in_kg)
+
+            }
+            getString(R.string.respiration_rate) -> {
+
+                vital_unit = getString(R.string.pr_min)
+
+                bpLayout.visibility = View.GONE
+                heightWeightLayout.visibility = View.VISIBLE
+
+                heightWeightLabel.text = getString(R.string.respiration_rate)
+                heightWeightValue.hint = getString(R.string.pr_min)
+
+            }
+            getString(R.string.calories_burned) -> {
+
+                vital_unit = getString(R.string.calories_burned_unit)
+
+                bpLayout.visibility = View.GONE
+                heightWeightLayout.visibility = View.VISIBLE
+
+                heightWeightLabel.text = getString(R.string.calories_burned)
+                heightWeightValue.hint = getString(R.string.calories_burned_unit)
+
+            }
+            getString(R.string.blood_sugar) -> {
+
+                vital_unit = getString(R.string.blood_sugar_unit)
+
+                bpLayout.visibility = View.GONE
+                heightWeightLayout.visibility = View.VISIBLE
+
+                heightWeightLabel.text = getString(R.string.blood_sugar)
+                heightWeightValue.hint = getString(R.string.blood_sugar_unit)
+
+            }
+            getString(R.string.oxygen_saturation) -> {
+
+                vital_unit = getString(R.string.oxygen_saturation_unit)
+
+                bpLayout.visibility = View.GONE
+                heightWeightLayout.visibility = View.VISIBLE
+
+                heightWeightLabel.text = getString(R.string.oxygen_saturation)
+                heightWeightValue.hint = getString(R.string.oxygen_saturation_unit)
+
+            }
+        }
+    }
+
+    private fun updateVital() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ResponseModelClasses.LoginResponseModel> =
+                apiService.getSingleUnitVital(
+                    AppPrefences.getUserID(this), selectedVitalName,
+                    Utils.getJSONRequestBodyAny(
+                        RequestModel.setVitalRequestModel(
+                            vital_date, vital_reading, vital_unit
+                        )
+                    )
+                )
+            call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    response: Response<ResponseModelClasses.LoginResponseModel>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("Response:", response.body().toString())
+                        if (response.code() == 400) {
+                            Log.v("Error code 400", response.errorBody().toString())
+                        }
+                        if (response.body() != null) {
+                            if (response.body()!!.message == "fail") {
+                                showSuccessPopup(response.body()!!.message)
+                            } else {
+
+                                showSuccessPopup("Vital Saved Successfully.")
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
 
 }
