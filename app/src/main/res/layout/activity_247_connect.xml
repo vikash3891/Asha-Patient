@@ -52,6 +52,7 @@
                 android:background="@drawable/drawable_background_gradient"
                 android:gravity="center"
                 android:text="Audio/Video"
+                android:fontFamily="@font/quicksand_medium"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/sp_29"
                 android:textStyle="bold" />
@@ -62,6 +63,7 @@
             android:id="@+id/bottomBar"
             layout="@layout/bottombar_layout"
             android:layout_width="match_parent"
+            android:fontFamily="@font/quicksand_medium"
             android:layout_height="@dimen/dp_50"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom" />

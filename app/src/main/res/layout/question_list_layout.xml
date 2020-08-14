@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/mandatory"
-        android:fontFamily="@font/roboto"
+        android:fontFamily="@font/quicksand_medium"
         android:textSize="@dimen/sp_16" />
     <!---->
     <!--<View-->

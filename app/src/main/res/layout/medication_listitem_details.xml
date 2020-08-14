@@ -18,6 +18,7 @@
             android:padding="@dimen/dp_5"
             android:text="Days: "
             android:textColor="@color/black"
+            android:fontFamily="@font/quicksand_medium"
             android:textSize="@dimen/sp_16" />
 
         <TextView
@@ -25,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_5"
-            android:text="14"
+            android:fontFamily="@font/quicksand_medium"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
@@ -39,6 +40,7 @@
             android:id="@+id/doseLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_medium"
             android:padding="@dimen/dp_5"
             android:text="Dose(per day): "
             android:textColor="@color/black"
@@ -49,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_5"
-            android:text="3"
+            android:fontFamily="@font/quicksand_medium"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
@@ -64,6 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_5"
+            android:fontFamily="@font/quicksand_medium"
             android:text="Instructions: "
             android:textColor="@color/black"
             android:textSize="@dimen/sp_16" />
@@ -73,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_5"
-            android:text="Thrice a day after meal."
+            android:fontFamily="@font/quicksand_medium"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
@@ -87,6 +90,7 @@
             android:id="@+id/statusLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_medium"
             android:padding="@dimen/dp_5"
             android:text="Status: "
             android:textColor="@color/black"
@@ -97,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_5"
-            android:text="On going."
+            android:fontFamily="@font/quicksand_medium"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
@@ -113,6 +117,7 @@
             android:id="@+id/ok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_medium"
             android:gravity="end"
             android:padding="@dimen/dp_10"
             android:text="Ok"

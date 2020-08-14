@@ -239,4 +239,12 @@ object ResponseModelClasses {
         val transanction_id: String
     )
 
+    data class SetVitalResponseModel(
+
+        val vital_date: String,
+        val vital_id: String,
+        val vital_reading: String,
+        val vital_unit: String
+    )
+
 }

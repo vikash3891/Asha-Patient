@@ -46,6 +46,8 @@ object Utils {
     var isAilmentOrService = true
     var selectedDoctorFacitiyID = ""
 
+    var fileUploadBase64 = ""
+
     var appointmentSlotList = java.util.ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
     var doctorFacilityList = ArrayList<ResponseModelClasses.GetFacilityListResponseModel>()
 
@@ -272,12 +274,11 @@ object Utils {
     /*Kotlin Encode File/Image to Base64*/
     fun encoder(filePath: String): String {
         val bytes = File(filePath).readBytes()
-        val base64 = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Base64.getEncoder().encodeToString(bytes)
         } else {
             TODO("VERSION.SDK_INT < O")
         }
-        return base64
     }
 
     /* Kotlin Decode Base64 to File/Image*/

@@ -65,7 +65,7 @@ object RequestModel {
         var map = HashMap<String, Any>()
 
         map.put(Constants.VITAL_DATE, vital_date)
-        map.put(Constants.VITAL_READING, vital_reading)
+        map.put(Constants.VITAL_READING, arrayOf(vital_reading))
         map.put(Constants.VITAL_UNIT, vital_unit)
         Log.d("VitalUpdateRequest: ", "" + Gson().toJson(map))
         return map;
@@ -159,5 +159,19 @@ object RequestModel {
         return map;
     }
 
+    fun getRecordUploadRequestModel(
+        appointmentID: String,
+        category: String,
+        storageLink: String,
+        fileContent: String
+    ): HashMap<String, Any> {
+        var map = HashMap<String, Any>()
 
+        map.put(Constants.APPOINTMENT_ID, appointmentID)
+        map.put(Constants.CATEGORY, category)
+        map.put(Constants.STORAGE_LINK, storageLink)
+        map.put(Constants.FILE_CONTENT, fileContent)
+        Log.d("RecordUploadRequest: ", "" + Gson().toJson(map))
+        return map;
+    }
 }

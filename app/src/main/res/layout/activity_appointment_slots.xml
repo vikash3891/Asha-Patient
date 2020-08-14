@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_5">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="@dimen/dp_80"
                         android:layout_height="@dimen/dp_80"
                         android:background="@drawable/ic_emoticon_50dp" />
@@ -53,16 +53,18 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:gravity="center_vertical|start"
-                    android:paddingStart="@dimen/dp_10">
+                    android:gravity="center_vertical|start">
 
                     <TextView
                         android:id="@+id/doctorName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/quicksand_medium"
                         android:gravity="center_horizontal"
+                        android:maxLines="1"
                         android:padding="@dimen/dp_2"
-                        android:text="Dr. Roy Thomas"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/sp_16"
                         android:textStyle="bold" />
@@ -72,28 +74,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/doctorName"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/quicksand_medium"
                         android:gravity="center_horizontal"
+                        android:maxLines="1"
                         android:padding="@dimen/dp_2"
                         android:text=""
                         android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_14" />
 
                     <TextView
                         android:id="@+id/address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/doctorSpeciality"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/quicksand_medium"
                         android:gravity="center_horizontal"
+                        android:maxLines="1"
                         android:padding="@dimen/dp_2"
                         android:text=""
                         android:textColor="@color/colorAppGray"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_13" />
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/quicksand_medium"
                     android:gravity="center"
                     android:text="$100"
                     android:textColor="@color/colorProgress"
@@ -106,19 +115,20 @@
         <TextView
             android:id="@+id/slotCalendar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_40"
+            android:layout_height="@dimen/dp_35"
             android:layout_below="@+id/cardDoctorDetails"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_10"
             android:background="@drawable/drawable_round_blue_stroke"
+            android:fontFamily="@font/quicksand_medium"
             android:gravity="center"
-            android:paddingTop="@dimen/dp_7"
-            android:paddingBottom="@dimen/dp_7"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
             android:text=""
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_17" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardSlotDetails"
@@ -140,6 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
+                    android:fontFamily="@font/quicksand_medium"
                     android:gravity="center"
                     android:padding="@dimen/dp_10"
                     android:text="Pick Time"
@@ -178,6 +189,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="Morning"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/sp_14" />
@@ -205,6 +217,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="Afternoon"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/sp_14" />
@@ -232,6 +245,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="Evening"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/sp_14" />
@@ -287,6 +301,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
                     android:paddingStart="@dimen/dp_10"
                     android:text="Available"
                     android:textColor="@color/black"
@@ -309,6 +324,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
                     android:paddingStart="@dimen/dp_10"
                     android:text="Booked"
                     android:textColor="@color/black"
@@ -331,6 +347,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
                     android:paddingStart="@dimen/dp_10"
                     android:text="Completed"
                     android:textColor="@color/black"
@@ -349,6 +366,7 @@
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_5"
             android:background="@drawable/round_corner_green"
+            android:fontFamily="@font/quicksand_medium"
             android:gravity="center"
             android:paddingTop="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_10"

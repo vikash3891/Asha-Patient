@@ -71,7 +71,8 @@
                                 android:layout_centerHorizontal="true"
                                 android:background="@drawable/drawable_round_corner"
                                 android:gravity="center_horizontal"
-                                android:hint="Start Date"
+                                android:hint="@string/start_date"
+                                android:fontFamily="@font/quicksand_medium"
                                 android:padding="@dimen/dp_5"
                                 android:textSize="@dimen/sp_14" />
 
@@ -81,6 +82,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/startDate"
                                 android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/quicksand_medium"
                                 android:gravity="center_horizontal"
                                 android:padding="@dimen/dp_2"
                                 android:text=""
@@ -100,6 +102,7 @@
                                 android:id="@+id/endDate"
                                 android:layout_width="150dp"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
                                 android:layout_centerHorizontal="true"
                                 android:background="@drawable/drawable_round_corner"
                                 android:gravity="center_horizontal"
@@ -115,6 +118,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:gravity="center_horizontal"
                                 android:padding="@dimen/dp_2"
+                                android:fontFamily="@font/quicksand_medium"
                                 android:text=""
                                 android:textColor="@color/colorAppGray"
                                 android:textSize="@dimen/sp_14"
@@ -126,7 +130,6 @@
                         android:id="@+id/layoutSearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/layoutDates"
                         android:layout_margin="@dimen/dp_10"
                         android:orientation="horizontal"
                         android:visibility="gone">
@@ -137,6 +140,7 @@
                             android:layout_marginStart="@dimen/dp_15"
                             android:layout_marginEnd="@dimen/dp_15"
                             android:layout_weight="2"
+                            android:fontFamily="@font/quicksand_medium"
                             android:background="@drawable/drawable_round_corner"
                             android:hint="Type search keyword"
                             android:padding="@dimen/dp_10"
@@ -150,7 +154,7 @@
                             android:layout_marginEnd="@dimen/dp_10"
                             android:layout_weight="1"
                             android:background="@drawable/rounded_corner_blue"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="Search"
                             android:textAllCaps="false"
                             android:textColor="@color/colorWhite"
@@ -184,6 +188,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
+                        android:fontFamily="@font/quicksand_medium"
                         android:textSize="@dimen/sp_18"
                         android:visibility="gone" />
                 </RelativeLayout>

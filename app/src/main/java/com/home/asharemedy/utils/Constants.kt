@@ -83,6 +83,11 @@ class Constants {
         const val HABIT_FREQUENCY_UNIT = "habit_frequency_unit"
         const val STATUS = "status"
 
+        const val APPOINTMENT_ID = "appointment_id"
+        const val CATEGORY = "category"
+        const val STORAGE_LINK = "storage_link"
+        const val FILE_CONTENT = "file_content"
+
 
     }
 }

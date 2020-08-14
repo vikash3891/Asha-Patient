@@ -46,6 +46,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
+                        android:fontFamily="@font/quicksand_medium"
                         android:padding="@dimen/dp_10"
                         android:text="Appointment Details"
                         android:textColor="@color/colorBlack"
@@ -67,6 +68,7 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
+                            android:fontFamily="@font/quicksand_medium"
                             android:padding="@dimen/dp_2"
                             android:text="Appointment Status :"
                             android:textColor="@color/colorAccent"
@@ -78,6 +80,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/dp_2"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text=""
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -99,6 +102,7 @@
                             android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Facility Name :"
+                            android:fontFamily="@font/quicksand_medium"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/sp_15" />
 
@@ -106,6 +110,7 @@
                             android:id="@+id/facilityNameValue"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
                             android:layout_weight="1"
                             android:padding="@dimen/dp_2"
                             android:text="@string/american_hospital"
@@ -123,6 +128,7 @@
                             android:id="@+id/addressLabel"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
@@ -138,9 +144,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:ellipsize="end"
+                            android:fontFamily="@font/quicksand_medium"
                             android:maxLines="3"
                             android:padding="@dimen/dp_2"
-                            android:text="02 June, 1991"
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
 
@@ -159,6 +165,7 @@
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
                             android:gravity="start"
+                            android:fontFamily="@font/quicksand_medium"
                             android:padding="@dimen/dp_2"
                             android:text="Date :"
                             android:textColor="@color/colorAccent"
@@ -169,6 +176,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/quicksand_medium"
                             android:padding="@dimen/dp_2"
                             android:text="@string/_03_june_2020"
                             android:textSize="@dimen/sp_15" />
@@ -188,6 +196,7 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
+                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Time :"
@@ -200,6 +209,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/dp_2"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="@string/_1430"
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -219,6 +229,7 @@
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
                             android:gravity="start"
+                            android:fontFamily="@font/quicksand_medium"
                             android:padding="@dimen/dp_2"
                             android:text="Clinician :"
                             android:textColor="@color/colorAccent"
@@ -229,8 +240,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/quicksand_medium"
                             android:padding="@dimen/dp_2"
-                            android:text="@string/dr_anna_johnson"
+                            android:text=""
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
 
@@ -251,6 +263,7 @@
                             android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Speciality :"
+                            android:fontFamily="@font/quicksand_medium"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/sp_15" />
 
@@ -260,6 +273,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/dp_2"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="@string/ent"
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -279,6 +293,7 @@
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
                             android:gravity="start"
+                            android:fontFamily="@font/quicksand_medium"
                             android:padding="@dimen/dp_2"
                             android:text="Complaints :"
                             android:textColor="@color/colorAccent"
@@ -290,6 +305,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/dp_2"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="@string/frequent_vomiting"
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -304,6 +320,7 @@
                         <TextView
                             android:id="@+id/coordinatorLabel"
                             android:layout_width="0dp"
+                            android:fontFamily="@font/quicksand_medium"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
@@ -319,6 +336,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/quicksand_medium"
                             android:padding="@dimen/dp_2"
                             android:text="@string/dr_anna_johnson"
                             android:textSize="@dimen/sp_15" />
@@ -335,6 +353,7 @@
                             android:id="@+id/remarksLabel"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
@@ -350,6 +369,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/dp_2"
+                            android:fontFamily="@font/quicksand_medium"
                             android:text="@string/frequent_vomiting"
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -371,7 +391,6 @@
                 android:id="@+id/layoutDisclaimer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/bottombar_layout"
                 android:layout_margin="@dimen/dp_5"
                 android:orientation="horizontal">
 
@@ -380,6 +399,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
+                    android:fontFamily="@font/quicksand_medium"
                     android:padding="@dimen/dp_10"
                     android:text="@string/for_any_change_comments_related_to_this_appointment_please_contact_your_health_manager"
                     android:textSize="@dimen/sp_10" />

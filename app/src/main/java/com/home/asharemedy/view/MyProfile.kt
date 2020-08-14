@@ -505,17 +505,21 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             submit.setOnClickListener {
 
                 try {
-                    habitFrequencyValue = habitFrequency.text.toString().toInt()
-                    Log.e("Frequency: ", habitFrequencyValue.toString())
-                    habitFrequencyUnit = "per Day"
+                    if (habitYes.isChecked && habitFrequency.text.toString().isEmpty()) {
+                        showSuccessPopup("Please enter habit frequency.")
+                    } else {
+                        habitFrequencyValue = habitFrequency.text.toString().toInt()
+                        Log.e("Frequency: ", habitFrequencyValue.toString())
+                        habitFrequencyUnit = "per Day"
 
-                    habitStatus = if (habitYes.isChecked)
-                        "active"
-                    else
-                        "inactive"
+                        habitStatus = if (habitYes.isChecked)
+                            "active"
+                        else
+                            "inactive"
 
-                    updateAddHabitView(spinnerHabit.selectedItem.toString(), habitYes.isChecked)
-                    dialog.dismiss()
+                        updateAddHabitView(spinnerHabit.selectedItem.toString(), habitYes.isChecked)
+                        dialog.dismiss()
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

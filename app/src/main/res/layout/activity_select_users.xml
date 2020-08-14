@@ -65,6 +65,7 @@
         android:layout_marginTop="28dp"
         android:textSize="17sp"
         android:textColor="#333333"
+        android:fontFamily="@font/quicksand_medium"
         android:visibility="invisible"
         tools:visibility="visible"
         android:text="@string/select_users_not_found"/>

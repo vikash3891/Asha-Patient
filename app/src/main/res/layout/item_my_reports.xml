@@ -31,6 +31,7 @@
                 android:gravity="center_horizontal|center"
                 android:padding="@dimen/dp_3"
                 android:text="30 July"
+                android:fontFamily="@font/quicksand_medium"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/sp_14" />
 
@@ -50,6 +51,7 @@
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_2"
                 android:text="CT Scan"
+                android:fontFamily="@font/quicksand_medium"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_16"
                 android:textStyle="bold" />
@@ -61,6 +63,7 @@
                 android:layout_below="@+id/reportName"
                 android:ellipsize="end"
                 android:gravity="center_horizontal"
+                android:fontFamily="@font/quicksand_medium"
                 android:maxLines="1"
                 android:padding="@dimen/dp_2"
                 android:text=""

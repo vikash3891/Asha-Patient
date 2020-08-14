@@ -1,7 +1,9 @@
 package com.home.asharemedy.view
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.ThumbnailUtils
 import android.os.Bundle
@@ -23,7 +25,20 @@ import kotlinx.android.synthetic.main.topbar_layout.view.*
 import java.io.IOException
 import android.graphics.BitmapFactory
 import android.util.Base64
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.home.asharemedy.api.ApiClient
+import com.home.asharemedy.api.ApiInterface
+import com.home.asharemedy.api.RequestModel
+import com.home.asharemedy.api.ResponseModelClasses
+import com.home.asharemedy.chat.utils.getFilePath
+import com.home.asharemedy.utils.AppPrefences
+import com.home.asharemedy.utils.Constants
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 
 class AddMedicalRecordActivity : BaseActivity() {
@@ -34,6 +49,11 @@ class AddMedicalRecordActivity : BaseActivity() {
     val REQUEST_CODE = 100
     val DOCUMENT_REQUEST_CODE = 111
     val CAMERA_REQUEST_CODE = 200
+
+    var appointmentID = ""
+    var category = ""
+    var storageLink = ""
+    var fileContent = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +70,7 @@ class AddMedicalRecordActivity : BaseActivity() {
     private fun initView() {
         topbar.screenName.text = getString(R.string.dashboard)
         topbar.imageBack.visibility = View.GONE
-
+        setupPermissions()
         loadList()
     }
 
@@ -89,7 +109,7 @@ class AddMedicalRecordActivity : BaseActivity() {
 
             layoutCamera.setOnClickListener {
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(cameraIntent, REQUEST_CODE)
+                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
             }
             layoutGallery.setOnClickListener {
                 val intent = Intent(Intent.ACTION_PICK)
@@ -103,6 +123,11 @@ class AddMedicalRecordActivity : BaseActivity() {
 
                 startActivityForResult(Intent.createChooser(intent, "Select a file"), 111)
             }
+            uploadAttachment.setOnClickListener {
+                if (appointmentID.isNotEmpty() && category.isNotEmpty() && storageLink.isNotEmpty() && fileContent.isNotEmpty()) {
+                    addRecordApi()
+                }
+            }
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -112,24 +137,18 @@ class AddMedicalRecordActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (resultCode == Activity.RESULT_OK && requestCode == CAMERA_REQUEST_CODE && data != null) {
+            if (resultCode == Activity.RESULT_OK && requestCode == CAMERA_REQUEST_CODE) {
                 layoutPreview.visibility = View.VISIBLE
-                imagePreview.setImageBitmap(data.extras?.get("data") as Bitmap)
+                imagePreview.setImageBitmap(data!!.extras?.get("data") as Bitmap)
             }
             if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
                 layoutPreview.visibility = View.VISIBLE
                 imagePreview.setImageURI(data?.data) // handle chosen image
 
-
-                val bm = BitmapFactory.decodeFile("/path/to/image.jpg")
-                val baos = ByteArrayOutputStream()
-                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos) // bm is the bitmap object
-                val b = baos.toByteArray()
-
-                val encodedImage = Base64.encodeToString(b, Base64.DEFAULT)
-
-                /* var fileBase64 = Utils.encoder(data?.data.toString())*/
-                Log.d("FileBase64", encodedImage)
+                Log.d("FilePath", getFilePath(applicationContext, data?.data!!))
+                Log.d("FileBase64", Utils.encoder(getFilePath(applicationContext, data.data!!)!!))
+                Utils.fileUploadBase64 =
+                    Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
             }
             if (resultCode == Activity.RESULT_OK && requestCode == DOCUMENT_REQUEST_CODE) {
                 val selectedFile = data?.data //The uri with the location of the file
@@ -149,6 +168,83 @@ class AddMedicalRecordActivity : BaseActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun setupPermissions() {
+        val permission = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            Log.i("Permission", "Permission to record denied")
+            makeRequest()
+        }
+    }
+
+    private fun makeRequest() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            101
+        )
+    }
+
+    private fun addRecordApi() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ResponseModelClasses.LoginResponseModel> =
+                apiService.getHabit(
+                    AppPrefences.getUserID(this),
+                    Utils.getJSONRequestBodyAny(
+                        RequestModel.getRecordUploadRequestModel(
+                            appointmentID, category, storageLink, fileContent
+                        )
+                    )
+                )
+            call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    response: Response<ResponseModelClasses.LoginResponseModel>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("Response:", response.body().toString())
+                        if (response.code() == 400) {
+                            Log.v("Error code 400", response.errorBody().toString())
+                        }
+                        if (response.body() != null) {
+                            if (response.body()!!.message == "fail") {
+                                showSuccessPopup(response.body()!!.message)
+                            } else {
+
+                                showSuccessPopup("Habit added Successfully.")
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
     }
 
 }

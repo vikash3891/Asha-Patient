@@ -57,6 +57,7 @@ class ActivityAddVitalRecord : BaseActivity() {
             bpLayout.visibility = View.GONE
             heightWeightLayout.visibility = View.VISIBLE
 
+            selectedVitalName = "temperature"
             vitalName.text = getString(R.string.temperature)
             heightWeightLabel.text = getString(R.string.temperature)
             heightWeightValue.hint = getString(R.string.celsius)
@@ -73,7 +74,15 @@ class ActivityAddVitalRecord : BaseActivity() {
             }
             saveVitalRecord.setOnClickListener {
                 vital_date = vitalRecordDate.text.toString()
-                vital_reading = heightWeightValue.text.toString()
+                if (selectedVitalName.equals(getString(R.string.blood_pressure))) {
+                    vital_reading =
+                        arrayOf(
+                            bpSystolic.text.toString() + "/120",
+                            bpDaistolic.text.toString() + "/140"
+                        ).toString()
+                } else {
+                    vital_reading = heightWeightValue.text.toString()
+                }
 
                 updateVital()
             }
@@ -129,7 +138,7 @@ class ActivityAddVitalRecord : BaseActivity() {
             getString(R.string.temperature) -> {
 
                 vital_unit = "C"
-
+                selectedVitalName = getString(R.string.temperature)
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -138,7 +147,7 @@ class ActivityAddVitalRecord : BaseActivity() {
             }
             getString(R.string.blood_pressure) -> {
                 vital_unit = getString(R.string.blood_sugar_unit)
-
+                selectedVitalName = "bloodpressure"
                 bpLayout.visibility = View.VISIBLE
                 heightWeightLayout.visibility = View.GONE
 
@@ -148,6 +157,7 @@ class ActivityAddVitalRecord : BaseActivity() {
             getString(R.string.pulse) -> {
                 vital_unit = getString(R.string.pr_min)
 
+                selectedVitalName = getString(R.string.pulse)
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -157,6 +167,7 @@ class ActivityAddVitalRecord : BaseActivity() {
             getString(R.string.height) -> {
                 vital_unit = "ft.inch"
 
+                selectedVitalName = getString(R.string.height)
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -167,6 +178,7 @@ class ActivityAddVitalRecord : BaseActivity() {
             getString(R.string.weight) -> {
                 vital_unit = "kg"
 
+                selectedVitalName = getString(R.string.weight)
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -178,6 +190,7 @@ class ActivityAddVitalRecord : BaseActivity() {
 
                 vital_unit = getString(R.string.pr_min)
 
+                selectedVitalName = "respiration_rate"
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -189,6 +202,7 @@ class ActivityAddVitalRecord : BaseActivity() {
 
                 vital_unit = getString(R.string.calories_burned_unit)
 
+                selectedVitalName = "calories_burned"
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -200,6 +214,7 @@ class ActivityAddVitalRecord : BaseActivity() {
 
                 vital_unit = getString(R.string.blood_sugar_unit)
 
+                selectedVitalName = "bloodsugar"
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -211,6 +226,7 @@ class ActivityAddVitalRecord : BaseActivity() {
 
                 vital_unit = getString(R.string.oxygen_saturation_unit)
 
+                selectedVitalName = "oxygen_saturation"
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -226,7 +242,11 @@ class ActivityAddVitalRecord : BaseActivity() {
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ResponseModelClasses.LoginResponseModel> =
+            Log.d(
+                "ReqData:",
+                "$selectedVitalName $vital_date $vital_reading $vital_unit"
+            )
+            val call: Call<ResponseModelClasses.SetVitalResponseModel> =
                 apiService.getSingleUnitVital(
                     AppPrefences.getUserID(this), selectedVitalName,
                     Utils.getJSONRequestBodyAny(
@@ -235,10 +255,10 @@ class ActivityAddVitalRecord : BaseActivity() {
                         )
                     )
                 )
-            call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
+            call.enqueue(object : Callback<ResponseModelClasses.SetVitalResponseModel> {
                 override fun onResponse(
-                    call: Call<ResponseModelClasses.LoginResponseModel>,
-                    response: Response<ResponseModelClasses.LoginResponseModel>
+                    call: Call<ResponseModelClasses.SetVitalResponseModel>,
+                    response: Response<ResponseModelClasses.SetVitalResponseModel>
                 ) {
                     try {
                         dismissDialog()
@@ -247,12 +267,7 @@ class ActivityAddVitalRecord : BaseActivity() {
                             Log.v("Error code 400", response.errorBody().toString())
                         }
                         if (response.body() != null) {
-                            if (response.body()!!.message == "fail") {
-                                showSuccessPopup(response.body()!!.message)
-                            } else {
-
                                 showSuccessPopup("Vital Saved Successfully.")
-                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -260,7 +275,7 @@ class ActivityAddVitalRecord : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    call: Call<ResponseModelClasses.SetVitalResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())

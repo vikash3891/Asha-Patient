@@ -27,6 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="Amount" />
 
             <EditText
@@ -34,7 +35,84 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/listDoctorDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="@dimen/dp_80"
+                    android:background="@drawable/ic_emoticon_50dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center_vertical|start"
+                android:paddingStart="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/doctorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/dp_2"
+                    android:text=""
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/doctorSpeciality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/doctorName"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/dp_2"
+                    android:text=""
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/doctorSpeciality"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/dp_2"
+                    android:text=""
+                    android:textColor="@color/colorAppGray"
+                    android:textSize="@dimen/sp_16" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/colorProgress"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -53,7 +131,7 @@
                     android:id="@+id/mobileLabel"
                     android:layout_width="@dimen/dp_150"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/quicksand_medium"
                     android:gravity="start"
                     android:paddingStart="@dimen/dp_10"
                     android:text="@string/mobile_number"
@@ -68,14 +146,14 @@
                     android:background="@drawable/edittext_border"
                     android:ellipsize="end"
                     android:enabled="false"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/quicksand_medium"
                     android:gravity="start"
                     android:hint="@string/mandatory"
                     android:imeOptions="actionNext|flagNavigateNext"
                     android:maxLength="10"
                     android:maxLines="1"
                     android:padding="@dimen/dp_10"
-                    android:text="9876543210"
+                    android:text=""
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/sp_14" />
             </LinearLayout>
@@ -91,7 +169,7 @@
                     android:id="@+id/emailLabel"
                     android:layout_width="@dimen/dp_150"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/quicksand_medium"
                     android:gravity="start"
                     android:paddingStart="@dimen/dp_10"
                     android:text="@string/email"
@@ -106,7 +184,7 @@
                     android:background="@drawable/edittext_border"
                     android:ellipsize="end"
                     android:enabled="false"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/quicksand_medium"
                     android:gravity="start"
                     android:hint="@string/mandatory"
                     android:imeOptions="actionNext|flagNavigateNext"
@@ -130,7 +208,7 @@
                     android:id="@+id/amountLabel"
                     android:layout_width="@dimen/dp_150"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/quicksand_medium"
                     android:gravity="start"
                     android:paddingStart="@dimen/dp_10"
                     android:text="Amount"
@@ -145,7 +223,7 @@
                     android:background="@drawable/edittext_border"
                     android:ellipsize="end"
                     android:enabled="false"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/quicksand_medium"
                     android:gravity="start"
                     android:hint="@string/mandatory"
                     android:imeOptions="actionNext|flagNavigateNext"
@@ -157,6 +235,106 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/sp_14" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutAilment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_5">
+
+                <TextView
+                    android:id="@+id/ailmentLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start"
+                    android:paddingStart="@dimen/dp_10"
+                    android:text="Ailment: "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/ailmentValue"
+                    android:layout_width="@dimen/dp_150"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start"
+                    android:paddingStart="@dimen/dp_10"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_5">
+
+                <TextView
+                    android:id="@+id/dateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start"
+                    android:paddingStart="@dimen/dp_10"
+                    android:text="Date: "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/dateValue"
+                    android:layout_width="@dimen/dp_150"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start"
+                    android:paddingStart="@dimen/dp_10"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_5">
+
+                <TextView
+                    android:id="@+id/timeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start"
+                    android:paddingStart="@dimen/dp_10"
+                    android:text="Time: "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/timeValue"
+                    android:layout_width="@dimen/dp_150"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start"
+                    android:paddingStart="@dimen/dp_10"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -170,6 +348,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="Environment" />
 
             <Spinner
@@ -191,6 +370,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="Merchant Key" />
 
             <EditText
@@ -198,6 +378,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="CLAMB2ZM" />
         </LinearLayout>
 
@@ -212,13 +393,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="Merchant Salt" />
 
             <EditText
                 android:id="@+id/editTextMerchantSalt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium" />
         </LinearLayout>
 
         <LinearLayout
@@ -232,6 +415,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="Email" />
 
             <EditText
@@ -239,213 +423,53 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/quicksand_medium"
                 android:inputType="text"
                 android:text="xyz@gmail.com" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnPayNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/round_corner_green"
-        android:onClick="navigateToBaseActivity"
-        android:paddingStart="@dimen/dp_40"
-        android:paddingEnd="@dimen/dp_40"
-        android:text="Payment"
-        android:textColor="@color/white" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_1dp"
-        android:layout_margin="@dimen/dp_20"
-        android:background="@color/gray" />
-
-    <Button
-        android:id="@+id/reviewPayment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_corner_green"
-        android:onClick="navigateToBaseActivity"
-        android:paddingStart="@dimen/dp_40"
-        android:paddingEnd="@dimen/dp_40"
-        android:text="Review Payment"
-        android:textColor="@color/white" />
 
     <LinearLayout
-        android:id="@+id/listDoctorDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_2"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/reviewPayment"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp_5">
-
-            <ImageView
-                android:layout_width="@dimen/dp_80"
-                android:layout_height="@dimen/dp_80"
-                android:background="@drawable/ic_emoticon_50dp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:gravity="center_vertical|start"
-            android:paddingStart="@dimen/dp_10">
-
-            <TextView
-                android:id="@+id/doctorName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/dp_2"
-                android:text="Dr. Roy Thomas"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/doctorSpeciality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/doctorName"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/dp_2"
-                android:text="Oral Surgeon"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_16" />
-
-            <TextView
-                android:id="@+id/address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/doctorSpeciality"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/dp_2"
-                android:text="NOA Dental Clinic"
-                android:textColor="@color/colorAppGray"
-                android:textSize="@dimen/sp_16" />
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/dp_20"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="$100"
-            android:textColor="@color/colorProgress"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+            android:background="@drawable/round_corner_green"
+            android:fontFamily="@font/quicksand_medium"
+            android:onClick="navigateToBaseActivity"
+            android:paddingStart="@dimen/dp_40"
+            android:paddingEnd="@dimen/dp_40"
+            android:text="Review Payment"
+            android:textColor="@color/white" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutAilment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_5">
-
-        <TextView
-            android:id="@+id/ailmentLabel"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnPayNow"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:gravity="start"
-            android:paddingStart="@dimen/dp_10"
-            android:text="Ailment: "
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry" />
-
-        <TextView
-            android:id="@+id/ailmentValue"
-            android:layout_width="@dimen/dp_150"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:gravity="start"
-            android:paddingStart="@dimen/dp_10"
-            android:text="Mouth"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            tools:ignore="RtlSymmetry" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_5">
-
-        <TextView
-            android:id="@+id/dateLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:gravity="start"
-            android:paddingStart="@dimen/dp_10"
-            android:text="Date: "
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry" />
-
-        <TextView
-            android:id="@+id/dateValue"
-            android:layout_width="@dimen/dp_150"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:gravity="start"
-            android:paddingStart="@dimen/dp_10"
-            android:text="23, July 2020"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            tools:ignore="RtlSymmetry" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_5">
-
-        <TextView
-            android:id="@+id/timeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:gravity="start"
-            android:paddingStart="@dimen/dp_10"
-            android:text="Time: "
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry" />
-
-        <TextView
-            android:id="@+id/timeValue"
-            android:layout_width="@dimen/dp_150"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:gravity="start"
-            android:paddingStart="@dimen/dp_10"
-            android:text="Mouth"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            tools:ignore="RtlSymmetry" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
+            android:background="@drawable/round_corner_green"
+            android:fontFamily="@font/quicksand_medium"
+            android:onClick="navigateToBaseActivity"
+            android:paddingStart="@dimen/dp_40"
+            android:paddingEnd="@dimen/dp_40"
+            android:text="Payment"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

@@ -52,6 +52,7 @@
             android:textColor="@color/text_color_white"
             android:textSize="17sp"
             android:textStyle="normal"
+            android:fontFamily="@font/quicksand_medium"
             tools:text="E" />
     </RelativeLayout>
 
@@ -66,6 +67,7 @@
         android:layout_toRightOf="@+id/container_avatar"
         android:ellipsize="end"
         android:singleLine="true"
+        android:fontFamily="@font/quicksand_medium"
         android:textColor="@color/text_color_primary"
         android:textSize="17sp"
         tools:text="Room name" />
@@ -78,6 +80,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginRight="6dp"
         android:layout_toLeftOf="@+id/text_unread_counter"
+        android:fontFamily="@font/quicksand_medium"
         android:layout_toRightOf="@+id/container_avatar"
         android:ellipsize="end"
         android:paddingBottom="2dp"
@@ -93,6 +96,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="15dp"
+        android:fontFamily="@font/quicksand_medium"
         android:layout_marginRight="11dp"
         android:gravity="center"
         android:textColor="@color/color_text_last_message"
@@ -110,6 +114,7 @@
         android:layout_marginBottom="6dp"
         android:background="@drawable/dialogs_unread_counter_background"
         android:gravity="center"
+        android:fontFamily="@font/quicksand_medium"
         android:minWidth="21dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"

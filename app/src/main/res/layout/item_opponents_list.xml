@@ -17,6 +17,7 @@
         android:id="@+id/opponents_name"
         style="@style/MatchWidth"
         android:layout_marginStart="@dimen/padding_start"
+        android:fontFamily="@font/quicksand_medium"
         android:layout_marginLeft="@dimen/padding_start"
         android:textAppearance="?android:attr/textAppearanceLarge"
         tools:text="User Name" />

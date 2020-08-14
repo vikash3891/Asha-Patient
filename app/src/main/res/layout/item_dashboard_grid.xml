@@ -38,6 +38,7 @@
             android:layout_below="@+id/layoutItemImage"
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
+            android:fontFamily="@font/quicksand_medium"
             android:padding="@dimen/dp_5"
             android:text="Dashboard"
             android:textColor="@color/colorWhite"

@@ -35,6 +35,7 @@
                 android:padding="@dimen/dp_3"
                 android:text="30"
                 android:textColor="@color/white"
+                android:fontFamily="@font/quicksand_medium"
                 android:textSize="@dimen/sp_17" />
 
             <TextView
@@ -44,6 +45,7 @@
                 android:layout_below="@+id/paymentDate"
                 android:gravity="center"
                 android:padding="@dimen/dp_3"
+                android:fontFamily="@font/quicksand_medium"
                 android:text="May"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
@@ -55,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/paymentMonth"
                 android:layout_centerHorizontal="true"
+                android:fontFamily="@font/quicksand_medium"
                 android:padding="@dimen/dp_3"
                 android:text="2020"
                 android:textColor="@color/colorAccent"
@@ -77,12 +80,14 @@
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_2"
                 android:text=""
+                android:fontFamily="@font/quicksand_medium"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_18" />
 
             <TextView
                 android:id="@+id/paymentStatus"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/quicksand_medium"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/paymentAmount"
                 android:gravity="center_horizontal"
@@ -104,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="top|center_horizontal"
                 android:padding="@dimen/dp_3"
+                android:fontFamily="@font/quicksand_medium"
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12" />
