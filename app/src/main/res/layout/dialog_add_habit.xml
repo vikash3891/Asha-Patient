@@ -2,21 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
     android:gravity="center"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50dp">
+        android:layout_height="@dimen/dimen_50dp"
+        android:background="@color/gridItemBackgroundGredientDark"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingEnd="@dimen/dp_10">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/quicksand_medium"
             android:gravity="center"
+            android:padding="@dimen/dp_5"
             android:text="@string/add_habit"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_19" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_17" />
     </RelativeLayout>
 
     <LinearLayout
@@ -31,7 +36,8 @@
             android:id="@+id/spinnerHabit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
-            android:tooltipText="@string/select" />
+            android:fontFamily="@font/quicksand_medium"
+            android:tooltipText="Select" />
     </LinearLayout>
 
     <!--Smoking-->
@@ -81,20 +87,19 @@
             android:layout_weight="2"
             android:background="@drawable/edittext_border"
             android:cursorVisible="true"
+            android:fontFamily="@font/quicksand_medium"
             android:gravity="start|center"
             android:hint=" Per Day"
             android:inputType="number"
-            android:maxLength="2"
-            android:maxLines="1"
+            android:maxLength="3"
             android:padding="@dimen/dp_2"
-            android:paddingStart="@dimen/dp_4"
             android:textSize="@dimen/sp_16"
             android:visibility="gone" />
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10">
 
@@ -108,7 +113,7 @@
             android:paddingTop="@dimen/dp_5"
             android:paddingEnd="@dimen/dp_15"
             android:paddingBottom="@dimen/dp_5"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/sp_16"
             android:visibility="gone" />
@@ -118,15 +123,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/dp_15"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginEnd="@dimen/dp_15"
-            android:layout_marginBottom="@dimen/dp_5"
             android:fontFamily="@font/quicksand_medium"
-            android:padding="@dimen/dp_10"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_5"
             android:text="@string/submit"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_16" />
     </RelativeLayout>
 
 </LinearLayout>

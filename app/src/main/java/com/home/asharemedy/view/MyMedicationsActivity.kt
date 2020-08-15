@@ -13,6 +13,7 @@ import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_clinic_visit.*
@@ -122,8 +123,8 @@ class MyMedicationsActivity : BaseActivity() {
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>> =
                 apiService.getMyMedicationsList(
-                    "13"
-                )//AppPrefences.getUserID(this))
+                    AppPrefences.getUserID(this)
+                )
             call.enqueue(object :
                 Callback<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>> {
                 override fun onResponse(

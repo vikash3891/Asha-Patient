@@ -74,7 +74,7 @@ class ActivityPaymentHistory : BaseActivity() {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>> =
-                apiService.getPaymentHistoryList()//AppPrefences.getUserID(this))
+                apiService.getPaymentHistoryList()
             call.enqueue(object :
                 Callback<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>> {
                 override fun onResponse(

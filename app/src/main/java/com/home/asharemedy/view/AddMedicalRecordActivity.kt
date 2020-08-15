@@ -10,11 +10,21 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.home.asharemedy.R
 import com.home.asharemedy.adapter.AddMedicalRecordAdapter
+import com.home.asharemedy.api.ApiClient
+import com.home.asharemedy.api.ApiInterface
+import com.home.asharemedy.api.RequestModel
+import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
-import com.home.asharemedy.databinding.ActivityDashboardBinding
+import com.home.asharemedy.chat.utils.getFilePath
 import com.home.asharemedy.model.DashboardGridModel
+import com.home.asharemedy.utils.AppPrefences
+import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_add_medical_record.*
 import kotlinx.android.synthetic.main.activity_dashboard.bottomBar
@@ -22,38 +32,32 @@ import kotlinx.android.synthetic.main.activity_dashboard.gvDashboard
 import kotlinx.android.synthetic.main.activity_dashboard.topbar
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
-import java.io.IOException
-import android.graphics.BitmapFactory
-import android.util.Base64
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.home.asharemedy.api.ApiClient
-import com.home.asharemedy.api.ApiInterface
-import com.home.asharemedy.api.RequestModel
-import com.home.asharemedy.api.ResponseModelClasses
-import com.home.asharemedy.chat.utils.getFilePath
-import com.home.asharemedy.utils.AppPrefences
-import com.home.asharemedy.utils.Constants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.ByteArrayOutputStream
-import java.io.File
+import java.io.IOException
 
+class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
-class AddMedicalRecordActivity : BaseActivity() {
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        category = reportType[position]
+    }
 
     var adapter: AddMedicalRecordAdapter? = null
     var foodsList = ArrayList<DashboardGridModel>()
-    private lateinit var viewDataBinding: ActivityDashboardBinding
     val REQUEST_CODE = 100
     val DOCUMENT_REQUEST_CODE = 111
     val CAMERA_REQUEST_CODE = 200
-
     var appointmentID = ""
     var category = ""
     var storageLink = ""
     var fileContent = ""
+
+    var reportType =
+        arrayOf("CT/MRI Report", "X-Ray Report", "Blood Reports", "Prescription", "Other Reports")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,25 +72,39 @@ class AddMedicalRecordActivity : BaseActivity() {
     }
 
     private fun initView() {
-        topbar.screenName.text = getString(R.string.dashboard)
-        topbar.imageBack.visibility = View.GONE
-        setupPermissions()
-        loadList()
+        try {
+            topbar.screenName.text = getString(R.string.dashboard)
+            topbar.imageBack.visibility = View.GONE
+            setupPermissions()
+
+            spinnerHabit.onItemSelectedListener = this@AddMedicalRecordActivity
+
+            val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, reportType)
+            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerHabit.adapter = aa
+            loadList()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun loadList() {
-        for (i in 0..1) {
-            foodsList.add(
-                DashboardGridModel(
-                    "Document " + i + 1,
-                    R.drawable.doc_icon
+        try {
+            for (i in 0..1) {
+                foodsList.add(
+                    DashboardGridModel(
+                        "Document " + i + 1,
+                        R.drawable.doc_icon
+                    )
                 )
-            )
+            }
+
+            adapter = AddMedicalRecordAdapter(this, foodsList)
+
+            gvDashboard.adapter = adapter
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        adapter = AddMedicalRecordAdapter(this, foodsList)
-
-        gvDashboard.adapter = adapter
     }
 
     private fun checkClicks() {
@@ -171,14 +189,18 @@ class AddMedicalRecordActivity : BaseActivity() {
     }
 
     private fun setupPermissions() {
-        val permission = ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+        try {
+            val permission = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
 
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            Log.i("Permission", "Permission to record denied")
-            makeRequest()
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                Log.i("Permission", "Permission to record denied")
+                makeRequest()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

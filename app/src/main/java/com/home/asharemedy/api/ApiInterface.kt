@@ -11,12 +11,6 @@ interface ApiInterface {
     @POST(Constants.LOGIN_USER)
     fun getAdminLogin(@Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
 
-    @GET("/{patientId}" + "/vitals" + "/{vitalName}")
-    fun getVitalAPI(
-        @Path("patientId") patientId: String,
-        @Path("vitalName") vitalName: String, @FieldMap fieldMap: Map<String, String>
-    ):
-            Call<ResponseModelClasses.GetOrderHistoryResponseModel>
 
     @POST(Constants.PATIENT_REGISTRATION)
     fun registerUser(@Body body: RequestBody): Call<ResponseModelClasses.RegistrationResponse>

@@ -59,12 +59,11 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onResume() {
         super.onResume()
-        if (isSmokingAdded) {
 
-        }
     }
 
     private fun initView() {
+        layoutHabits.isEnabled = false
         getPatientProfile()
 
     }
@@ -268,7 +267,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.LoginResponseModel> =
                 apiService.updateProfile(
-                    "54",
+                    AppPrefences.getUserID(this@MyProfile),
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getUpdateProfileRequestModel(
                             this@MyProfile, data!!
@@ -373,7 +372,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ArrayList<ResponseModelClasses.GetHabitResponseModel>> =
-                apiService.getPatientHabits("17")//AppPrefences.getUserID(this))
+                apiService.getPatientHabits(AppPrefences.getUserID(this))
             call.enqueue(object : Callback<ArrayList<ResponseModelClasses.GetHabitResponseModel>> {
                 override fun onResponse(
                     call: Call<ArrayList<ResponseModelClasses.GetHabitResponseModel>>,
@@ -539,25 +538,28 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                     isSmokingAdded = isChecked
                     habitName = "Smoking"
                     layoutSmoking.visibility = View.VISIBLE
+                    smokingYes.isChecked = isChecked
+                    smokingFrequency.setText(habitFrequencyValue)
                     addHabitApi()
-                    this.smokingYes.isChecked = isChecked
-                    this.smokingFrequency.setText(habitFrequencyValue)
+
                 }
                 "Drinking" -> {
                     isDrinkingAdded = isChecked
                     habitName = "Drinking"
                     layoutDrinking.visibility = View.VISIBLE
-                    addHabitApi()
                     this.drinkingYes.isChecked = isChecked
                     this.drinkingFrequency.setText(habitFrequencyValue)
+                    addHabitApi()
+
                 }
                 else -> {
                     isExerciseAdded = isChecked
                     habitName = "Exercise"
                     layoutExercise.visibility = View.VISIBLE
+                    exerciseYes.isChecked = isChecked
+                    exerciseFrequency.setText(habitFrequencyValue)
                     addHabitApi()
-                    this.exerciseYes.isChecked = isChecked
-                    this.exerciseFrequency.setText(habitFrequencyValue)
+
                 }
             }
         } catch (e: Exception) {

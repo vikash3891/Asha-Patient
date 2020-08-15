@@ -450,8 +450,8 @@
             android:background="@drawable/round_corner_green"
             android:fontFamily="@font/quicksand_medium"
             android:onClick="navigateToBaseActivity"
-            android:paddingStart="@dimen/dp_40"
-            android:paddingEnd="@dimen/dp_40"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingEnd="@dimen/dp_20"
             android:text="Review Payment"
             android:textColor="@color/white" />
 

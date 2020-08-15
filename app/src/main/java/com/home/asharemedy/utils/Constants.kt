@@ -24,7 +24,8 @@ class Constants {
         const val REGISTRATION_USER = "registration/user"
         const val LOGIN_USER = "sessions"
         const val APPOINTMENTS = "appointments?"
-        const val PAYMENT_HISTORY = "payments?"//5
+        const val PAYMENT_HISTORY = "payments?"
+        const val PAYMENTS = "payments"
 
         const val NAME = "name"
         const val EMAIL = "email"

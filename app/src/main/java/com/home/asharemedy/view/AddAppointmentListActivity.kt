@@ -240,7 +240,7 @@ class AddAppointmentListActivity : BaseActivity() {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ArrayList<ResponseModelClasses.GetAilmentResponseModel>> =
-                apiService.getAilmentList()//AppPrefences.getUserID(this))
+                apiService.getAilmentList()
             call.enqueue(object :
                 Callback<ArrayList<ResponseModelClasses.GetAilmentResponseModel>> {
                 override fun onResponse(
@@ -285,7 +285,7 @@ class AddAppointmentListActivity : BaseActivity() {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ArrayList<ResponseModelClasses.GetServiceResponseModel>> =
-                apiService.getServicesList()//AppPrefences.getUserID(this))
+                apiService.getServicesList()
             call.enqueue(object :
                 Callback<ArrayList<ResponseModelClasses.GetServiceResponseModel>> {
                 override fun onResponse(
@@ -330,7 +330,7 @@ class AddAppointmentListActivity : BaseActivity() {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>> =
-                apiService.getFacilitiesList()//AppPrefences.getUserID(this))
+                apiService.getFacilitiesList()
             call.enqueue(object :
                 Callback<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>> {
                 override fun onResponse(
@@ -375,7 +375,7 @@ class AddAppointmentListActivity : BaseActivity() {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>> =
-                apiService.getDoctorsList()//AppPrefences.getUserID(this))
+                apiService.getDoctorsList()
             call.enqueue(object :
                 Callback<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>> {
                 override fun onResponse(

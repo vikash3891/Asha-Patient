@@ -34,8 +34,6 @@ object Utils {
     private val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123
     var isRegisterSuccess = false
 
-    private var orderHistoryList =
-        ArrayList<ResponseModelClasses.GetOrderHistoryResponseModel.TableData1>()
     private var userDetails = ArrayList<LoginModel>()
     private var selectedItem = ListItemModel()
     var cartTotalAmount = 0.0

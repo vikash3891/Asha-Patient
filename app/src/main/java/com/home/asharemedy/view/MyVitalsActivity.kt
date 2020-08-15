@@ -19,6 +19,7 @@ import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_my_vitals.*
@@ -267,9 +268,9 @@ class MyVitalsActivity : BaseActivity() {
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>> =
                 apiService.getPatientVitalsList(
-                    "13",
+                    AppPrefences.getUserID(this),
                     "temperature"
-                )//AppPrefences.getUserID(this))
+                )
             call.enqueue(object :
                 Callback<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>> {
                 override fun onResponse(

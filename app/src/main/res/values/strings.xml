@@ -35,6 +35,7 @@
     <string name="select_waterdistrict">Select Water District/Agency</string>
     <string name="select">Select</string>
     <string name="mandatory">Mandatory</string>
+    <string name="optional">Optional</string>
     <string name="acc_no">Account Number</string>
     <string name="meter_no">Meter Number</string>
     <string name="service_zip_code">Service Zip Code</string>
