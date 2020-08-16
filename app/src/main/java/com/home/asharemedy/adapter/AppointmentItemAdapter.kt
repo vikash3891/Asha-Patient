@@ -31,6 +31,7 @@ class AppointmentItemAdapter(
 
         holder.itemView.listDoctorDetails.setOnClickListener {
             Utils.selectedDoctorFacitiyID = position.toString()
+            Utils.selectedDoctorFacility = list[position]
             context.startActivity(Intent(context, AppointmentSlotActivity::class.java))
         }
     }

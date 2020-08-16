@@ -37,7 +37,7 @@ class Constants {
         const val STATE = "state"
         const val CITY = "city"
         const val CREATED_DATE = "create_date"
-        const val PATIENT_ID = "patientId"
+        const val PATIENTID = "patientId"
         const val VITAL_NAME = "vitalName"
         const val START_DATE = "startDate"
         const val END_DATE = "endDate"
@@ -94,7 +94,27 @@ class Constants {
         const val PRIVACY_POLICY = "https://www.ashacares.com/privacy-policy"
 
         /*https://www.ashacares.com/forgot-password*/
+
         const val FORGOT_PASSWORD = "forgot-password"
+
+        const val TRANSACTION_ID = "transanction_id"
+        const val AMOUNT = "amount"
+        const val CGST_PERCENT = "cgst_percentage"
+        const val SGST_PERCENT = "sgst_percentage"
+        const val IGST_PERCENT = "igst_percentage"
+        const val GROSS_TOTAL = "gross_total"
+        const val DISCOUNT_PERCENT = "discount_percentage"
+        const val CONVENIENCE_FEE = "convenience_fee"
+        const val PAYER_ID = "payer_id"
+        const val PAYER_TYPE = "payer_type"
+        const val RECEIVER_ID = "receiver_id"
+        const val RECEIVER_TYPE = "receiver_type"
+
+        /* patient_id, doctor_slot_id, payment_id,purpose*/
+        const val PATIENT_ID = "patient_id"
+        const val DOCTOR_SLOT_ID = "doctor_slot_id"
+        const val PAYMENT_ID = "payment_id"
+        const val PURPOSE = "purpose"
 
     }
 }

@@ -43,7 +43,7 @@ object Utils {
     var selectedOrderID = ""
     var isAilmentOrService = true
     var selectedDoctorFacitiyID = ""
-
+    var selectedDoctorFacility: ResponseModelClasses.GetFacilityListResponseModel? = null
     var fileUploadBase64 = ""
 
     var appointmentSlotList = java.util.ArrayList<ResponseModelClasses.GetSlotListResponseModel>()

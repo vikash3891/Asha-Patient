@@ -1,5 +1,6 @@
 package com.home.asharemedy.view
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,7 @@ import com.home.asharemedy.R
 import com.home.asharemedy.adapter.AppointSlotListAdapter
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
+import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.payu.ActivityPayUMain
@@ -63,7 +65,6 @@ class AppointmentSlotActivity : BaseActivity() {
         gvSlots.adapter = adapter
     }
 
-
     private fun checkClicks() {
         try {
             topbarAppointment.imageBack.setOnClickListener {
@@ -92,7 +93,7 @@ class AppointmentSlotActivity : BaseActivity() {
                             cdate = formatter.format(date)
 
                             slotCalendar.text =
-                                "" + setMonth(monthOfYear + 1) + " " + dayOfMonth + ", " + year
+                                "" + Utils.setMonth(monthOfYear + 1) + " " + dayOfMonth + ", " + year
                         } catch (e1: ParseException) {
                             e1.printStackTrace()
                         }
@@ -116,26 +117,6 @@ class AppointmentSlotActivity : BaseActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-    private fun setMonth(monthOfYear: Int): String {
-        when (monthOfYear) {
-            1 -> return "Jan"
-            2 -> return "Feb"
-            3 -> return "Mar"
-            4 -> return "Apr"
-            5 -> return "May"
-            6 -> return "Jun"
-            7 -> return "Jul"
-            8 -> return "Aug"
-            9 -> return "Sep"
-            10 -> return "Oct"
-            11 -> return "Nov"
-            12 -> return "Dec"
-            else -> { // Note the block
-                return "June"
-            }
         }
     }
 
@@ -245,4 +226,5 @@ class AppointmentSlotActivity : BaseActivity() {
         dismissDialog()
         showToast(getString(R.string.internet))
     }
+
 }

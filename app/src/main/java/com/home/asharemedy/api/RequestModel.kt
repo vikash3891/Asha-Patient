@@ -48,7 +48,7 @@ object RequestModel {
     ): Map<String, String> {
         var map = HashMap<String, String>()
 
-        map.put(Constants.PATIENT_ID, patientId)
+        map.put(Constants.PATIENTID, patientId)
         map.put(Constants.VITAL_NAME, vitalName)
         map.put(Constants.START_DATE, startDate)
         map.put(Constants.END_DATE, endDate)
@@ -102,7 +102,6 @@ object RequestModel {
         map.put(Constants.PATIENT_ADDRESS1, address)
         map.put(Constants.PATIENT_ADDRESS2, street)
         map.put(Constants.PATIENT_PINCODE, pincode)
-
 
         Log.d("Reg Request: ", "" + Gson().toJson(map))
         return map;
@@ -169,6 +168,41 @@ object RequestModel {
 
         map.put(Constants.EMAIL, emailID)
         Log.d("ForgotPasswordRequest: ", "" + Gson().toJson(map))
+        return map;
+    }
+
+    fun getPaymentStep1RequestModel(
+        data: ResponseModelClasses.GetPaymentHistoryResponseModel
+    ): HashMap<String, Any> {
+        var map = HashMap<String, Any>()
+
+        map.put(Constants.TRANSACTION_ID, data.transanction_id)
+        map.put(Constants.AMOUNT, data.amount)
+        map.put(Constants.STATUS, data.status)
+        map.put(Constants.CGST_PERCENT, data.cgst_percentage)
+        map.put(Constants.SGST_PERCENT, data.sgst_percentage)
+        map.put(Constants.IGST_PERCENT, data.igst_percentage)
+        map.put(Constants.GROSS_TOTAL, data.gross_total)
+        map.put(Constants.DISCOUNT_PERCENT, data.discount_percentage)
+        map.put(Constants.CONVENIENCE_FEE, data.convenience_fee)
+        map.put(Constants.PAYER_ID, data.payer_id)
+        map.put(Constants.PAYER_TYPE, data.payer_type)
+        map.put(Constants.RECEIVER_ID, data.receiver_id)
+        map.put(Constants.RECEIVER_TYPE, data.receiver_type)
+        Log.d("PaymentStep1Request: ", "" + Gson().toJson(map))
+        return map;
+    }
+
+    fun getPaymentStepTwoRequestModel(
+        patient_id: String, doctor_slot_id: String, payment_id: String, purpose: String
+    ): HashMap<String, Any> {
+        var map = HashMap<String, Any>()
+
+        map.put(Constants.PATIENT_ID, patient_id)
+        map.put(Constants.DOCTOR_SLOT_ID, doctor_slot_id)
+        map.put(Constants.PAYMENT_ID, payment_id)
+        map.put(Constants.PURPOSE, purpose)
+        Log.d("PaymentStepTwoRequest: ", "" + Gson().toJson(map))
         return map;
     }
 }

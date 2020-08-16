@@ -199,6 +199,7 @@
         <activity android:name=".view.ViewDocumentActivity" />
         <activity android:name=".view.WebViewActivity" />
         <activity android:name=".view.ForgotPasswordFirstActivity" />
+        <activity android:name=".view.SuccessActivity" />
 
 
         <service android:name=".video.services.LoginService" />

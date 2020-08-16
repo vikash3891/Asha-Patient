@@ -47,7 +47,6 @@ class AddAppointmentListActivity : BaseActivity() {
 
     private lateinit var viewDataBinding: ActivityAddAppointmentListBinding
     var adapter: AppointmentItemAdapter? = null
-    //var doctorFacilityList = ArrayList<ResponseModelClasses.GetFacilityListResponseModel>()
     var isDoctor = true
 
     override fun onCreate(savedInstanceState: Bundle?) {

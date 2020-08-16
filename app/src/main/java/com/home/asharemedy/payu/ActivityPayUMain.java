@@ -27,6 +27,8 @@ import com.payu.india.Payu.PayuConstants;
 import com.payu.india.Payu.PayuErrors;
 import com.payu.payuui.Activity.PayUBaseActivity;
 
+import java.util.Objects;
+
 public class ActivityPayUMain extends BaseActivity {
 
     private String merchantKey, userCredentials;
@@ -53,6 +55,20 @@ public class ActivityPayUMain extends BaseActivity {
 
     private String salt = null;
 
+    private String transanction_id = "wnjkd28337udhwed";
+    private String amount = "";
+    private String status = "";
+    private String cgst_percentage = "5";
+    private String sgst_percentage = "10";
+    private String igst_percentage = "15";
+    private String gross_total = "2500";
+    private String discount_percentage = "0";
+    private String convenience_fee = "50";
+    private String payer_id = "";
+    private String payer_type = "patient";
+    private String receiver_id = "";
+    private String receiver_type = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +80,7 @@ public class ActivityPayUMain extends BaseActivity {
 
         PayUSdkDetails payUSdkDetails = new PayUSdkDetails();
 
-        Toast.makeText(this, "Build No: " + payUSdkDetails.getSdkBuildNumber() + "\n Build Type: " + payUSdkDetails.getSdkBuildType() + " \n Build Flavor: " + payUSdkDetails.getSdkFlavor() + "\n Application Id: " + payUSdkDetails.getSdkApplicationId() + "\n Version Code: " + payUSdkDetails.getSdkVersionCode() + "\n Version Name: " + payUSdkDetails.getSdkVersionName(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Build No: " + payUSdkDetails.getSdkBuildNumber() + "\n Build Type: " + payUSdkDetails.getSdkBuildType() + " \n Build Flavor: " + payUSdkDetails.getSdkFlavor() + "\n Application Id: " + payUSdkDetails.getSdkApplicationId() + "\n Version Code: " + payUSdkDetails.getSdkVersionCode() + "\n Version Name: " + payUSdkDetails.getSdkVersionName(), Toast.LENGTH_LONG).show();
 
         environmentSpinner = findViewById(R.id.spinner_environment);
 
@@ -93,7 +109,17 @@ public class ActivityPayUMain extends BaseActivity {
     }
 
     private void initView() {
-        //mobileValue.setText(Utils.doctorFacilityList[0].name);
+        try {
+            doctorName.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getName());
+            address.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getAddress1() + " " +
+                    Utils.INSTANCE.getSelectedDoctorFacility().getAddress2());
+            mobileValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getPhone());
+            emailValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getEmail());
+            dateValue.setText(Utils.INSTANCE.getDate());
+            timeValue.setText(Utils.INSTANCE.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

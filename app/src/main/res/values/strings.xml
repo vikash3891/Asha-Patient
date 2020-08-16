@@ -638,5 +638,6 @@
     <string name="female">Female</string>
     <string name="other">Other</string>
     <string name="reset_password">Reset Password</string>
+    <string name="appointment_scheduled_successfully">Appointment scheduled successfully.</string>
 
 </resources>
