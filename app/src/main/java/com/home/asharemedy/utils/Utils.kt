@@ -45,6 +45,7 @@ object Utils {
     var selectedDoctorFacitiyID = ""
     var selectedDoctorFacility: ResponseModelClasses.GetFacilityListResponseModel? = null
     var fileUploadBase64 = ""
+    var userfileUploadBase64 = ""
 
     var appointmentSlotList = java.util.ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
     var doctorFacilityList = ArrayList<ResponseModelClasses.GetFacilityListResponseModel>()

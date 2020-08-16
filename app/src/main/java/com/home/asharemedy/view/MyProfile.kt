@@ -1,13 +1,19 @@
 package com.home.asharemedy.view
 
+import android.Manifest
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.*
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
@@ -15,6 +21,7 @@ import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.chat.utils.getFilePath
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
@@ -27,7 +34,6 @@ import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
@@ -44,6 +50,9 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     var cDate = ""
 
     var languages = arrayOf("Smoking", "Exercise")
+
+    val REQUEST_CODE = 100
+    val CAMERA_REQUEST_CODE = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +73,23 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     private fun initView() {
         layoutHabits.isEnabled = false
+        setupPermissions()
         getPatientProfile()
 
     }
 
     private fun checkClicks() {
+
+        captureImage.setOnClickListener {
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
+        }
+        chooseImage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, REQUEST_CODE)
+        }
+
         communicationEdit.setOnClickListener {
             if (!isEditable) {
                 isEditable = true
@@ -262,6 +283,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             data!!.emergency_contact_number = emergencyContactValue.text.toString()
             data!!.patient_city = cityValue.text.toString()
             data!!.patient_state = stateValue.text.toString()
+            data!!.photo = Utils.userfileUploadBase64
 
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
@@ -506,6 +528,8 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 try {
                     if (habitYes.isChecked && habitFrequency.text.toString().isEmpty()) {
                         showSuccessPopup("Please enter habit frequency.")
+                    } else if (!habitYes.isChecked) {
+                        dialog.dismiss()
                     } else {
                         habitFrequencyValue = habitFrequency.text.toString().toInt()
                         Log.e("Frequency: ", habitFrequencyValue.toString())
@@ -669,5 +693,50 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
         dpd.show()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        try {
+            if (resultCode == Activity.RESULT_OK && requestCode == CAMERA_REQUEST_CODE) {
+                userProfileImage.setImageBitmap(data!!.extras?.get("data") as Bitmap)
+            }
+            if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
+
+                userProfileImage.setImageURI(data?.data) // handle chosen image
+
+                Log.d("FilePath", getFilePath(applicationContext, data?.data!!))
+                Log.d("FileBase64", Utils.encoder(getFilePath(applicationContext, data.data!!)!!))
+                Utils.userfileUploadBase64 =
+                    Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun setupPermissions() {
+        try {
+            val permission = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                Log.i("Permission", "Permission to record denied")
+                makeRequest()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun makeRequest() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            101
+        )
+    }
+
 
 }

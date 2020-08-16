@@ -639,5 +639,7 @@
     <string name="other">Other</string>
     <string name="reset_password">Reset Password</string>
     <string name="appointment_scheduled_successfully">Appointment scheduled successfully.</string>
+    <string name="capture_image">Capture Image</string>
+    <string name="choose_image">Choose Image</string>
 
 </resources>
