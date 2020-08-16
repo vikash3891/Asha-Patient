@@ -73,18 +73,20 @@ class ActivityAddVitalRecord : BaseActivity() {
                 finish()
             }
             saveVitalRecord.setOnClickListener {
-                vital_date = vitalRecordDate.text.toString()
-                if (selectedVitalName.equals(getString(R.string.blood_pressure))) {
-                    vital_reading =
-                        arrayOf(
-                            bpSystolic.text.toString() + "/120",
-                            bpDaistolic.text.toString() + "/140"
-                        ).toString()
-                } else {
-                    vital_reading = heightWeightValue.text.toString()
-                }
 
-                updateVital()
+                vital_date = vitalRecordDate.text.toString()
+                vital_reading = if (selectedVitalName.equals(getString(R.string.blood_pressure))) {
+                    arrayOf(
+                        bpSystolic.text.toString() + "/120",
+                        bpDaistolic.text.toString() + "/140"
+                    ).toString()
+                } else {
+                    heightWeightValue.text.toString()
+                }
+                if (vital_reading.isNotEmpty())
+                    updateVital()
+                else
+                    showSuccessPopup("Please enter Vital Reading.")
             }
 
             vitalName.setOnClickListener() {
@@ -267,7 +269,7 @@ class ActivityAddVitalRecord : BaseActivity() {
                             Log.v("Error code 400", response.errorBody().toString())
                         }
                         if (response.body() != null) {
-                                showSuccessPopup("Vital Saved Successfully.")
+                            showSuccessPopup("Vital Saved Successfully.")
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

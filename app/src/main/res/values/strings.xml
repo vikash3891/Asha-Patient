@@ -641,5 +641,8 @@
     <string name="appointment_scheduled_successfully">Appointment scheduled successfully.</string>
     <string name="capture_image">Capture Image</string>
     <string name="choose_image">Choose Image</string>
+    <string name="attachment_name">Attachment Name</string>
+    <string name="paste_url_for_medical_record_here">Paste URL for Medical Record here</string>
+    <string name="document_link">Document Link :</string>
 
 </resources>

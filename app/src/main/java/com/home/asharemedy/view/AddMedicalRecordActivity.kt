@@ -54,7 +54,6 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
     var appointmentID = ""
     var category = ""
     var storageLink = ""
-    var fileContent = ""
 
     var reportType =
         arrayOf("CT/MRI Report", "X-Ray Report", "Blood Reports", "Prescription", "Other Reports")
@@ -82,6 +81,7 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
             val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, reportType)
             aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerHabit.adapter = aa
+            category = reportType[0]
             loadList()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -142,8 +142,10 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                 startActivityForResult(Intent.createChooser(intent, "Select a file"), 111)
             }
             uploadAttachment.setOnClickListener {
-                if (appointmentID.isNotEmpty() && category.isNotEmpty() && storageLink.isNotEmpty() && fileContent.isNotEmpty()) {
+                if (category.isNotEmpty() && storageLink.isNotEmpty() && Utils.fileUploadBase64.isNotEmpty()) {
                     addRecordApi()
+                } else {
+                    showSuccessPopup("Please select from provided options.")
                 }
             }
 
@@ -158,6 +160,9 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
             if (resultCode == Activity.RESULT_OK && requestCode == CAMERA_REQUEST_CODE) {
                 layoutPreview.visibility = View.VISIBLE
                 imagePreview.setImageBitmap(data!!.extras?.get("data") as Bitmap)
+                storageLink = "capturedImage"
+                Utils.fileUploadBase64 =
+                    Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
             }
             if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
                 layoutPreview.visibility = View.VISIBLE
@@ -165,12 +170,13 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
 
                 Log.d("FilePath", getFilePath(applicationContext, data?.data!!))
                 Log.d("FileBase64", Utils.encoder(getFilePath(applicationContext, data.data!!)!!))
+                storageLink = getFilePath(applicationContext, data.data!!)!!
                 Utils.fileUploadBase64 =
                     Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
             }
             if (resultCode == Activity.RESULT_OK && requestCode == DOCUMENT_REQUEST_CODE) {
                 val selectedFile = data?.data //The uri with the location of the file
-
+                storageLink = getFilePath(applicationContext, data?.data!!)!!
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(
                         this@AddMedicalRecordActivity.contentResolver,
@@ -222,7 +228,7 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                     AppPrefences.getUserID(this),
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getRecordUploadRequestModel(
-                            appointmentID, category, storageLink, fileContent
+                            appointmentID, category, storageLink, Utils.fileUploadBase64
                         )
                     )
                 )

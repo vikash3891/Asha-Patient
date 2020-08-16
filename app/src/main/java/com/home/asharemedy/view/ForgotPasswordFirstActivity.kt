@@ -30,9 +30,27 @@ class ForgotPasswordFirstActivity : BaseActivity() {
             }
 
             btnSubmitStep1.setOnClickListener {
-                if (editEmailF1.text!!.isNotEmpty() && Utils.isValidEmail(editEmailF1.text.toString()))
-                    setForgotPassword()
-                else
+                if (editEmailF1.text!!.isNotEmpty() && Utils.isValidEmail(editEmailF1.text.toString())) {
+                    //setForgotPassword()
+                    var alertDialog =
+                        AlertDialog.Builder(this@ForgotPasswordFirstActivity)
+                    alertDialog.setTitle(getString(R.string.app_name))
+                    alertDialog.setMessage("Password Reset Link provided.")
+
+                    alertDialog.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                        dialog.dismiss()
+                        finish()
+                    }
+
+                    alertDialog.setPositiveButton(getString(R.string.reset_password)) { dialog, _ ->
+                        startWebActivity(
+                            getString(R.string.reset_password),
+                            Constants.PRIVACY_POLICY
+                        )
+                    }
+
+                    alertDialog.show()
+                } else
                     showSuccessPopup("Please enter valid Email")
             }
 
