@@ -99,6 +99,16 @@ class RegistrationActivity : BaseActivity() {
             imgCABback.setOnClickListener {
                 finish()
             }
+
+            textPrivacy.setOnClickListener {
+                startWebActivity(getString(R.string.privacy_policy), Constants.PRIVACY_POLICY)
+            }
+            textTerms.setOnClickListener {
+                startWebActivity(
+                    getString(R.string.terms_and_conditions),
+                    Constants.TERMS_AND_CONDITION
+                )
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

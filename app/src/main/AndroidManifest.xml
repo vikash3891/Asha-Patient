@@ -197,6 +197,8 @@
         <activity android:name=".view.ActivityAddVitalRecord" />
         <activity android:name=".view.AddMedicalRecordActivity" />
         <activity android:name=".view.ViewDocumentActivity" />
+        <activity android:name=".view.WebViewActivity" />
+        <activity android:name=".view.ForgotPasswordFirstActivity" />
 
 
         <service android:name=".video.services.LoginService" />

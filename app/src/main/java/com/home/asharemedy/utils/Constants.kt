@@ -89,6 +89,12 @@ class Constants {
         const val STORAGE_LINK = "storage_link"
         const val FILE_CONTENT = "file_content"
 
+        const val FAQ = "https://www.ashacares.com/faq"
+        const val TERMS_AND_CONDITION = "https://www.ashacares.com/terms-of-use"
+        const val PRIVACY_POLICY = "https://www.ashacares.com/privacy-policy"
+
+        /*https://www.ashacares.com/forgot-password*/
+        const val FORGOT_PASSWORD = "forgot-password"
 
     }
 }

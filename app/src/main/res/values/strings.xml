@@ -19,7 +19,7 @@
     <string name="step1">Step 1</string>
     <string name="step2">Step 2</string>
     <string name="step3">Step 3</string>
-    <string name="validate_email">Please validate your Email</string>
+    <string name="validate_email">Please enter your Email</string>
     <string name="change_password_header">Please enter new password and confirm it.</string>
     <string name="submit">Submit</string>
     <string name="update">Update</string>
@@ -60,7 +60,7 @@
     <string name="phone_number">Phone Number</string>
     <string name="business_phone_number">Work Number</string>
     <string name="security_questions">Security Questions</string>
-    <string name="address">Communication Address</string>
+    <string name="address">Address</string>
     <string name="mailing_address">Mailing Address</string>
     <string name="add_account">Add Account</string>
     <string name="billing_preference">Billing Preference</string>
@@ -178,7 +178,9 @@
     <string name="doctor">Doctor</string>
     <string name="patient">Patient</string>
     <string name="sign_up">Don\'t have a account? <font color="#0c9881">Sign Up</font></string>
-    <string name="privacy_plicy_terms_conditions">Privacy Policy | Terms and Conditions</string>
+    <string name="privacy_policy">Privacy Policy | </string>
+    <string name="privacy_policy_"> <u>Privacy Policy.</u> </string>
+    <string name="terms_conditions">Terms and Conditions</string>
     <string name="username">Username</string>
     <string name="my_health_record">My Health Record</string>
     <string name="appointments">Appointments</string>
@@ -617,7 +619,7 @@
     <string name="street">Street</string>
     <string name="city">City</string>
     <string name="state">State</string>
-    <string name="pincode">Pincode</string>
+    <string name="pincode">Pin Code</string>
     <string name="emergency_contact">Emergency Contact</string>
     <string name="add_habit">Add Habit</string>
     <string name="systolic">Systolic</string>
@@ -628,5 +630,13 @@
     <string name="select_vital">Select Vital</string>
     <string name="vital_name">Vital Name</string>
     <string name="celsius">Celsius</string>
+    <string name="i_agree_to_the_asha">I agree to the Asha </string>
+    <string name="terms_of_service"> <u>Terms of Service</u> </string>
+    <string name="amp"> <![CDATA[&]]> </string>
+    <string name="register">Register</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="reset_password">Reset Password</string>
 
 </resources>

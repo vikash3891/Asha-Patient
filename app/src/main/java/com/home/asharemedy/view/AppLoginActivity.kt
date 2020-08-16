@@ -68,20 +68,29 @@ class AppLoginActivity : BaseActivity() {
             }
 
             txtForgotPassword.setOnClickListener {
-                //startActivity(Intent(this@LoginActivity, FilterActivity::class.java))
+                startActivity(Intent(this@AppLoginActivity, ForgotPasswordFirstActivity::class.java))
             }
 
             btnLogin.setOnClickListener {
                 validationFields()
+            }
 
-                /*startActivity(Intent(this@AppLoginActivity, DashboardActivity::class.java))
-                finish()*/
+            textPrivacyPolicy.setOnClickListener {
+                startWebActivity(getString(R.string.privacy_policy), Constants.PRIVACY_POLICY)
+            }
+            termsAndCondition.setOnClickListener {
+                startWebActivity(
+                    getString(R.string.terms_and_conditions),
+                    Constants.TERMS_AND_CONDITION
+                )
             }
 
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
+
 
     private fun loginApi() = if (Utils.isConnected(this)) {
         showDialog()

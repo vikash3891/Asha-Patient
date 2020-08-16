@@ -27,13 +27,8 @@ class WebViewActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_view)
-        //setUnBinder(ButterKnife.bind(this))
 
         contentTitle = intent.getStringExtra("contentTitle")
-
-        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        //supportActionBar!!.title = "" + contentTitle
-
 
         contentWebView = findViewById(R.id.webView)
         contentUrl = intent.getStringExtra("contentUrl")

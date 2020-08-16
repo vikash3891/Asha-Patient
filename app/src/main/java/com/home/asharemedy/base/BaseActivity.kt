@@ -18,6 +18,7 @@ import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.LocaleManagerMew
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.view.AppLoginActivity
+import com.home.asharemedy.view.WebViewActivity
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
@@ -181,6 +182,17 @@ abstract class BaseActivity : AppCompatActivity(), BaseFragment.Callback {
         val date = Date()
         println("Current Date is: $date.date")
         return inputFormat.format(date.time)
+    }
+
+    fun startWebActivity(title: String, url: String) {
+        try {
+            intent = Intent(this, WebViewActivity::class.java)
+            intent.putExtra("contentTitle", title)
+            intent.putExtra("contentUrl", url)
+            startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

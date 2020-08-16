@@ -119,13 +119,24 @@
             android:padding="@dimen/dp_6">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textPrivacyPolicy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_3"
                 android:fontFamily="@font/quicksand_medium"
-                android:text="@string/privacy_plicy_terms_conditions"
+                android:text="@string/privacy_policy"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_10" />
+                android:textSize="@dimen/sp_12" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/termsAndCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_3"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="@string/terms_conditions"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_12" />
 
             <ImageView
                 android:layout_width="@dimen/dp_100"

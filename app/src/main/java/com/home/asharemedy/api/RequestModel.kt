@@ -108,19 +108,6 @@ object RequestModel {
         return map;
     }
 
-    fun getPlaceOrderCartRequestModel(
-        orderID: String
-    ): Map<String, String> {
-
-        val map = HashMap<String, String>()
-
-        map.put("card_value", orderID)
-
-
-        Log.d("Reg Request: ", "" + Gson().toJson(map))
-        return map;
-    }
-
     fun getUpdateProfileRequestModel(
         context: Context, data: ResponseModelClasses.GetPatientProfileResponseModel
     ): HashMap<String, Any> {
@@ -172,6 +159,16 @@ object RequestModel {
         map.put(Constants.STORAGE_LINK, storageLink)
         map.put(Constants.FILE_CONTENT, fileContent)
         Log.d("RecordUploadRequest: ", "" + Gson().toJson(map))
+        return map;
+    }
+
+    fun getForgotPasswordRequestModel(
+        emailID: String
+    ): HashMap<String, Any> {
+        var map = HashMap<String, Any>()
+
+        map.put(Constants.EMAIL, emailID)
+        Log.d("ForgotPasswordRequest: ", "" + Gson().toJson(map))
         return map;
     }
 }
