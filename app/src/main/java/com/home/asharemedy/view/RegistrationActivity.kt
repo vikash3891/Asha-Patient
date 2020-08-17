@@ -150,14 +150,14 @@ class RegistrationActivity : BaseActivity() {
                 !allValid
                 return
             } else if (editPincode.text!!.isEmpty()) {
-                showSuccessPopup("Please enter Pincode")
+                showSuccessPopup("Please enter Pin Code.")
                 !allValid
                 return
-            } else if (editPassword.text!!.isEmpty()) {// || !isPasswordValid(editPassword.text)
+            } else if (editPassword.text!!.isEmpty()) {
                 showSuccessPopup(getString(R.string.password_validation_message))
                 !allValid
                 return
-            } else if (editCPassword.text!!.isEmpty()) {// || !isPasswordValid(editCPassword.text)
+            } else if (editCPassword.text!!.isEmpty()) {
                 showSuccessPopup("Please enter Confirm Password")
                 !allValid
                 return
@@ -165,6 +165,10 @@ class RegistrationActivity : BaseActivity() {
                 editPassword.text.toString() != editCPassword.text.toString()
             ) {
                 showSuccessPopup("Password doesn't match")
+                !allValid
+                return
+            } else if (!cb_terms.isChecked) {
+                showSuccessPopup("Please accept Terms of Service & Privacy Policy.")
                 !allValid
                 return
             } else if (allValid) {

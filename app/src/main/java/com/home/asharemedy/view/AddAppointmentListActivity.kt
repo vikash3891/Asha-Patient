@@ -1,7 +1,6 @@
 package com.home.asharemedy.view
 
 import android.app.AlertDialog
-import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -24,28 +23,20 @@ import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.databinding.ActivityAddAppointmentListBinding
-import com.home.asharemedy.model.ListItemModel
 import com.home.asharemedy.model.AilmentArrayData
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.isAilmentOrService
 import kotlinx.android.synthetic.main.activity_add_appointment_list.*
-import kotlinx.android.synthetic.main.activity_add_appointment_list.topbar
-import kotlinx.android.synthetic.main.activity_appointment_slots.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.dialog_layout.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class AddAppointmentListActivity : BaseActivity() {
 
-    private lateinit var viewDataBinding: ActivityAddAppointmentListBinding
     var adapter: AppointmentItemAdapter? = null
     var isDoctor = true
 
@@ -212,18 +203,18 @@ class AddAppointmentListActivity : BaseActivity() {
 
             }
 
-            appointmentForDoctor.setOnClickListener() {
-                ailmentSelectedValues.setText("")
+            appointmentForDoctor.setOnClickListener {
+                ailmentSelectedValues.text = ""
                 ailmentSelectedValues.hint = "Choose Ailment"
                 getDoctorList()
                 changeSlotButtonBackgroundSlot(appointmentForDoctor)
             }
-            appointmentForInstitution.setOnClickListener() {
+            appointmentForInstitution.setOnClickListener {
                 changeSlotButtonBackgroundSlot(appointmentForInstitution)
             }
 
-            appointmentForFacility.setOnClickListener() {
-                ailmentSelectedValues.setText("")
+            appointmentForFacility.setOnClickListener {
+                ailmentSelectedValues.text = ""
                 ailmentSelectedValues.hint = "Choose Service"
                 getFacilityList()
                 changeSlotButtonBackgroundSlot(appointmentForFacility)

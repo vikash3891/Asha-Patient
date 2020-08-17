@@ -89,14 +89,13 @@
     <string name="total_due">Total Due</string>
     <string name="penalty_charges_adjustments">Penalty Charges/Adjustments</string>
     <string name="pay_now">Pay Now</string>
-    <string name="contactus_description">If you need assistance please use the below contact information to reach our customer service staff.   </string>
+    <string name="contactus_description">If you need assistance please use the below contact information to reach our customer service staff.</string>
     <string name="usagenotification_description">You will be notified if you exceed your Daily/Monthly threshold limit. </string>
     <string name="usagenotification_description2">We recommend to set 50% of water budget as your threshold limit.</string>
 
 
     <string name="contactus_phone">Phone</string>
-    <string name="contactus_online">Online : Please visit us at <u>www.eocwd.com/contact</u></string>
-    <string name="contactus_address">Address</string>
+   <string name="contactus_address">Address</string>
     <string name="contactus_opentime">Open Time</string>
     <string name="conservation_tip1">THINK. You can\'t do anything wiouth water. Save it. Every Drop Counts !</string>
     <string name="conservation_tip2">Water Conservation is our Nature, Habit, Groove, Style, Thing, Save our water Be Water Wise !</string>
