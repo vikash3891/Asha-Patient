@@ -128,6 +128,13 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/sp_12" />
 
+            <View
+                android:layout_width="@dimen/dimen_1dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_5"
+                android:layout_marginEnd="@dimen/dp_5"
+                android:background="@color/white" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/termsAndCondition"
                 android:layout_width="wrap_content"

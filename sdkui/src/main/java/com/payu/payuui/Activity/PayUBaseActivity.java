@@ -92,7 +92,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
     private ProgressBar mProgressBar;
     private boolean isSamsungPayAvailable = false;
     private boolean isStandAlonePhonePeAvailable = false;
-    private  boolean isPaymentByPhonePe = false;
+    private boolean isPaymentByPhonePe = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +115,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
             merchantKey = mPaymentParams.getKey();
             userCredentials = mPaymentParams.getUserCredentials();
 
-         // Call back method of PayU custom browser to check availability of Samsung Pay
+            // Call back method of PayU custom browser to check availability of Samsung Pay
 
             PayUCustomBrowserCallback payUCustomBrowserCallback = new PayUCustomBrowserCallback() {
 
@@ -128,7 +128,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
                 @Override
                 public void isPaymentOptionAvailable(CustomBrowserResultData resultData) {
                     isSamsungPayAvailable = true;
-                    if(pagerAdapter!=null)
+                    if (pagerAdapter != null)
                         pagerAdapter.notifyDataSetChanged();
                 }
             };
@@ -277,7 +277,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
 
             }
 
-            if(payuResponse.isGenericIntentAvailable()){
+            if (payuResponse.isGenericIntentAvailable()) {
                 paymentOptionsList.add(SdkUIConstants.GENERICINTENT);
             }
 
@@ -290,28 +290,23 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
                 paymentOptionsList.add(SdkUIConstants.LAZY_PAY); // added Lazy Pay Option
 
             }
-            if (isSamsungPayAvailable==true) {
+            if (isSamsungPayAvailable == true) {
                 paymentOptionsList.add("SAMPAY");
             }
 
-            if(payuResponse.isPhonePeIntentAvailable()){
+            if (payuResponse.isPhonePeIntentAvailable()) {
 
                 paymentOptionsList.add(SdkUIConstants.PHONEPE);
             }
 
-            if(payuResponse.isPhonePeIntentAvailable()){
+            if (payuResponse.isPhonePeIntentAvailable()) {
                 paymentOptionsList.add(SdkUIConstants.CBPHONEPE);
             }
-            if(payuResponse.isCashCardAvailable()){
+            if (payuResponse.isCashCardAvailable()) {
                 paymentOptionsList.add(SdkUIConstants.CASH_CARDS);
             }
-
-
-
-            }
-
-
-            else {
+            Log.d("Add Payment option: ", paymentOptionsList.toString());
+        } else {
             Toast.makeText(this, "Something went wrong : " + payuResponse.getResponseStatus().getResult(), Toast.LENGTH_LONG).show();
         }
 
@@ -354,7 +349,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
                             }
 
 
-                                if (savedCards.get(currentPosition).getCardType().equals("SMAE")) {
+                            if (savedCards.get(currentPosition).getCardType().equals("SMAE")) {
                                 payNowButton.setEnabled(true);
                             } else {
                                 SavedCardItemFragmentAdapter mSaveAdapter = (SavedCardItemFragmentAdapter) myViewPager.getAdapter();
@@ -375,39 +370,15 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
                             tempCreditDebitFragment.checkData();
                         break;
                     case SdkUIConstants.NET_BANKING:
-                        payNowButton.setEnabled(true);
-                        hideKeyboard();
-                        break;
                     case SdkUIConstants.PAYU_MONEY:
-                        payNowButton.setEnabled(true);
-                        hideKeyboard();
-                        break;
-                    case SdkUIConstants.UPI:
-                        payNowButton.setEnabled(true);
-                        hideKeyboard();
-                        break;
                     case SdkUIConstants.TEZ:
-                        payNowButton.setEnabled(true);
-                        hideKeyboard();
-                        break;
+                    case SdkUIConstants.UPI:
 
                     case SdkUIConstants.GENERICINTENT:
-                        payNowButton.setEnabled(true);
-                        hideKeyboard();
-                        break;
 
                     case SdkUIConstants.LAZY_PAY:
-                        payNowButton.setEnabled(true);
-                        hideKeyboard();
-                        break;
                     case "SAMPAY":
-                        payNowButton.setEnabled(true);
-                        hideKeyboard();
-                        break;
                     case SdkUIConstants.PHONEPE:
-                        payNowButton.setEnabled(true);
-                        hideKeyboard();
-                        break;
 
                     case SdkUIConstants.CBPHONEPE:
                     case SdkUIConstants.CASH_CARDS:
@@ -474,13 +445,13 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
                         makePaymentBySamPay();
                         break;
                     case SdkUIConstants.PHONEPE:
-                        isPaymentByPhonePe= true;
+                        isPaymentByPhonePe = true;
                         makePaymentByPhonePe();
                         break;
 
                     case SdkUIConstants.CBPHONEPE:
-                        isPaymentByPhonePe=false;
-                        isStandAlonePhonePeAvailable=false;
+                        isPaymentByPhonePe = false;
+                        isStandAlonePhonePeAvailable = false;
                         makePaymentByPhonePe();
                         break;
                 }
@@ -498,8 +469,8 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
 
             Intent intent = new Intent(this, PaymentsActivity.class);
             intent.putExtra(PayuConstants.PAYU_CONFIG, payuConfig);
-            intent.putExtra("isStandAlonePhonePeAvailable",isStandAlonePhonePeAvailable);
-            intent.putExtra("isPaymentByPhonePe",isPaymentByPhonePe);
+            intent.putExtra("isStandAlonePhonePeAvailable", isStandAlonePhonePeAvailable);
+            intent.putExtra("isPaymentByPhonePe", isPaymentByPhonePe);
 
             startActivityForResult(intent, PayuConstants.PAYU_REQUEST_CODE);
         } else {
@@ -508,9 +479,6 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
 
         }
     }
-
-
-
 
 
     private void makePaymentByPayUMoney() {
@@ -522,7 +490,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
         }
     }
 
-    private void makePaymentByTEZ(){
+    private void makePaymentByTEZ() {
         try {
             mPostData = new PaymentPostParams(mPaymentParams, PayuConstants.TEZ).getPaymentPostParams();
         } catch (Exception e) {
@@ -530,7 +498,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
         }
     }
 
-    private void makePaymentByGenericIntent(){
+    private void makePaymentByGenericIntent() {
         try {
             mPostData = new PaymentPostParams(mPaymentParams, PayuConstants.UPI_INTENT).getPaymentPostParams();
         } catch (Exception e) {
@@ -538,7 +506,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
         }
     }
 
-    private void makePaymentByPhonePe(){
+    private void makePaymentByPhonePe() {
 
         try {
             mPostData = new PaymentPostParams(mPaymentParams, PayuConstants.PHONEPE_INTENT).getPaymentPostParams();
@@ -549,30 +517,29 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
     }
 
 
-    private void makePaymentByLazyPay(){
+    private void makePaymentByLazyPay() {
 
-        try{
+        try {
 
             mPostData = new PaymentPostParams(mPaymentParams, PayuConstants.LAZYPAY).getPaymentPostParams();
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
-      Log.e("error",e+"");
+            Log.e("error", e + "");
 
         }
 
     }
-    private void makePaymentBySamPay(){
 
-        try{
+    private void makePaymentBySamPay() {
+
+        try {
 
             mPostData = new PaymentPostParams(mPaymentParams, PayuConstants.SAMSUNG_PAY).getPaymentPostParams();
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
-      Log.e("error",e+"");
+            Log.e("error", e + "");
 
         }
 
@@ -587,8 +554,6 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
         } else {
             mPaymentParams.setStoreCard(0);
         }
-
-
 
 
         // lets try to get the post params
@@ -616,11 +581,11 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
 
         spinnerNetbanking = (Spinner) findViewById(R.id.spinner);
         ArrayList<PaymentDetails> netBankingList = null;
-        if(mPayuResponse!=null)
-        netBankingList = mPayuResponse.getNetBanks();
+        if (mPayuResponse != null)
+            netBankingList = mPayuResponse.getNetBanks();
 
-        if(netBankingList!=null && netBankingList.get(spinnerNetbanking.getSelectedItemPosition()) !=null)
-        bankCode = netBankingList.get(spinnerNetbanking.getSelectedItemPosition()).getBankCode();
+        if (netBankingList != null && netBankingList.get(spinnerNetbanking.getSelectedItemPosition()) != null)
+            bankCode = netBankingList.get(spinnerNetbanking.getSelectedItemPosition()).getBankCode();
 
         mPaymentParams.setBankCode(bankCode);
 
@@ -631,15 +596,16 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
         }
 
     }
+
     private void makePaymentByWallets() {
 
         spinnerNetbanking = (Spinner) findViewById(R.id.spinnerWallets);
         ArrayList<PaymentDetails> walletList = null;
-        if(mPayuResponse!=null)
+        if (mPayuResponse != null)
             walletList = mPayuResponse.getCashCard();
 
-        if(walletList!=null && walletList.get(spinnerNetbanking.getSelectedItemPosition()) !=null)
-        bankCode = walletList.get(spinnerNetbanking.getSelectedItemPosition()).getBankCode();
+        if (walletList != null && walletList.get(spinnerNetbanking.getSelectedItemPosition()) != null)
+            bankCode = walletList.get(spinnerNetbanking.getSelectedItemPosition()).getBankCode();
 
         mPaymentParams.setBankCode(bankCode);
 
@@ -657,7 +623,7 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
         StoredCard selectedStoredCard = mPayuResponse.getStoredCards().get(viewPager.getCurrentItem());
         SavedCardItemFragmentAdapter mSaveAdapter = (SavedCardItemFragmentAdapter) viewPager.getAdapter();
         SavedCardItemFragment mSaveFragment = mSaveAdapter.getFragment(viewPager.getCurrentItem()) instanceof SavedCardItemFragment ? mSaveAdapter.getFragment(viewPager.getCurrentItem()) : null;
-        String cvv = mSaveFragment !=null ? mSaveFragment.getCvv() : null;
+        String cvv = mSaveFragment != null ? mSaveFragment.getCvv() : null;
 
         // lets try to get the post params
         selectedStoredCard.setCvv(cvv); // make sure that you set the cvv also
@@ -668,7 +634,6 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
         mPaymentParams.setCardName(selectedStoredCard.getCardName());
         mPaymentParams.setExpiryMonth(selectedStoredCard.getExpiryMonth());
         mPaymentParams.setExpiryYear(selectedStoredCard.getExpiryYear());
-
 
 
         try {
@@ -709,17 +674,17 @@ public class PayUBaseActivity extends FragmentActivity implements PaymentRelated
         // 1)Vpa length should be less than or equal to 50
         // 2)It can be alphanumeric and can contain a dot(.).
         // 3)It should contain a @
-        if(etVirtualAddress.getText()!=null && etVirtualAddress.getText().toString().trim().length()==0){
+        if (etVirtualAddress.getText() != null && etVirtualAddress.getText().toString().trim().length() == 0) {
             etVirtualAddress.requestFocus();
             etVirtualAddress.setError(getBaseContext().getText(R.string.error_fill_vpa));
 
-        }else {
-            if(etVirtualAddress.getText().toString().trim().length()> PayuConstants.MAX_VPA_SIZE){
+        } else {
+            if (etVirtualAddress.getText().toString().trim().length() > PayuConstants.MAX_VPA_SIZE) {
                 etVirtualAddress.setError(getBaseContext().getText(R.string.error_invalid_vpa));
-            }else if(!etVirtualAddress.getText().toString().trim().contains("@")){
+            } else if (!etVirtualAddress.getText().toString().trim().contains("@")) {
                 etVirtualAddress.setError(getBaseContext().getText(R.string.error_invalid_vpa));
-            }else{
-                String userVirtualAddress= etVirtualAddress.getText().toString().trim();
+            } else {
+                String userVirtualAddress = etVirtualAddress.getText().toString().trim();
                 Pattern pattern = Pattern.compile("^([A-Za-z0-9\\.])+\\@[A-Za-z0-9]+$");
                 Matcher matcher = pattern.matcher(userVirtualAddress);
                 if (matcher.matches()) {

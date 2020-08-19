@@ -12,7 +12,6 @@ import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
-import com.home.asharemedy.model.ListItemModel
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_clinic_visit.*
@@ -26,7 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ListActivity : BaseActivity() {
+class ActivityAppointmentList : BaseActivity() {
 
     var adapter: ListItemAdapter? = null
     var appointmentList = ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>()
@@ -70,7 +69,7 @@ class ListActivity : BaseActivity() {
         bottomBar.layoutHome.setOnClickListener {
             startActivity(
                 Intent(
-                    this@ListActivity,
+                    this@ActivityAppointmentList,
                     DashboardActivity::class.java
                 )
             )
@@ -167,10 +166,10 @@ class ListActivity : BaseActivity() {
 
             listRecyc.apply {
 
-                layoutManager = LinearLayoutManager(this@ListActivity)
+                layoutManager = LinearLayoutManager(this@ActivityAppointmentList)
 
                 adapter =
-                    ListItemAdapter(this@ListActivity, appointmentList)
+                    ListItemAdapter(this@ActivityAppointmentList, appointmentList)
             }
         } catch (e: Exception) {
             e.printStackTrace()

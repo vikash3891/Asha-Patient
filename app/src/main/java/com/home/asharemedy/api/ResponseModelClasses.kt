@@ -70,18 +70,23 @@ object ResponseModelClasses {
         val country: String,
         val doe: String,
         val dob: String,
+        val doctor_id: String,
         val email: String,
+        val experience: String,
         val facility_id: String,
+        val fees: String,
         val gender: String,
         val name: String,
         val phone: String,
         val pincode: String,
+        val profession: String,
+        val specialization: String,
         val state: String,
         val type: String
 
     )
 
-    /*Facility List*/
+    /*Slot List*/
     data class GetSlotListResponseModel(
 
         val end_time: String,
@@ -199,7 +204,7 @@ object ResponseModelClasses {
     data class SetVitalResponseModel(
 
         val vital_date: String,
-        val vital_id: String,
+        val vital_id: Int,
         val vital_reading: String,
         val vital_unit: String
     )

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/groupOther"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/navProfile"
+            android:icon="@drawable/drawer_profile"
+            android:title="@string/my_profile" />
+
+        <item
+            android:id="@+id/navChangePassword"
+            android:icon="@drawable/drawer_change_password"
+            android:title="@string/change_password" />
+        <item
+            android:id="@+id/navPayment"
+            android:icon="@drawable/drawer_payment"
+            android:title="@string/payment" />
+
+        <item
+            android:id="@+id/navFaq"
+            android:icon="@drawable/drawer_faq"
+            android:title="@string/faq" />
+
+        <item
+            android:id="@+id/navTerms"
+            android:icon="@drawable/drawer_terms"
+            android:title="@string/terms_conditions" />
+
+        <item
+            android:id="@+id/navPrivacy"
+            android:icon="@drawable/drawer_privacy"
+            android:title="@string/privacy_policy" />
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/drawer_signout"
+            android:title="@string/action_logout" />
+
+    </group>
+
+</menu>

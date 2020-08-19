@@ -61,7 +61,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ListActivity"
+            android:name=".view.ActivityAppointmentList"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

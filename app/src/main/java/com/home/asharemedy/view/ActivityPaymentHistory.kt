@@ -10,7 +10,6 @@ import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
-import com.home.asharemedy.model.PaymentItemModel
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_clinic_visit.*
@@ -23,7 +22,7 @@ import retrofit2.Response
 class ActivityPaymentHistory : BaseActivity() {
 
     var adapter: PaymentListAdapter? = null
-    var foodsList = ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>()
+    var paymentHistoryList = ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,8 +85,8 @@ class ActivityPaymentHistory : BaseActivity() {
                         Log.d("PayHisRes: ", response.body().toString())
 
                         if (response.body() != null) {
-                            foodsList.clear()
-                            foodsList = response.body()!!
+                            paymentHistoryList.clear()
+                            paymentHistoryList = response.body()!!
 
                             loadList()
                         }
@@ -116,14 +115,14 @@ class ActivityPaymentHistory : BaseActivity() {
     }
 
     private fun loadList() {
-        adapter = PaymentListAdapter(this, foodsList)
+        adapter = PaymentListAdapter(this, paymentHistoryList)
 
         listRecyc.apply {
 
             layoutManager = LinearLayoutManager(this@ActivityPaymentHistory)
 
             adapter =
-                PaymentListAdapter(this@ActivityPaymentHistory, foodsList)
+                PaymentListAdapter(this@ActivityPaymentHistory, paymentHistoryList)
         }
     }
 

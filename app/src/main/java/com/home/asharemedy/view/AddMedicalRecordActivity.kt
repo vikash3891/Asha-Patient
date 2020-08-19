@@ -29,7 +29,6 @@ import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_add_medical_record.*
 import kotlinx.android.synthetic.main.activity_dashboard.bottomBar
 import kotlinx.android.synthetic.main.activity_dashboard.gvDashboard
-import kotlinx.android.synthetic.main.activity_dashboard.topbar
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call

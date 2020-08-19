@@ -289,7 +289,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.LoginResponseModel> =
                 apiService.updateProfile(
-                    AppPrefences.getUserID(this@MyProfile),
+                    AppPrefences.getUserID(this),
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getUpdateProfileRequestModel(
                             this@MyProfile, data!!
@@ -303,7 +303,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 ) {
                     try {
                         dismissDialog()
-                        Log.d("Response:", response.body().toString())
+                        Log.d("UpdateProfileResponse:", response.body().toString())
                         if (response.code() == 400) {
                             Log.v("Error code 400", response.errorBody().toString())
                         }
@@ -357,7 +357,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 ) {
                     try {
                         //dismissDialog()
-                        Log.d("Response: ", response.body().toString())
+                        Log.d("ProfileResponse: ", response.body().toString())
                         if (response.body() != null) {
 
                             getPatientHabit()
@@ -629,12 +629,10 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
 
-                                if (isSmokingAdded) {
-                                    layoutSmoking.visibility = View.VISIBLE
-                                } else if (isDrinkingAdded) {
-                                    layoutDrinking.visibility = View.VISIBLE
-                                } else if (isExerciseAdded) {
-                                    layoutExercise.visibility = View.VISIBLE
+                                when {
+                                    isSmokingAdded -> layoutSmoking.visibility = View.VISIBLE
+                                    isDrinkingAdded -> layoutDrinking.visibility = View.VISIBLE
+                                    isExerciseAdded -> layoutExercise.visibility = View.VISIBLE
                                 }
 
                                 showSuccessPopup("Habit added Successfully.")
@@ -737,6 +735,5 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             101
         )
     }
-
 
 }

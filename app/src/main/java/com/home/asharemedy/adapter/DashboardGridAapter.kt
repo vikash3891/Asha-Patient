@@ -39,7 +39,7 @@ class DashboardGridAapter(context: Context, var gridList: ArrayList<DashboardGri
                         context!!.startActivity(
                             Intent(
                                 context,
-                                ListActivity::class.java
+                                ActivityAppointmentList::class.java
                             )
                         )
 
@@ -60,7 +60,7 @@ class DashboardGridAapter(context: Context, var gridList: ArrayList<DashboardGri
                         context!!.startActivity(Intent(context, MyVitalsActivity::class.java))
 
                     context!!.getString(R.string.my_clinical_visits) ->
-                        context!!.startActivity(Intent(context, ListActivity::class.java))
+                        context!!.startActivity(Intent(context, ActivityAppointmentList::class.java))
 
                     context!!.getString(R.string.my_medications) ->
                         context!!.startActivity(Intent(context, MyMedicationsActivity::class.java))

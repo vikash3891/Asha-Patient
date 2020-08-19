@@ -12,16 +12,19 @@ class AppointmentItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private var doctorName: TextView? = null
     private var doctorSpeciality: TextView? = null
     private var address: TextView? = null
+    private var consultationFees: TextView? = null
 
     init {
         doctorName = itemView.findViewById(R.id.doctorName)
         doctorSpeciality = itemView.findViewById(R.id.doctorSpeciality)
         address = itemView.findViewById(R.id.address)
+        consultationFees = itemView.findViewById(R.id.consultationFees)
     }
 
     fun bind(movie: ResponseModelClasses.GetFacilityListResponseModel) {
         doctorName?.text = movie.name
-        doctorSpeciality?.text = movie.city
+        doctorSpeciality?.text = movie.specialization
+        consultationFees?.text = "$" + movie.fees
         address?.text = movie.address1 + " " + movie.address2
     }
 

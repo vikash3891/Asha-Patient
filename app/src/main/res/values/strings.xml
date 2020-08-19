@@ -177,7 +177,7 @@
     <string name="doctor">Doctor</string>
     <string name="patient">Patient</string>
     <string name="sign_up">Don\'t have a account? <font color="#0c9881">Sign Up</font></string>
-    <string name="privacy_policy">Privacy Policy | </string>
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_"> <u>Privacy Policy.</u> </string>
     <string name="terms_conditions">Terms and Conditions</string>
     <string name="username">Username</string>
@@ -643,5 +643,13 @@
     <string name="attachment_name">Attachment Name</string>
     <string name="paste_url_for_medical_record_here">Paste URL for Medical Record here</string>
     <string name="document_link">Document Link :</string>
+    <string name="review_payment">Review Payment</string>
+    <string name="payment">Payment</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="my_profile">My Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="faq">FAQ</string>
 
 </resources>

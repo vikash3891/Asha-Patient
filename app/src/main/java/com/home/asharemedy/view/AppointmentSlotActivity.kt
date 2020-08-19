@@ -50,10 +50,11 @@ class AppointmentSlotActivity : BaseActivity() {
     private fun initView() {
 
         slotCalendar.text = Utils.getDate()
-        doctorName.text = Utils.doctorFacilityList[0].name
-        doctorSpeciality.text = Utils.doctorFacilityList[0].type
+        doctorName.text = Utils.selectedDoctorFacility!!.name
+        doctorSpeciality.text = Utils.selectedDoctorFacility!!.specialization
+        consultationFees.text = "$" + Utils.selectedDoctorFacility!!.fees
         address.text =
-            Utils.doctorFacilityList[0].address1 + " " + Utils.doctorFacilityList[0].address2
+            Utils.selectedDoctorFacility!!.address1 + " " + Utils.selectedDoctorFacility!!.address2
         cdate = Utils.getDate()
         getSlotList()
 

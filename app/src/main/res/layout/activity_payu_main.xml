@@ -87,22 +87,25 @@
                     android:padding="@dimen/dp_2"
                     android:text=""
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/doctorSpeciality"
+                    android:ellipsize="end"
                     android:fontFamily="@font/quicksand_medium"
                     android:gravity="center_horizontal"
+                    android:maxLines="1"
                     android:padding="@dimen/dp_2"
                     android:text=""
                     android:textColor="@color/colorAppGray"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_14" />
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/consultationFees"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -111,7 +114,8 @@
                 android:text=""
                 android:textColor="@color/colorProgress"
                 android:textSize="@dimen/sp_16"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -149,11 +153,8 @@
                     android:fontFamily="@font/quicksand_medium"
                     android:gravity="start"
                     android:hint="@string/mandatory"
-                    android:imeOptions="actionNext|flagNavigateNext"
-                    android:maxLength="10"
                     android:maxLines="1"
                     android:padding="@dimen/dp_10"
-                    android:text=""
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/sp_14" />
             </LinearLayout>
@@ -263,7 +264,7 @@
                     android:fontFamily="@font/quicksand_medium"
                     android:gravity="start"
                     android:paddingStart="@dimen/dp_10"
-                    android:text=""
+                    android:text="NA"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_14"
                     tools:ignore="RtlSymmetry" />
@@ -449,10 +450,11 @@
             android:background="@drawable/round_corner_green"
             android:fontFamily="@font/quicksand_medium"
             android:onClick="navigateToBaseActivity"
-            android:paddingStart="@dimen/dp_20"
-            android:paddingEnd="@dimen/dp_20"
-            android:text="Review Payment"
-            android:textColor="@color/white" />
+            android:paddingStart="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_10"
+            android:text="@string/review_payment"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
 
         <Button
             android:id="@+id/btnPayNow"
@@ -465,10 +467,11 @@
             android:background="@drawable/round_corner_green"
             android:fontFamily="@font/quicksand_medium"
             android:onClick="navigateToBaseActivity"
-            android:paddingStart="@dimen/dp_40"
-            android:paddingEnd="@dimen/dp_40"
-            android:text="Payment"
-            android:textColor="@color/white" />
+            android:paddingStart="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_10"
+            android:text="@string/payment"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
     </LinearLayout>
 
 </LinearLayout>

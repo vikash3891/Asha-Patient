@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.home.asharemedy.R;
 import com.home.asharemedy.base.BaseActivity;
+import com.home.asharemedy.utils.AppPrefences;
 import com.home.asharemedy.utils.Constants;
 import com.home.asharemedy.utils.Utils;
 import com.payu.india.Extras.PayUChecksum;
@@ -82,7 +83,6 @@ public class ActivityPayUMain extends BaseActivity {
 
         //Toast.makeText(this, "Build No: " + payUSdkDetails.getSdkBuildNumber() + "\n Build Type: " + payUSdkDetails.getSdkBuildType() + " \n Build Flavor: " + payUSdkDetails.getSdkFlavor() + "\n Application Id: " + payUSdkDetails.getSdkApplicationId() + "\n Version Code: " + payUSdkDetails.getSdkVersionCode() + "\n Version Name: " + payUSdkDetails.getSdkVersionName(), Toast.LENGTH_LONG).show();
 
-        environmentSpinner = findViewById(R.id.spinner_environment);
 
         String[] environmentArray = getResources().getStringArray(R.array.environment_array);
 
@@ -110,11 +110,23 @@ public class ActivityPayUMain extends BaseActivity {
 
     private void initView() {
         try {
+            environmentSpinner = findViewById(R.id.spinner_environment);
+            doctorName = findViewById(R.id.doctorName);
+            doctorSpeciality = findViewById(R.id.doctorSpeciality);
+            address = findViewById(R.id.address);
+            mobileValue = findViewById(R.id.mobileValue);
+            emailValue = findViewById(R.id.emailValue);
+            amountValue = findViewById(R.id.amountValue);
+            dateValue = findViewById(R.id.dateValue);
+            timeValue = findViewById(R.id.timeValue);
+
             doctorName.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getName());
+            doctorSpeciality.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getSpecialization());
             address.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getAddress1() + " " +
                     Utils.INSTANCE.getSelectedDoctorFacility().getAddress2());
             mobileValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getPhone());
             emailValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getEmail());
+            amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getFees());
             dateValue.setText(Utils.INSTANCE.getDate());
             timeValue.setText(Utils.INSTANCE.getTime());
         } catch (Exception e) {
@@ -137,7 +149,7 @@ public class ActivityPayUMain extends BaseActivity {
                  * */
                 new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert)
                         .setCancelable(false)
-                        .setMessage("Payu's Data : " + data.getStringExtra("payu_response") + "\n\n\n Merchant's Data: " + data.getStringExtra("result"))
+                        .setMessage("PayU's Data : " + data.getStringExtra("payu_response") + "\n\n\n Merchant's Data: " + data.getStringExtra("result"))
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
@@ -158,7 +170,7 @@ public class ActivityPayUMain extends BaseActivity {
         try {
             merchantKey = Constants.MERCHANT_KEY;//((EditText) findViewById(R.id.editTextMerchantKey)).getText().toString();
             salt = Constants.MERCHANT_SALT;//((EditText) findViewById(R.id.editTextMerchantSalt));
-            String amount = ((EditText) findViewById(R.id.editTextAmount)).getText().toString();
+            String amount = amountValue.getText().toString();
             String email = Constants.MERCHANT_EMAIL;//((EditText) findViewById(R.id.editTextEmail)).getText().toString();
 
             String value = environmentSpinner.getSelectedItem().toString();
@@ -181,9 +193,9 @@ public class ActivityPayUMain extends BaseActivity {
             mPaymentParams.setKey(merchantKey);
             mPaymentParams.setAmount(amount);
             mPaymentParams.setProductInfo("product_info");
-            mPaymentParams.setFirstName("firstname");
+            mPaymentParams.setFirstName(AppPrefences.INSTANCE.getUserName(this));
             mPaymentParams.setEmail("shubh24aug.work@gmail.com");
-            mPaymentParams.setPhone("");
+            mPaymentParams.setPhone(mobileValue.getText().toString());
 
 
             /*

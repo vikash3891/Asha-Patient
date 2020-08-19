@@ -2,13 +2,12 @@ package com.home.asharemedy.view
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.home.asharemedy.R
-import com.home.asharemedy.databinding.ActivityHealthRecordDashboardBinding
-import com.home.asharemedy.model.DashboardGridModel
 import com.home.asharemedy.adapter.DashboardGridAapter
 import com.home.asharemedy.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_dashboard.*
+import com.home.asharemedy.databinding.ActivityHealthRecordDashboardBinding
+import com.home.asharemedy.model.DashboardGridModel
+import kotlinx.android.synthetic.main.activity_health_record_dashboard.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 
