@@ -69,8 +69,8 @@ interface ApiInterface {
     fun getMyMedicationsList(@Path("patientID") id: String): Call<ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>>
 
     /*Get Appointment List */
-    @GET(Constants.APPOINTMENTS)// + "/{patientID}") //@Path("patientID") id: String
-    fun getMyAppointmentList(): Call<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>>
+    @GET(Constants.APPOINTMENTS)// + Constants.USER_ID + "={userId}&" + Constants.USER_TYPE + "={userType}")
+    fun getMyAppointmentList(@Query("userId") userId: String, @Query("userType") userType: String): Call<ResponseModelClasses.GetMyAppointmentsResponseModel>
 
     /*Get PaymentHistory */
     @GET(Constants.PAYMENT_HISTORY)// + "/{patientID}")   //@Path("patientID") id: String

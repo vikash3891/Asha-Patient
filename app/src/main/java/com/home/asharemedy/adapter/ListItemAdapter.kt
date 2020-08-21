@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.model.ListItemModel
+import com.home.asharemedy.utils.Utils.selectedAppointmentDetails
 import com.home.asharemedy.view.ListItemDetailActivity
 import com.home.asharemedy.viewHolder.ListItemViewHolder
 import kotlinx.android.synthetic.main.item_clinic_visit.view.*
 
-class ListItemAdapter(private val context: Context, private val list: List<ResponseModelClasses.GetMyAppointmentsResponseModel>) :
+class ListItemAdapter(private val context: Context, private val list: List<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>) :
     RecyclerView.Adapter<ListItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
@@ -20,7 +21,8 @@ class ListItemAdapter(private val context: Context, private val list: List<Respo
     }
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
-        val movie: ResponseModelClasses.GetMyAppointmentsResponseModel = list[position]
+        val movie: ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4 = list[position]
+        selectedAppointmentDetails.add(movie)
         holder.bind(movie)
 
         holder.itemView.listItemLayout.setOnClickListener {

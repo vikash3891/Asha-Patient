@@ -12,6 +12,7 @@ import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_clinic_visit.*
@@ -28,7 +29,7 @@ import kotlin.collections.ArrayList
 class ActivityAppointmentList : BaseActivity() {
 
     var adapter: ListItemAdapter? = null
-    var appointmentList = ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>()
+    var appointmentList = ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
     var cDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,13 +119,13 @@ class ActivityAppointmentList : BaseActivity() {
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>> =
-                apiService.getMyAppointmentList()//"7")//AppPrefences.getUserID(this))
+            val call: Call<ResponseModelClasses.GetMyAppointmentsResponseModel> =
+                apiService.getMyAppointmentList(AppPrefences.getUserID(this),"patients")
             call.enqueue(object :
-                Callback<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>> {
+                Callback<ResponseModelClasses.GetMyAppointmentsResponseModel> {
                 override fun onResponse(
-                    call: Call<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>>,
-                    response: Response<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>>
+                    call: Call<ResponseModelClasses.GetMyAppointmentsResponseModel>,
+                    response: Response<ResponseModelClasses.GetMyAppointmentsResponseModel>
                 ) {
                     try {
                         dismissDialog()
@@ -132,7 +133,7 @@ class ActivityAppointmentList : BaseActivity() {
 
                         if (response.body() != null) {
                             appointmentList.clear()
-                            appointmentList = response.body()!!
+                            appointmentList = response.body()!!.data
 
                             loadList()
                         }
@@ -142,7 +143,7 @@ class ActivityAppointmentList : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel>>,
+                    call: Call<ResponseModelClasses.GetMyAppointmentsResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())

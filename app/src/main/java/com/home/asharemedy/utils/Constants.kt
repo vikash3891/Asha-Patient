@@ -115,6 +115,8 @@ class Constants {
         const val DOCTOR_SLOT_ID = "doctor_slot_id"
         const val PAYMENT_ID = "payment_id"
         const val PURPOSE = "purpose"
+        const val USER_ID = "userId"
+        const val USER_TYPE = "userType"
 
     }
 }

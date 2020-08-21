@@ -6,10 +6,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ResponseModelClasses
+import com.home.asharemedy.utils.Utils
 
 class ListItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_clinic_visit, parent, false)) {
     private var visitDate: TextView? = null
+    private var visitMonth: TextView? = null
+    private var visitYear: TextView? = null
     private var facilityName: TextView? = null
     private var clinicianSpecName: TextView? = null
     private var complaint: TextView? = null
@@ -19,6 +22,8 @@ class ListItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     init {
         try {
             visitDate = itemView.findViewById(R.id.visitDate)
+            visitMonth = itemView.findViewById(R.id.visitMonth)
+            visitYear = itemView.findViewById(R.id.visitYear)
             facilityName = itemView.findViewById(R.id.facilityName)
             clinicianSpecName = itemView.findViewById(R.id.clinicianSpecName)
             complaint = itemView.findViewById(R.id.complaint)
@@ -29,13 +34,20 @@ class ListItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         }
     }
 
-    fun bind(movie: ResponseModelClasses.GetMyAppointmentsResponseModel) {
+    fun bind(movie: ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4) {
 
         try {
-            facilityName?.text = movie.service_provider_info.provider_name
-            //clinicianSpecName?.text = movie.clinician + " " + movie.spec
+            facilityName?.text = movie.appointment_provider_info.provider_name
+
+            var str = movie.appointment_slot_info.slot_date
+            var delimiter = "-"
+
+            val parts = str.split(delimiter)
+            visitDate?.text = parts[2]
+            visitMonth?.text = Utils.setMonth(parts[1].toInt())
+            visitYear?.text = parts[0]
             complaint?.text = movie.appointment_info.purpose
-            appointmentTime?.text = movie.slot_info.start_time
+            appointmentTime?.text = movie.appointment_slot_info.start_time
             appointmentStatus?.text = movie.appointment_info.status
         } catch (e: Exception) {
             e.printStackTrace()

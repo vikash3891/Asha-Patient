@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/view"
-                android:layout_below="@+id/topBarLayout">
+                android:layout_below="@+id/topbar">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -45,9 +45,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
                         android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center_horizontal"
                         android:padding="@dimen/dp_10"
+                        android:visibility="gone"
                         android:text="Appointment Details"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/sp_16"
@@ -79,8 +80,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="@dimen/dp_2"
                             android:fontFamily="@font/quicksand_medium"
+                            android:padding="@dimen/dp_2"
                             android:text=""
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -99,10 +100,10 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
+                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Facility Name :"
-                            android:fontFamily="@font/quicksand_medium"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/sp_15" />
 
@@ -110,8 +111,8 @@
                             android:id="@+id/facilityNameValue"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
                             android:layout_weight="1"
+                            android:fontFamily="@font/quicksand_medium"
                             android:padding="@dimen/dp_2"
                             android:text="@string/american_hospital"
                             android:textSize="@dimen/sp_15" />
@@ -128,10 +129,10 @@
                             android:id="@+id/addressLabel"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
+                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Address :"
@@ -164,8 +165,8 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
-                            android:gravity="start"
                             android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Date :"
                             android:textColor="@color/colorAccent"
@@ -208,8 +209,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="@dimen/dp_2"
                             android:fontFamily="@font/quicksand_medium"
+                            android:padding="@dimen/dp_2"
                             android:text="@string/_1430"
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -228,8 +229,8 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
-                            android:gravity="start"
                             android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Clinician :"
                             android:textColor="@color/colorAccent"
@@ -260,10 +261,10 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
+                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Speciality :"
-                            android:fontFamily="@font/quicksand_medium"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/sp_15" />
 
@@ -272,8 +273,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="@dimen/dp_2"
                             android:fontFamily="@font/quicksand_medium"
+                            android:padding="@dimen/dp_2"
                             android:text="@string/ent"
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -292,8 +293,8 @@
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
-                            android:gravity="start"
                             android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Complaints :"
                             android:textColor="@color/colorAccent"
@@ -304,8 +305,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="@dimen/dp_2"
                             android:fontFamily="@font/quicksand_medium"
+                            android:padding="@dimen/dp_2"
                             android:text="@string/frequent_vomiting"
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -320,11 +321,11 @@
                         <TextView
                             android:id="@+id/coordinatorLabel"
                             android:layout_width="0dp"
-                            android:fontFamily="@font/quicksand_medium"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
+                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Coordinator :"
@@ -353,10 +354,10 @@
                             android:id="@+id/remarksLabel"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
                             android:layout_weight="1"
                             android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
                             android:drawablePadding="@dimen/dp_20"
+                            android:fontFamily="@font/quicksand_medium"
                             android:gravity="start"
                             android:padding="@dimen/dp_2"
                             android:text="Remarks :"
@@ -368,8 +369,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="@dimen/dp_2"
                             android:fontFamily="@font/quicksand_medium"
+                            android:padding="@dimen/dp_2"
                             android:text="@string/frequent_vomiting"
                             android:textSize="@dimen/sp_15" />
                     </LinearLayout>
@@ -391,6 +392,7 @@
                 android:id="@+id/layoutDisclaimer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/bottomBar"
                 android:layout_margin="@dimen/dp_5"
                 android:orientation="horizontal">
 
@@ -405,8 +407,8 @@
                     android:textSize="@dimen/sp_10" />
 
                 <ImageView
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:src="@mipmap/ic_launcher" />

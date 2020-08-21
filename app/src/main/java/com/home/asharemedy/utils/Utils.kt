@@ -49,7 +49,7 @@ object Utils {
 
     var appointmentSlotList = java.util.ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
     var doctorFacilityList = ArrayList<ResponseModelClasses.GetFacilityListResponseModel>()
-
+    var selectedAppointmentDetails= ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
     /*
     For Checking the Internet Connectivity
      */

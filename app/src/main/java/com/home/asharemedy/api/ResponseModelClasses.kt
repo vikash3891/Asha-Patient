@@ -95,7 +95,6 @@ object ResponseModelClasses {
         val slot_status: String,
         var isSelected: Boolean = false,
         val start_time: String
-
     )
 
     /*User Habit List*/
@@ -152,34 +151,40 @@ object ResponseModelClasses {
 
     /*User Appointments List*/
     data class GetMyAppointmentsResponseModel(
-
-        val appointment_info: TableData1,
-        val service_provider_info: TableData2,
-        val slot_info: TableData3
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: ArrayList<TableData4>
     ) {
-        data class TableData1(
-            val appointment_id: String,
-            val patient_id: String,
-            val doctor_slot_id: String,
-            val facility_slot_id: String,
-            val payment_id: String,
-            val purpose: String,
-            val remarks: String,
-            val status: String,
-            val payment_amount: String
-        )
+        data class TableData4(
+            val appointment_info: TableData1,
+            val appointment_provider_info: TableData2,
+            val appointment_slot_info: TableData3
+        ) {
+            data class TableData1(
+                val appointment_id: String,
+                val patient_id: String,
+                val doctor_slot_id: String,
+                val facility_slot_id: String,
+                val payment_id: String,
+                val purpose: String,
+                val remarks: String,
+                val status: String,
+                val payment_amount: String
+            )
 
-        data class TableData2(
-            val provider_id: String,
-            val provider_name: String,
-            val provider_type: String
-        )
+            data class TableData2(
+                val provider_id: String,
+                val provider_name: String,
+                val provider_type: String
+            )
 
-        data class TableData3(
-            val start_time: String,
-            val end_time: String,
-            val slot_date: String
-        )
+            data class TableData3(
+                val start_time: String,
+                val end_time: String,
+                val slot_date: String
+            )
+        }
     }
 
     /*User PaymentHistory List*/
@@ -201,6 +206,7 @@ object ResponseModelClasses {
         val transanction_id: String
     )
 
+    /* Set Vital History Response*/
     data class SetVitalResponseModel(
 
         val vital_date: String,
