@@ -39,12 +39,13 @@ class MyMedicationListAdapter(
 
         holder.itemView.listItemLayout.setOnClickListener {
             //context.startActivity(Intent(context, ListItemDetailActivity::class.java))
+            showMedicationDialog(position)
         }
     }
 
     override fun getItemCount(): Int = list.size
 
-    private fun showAddServiceDialog(title: String) {
+    private fun showMedicationDialog(position:Int) {
         var dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -56,6 +57,11 @@ class MyMedicationListAdapter(
         val statusValue = dialog.findViewById(R.id.statusValue) as TextView
         val layoutOk = dialog.findViewById(R.id.layoutOk) as LinearLayout
 
+
+        daysValue.text = list[position].days
+        doseValue.text = list[position].dosage_instructions
+        instructionValue.text = list[position].dosage_instructions
+        //statusValue.text = list[position].days
         layoutOk.setOnClickListener { dialog.dismiss() }
         dialog.show()
 

@@ -25,7 +25,29 @@ import com.home.asharemedy.chat.utils.getFilePath
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
+import kotlinx.android.synthetic.main.acitivity_profile.*
 import kotlinx.android.synthetic.main.activity_profile_editable.*
+import kotlinx.android.synthetic.main.activity_profile_editable.brandPartnerName
+import kotlinx.android.synthetic.main.activity_profile_editable.communicationValue
+import kotlinx.android.synthetic.main.activity_profile_editable.dobValue
+import kotlinx.android.synthetic.main.activity_profile_editable.drinkingYes
+import kotlinx.android.synthetic.main.activity_profile_editable.emailValue
+import kotlinx.android.synthetic.main.activity_profile_editable.emergencyContactValue
+import kotlinx.android.synthetic.main.activity_profile_editable.emiratesIDValue
+import kotlinx.android.synthetic.main.activity_profile_editable.layoutDrinking
+import kotlinx.android.synthetic.main.activity_profile_editable.layoutExercise
+import kotlinx.android.synthetic.main.activity_profile_editable.layoutSmoking
+import kotlinx.android.synthetic.main.activity_profile_editable.nationalityValue
+import kotlinx.android.synthetic.main.activity_profile_editable.patientID
+import kotlinx.android.synthetic.main.activity_profile_editable.phoneNumberValue
+import kotlinx.android.synthetic.main.activity_profile_editable.radioGroupDrinking
+import kotlinx.android.synthetic.main.activity_profile_editable.radioGroupExercise
+import kotlinx.android.synthetic.main.activity_profile_editable.radioGroupSmoking
+import kotlinx.android.synthetic.main.activity_profile_editable.religionValue
+import kotlinx.android.synthetic.main.activity_profile_editable.smokingNo
+import kotlinx.android.synthetic.main.activity_profile_editable.smokingYes
+import kotlinx.android.synthetic.main.activity_profile_editable.topBarLayout
+import kotlinx.android.synthetic.main.activity_profile_editable.userName
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
@@ -48,8 +70,10 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     var habitStatus = ""
     var data: ResponseModelClasses.GetPatientProfileResponseModel? = null
     var cDate = ""
+    var isPrimaryClicked = false
 
     var languages = arrayOf("Smoking", "Exercise")
+
 
     val REQUEST_CODE = 100
     val CAMERA_REQUEST_CODE = 200
@@ -74,6 +98,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     private fun initView() {
         layoutHabits.isEnabled = false
         setupPermissions()
+
         getPatientProfile()
 
     }
@@ -92,99 +117,10 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
         communicationEdit.setOnClickListener {
             if (!isEditable) {
-                isEditable = true
-                communicationEdit.text = getString(R.string.save)
+                enableEditableUI()
 
-                dobValue.isEnabled = true
-                phoneNumberValue.isEnabled = true
-                phoneNumberValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                emailValue.isEnabled = true
-                emailValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                emergencyContactValue.isEnabled = true
-                emergencyContactValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                nationalityValue.isEnabled = true
-                nationalityValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                religionValue.isEnabled = true
-                religionValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                membershipValue.isEnabled = true
-                membershipValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                addressValue.isEnabled = true
-                addressValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                stateValue.isEnabled = true
-                stateValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                cityValue.isEnabled = true
-                cityValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                communicationValue.isEnabled = true
-                communicationValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                insuranceValue.isEnabled = true
-                insuranceValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-                emiratesIDValue.isEnabled = true
-                emiratesIDValue.background =
-                    ContextCompat.getDrawable(this, R.drawable.edittext_border)
             } else {
-                isEditable = false
-                communicationEdit.text = getString(R.string.menu_message_edit)
-
-                dobValue.isEnabled = false
-                phoneNumberValue.isEnabled = false
-                phoneNumberValue.background = null
-
-                emailValue.isEnabled = false
-                emailValue.background = null
-
-                emergencyContactValue.isEnabled = false
-                emergencyContactValue.background = null
-
-                nationalityValue.isEnabled = false
-                nationalityValue.background = null
-
-                religionValue.isEnabled = false
-                religionValue.background = null
-
-                membershipValue.isEnabled = false
-                membershipValue.background = null
-
-                addressValue.isEnabled = false
-                addressValue.background = null
-
-                stateValue.isEnabled = false
-                stateValue.background = null
-
-                cityValue.isEnabled = false
-                cityValue.background = null
-
-                communicationValue.isEnabled = false
-                communicationValue.background = null
-
-                insuranceValue.isEnabled = false
-                insuranceValue.background = null
-
-                emiratesIDValue.isEnabled = false
-                emiratesIDValue.background = null
-
-                validationField()
+                disableEditableUI()
             }
         }
 
@@ -236,6 +172,117 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         dobValue.setOnClickListener {
             openCalendar(dobValue)
         }
+
+        layoutPrimaryHealthIssues.setOnClickListener {
+            if(!isPrimaryClicked){
+                val intent = Intent(this, CheckListActivity::class.java)
+                startActivityForResult(intent, 123)
+                isPrimaryClicked = true
+            }
+
+        }
+    }
+
+    fun enableEditableUI() {
+        isEditable = true
+        communicationEdit.text = getString(R.string.save)
+
+        dobValue.isEnabled = true
+        phoneNumberValue.isEnabled = true
+        phoneNumberValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        emailValue.isEnabled = true
+        emailValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        emergencyContactValue.isEnabled = true
+        emergencyContactValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        nationalityValue.isEnabled = true
+        nationalityValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        religionValue.isEnabled = true
+        religionValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        membershipValue.isEnabled = true
+        membershipValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        addressValue.isEnabled = true
+        addressValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        stateValue.isEnabled = true
+        stateValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        cityValue.isEnabled = true
+        cityValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        communicationValue.isEnabled = true
+        communicationValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        insuranceValue.isEnabled = true
+        insuranceValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        emiratesIDValue.isEnabled = true
+        emiratesIDValue.background =
+            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+
+        layoutPrimaryHealthIssues.isEnabled = true
+    }
+
+    fun disableEditableUI() {
+        isEditable = false
+        communicationEdit.text = getString(R.string.menu_message_edit)
+
+        dobValue.isEnabled = false
+        phoneNumberValue.isEnabled = false
+        phoneNumberValue.background = null
+
+        emailValue.isEnabled = false
+        emailValue.background = null
+
+        emergencyContactValue.isEnabled = false
+        emergencyContactValue.background = null
+
+        nationalityValue.isEnabled = false
+        nationalityValue.background = null
+
+        religionValue.isEnabled = false
+        religionValue.background = null
+
+        membershipValue.isEnabled = false
+        membershipValue.background = null
+
+        addressValue.isEnabled = false
+        addressValue.background = null
+
+        stateValue.isEnabled = false
+        stateValue.background = null
+
+        cityValue.isEnabled = false
+        cityValue.background = null
+
+        communicationValue.isEnabled = false
+        communicationValue.background = null
+
+        insuranceValue.isEnabled = false
+        insuranceValue.background = null
+
+        emiratesIDValue.isEnabled = false
+        emiratesIDValue.background = null
+
+        layoutPrimaryHealthIssues.isEnabled = false
+
+        validationField()
     }
 
     private fun validationField() {
@@ -283,6 +330,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             data!!.emergency_contact_number = emergencyContactValue.text.toString()
             data!!.patient_city = cityValue.text.toString()
             data!!.patient_state = stateValue.text.toString()
+            data!!.primary_health_issue = primaryHealthIssuesValue.text.toString()
             data!!.photo = Utils.userfileUploadBase64
 
             val apiService =
@@ -449,6 +497,8 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         emiratesIDValue.setText(data.parent_id)
         cityValue.setText(data.patient_city)
         stateValue.setText(data.patient_state)
+        Log.d("PrimaryIssues: ", data.primary_health_issue)
+        primaryHealthIssuesValue.setText(data.primary_health_issue)
     }
 
     fun updateHabitView(data: ArrayList<ResponseModelClasses.GetHabitResponseModel>) {
@@ -706,6 +756,11 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 Log.d("FileBase64", Utils.encoder(getFilePath(applicationContext, data.data!!)!!))
                 Utils.userfileUploadBase64 =
                     Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
+            }
+            if (resultCode == 0 && requestCode == 123) {
+                isPrimaryClicked = false
+                primaryHealthIssuesValue.setText(Utils.selectedHealthIssues)
+
             }
         } catch (e: Exception) {
             e.printStackTrace()

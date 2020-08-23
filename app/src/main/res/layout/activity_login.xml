@@ -33,22 +33,31 @@
             android:padding="@dimen/dp_10"
             android:textSize="@dimen/sp_16" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/editUserPass"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
-            android:background="@drawable/white_border_gradient"
-            android:fontFamily="@font/quicksand_medium"
-            android:hint="@string/password"
-            android:imeOptions="actionNext"
-            android:inputType="textPassword"
-            android:maxLength="16"
-            android:maxLines="1"
-            android:padding="@dimen/dp_10"
-            android:textSize="@dimen/sp_16" />
+            app:hintEnabled="false"
+            app:passwordToggleEnabled="true">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editUserPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_border_gradient"
+                android:fontFamily="@font/quicksand_medium"
+                android:hint="@string/password"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:maxLength="16"
+                android:maxLines="1"
+                android:padding="@dimen/dp_10"
+                android:textSize="@dimen/sp_16"
+                app:passwordToggleEnabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <RelativeLayout

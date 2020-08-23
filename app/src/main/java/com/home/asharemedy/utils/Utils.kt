@@ -19,6 +19,7 @@ import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.model.ListItemModel
 import com.home.asharemedy.model.LoginModel
 import com.home.asharemedy.video.utils.getString
+import com.home.asharemedy.view.CheckListActivity
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -46,10 +47,25 @@ object Utils {
     var selectedDoctorFacility: ResponseModelClasses.GetFacilityListResponseModel? = null
     var fileUploadBase64 = ""
     var userfileUploadBase64 = ""
+    var selectedHealthIssues = ""
 
     var appointmentSlotList = java.util.ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
     var doctorFacilityList = ArrayList<ResponseModelClasses.GetFacilityListResponseModel>()
-    var selectedAppointmentDetails= ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
+    var selectedAppointmentDetails =
+        ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
+
+    val teachers: Array<SpiritualTeacher>
+        get() =
+            arrayOf(
+                SpiritualTeacher("Diabetes", false), SpiritualTeacher("Heart Diseases", false),
+                SpiritualTeacher("Hypertension", false), SpiritualTeacher("Allergies", false),
+                SpiritualTeacher("Asthma", false), SpiritualTeacher("Others", false)
+            )
+
+    class SpiritualTeacher(var name: String?, var isSelected: Boolean) {
+
+    }
+
     /*
     For Checking the Internet Connectivity
      */

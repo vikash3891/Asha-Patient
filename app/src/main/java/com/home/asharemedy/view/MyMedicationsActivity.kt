@@ -46,8 +46,25 @@ class MyMedicationsActivity : BaseActivity() {
         layoutDates.visibility = View.GONE
         floatingActionButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
         floatingActionButton.visibility = View.GONE
+        for (i in 0..10) {
 
-        getMyMedicationsList()
+            medicationsList.add(
+                ResponseModelClasses.GetMyMedicationResponseModel(
+                    "Paracetamol", "10", "2", "14", "For Fever", "1"
+                )
+            )
+        }
+        adapter = MyMedicationListAdapter(this, medicationsList)
+
+        listRecyc.apply {
+            // set a LinearLayoutManager to handle Android
+            // RecyclerView behavior
+            layoutManager = LinearLayoutManager(this@MyMedicationsActivity)
+            // set the custom adapter to the RecyclerView
+            adapter = MyMedicationListAdapter(this@MyMedicationsActivity, medicationsList)
+        }
+
+        //getMyMedicationsList()
     }
 
     private fun checkOnClick() {

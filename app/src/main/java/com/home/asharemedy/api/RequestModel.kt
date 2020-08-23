@@ -59,7 +59,7 @@ object RequestModel {
 
     fun setVitalRequestModel(
         vital_date: String,
-        vital_reading: String,
+        vital_reading: Float,
         vital_unit: String
     ): HashMap<String, Any> {
         var map = HashMap<String, Any>()

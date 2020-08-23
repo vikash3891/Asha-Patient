@@ -763,6 +763,53 @@
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/sp_14" />
                     </LinearLayout>
+
+                    <!--Primary Health Issues-->
+                    <LinearLayout
+                        android:id="@+id/layoutPrimaryHealthIssues"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_4">
+
+                        <TextView
+                            android:id="@+id/primaryHealthIssuesLabel"
+                            android:layout_width="@dimen/dp_150"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:padding="@dimen/dp_5"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="Primary Health Issues :"
+                            android:textColor="@color/colorAccent" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/primaryHealthIssuesValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:ellipsize="end"
+                            android:enabled="false"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:hint="@string/mandatory"
+                            android:imeOptions="actionNext|flagNavigateNext"
+                            android:maxLength="50"
+                            android:maxLines="2"
+                            android:padding="@dimen/dp_5"
+                            android:text=""
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_14" />
+
+                        <Spinner
+                            android:id="@+id/spinnerPrimaryHealthIssues"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_25"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:tooltipText="Select"
+                            android:visibility="gone" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <RelativeLayout

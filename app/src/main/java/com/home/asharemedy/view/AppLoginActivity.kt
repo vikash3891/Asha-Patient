@@ -24,8 +24,8 @@ class AppLoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
 
         try {
-            editUserName.setText("John@doe.com")
-            editUserPass.setText("12345")
+            editUserName.setText("john@doe.com")
+            editUserPass.setText("password")
             clickPerform()
 
         } catch (e: Exception) {
@@ -55,6 +55,13 @@ class AppLoginActivity : BaseActivity() {
                 return
             } else if (isValid) {
                 loginApi()
+
+                /*startActivity(
+                    Intent(
+                        this@AppLoginActivity,
+                        DashboardActivity::class.java
+                    )
+                )*/
             }
         } catch (e: Exception) {
             e.printStackTrace()

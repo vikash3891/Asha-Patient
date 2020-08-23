@@ -253,7 +253,7 @@ class ActivityAddVitalRecord : BaseActivity() {
                     AppPrefences.getUserID(this), selectedVitalName,
                     Utils.getJSONRequestBodyAny(
                         RequestModel.setVitalRequestModel(
-                            vital_date, vital_reading, vital_unit
+                            vital_date, vital_reading.toFloat(), vital_unit
                         )
                     )
                 )

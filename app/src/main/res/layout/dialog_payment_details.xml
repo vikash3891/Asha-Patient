@@ -13,29 +13,43 @@
         android:layout_weight="1"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="center"
-        android:text="Medication Detail"
+        android:text="Payment Detail"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_18"
         android:textStyle="bold" />
-
+    <!--val amount: String,
+            val cgst_percentage: String,
+            val convenience_fee: String,
+            val discount_percentage: String,
+            val grossTotal: String,
+            val igst_percentage: String,
+            val payer_id: String,
+            val payer_type: String,
+            val payment_id: String,
+            val receiver_id: String,
+            val receiver_type: String,
+            val sgst_percentage: String,
+            val status: String,
+            val transanction_id: String-->
+    <!--Amount-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/daysLabel"
+            android:id="@+id/amountLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/quicksand_medium"
             android:padding="@dimen/dp_5"
-            android:text="Days: "
+            android:text="Amount: "
             android:textColor="@color/black"
             android:textSize="@dimen/sp_16" />
 
         <TextView
-            android:id="@+id/daysValue"
+            android:id="@+id/amountValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -45,24 +59,25 @@
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
+    <!--Discount %-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/doseLabel"
+            android:id="@+id/discountLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/quicksand_medium"
             android:padding="@dimen/dp_5"
-            android:text="Dose(per day): "
+            android:text="Discount (%): "
             android:textColor="@color/black"
             android:textSize="@dimen/sp_16" />
 
         <TextView
-            android:id="@+id/doseValue"
+            android:id="@+id/discountValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -72,24 +87,25 @@
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
+    <!--Convenience Fees-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/instructionLabel"
+            android:id="@+id/convenienceLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/quicksand_medium"
             android:padding="@dimen/dp_5"
-            android:text="Instructions: "
+            android:text="Convenience Fees: "
             android:textColor="@color/black"
             android:textSize="@dimen/sp_16" />
 
         <TextView
-            android:id="@+id/instructionValue"
+            android:id="@+id/convenienceValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -99,6 +115,35 @@
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
+    <!--Gross Total Fees-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/grossTotalLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/quicksand_medium"
+            android:padding="@dimen/dp_5"
+            android:text="Gross Total: "
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/grossTotalValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/quicksand_medium"
+            android:padding="@dimen/dp_5"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+    <!--Status-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -126,6 +171,7 @@
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
+    <!--Ok-->
     <LinearLayout
         android:id="@+id/layoutOk"
         android:layout_width="match_parent"
