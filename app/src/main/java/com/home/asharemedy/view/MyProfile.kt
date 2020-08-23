@@ -25,29 +25,8 @@ import com.home.asharemedy.chat.utils.getFilePath
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
-import kotlinx.android.synthetic.main.acitivity_profile.*
+import com.home.asharemedy.utils.Utils.profileData
 import kotlinx.android.synthetic.main.activity_profile_editable.*
-import kotlinx.android.synthetic.main.activity_profile_editable.brandPartnerName
-import kotlinx.android.synthetic.main.activity_profile_editable.communicationValue
-import kotlinx.android.synthetic.main.activity_profile_editable.dobValue
-import kotlinx.android.synthetic.main.activity_profile_editable.drinkingYes
-import kotlinx.android.synthetic.main.activity_profile_editable.emailValue
-import kotlinx.android.synthetic.main.activity_profile_editable.emergencyContactValue
-import kotlinx.android.synthetic.main.activity_profile_editable.emiratesIDValue
-import kotlinx.android.synthetic.main.activity_profile_editable.layoutDrinking
-import kotlinx.android.synthetic.main.activity_profile_editable.layoutExercise
-import kotlinx.android.synthetic.main.activity_profile_editable.layoutSmoking
-import kotlinx.android.synthetic.main.activity_profile_editable.nationalityValue
-import kotlinx.android.synthetic.main.activity_profile_editable.patientID
-import kotlinx.android.synthetic.main.activity_profile_editable.phoneNumberValue
-import kotlinx.android.synthetic.main.activity_profile_editable.radioGroupDrinking
-import kotlinx.android.synthetic.main.activity_profile_editable.radioGroupExercise
-import kotlinx.android.synthetic.main.activity_profile_editable.radioGroupSmoking
-import kotlinx.android.synthetic.main.activity_profile_editable.religionValue
-import kotlinx.android.synthetic.main.activity_profile_editable.smokingNo
-import kotlinx.android.synthetic.main.activity_profile_editable.smokingYes
-import kotlinx.android.synthetic.main.activity_profile_editable.topBarLayout
-import kotlinx.android.synthetic.main.activity_profile_editable.userName
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
@@ -68,15 +47,14 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     var habitFrequencyValue = 0
     var habitFrequencyUnit = ""
     var habitStatus = ""
-    var data: ResponseModelClasses.GetPatientProfileResponseModel? = null
+
     var cDate = ""
     var isPrimaryClicked = false
 
     var languages = arrayOf("Smoking", "Exercise")
 
-
-    val REQUEST_CODE = 100
-    val CAMERA_REQUEST_CODE = 200
+    private val REQUEST_CODE = 100
+    private val CAMERA_REQUEST_CODE = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,199 +68,209 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     private fun initView() {
-        layoutHabits.isEnabled = false
-        setupPermissions()
+        try {
+            layoutHabits.isEnabled = false
+            setupPermissions()
 
-        getPatientProfile()
-
+            getPatientProfile()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun checkClicks() {
 
-        captureImage.setOnClickListener {
-            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
-        }
-        chooseImage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_CODE)
-        }
-
-        communicationEdit.setOnClickListener {
-            if (!isEditable) {
-                enableEditableUI()
-
-            } else {
-                disableEditableUI()
+        try {
+            captureImage.setOnClickListener {
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
             }
-        }
-
-        radioGroupSmoking.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
-
-            if (i == R.id.smokingYes) {
-                smokingFrequency.visibility = View.VISIBLE
-            } else if (i == R.id.smokingNo) {
-                smokingFrequency.visibility = View.GONE
+            chooseImage.setOnClickListener {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = "image/*"
+                startActivityForResult(intent, REQUEST_CODE)
             }
-        }
-        radioGroupDrinking.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
 
-            if (i == R.id.drinkingYes) {
-                drinkingFrequency.visibility = View.VISIBLE
-            } else if (i == R.id.drinkingNo) {
-                drinkingFrequency.visibility = View.GONE
+            communicationEdit.setOnClickListener {
+                if (!isEditable) {
+                    enableEditableUI()
+
+                } else {
+                    disableEditableUI()
+                }
             }
-        }
-        radioGroupExercise.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
 
-            if (i == R.id.exerciseYes) {
-                exerciseFrequency.visibility = View.VISIBLE
-            } else if (i == R.id.exerciseNo) {
-                exerciseFrequency.visibility = View.GONE
+            radioGroupSmoking.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
+
+                if (i == R.id.smokingYes) {
+                    smokingFrequency.visibility = View.VISIBLE
+                } else if (i == R.id.smokingNo) {
+                    smokingFrequency.visibility = View.GONE
+                }
             }
-        }
+            radioGroupDrinking.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
 
-        bottomBar.layoutSettings.setOnClickListener {
-            logoutAlertDialog()
-        }
-        bottomBar.layoutHome.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@MyProfile,
-                    DashboardActivity::class.java
+                if (i == R.id.drinkingYes) {
+                    drinkingFrequency.visibility = View.VISIBLE
+                } else if (i == R.id.drinkingNo) {
+                    drinkingFrequency.visibility = View.GONE
+                }
+            }
+            radioGroupExercise.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
+
+                if (i == R.id.exerciseYes) {
+                    exerciseFrequency.visibility = View.VISIBLE
+                } else if (i == R.id.exerciseNo) {
+                    exerciseFrequency.visibility = View.GONE
+                }
+            }
+
+            bottomBar.layoutSettings.setOnClickListener {
+                logoutAlertDialog()
+            }
+            bottomBar.layoutHome.setOnClickListener {
+                startActivity(
+                    Intent(
+                        this@MyProfile,
+                        DashboardActivity::class.java
+                    )
                 )
-            )
-            finish()
-        }
-
-        topBarLayout.imageBack.setOnClickListener {
-            finish()
-        }
-        habitEdit.setOnClickListener {
-            showHabitDialog()
-        }
-
-        dobValue.setOnClickListener {
-            openCalendar(dobValue)
-        }
-
-        layoutPrimaryHealthIssues.setOnClickListener {
-            if(!isPrimaryClicked){
-                val intent = Intent(this, CheckListActivity::class.java)
-                startActivityForResult(intent, 123)
-                isPrimaryClicked = true
+                finish()
             }
 
+            topBarLayout.imageBack.setOnClickListener {
+                finish()
+            }
+            habitEdit.setOnClickListener {
+                showHabitDialog()
+            }
+
+            dobValue.setOnClickListener {
+                openCalendar(dobValue)
+            }
+
+            layoutPrimaryHealthIssues.setOnClickListener {
+                if (!isPrimaryClicked) {
+                    val intent = Intent(this, CheckListActivity::class.java)
+                    startActivityForResult(intent, 123)
+                    isPrimaryClicked = true
+                }
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
-    fun enableEditableUI() {
-        isEditable = true
-        communicationEdit.text = getString(R.string.save)
+    private fun enableEditableUI() {
+        try {
+            isEditable = true
+            communicationEdit.text = getString(R.string.save)
 
-        dobValue.isEnabled = true
-        phoneNumberValue.isEnabled = true
-        phoneNumberValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            dobValue.isEnabled = true
+            phoneNumberValue.isEnabled = true
+            phoneNumberValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        emailValue.isEnabled = true
-        emailValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            emailValue.isEnabled = true
+            emailValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        emergencyContactValue.isEnabled = true
-        emergencyContactValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            emergencyContactValue.isEnabled = true
+            emergencyContactValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        nationalityValue.isEnabled = true
-        nationalityValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            nationalityValue.isEnabled = true
+            nationalityValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        religionValue.isEnabled = true
-        religionValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            religionValue.isEnabled = true
+            religionValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        membershipValue.isEnabled = true
-        membershipValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            membershipValue.isEnabled = true
+            membershipValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        addressValue.isEnabled = true
-        addressValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            addressValue.isEnabled = true
+            addressValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        stateValue.isEnabled = true
-        stateValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            stateValue.isEnabled = true
+            stateValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        cityValue.isEnabled = true
-        cityValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            cityValue.isEnabled = true
+            cityValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        communicationValue.isEnabled = true
-        communicationValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            communicationValue.isEnabled = true
+            communicationValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        insuranceValue.isEnabled = true
-        insuranceValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            insuranceValue.isEnabled = true
+            insuranceValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        emiratesIDValue.isEnabled = true
-        emiratesIDValue.background =
-            ContextCompat.getDrawable(this, R.drawable.edittext_border)
+            emiratesIDValue.isEnabled = true
+            emiratesIDValue.background =
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
-        layoutPrimaryHealthIssues.isEnabled = true
+            layoutPrimaryHealthIssues.isEnabled = true
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    fun disableEditableUI() {
-        isEditable = false
-        communicationEdit.text = getString(R.string.menu_message_edit)
+    private fun disableEditableUI() {
+        try {
+            isEditable = false
+            communicationEdit.text = getString(R.string.menu_message_edit)
 
-        dobValue.isEnabled = false
-        phoneNumberValue.isEnabled = false
-        phoneNumberValue.background = null
+            dobValue.isEnabled = false
+            phoneNumberValue.isEnabled = false
+            phoneNumberValue.background = null
 
-        emailValue.isEnabled = false
-        emailValue.background = null
+            emailValue.isEnabled = false
+            emailValue.background = null
 
-        emergencyContactValue.isEnabled = false
-        emergencyContactValue.background = null
+            emergencyContactValue.isEnabled = false
+            emergencyContactValue.background = null
 
-        nationalityValue.isEnabled = false
-        nationalityValue.background = null
+            nationalityValue.isEnabled = false
+            nationalityValue.background = null
 
-        religionValue.isEnabled = false
-        religionValue.background = null
+            religionValue.isEnabled = false
+            religionValue.background = null
 
-        membershipValue.isEnabled = false
-        membershipValue.background = null
+            membershipValue.isEnabled = false
+            membershipValue.background = null
 
-        addressValue.isEnabled = false
-        addressValue.background = null
+            addressValue.isEnabled = false
+            addressValue.background = null
 
-        stateValue.isEnabled = false
-        stateValue.background = null
+            stateValue.isEnabled = false
+            stateValue.background = null
 
-        cityValue.isEnabled = false
-        cityValue.background = null
+            cityValue.isEnabled = false
+            cityValue.background = null
 
-        communicationValue.isEnabled = false
-        communicationValue.background = null
+            communicationValue.isEnabled = false
+            communicationValue.background = null
 
-        insuranceValue.isEnabled = false
-        insuranceValue.background = null
+            insuranceValue.isEnabled = false
+            insuranceValue.background = null
 
-        emiratesIDValue.isEnabled = false
-        emiratesIDValue.background = null
+            emiratesIDValue.isEnabled = false
+            emiratesIDValue.background = null
 
-        layoutPrimaryHealthIssues.isEnabled = false
+            layoutPrimaryHealthIssues.isEnabled = false
 
-        validationField()
+            validationField()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun validationField() {
@@ -305,13 +293,13 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                 !allValid
                 return
             } else if (allValid) {
-                data!!.patient_name = userName.text.toString()
-                data!!.patient_mobile = phoneNumberValue.text.toString()
-                data!!.patient_email = emailValue.text.toString()
-                data!!.patient_address1 = addressValue.text.toString()
-                data!!.patient_address2 = stateValue.text.toString()
-                data!!.patient_city = cityValue.text.toString()
-                // data!!.pin = pinValue.text.toString()
+                profileData!!.patient_name = userName.text.toString()
+                profileData!!.patient_mobile = phoneNumberValue.text.toString()
+                profileData!!.patient_email = emailValue.text.toString()
+                profileData!!.patient_address1 = addressValue.text.toString()
+                profileData!!.patient_address2 = stateValue.text.toString()
+                profileData!!.patient_city = cityValue.text.toString()
+
                 updateProfileApi()
             }
         } catch (e: Exception) {
@@ -322,16 +310,16 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     private fun updateProfileApi() = if (Utils.isConnected(this)) {
         showDialog()
         try {
-            data!!.patient_name = userName.text.toString()
-            data!!.patient_dob = dobValue.text.toString()
-            data!!.patient_mobile = phoneNumberValue.text.toString()
-            data!!.patient_address1 = addressValue.text.toString()
-            data!!.patient_address2 = communicationValue.text.toString()
-            data!!.emergency_contact_number = emergencyContactValue.text.toString()
-            data!!.patient_city = cityValue.text.toString()
-            data!!.patient_state = stateValue.text.toString()
-            data!!.primary_health_issue = primaryHealthIssuesValue.text.toString()
-            data!!.photo = Utils.userfileUploadBase64
+            profileData!!.patient_name = userName.text.toString()
+            profileData!!.patient_dob = dobValue.text.toString()
+            profileData!!.patient_mobile = phoneNumberValue.text.toString()
+            profileData!!.patient_address1 = addressValue.text.toString()
+            profileData!!.patient_address2 = communicationValue.text.toString()
+            profileData!!.emergency_contact_number = emergencyContactValue.text.toString()
+            profileData!!.patient_city = cityValue.text.toString()
+            profileData!!.patient_state = stateValue.text.toString()
+            profileData!!.primary_health_issue = primaryHealthIssuesValue.text.toString()
+            profileData!!.photo = Utils.userfileUploadBase64
 
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
@@ -340,7 +328,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                     AppPrefences.getUserID(this),
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getUpdateProfileRequestModel(
-                            this@MyProfile, data!!
+                            this@MyProfile, profileData!!
                         )
                     )
                 )
@@ -407,10 +395,9 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                         //dismissDialog()
                         Log.d("ProfileResponse: ", response.body().toString())
                         if (response.body() != null) {
-
+                            profileData = response.body()!!
+                            updateView()
                             getPatientHabit()
-                            data = response.body()!!
-                            updateView(data!!)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -437,7 +424,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun getPatientHabit() = if (Utils.isConnected(this)) {
-        //showDialog()
+
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
@@ -479,58 +466,66 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         showToast(getString(R.string.internet))
     }
 
-    fun updateView(data: ResponseModelClasses.GetPatientProfileResponseModel) {
-        userName.text = data.patient_name
-        patientID.text = data.patient_id
-        dobValue.setText(data.patient_dob)
-        brandPartnerName.text = data.insurance_company_name
-        phoneNumberValue.setText(data.patient_mobile)
-        emailValue.setText(data.patient_email)
-        emergencyContactValue.setText(data.emergency_contact_number)
+    fun updateView() {
+        try {
+            userName.text = profileData!!.patient_name
+            patientID.text = profileData!!.patient_id
+            dobValue.setText(profileData!!.patient_dob)
+            brandPartnerName.text = profileData!!.insurance_company_name
+            phoneNumberValue.setText(profileData!!.patient_mobile)
+            emailValue.setText(profileData!!.patient_email)
+            emergencyContactValue.setText(profileData!!.emergency_contact_number)
 
-        nationalityValue.setText(data.patient_country)
-        religionValue.setText(data.patient_country)
-        membershipValue.setText(data.membership_number)
-        addressValue.setText(data.patient_address1)
-        communicationValue.setText(data.patient_address2)
-        insuranceValue.setText(data.insurance_company_name)
-        emiratesIDValue.setText(data.parent_id)
-        cityValue.setText(data.patient_city)
-        stateValue.setText(data.patient_state)
-        Log.d("PrimaryIssues: ", data.primary_health_issue)
-        primaryHealthIssuesValue.setText(data.primary_health_issue)
+            nationalityValue.setText(profileData!!.patient_country)
+            religionValue.setText(profileData!!.patient_country)
+            membershipValue.setText(profileData!!.membership_number)
+            addressValue.setText(profileData!!.patient_address1)
+            communicationValue.setText(profileData!!.patient_address2)
+            insuranceValue.setText(profileData!!.insurance_company_name)
+            emiratesIDValue.setText(profileData!!.parent_id)
+            cityValue.setText(profileData!!.patient_city)
+            stateValue.setText(profileData!!.patient_state)
+            Log.d("PrimaryIssues: ", profileData!!.primary_health_issue)
+            primaryHealthIssuesValue.setText(profileData!!.primary_health_issue)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    fun updateHabitView(data: ArrayList<ResponseModelClasses.GetHabitResponseModel>) {
+    fun updateHabitView(habitData: ArrayList<ResponseModelClasses.GetHabitResponseModel>) {
 
-        for (i in 0 until data.size) {
-            if (data[i].patient_habit_id.equals("4")) {
-                if (data[i].status.equals("active")) {
-                    smokingYes.isChecked = true
-                    smokingNo.isChecked = false
-                    smokingFrequency.visibility = View.VISIBLE
-                    smokingFrequency.setText(data[i].habit_frequency)
-                    smokingFrequency.hint = data[i].habit_frequency_unit
-                } else {
-                    smokingYes.isChecked = false
-                    smokingNo.isChecked = true
-                    smokingFrequency.visibility = View.GONE
-                }
-            } else if (data[i].patient_habit_id.equals("5")) {
-                if (data[i].status.equals("active")) {
-                    exerciseYes.isChecked = true
-                    exerciseNo.isChecked = false
-                    exerciseFrequency.visibility = View.VISIBLE
-                    exerciseFrequency.setText(data[i].habit_frequency)
-                    exerciseFrequency.hint = data[i].habit_frequency_unit
-                } else {
-                    exerciseYes.isChecked = false
-                    exerciseNo.isChecked = true
-                    exerciseFrequency.visibility = View.GONE
-                }
-            } else if (data[i].patient_habit_id.equals("4")) {
+        try {
+            for (i in 0 until habitData.size) {
+                if (habitData[i].patient_habit_id.equals("4")) {
+                    if (habitData[i].status.equals("active")) {
+                        smokingYes.isChecked = true
+                        smokingNo.isChecked = false
+                        smokingFrequency.visibility = View.VISIBLE
+                        smokingFrequency.setText(habitData[i].habit_frequency)
+                        smokingFrequency.hint = habitData[i].habit_frequency_unit
+                    } else {
+                        smokingYes.isChecked = false
+                        smokingNo.isChecked = true
+                        smokingFrequency.visibility = View.GONE
+                    }
+                } else if (habitData[i].patient_habit_id.equals("5")) {
+                    if (habitData[i].status.equals("active")) {
+                        exerciseYes.isChecked = true
+                        exerciseNo.isChecked = false
+                        exerciseFrequency.visibility = View.VISIBLE
+                        exerciseFrequency.setText(habitData[i].habit_frequency)
+                        exerciseFrequency.hint = habitData[i].habit_frequency_unit
+                    } else {
+                        exerciseYes.isChecked = false
+                        exerciseNo.isChecked = true
+                        exerciseFrequency.visibility = View.GONE
+                    }
+                } else if (habitData[i].patient_habit_id.equals("4")) {
 
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -738,24 +733,27 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             month,
             day
         )
-        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+        dpd.datePicker.maxDate = System.currentTimeMillis() - 1000;
         dpd.show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
         try {
             if (resultCode == Activity.RESULT_OK && requestCode == CAMERA_REQUEST_CODE) {
-                userProfileImage.setImageBitmap(data!!.extras?.get("data") as Bitmap)
+                userProfileImage.setImageBitmap(resultData!!.extras?.get("data") as Bitmap)
             }
             if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
 
-                userProfileImage.setImageURI(data?.data) // handle chosen image
+                userProfileImage.setImageURI(resultData?.data) // handle chosen image
 
-                Log.d("FilePath", getFilePath(applicationContext, data?.data!!))
-                Log.d("FileBase64", Utils.encoder(getFilePath(applicationContext, data.data!!)!!))
+                Log.d("FilePath", getFilePath(applicationContext, resultData?.data!!))
+                Log.d(
+                    "FileBase64",
+                    Utils.encoder(getFilePath(applicationContext, resultData.data!!)!!)
+                )
                 Utils.userfileUploadBase64 =
-                    Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
+                    Utils.encoder(getFilePath(applicationContext, resultData.data!!)!!)
             }
             if (resultCode == 0 && requestCode == 123) {
                 isPrimaryClicked = false

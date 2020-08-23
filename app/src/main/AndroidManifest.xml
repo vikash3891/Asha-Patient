@@ -174,9 +174,6 @@
             android:name=".video.activities.AppInfoActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view._247ConnectActivity" />
-        <activity android:name=".payu.ActivityPayUMain" />
-        <activity android:name=".payu.MerchantCheckoutActivity" />
-
 
         <activity
             android:name=".view.MyMedicationsActivity"
@@ -201,6 +198,7 @@
         <activity android:name=".view.ForgotPasswordFirstActivity" />
         <activity android:name=".view.SuccessActivity" />
         <activity android:name=".view.CheckListActivity" />
+        <activity android:name=".payu.ActivityPayU" />
 
 
         <service android:name=".video.services.LoginService" />

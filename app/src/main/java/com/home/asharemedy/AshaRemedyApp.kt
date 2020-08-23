@@ -12,6 +12,7 @@ import com.home.asharemedy.utils.LocaleManagerMew
 import com.quickblox.auth.session.QBSettings
 import com.home.asharemedy.chat.managers.BackgroundListener
 import com.home.asharemedy.chat.utils.ActivityLifecycle
+import com.home.asharemedy.payu.AppEnvironment
 import com.home.asharemedy.video.db.DbHelper
 import io.fabric.sdk.android.Fabric
 
@@ -38,8 +39,11 @@ private const val MIN_PORT_VALUE = 1000
 private const val MIN_SOCKET_TIMEOUT = 300
 private const val MAX_SOCKET_TIMEOUT = 60000
 
+
 class AshaRemedyApp : Application() {
     private lateinit var dbHelper: DbHelper
+    private lateinit var appEnvironment: AppEnvironment
+
     init {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -71,6 +75,8 @@ class AshaRemedyApp : Application() {
         checkChatSettings()
         initCredentials()
         ProcessLifecycleOwner.get().lifecycle.addObserver(BackgroundListener())
+
+        appEnvironment = AppEnvironment.SANDBOX
     }
 
     private fun checkAppCredentials() {
@@ -81,7 +87,8 @@ class AshaRemedyApp : Application() {
 
     private fun checkChatSettings() {
         if (USER_DEFAULT_PASSWORD.isEmpty() || CHAT_PORT !in MIN_PORT_VALUE..MAX_PORT_VALUE
-            || SOCKET_TIMEOUT !in MIN_SOCKET_TIMEOUT..MAX_SOCKET_TIMEOUT) {
+            || SOCKET_TIMEOUT !in MIN_SOCKET_TIMEOUT..MAX_SOCKET_TIMEOUT
+        ) {
             throw AssertionError(getString(R.string.error_chat_credentails_empty))
         }
     }
@@ -106,5 +113,13 @@ class AshaRemedyApp : Application() {
     @Synchronized
     fun getDbHelper(): DbHelper {
         return dbHelper
+    }
+
+    fun getAppEnvironment(): AppEnvironment {
+        return appEnvironment
+    }
+
+    fun setAppEnvironment(appEnvironment: AppEnvironment) {
+        this.appEnvironment = appEnvironment
     }
 }

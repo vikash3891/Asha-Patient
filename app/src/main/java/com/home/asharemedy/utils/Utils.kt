@@ -54,6 +54,8 @@ object Utils {
     var selectedAppointmentDetails =
         ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
 
+    var profileData: ResponseModelClasses.GetPatientProfileResponseModel? = null
+
     val teachers: Array<SpiritualTeacher>
         get() =
             arrayOf(

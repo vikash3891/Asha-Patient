@@ -1,6 +1,5 @@
 package com.home.asharemedy.view
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -11,10 +10,9 @@ import com.home.asharemedy.R
 import com.home.asharemedy.adapter.AppointSlotListAdapter
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
-import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
-import com.home.asharemedy.payu.ActivityPayUMain
+import com.home.asharemedy.payu.ActivityPayU
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.appointmentSlotList
@@ -75,7 +73,7 @@ class AppointmentSlotActivity : BaseActivity() {
                 for (i in 0 until Utils.appointmentSlotList.size) {
                     Log.d("SelSlotList", Utils.appointmentSlotList[i].isSelected.toString())
                 }
-                startActivity(Intent(this@AppointmentSlotActivity, ActivityPayUMain::class.java))
+                startActivity(Intent(this@AppointmentSlotActivity, ActivityPayU::class.java))
             }
 
             slotCalendar.setOnClickListener() {

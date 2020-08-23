@@ -48,15 +48,7 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun initView() {
-//        topbar.screenName.text = getString(R.string.dashboard)
-//        topbar.imageBack.visibility = View.GONE
 
-        /* setSupportActionBar(toolbar);
-         val toggle = ActionBarDrawerToggle(
-             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
-         )
-         drawer.addDrawerListener(toggle)
-         toggle.syncState()*/
         setNavigationalDrawer()
         setupToolDrawer()
         getPatientProfile()
@@ -126,7 +118,8 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
                         dismissDialog()
                         Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
-                            updateView(response.body()!!)
+                            Utils.profileData = response.body()!!
+                            updateView()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -152,15 +145,15 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
         showToast(getString(R.string.internet))
     }
 
-    fun updateView(data: ResponseModelClasses.GetPatientProfileResponseModel) {
-        profileName.text = data.patient_name
-        profileDetails.userName.text = data.patient_name
-        profileDetails.patientID.text = data.patient_id
-        profileDetails.dobValue.text = data.patient_dob
-        profileDetails.brandPartnerName.text = data.insurance_company_name
-        profileDetails.phoneNumberValue.text = data.patient_mobile
-        profileDetails.emailValue.text = data.patient_email
-        profileDetails.emergencyContactValue.text = data.emergency_contact_number
+    fun updateView() {
+        profileName.text = Utils.profileData!!.patient_name
+        profileDetails.userName.text = Utils.profileData!!.patient_name
+        profileDetails.patientID.text = Utils.profileData!!.patient_id
+        profileDetails.dobValue.text = Utils.profileData!!.patient_dob
+        profileDetails.brandPartnerName.text = Utils.profileData!!.insurance_company_name
+        profileDetails.phoneNumberValue.text = Utils.profileData!!.patient_mobile
+        profileDetails.emailValue.text = Utils.profileData!!.patient_email
+        profileDetails.emergencyContactValue.text = Utils.profileData!!.emergency_contact_number
 
     }
 

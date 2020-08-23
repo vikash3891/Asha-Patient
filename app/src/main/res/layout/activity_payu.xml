@@ -1,0 +1,437 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    card_view:ignore="MissingDefaultResource"
+    tools:context="com.home.asharemedy.payu.ActivityPayU">
+
+    <include
+        android:id="@+id/topBarLayout"
+        layout="@layout/topbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/dimen_5dp"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/dimen_5dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/dp_3"
+                app:cardElevation="@dimen/dimen_5dp"
+                app:cardPreventCornerOverlap="false"
+                app:contentPaddingBottom="@dimen/dimen_10dp"
+                app:contentPaddingLeft="@dimen/dimen_15dp"
+                app:contentPaddingRight="@dimen/dimen_15dp"
+                app:contentPaddingTop="@dimen/dimen_10dp"
+                card_view:cardElevation="@dimen/dimen_5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Environment"
+                        android:textColor="@color/payumoney_black"
+                        android:textSize="@dimen/dimen_18sp" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_grp_env"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_5dp"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/dimen_5dp"
+                        android:paddingRight="@dimen/dimen_5dp">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/radio_btn_sandbox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="@integer/int_1"
+                            android:checked="true"
+                            android:text="Sandbox"
+                            android:textColor="@color/payumoney_black" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/radio_btn_production"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="@integer/int_1"
+                            android:text="Production" />
+                    </RadioGroup>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/listDoctorDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_5">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="@dimen/dp_80"
+                            android:layout_height="@dimen/dp_80"
+                            android:background="@drawable/ic_emoticon_50dp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="@dimen/dp_10">
+
+                        <TextView
+                            android:id="@+id/doctorName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="center_horizontal"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/doctorSpeciality"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/doctorName"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="center_horizontal"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/doctorSpeciality"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="center_horizontal"
+                            android:maxLines="1"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@color/colorAppGray"
+                            android:textSize="@dimen/sp_14" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/consultationFees"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/colorProgress"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/dp_3"
+                app:cardElevation="@dimen/dimen_5dp"
+                app:cardPreventCornerOverlap="false"
+                app:contentPaddingBottom="@dimen/dimen_5dp"
+                app:contentPaddingLeft="@dimen/dimen_15dp"
+                app:contentPaddingRight="@dimen/dimen_15dp"
+                app:contentPaddingTop="@dimen/dimen_5dp"
+                card_view:cardElevation="@dimen/dimen_5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User details"
+                        android:textColor="@color/payumoney_black"
+                        android:textSize="@dimen/dimen_18sp" />
+
+                    <!--Email-->
+                    <LinearLayout
+                        android:id="@+id/layoutEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_5">
+
+                        <TextView
+                            android:id="@+id/emailLabel"
+                            android:layout_width="@dimen/dp_150"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="@string/email"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/sp_14"
+                            tools:ignore="RtlSymmetry" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/emailValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_border"
+                            android:ellipsize="end"
+                            android:enabled="false"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:hint="@string/mandatory"
+                            android:imeOptions="actionNext|flagNavigateNext"
+                            android:inputType="textEmailAddress"
+                            android:maxLength="50"
+                            android:maxLines="1"
+                            android:padding="@dimen/dp_5"
+                            android:text=""
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+                    <!--Mobile-->
+                    <LinearLayout
+                        android:id="@+id/layoutMobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_5">
+
+                        <TextView
+                            android:id="@+id/mobileLabel"
+                            android:layout_width="@dimen/dp_150"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="@string/mobile_number"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/sp_14"
+                            tools:ignore="RtlSymmetry" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/mobileValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_border"
+                            android:ellipsize="end"
+                            android:enabled="false"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:hint="@string/mandatory"
+                            android:maxLines="1"
+                            android:padding="@dimen/dp_5"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+                    <!--Amount-->
+                    <LinearLayout
+                        android:id="@+id/layoutAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_5">
+
+                        <TextView
+                            android:id="@+id/amountLabel"
+                            android:layout_width="@dimen/dp_150"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="Amount"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/sp_14"
+                            tools:ignore="RtlSymmetry" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/amountValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_border"
+                            android:ellipsize="end"
+                            android:enabled="false"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:hint="@string/mandatory"
+                            android:imeOptions="actionNext|flagNavigateNext"
+                            android:inputType="textEmailAddress"
+                            android:maxLength="5"
+                            android:maxLines="1"
+                            android:padding="@dimen/dp_5"
+                            android:text=""
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+                    <!--Ailment-->
+                    <LinearLayout
+                        android:id="@+id/layoutAilment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_5">
+
+                        <TextView
+                            android:id="@+id/ailmentLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="Ailment: "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/ailmentValue"
+                            android:layout_width="@dimen/dp_150"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="NA"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14"
+                            tools:ignore="RtlSymmetry" />
+                    </LinearLayout>
+
+                    <!--Date-->
+                    <LinearLayout
+                        android:id="@+id/layoutDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_5">
+
+                        <TextView
+                            android:id="@+id/dateLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="Date: "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/dateValue"
+                            android:layout_width="@dimen/dp_150"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14"
+                            tools:ignore="RtlSymmetry" />
+                    </LinearLayout>
+
+                    <!--Time-->
+                    <LinearLayout
+                        android:id="@+id/layoutTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_5">
+
+                        <TextView
+                            android:id="@+id/timeLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="Time: "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold"
+                            tools:ignore="RtlSymmetry" />
+
+                        <TextView
+                            android:id="@+id/timeValue"
+                            android:layout_width="@dimen/dp_150"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14"
+                            tools:ignore="RtlSymmetry" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_25dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/pay_now_button"
+                    style="@style/ButtonStyle"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:text="Pay Now" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+
+

@@ -55,13 +55,6 @@ class AppLoginActivity : BaseActivity() {
                 return
             } else if (isValid) {
                 loginApi()
-
-                /*startActivity(
-                    Intent(
-                        this@AppLoginActivity,
-                        DashboardActivity::class.java
-                    )
-                )*/
             }
         } catch (e: Exception) {
             e.printStackTrace()
