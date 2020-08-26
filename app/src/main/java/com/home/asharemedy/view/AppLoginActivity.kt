@@ -130,6 +130,7 @@ class AppLoginActivity : BaseActivity() {
                                     response.body()!!.data[0].user_id!!
                                 )
                                 Log.e("UserID: ", AppPrefences.getUserID(this@AppLoginActivity))
+                                Log.e("Token: ", response.body()!!.data[0].token)
                                 Utils.setUserDetails(response.body()!!.data[0])
 
                                 AppPrefences.setPassword(
@@ -142,7 +143,7 @@ class AppLoginActivity : BaseActivity() {
                                         DashboardActivity::class.java
                                     )
                                 )
-
+a
                                 finish()
                                 //showSuccessPopup(response.body()!!.message)
                             }

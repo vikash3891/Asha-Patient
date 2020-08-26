@@ -12,8 +12,10 @@ import android.os.Build
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.home.asharemedy.AshaRemedyApp
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.model.ListItemModel
@@ -308,6 +310,10 @@ object Utils {
         File(pathFile).run {
             writeBytes(imageByteArray)
         }
+    }
+
+    fun getString(@StringRes stringId: Int): String {
+        return AshaRemedyApp.getInstance().getString(stringId)
     }
 
 }

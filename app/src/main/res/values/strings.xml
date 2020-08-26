@@ -187,6 +187,7 @@
     <string name="talk_to_thb">Talk to THB</string>
     <string name="payment_history">Payment History</string>
     <string name="add_vital">Add Vital</string>
+    <string name="add_medication">Add Medication</string>
     <string name="health_info">Health Info</string>
     <string name="more_thb">More THB</string>
     <string name="my_vitals">My Vitals</string>
@@ -651,5 +652,15 @@
     <string name="my_profile">My Profile</string>
     <string name="change_password">Change Password</string>
     <string name="faq">FAQ</string>
+
+
+    <string name="rupees_symbol">₹</string>
+    <string name="medicine_name">Medicine Name</string>
+    <string name="prescribed_for">Prescribed For (Days)</string>
+    <string name="prescribed_by">Prescribed By</string>
+    <string name="dose_per_day">Dose per day</string>
+    <string name="instructions">Instructions</string>
+    <string name="precautions">Precautions</string>
+    <string name="save_medication_detail">Save Medication Detail</string>
 
 </resources>

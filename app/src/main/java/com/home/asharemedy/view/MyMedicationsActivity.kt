@@ -45,7 +45,7 @@ class MyMedicationsActivity : BaseActivity() {
         topbar.screenName.text = getString(R.string.my_medications)
         layoutDates.visibility = View.GONE
         floatingActionButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
-        floatingActionButton.visibility = View.GONE
+        floatingActionButton.visibility = View.VISIBLE
         for (i in 0..10) {
 
             medicationsList.add(
@@ -74,7 +74,7 @@ class MyMedicationsActivity : BaseActivity() {
         }
 
         floatingActionButton.setOnClickListener {
-            startActivity(Intent(this, AddAppointmentListActivity::class.java))
+            startActivity(Intent(this, AddMedicationActivity::class.java))
         }
 
         startDate.setOnClickListener {

@@ -7,6 +7,7 @@ class LoginModel {
     var user_name: String? = null
     var user_password: String? = null
     var user_type: String? = null
+    var token: String? = null
 
     constructor()
     constructor(
@@ -14,12 +15,14 @@ class LoginModel {
         user_id: String,
         user_name: String,
         user_password: String,
-        user_type: String
+        user_type: String,
+        token: String
     ) {
         this.user_email = user_email
         this.user_id = user_id
         this.user_name = user_name
         this.user_password = user_password
         this.user_type = user_type
+        this.token = token
     }
 }

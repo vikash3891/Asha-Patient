@@ -50,7 +50,7 @@ class AppointmentSlotActivity : BaseActivity() {
         slotCalendar.text = Utils.getDate()
         doctorName.text = Utils.selectedDoctorFacility!!.name
         doctorSpeciality.text = Utils.selectedDoctorFacility!!.specialization
-        consultationFees.text = "$" + Utils.selectedDoctorFacility!!.fees
+        consultationFees.text = getString(R.string.rupees_symbol) + Utils.selectedDoctorFacility!!.fees
         address.text =
             Utils.selectedDoctorFacility!!.address1 + " " + Utils.selectedDoctorFacility!!.address2
         cdate = Utils.getDate()

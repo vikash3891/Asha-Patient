@@ -118,5 +118,11 @@ class Constants {
         const val USER_ID = "userId"
         const val USER_TYPE = "userType"
 
+        const val MEDICATION_TYPE = "medication_type"
+        const val DRUG_NAME = "drug_name"
+        const val DOSAGE_INSTRUCTIONS = "dosage_instructions"
+        const val DAYS = "days"
+        const val DOSE_PER_DAY = "dose_per_day"
+        const val OTHER_INSTRUCTION = "other_instruction"
     }
 }

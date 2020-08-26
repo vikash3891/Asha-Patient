@@ -115,14 +115,18 @@ class ActivityPaymentHistory : BaseActivity() {
     }
 
     private fun loadList() {
-        adapter = PaymentListAdapter(this, paymentHistoryList)
+        try {
+            adapter = PaymentListAdapter(this, paymentHistoryList)
 
-        listRecyc.apply {
+            listRecyc.apply {
 
-            layoutManager = LinearLayoutManager(this@ActivityPaymentHistory)
+                layoutManager = LinearLayoutManager(this@ActivityPaymentHistory)
 
-            adapter =
-                PaymentListAdapter(this@ActivityPaymentHistory, paymentHistoryList)
+                adapter =
+                    PaymentListAdapter(this@ActivityPaymentHistory, paymentHistoryList)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

@@ -3,9 +3,11 @@ package com.home.asharemedy.viewHolder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ResponseModelClasses
+import com.home.asharemedy.utils.Utils.getString
 
 class AppointmentItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_appointment, parent, false)) {
@@ -24,7 +26,7 @@ class AppointmentItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(movie: ResponseModelClasses.GetFacilityListResponseModel) {
         doctorName?.text = movie.name
         doctorSpeciality?.text = movie.specialization
-        consultationFees?.text = "$" + movie.fees
+        consultationFees?.text = getString(R.string.rupees_symbol) + movie.fees
         address?.text = movie.address1 + " " + movie.address2
     }
 

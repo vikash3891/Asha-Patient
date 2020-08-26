@@ -73,7 +73,7 @@ class VideoLoginActivity : BaseActivity() {
 
     private fun signUpNewUser(newUser: QBUser) {
         try {
-            showProgressDialog(R.string.dlg_creating_new_user)
+            showProgressDialog(R.string.dlg_loading_dialogs_users)
             signUp(newUser, object : QBEntityCallback<QBUser> {
                 override fun onSuccess(result: QBUser, params: Bundle) {
                     SharedPrefsHelper.saveQbUser(newUser)

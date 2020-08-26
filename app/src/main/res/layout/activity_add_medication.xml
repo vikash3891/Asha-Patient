@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.home.asharemedy.model.DashboardViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/topbar"
+            layout="@layout/topbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50" />
+
+        <LinearLayout
+            android:id="@+id/layoutVitalHeader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topbar"
+            android:layout_marginBottom="@dimen/dp_50"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <!--Medicine Name-->
+            <LinearLayout
+                android:id="@+id/layoutMedicineName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_40"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/medicineLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start|center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_5"
+                    android:text="@string/medicine_name"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/medicineName"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_border"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center"
+                    android:hint="@string/mandatory"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <!--Prescribed For-->
+            <LinearLayout
+                android:id="@+id/layoutPrescribedFor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/prescribedForLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start|center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_5"
+                    android:text="@string/prescribed_for"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/prescribedForName"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_border"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center"
+                    android:hint="@string/mandatory"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <!--Prescribed By-->
+            <LinearLayout
+                android:id="@+id/layoutPrescribedBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/prescribedByLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start|center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_5"
+                    android:text="@string/prescribed_by"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/prescribedBy"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_border"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center"
+                    android:hint="@string/mandatory"
+                    android:inputType="textPersonName"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <!--Dose per day-->
+            <LinearLayout
+                android:id="@+id/layoutDosePerDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dosePerDayLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start|center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_5"
+                    android:text="@string/dose_per_day"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/dosePerDayName"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_border"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center"
+                    android:hint="@string/mandatory"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <!--Instructions-->
+            <LinearLayout
+                android:id="@+id/layoutInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/instructionsLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start|center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_5"
+                    android:text="@string/instructions"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/instructionsName"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_border"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center"
+                    android:hint="@string/optional"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <!--Precautions-->
+            <LinearLayout
+                android:id="@+id/layoutPrecautionsName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/precautionsLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start|center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_5"
+                    android:text="@string/precautions"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/precautionsName"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_border"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center"
+                    android:hint="@string/optional"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <!--Status-->
+            <LinearLayout
+                android:id="@+id/layoutStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/statusLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="start|center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_5"
+                    android:text="@string/status"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_14" />
+
+                <Spinner
+                    android:id="@+id/statusValue"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_border"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/saveMedicationDetail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_60"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:background="@drawable/round_corner_green"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="center"
+                android:text="@string/save_medication_detail"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+
+        <include
+            android:id="@+id/bottomBar"
+            layout="@layout/bottombar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom" />
+
+    </RelativeLayout>
+</layout>

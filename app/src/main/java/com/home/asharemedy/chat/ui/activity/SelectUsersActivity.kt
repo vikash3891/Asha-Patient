@@ -124,36 +124,40 @@ class SelectUsersActivity : BaseActivity() {
 
             usersListView.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, view, position, id ->
-                    usersAdapter.onItemClicked(position, view, parent)
-                    menu.getItem(0).isVisible = (usersAdapter.selectedUsers.size >= 1)
+                    try {
+                        usersAdapter.onItemClicked(position, view, parent)
+                        menu.getItem(0).isVisible = (usersAdapter.selectedUsers.size >= 1)
 
-                    var subtitle = ""
-                    if (usersAdapter.selectedUsers.size != 1) {
-                        subtitle = getString(
-                            R.string.select_users_create_chat_subtitle,
-                            usersAdapter.selectedUsers.size.toString()
-                        )
-                    } else {
-                        subtitle = getString(R.string.select_users_create_chat_subtitle_single, "1")
-                    }
-                    supportActionBar?.subtitle = subtitle
-
-                    chipGroup.removeAllViews()
-                    for (user in usersAdapter.selectedUsers) {
-                        val chip = Chip(this)
-                        chip.text = user.fullName
-                        chip.chipIcon = getColorCircleDrawable(user.id.hashCode())
-                        chip.isCloseIconVisible = false
-                        chip.isCheckable = false
-                        chip.isClickable = false
-                        chipGroup.addView(chip as View)
-                        chipGroup.visibility = View.VISIBLE
-                        runOnUiThread {
-                            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+                        var subtitle = ""
+                        subtitle = if (usersAdapter.selectedUsers.size != 1) {
+                            getString(
+                                R.string.select_users_create_chat_subtitle,
+                                usersAdapter.selectedUsers.size.toString()
+                            )
+                        } else {
+                            getString(R.string.select_users_create_chat_subtitle_single, "1")
                         }
-                    }
-                    if (usersAdapter.selectedUsers.size == 0) {
-                        chipGroup.visibility = View.GONE
+                        supportActionBar?.subtitle = subtitle
+
+                        chipGroup.removeAllViews()
+                        for (user in usersAdapter.selectedUsers) {
+                            val chip = Chip(this)
+                            chip.text = user.fullName
+                            chip.chipIcon = getColorCircleDrawable(user.id.hashCode())
+                            chip.isCloseIconVisible = false
+                            chip.isCheckable = false
+                            chip.isClickable = false
+                            chipGroup.addView(chip as View)
+                            chipGroup.visibility = View.VISIBLE
+                            runOnUiThread {
+                                scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+                            }
+                        }
+                        if (usersAdapter.selectedUsers.size == 0) {
+                            chipGroup.visibility = View.GONE
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
 

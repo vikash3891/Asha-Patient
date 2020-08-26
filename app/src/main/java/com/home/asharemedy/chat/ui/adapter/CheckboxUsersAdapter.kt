@@ -1,13 +1,15 @@
 package com.home.asharemedy.chat.ui.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.home.asharemedy.R
 import com.quickblox.users.model.QBUser
 
 
-class CheckboxUsersAdapter(context: Context, users: List<QBUser>) : UsersAdapter(context, users as MutableList<QBUser>) {
+class CheckboxUsersAdapter(context: Context, users: List<QBUser>) :
+    UsersAdapter(context, users as MutableList<QBUser>) {
 
     private val initiallySelectedUsers: MutableList<Int> = ArrayList()
     private val _selectedUsers: MutableSet<QBUser> = HashSet()
@@ -54,6 +56,8 @@ class CheckboxUsersAdapter(context: Context, users: List<QBUser>) : UsersAdapter
     }
 
     override fun isAvailableForSelection(user: QBUser): Boolean {
-        return true//super.isAvailableForSelection(user) && !initiallySelectedUsers.contains(user.id)
+        Log.d("IsAvailable", (super.isAvailableForSelection(user) || !initiallySelectedUsers.contains(user.id)).toString()+
+        " "+ user.fullName)
+        return super.isAvailableForSelection(user) || !initiallySelectedUsers.contains(user.id)
     }
 }

@@ -28,7 +28,7 @@ class MyMedicationViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         medicineName?.text = movie.drug_name
         daysCount?.text = movie.days + " days"
         medicineCourse?.text = movie.dosage_instructions
-        //medicinePrice?.text = "$"+movie.medicinePrice
+        //medicinePrice?.text = getString(R.string.rupees_symbol)+movie.medicinePrice
 
     }
 

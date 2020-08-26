@@ -30,6 +30,7 @@ class SuccessActivity : BaseActivity() {
     var convenience_fee = "50"
     var payer_id = ""
     var payer_type = "patient"
+    var payment_date = ""
     var receiver_id = ""
     var receiver_type = ""
 
@@ -55,6 +56,7 @@ class SuccessActivity : BaseActivity() {
         showDialog()
         try {
             var payment_id = "1"
+            payment_date = Utils.getDate()
             var setPaymentRequestOne = ResponseModelClasses.GetPaymentHistoryResponseModel(
                 amount,
                 cgst_percentage,
@@ -64,6 +66,7 @@ class SuccessActivity : BaseActivity() {
                 igst_percentage,
                 payer_id,
                 payer_type,
+                payment_date,
                 payment_id,
                 receiver_id,
                 receiver_type,
@@ -140,7 +143,7 @@ class SuccessActivity : BaseActivity() {
                 apiService.setPaymentStepOne(
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getPaymentStepTwoRequestModel(
-                            patient_id, doctor_slot_id, payment_id,purpose
+                            patient_id, doctor_slot_id, payment_id, purpose
                         )
                     )
                 )

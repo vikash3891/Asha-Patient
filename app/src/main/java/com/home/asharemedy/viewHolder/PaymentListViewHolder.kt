@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.model.PaymentItemModel
+import com.home.asharemedy.utils.Utils
+import com.home.asharemedy.utils.Utils.getString
 
 class PaymentListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_payment, parent, false)) {
@@ -27,10 +29,10 @@ class PaymentListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
     fun bind(movie: ResponseModelClasses.GetPaymentHistoryResponseModel) {
 
-        //val parts = movie..split(delimiter)
-//        paymentDate?.text = movie.paymentDate
-//        paymentMonth?.text = movie.paymentMonth
-        paymentAmount?.text = "$" + movie.amount
+        val parts = movie.payment_date.split("-")
+        paymentDate?.text = parts[2]
+        paymentMonth?.text = Utils.setMonth(parts[1].toInt())
+        paymentAmount?.text = getString(R.string.rupees_symbol) + movie.amount
         paymentStatus?.text = movie.status
         paymentID?.text = "ID: " + movie.transanction_id
 

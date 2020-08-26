@@ -90,4 +90,7 @@ interface ApiInterface {
     @POST(Constants.FORGOT_PASSWORD)
     fun setPaymentStepOne(@Body body: RequestBody): Call<ResponseModelClasses.RegistrationResponse>
 
+    @POST(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICATIONS)/*/patients/17/habits*/
+    fun setMedication(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.SetVitalResponseModel>
+
 }

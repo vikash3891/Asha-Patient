@@ -198,6 +198,7 @@ object ResponseModelClasses {
         val igst_percentage: String,
         val payer_id: String,
         val payer_type: String,
+        val payment_date: String,
         val payment_id: String,
         val receiver_id: String,
         val receiver_type: String,
