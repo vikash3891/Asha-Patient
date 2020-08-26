@@ -134,24 +134,19 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/sp_14" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/prescribedBy"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dp_30"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_border"
-                    android:fontFamily="@font/quicksand_medium"
+                    android:ellipsize="end"
                     android:gravity="center"
-                    android:hint="@string/mandatory"
-                    android:inputType="textPersonName"
-                    android:maxLength="50"
-                    android:maxLines="1"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_10"
-                    android:text=""
-                    android:textColor="@color/black"
                     android:textSize="@dimen/sp_14" />
+
             </LinearLayout>
 
             <!--Dose per day-->
@@ -283,7 +278,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/statusLabel"

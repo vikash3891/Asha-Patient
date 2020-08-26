@@ -143,7 +143,7 @@ class AppLoginActivity : BaseActivity() {
                                         DashboardActivity::class.java
                                     )
                                 )
-a
+
                                 finish()
                                 //showSuccessPopup(response.body()!!.message)
                             }

@@ -2,6 +2,7 @@ package com.home.asharemedy.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -41,7 +42,8 @@ class AddMedicationActivity : BaseActivity(), AdapterView.OnItemSelectedListener
     private var other_instruction = ""
     private var status = ""
 
-    var medicationStatus = arrayOf("Active", "Inactive")
+    private var medicationStatus = arrayOf("Active", "Inactive")
+    private var prescribedByArray = arrayOf("Prescribed off Platform", "Prescribed on Platform")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +58,19 @@ class AddMedicationActivity : BaseActivity(), AdapterView.OnItemSelectedListener
             topbar.screenName.text = getString(R.string.add_medication)
 
             statusValue.onItemSelectedListener = this
+            prescribedBy.onItemSelectedListener = this
 
             val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, medicationStatus)
             aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             statusValue.adapter = aa
+
+            val prescribedByAdapter =
+                ArrayAdapter(this, android.R.layout.simple_spinner_item, prescribedByArray)
+            prescribedByAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            prescribedBy.adapter = prescribedByAdapter
+
+            prescribedForName.filters = arrayOf<InputFilter>(Utils.InputFilterMinMax(1, 30))
+            dosePerDayName.filters = arrayOf<InputFilter>(Utils.InputFilterMinMax(1, 10))
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -106,11 +117,6 @@ class AddMedicationActivity : BaseActivity(), AdapterView.OnItemSelectedListener
                     !allValid
                     return
                 }
-                prescribedBy.text!!.isEmpty() -> {
-                    showSuccessPopup("Please enter Prescribed by details")
-                    !allValid
-                    return
-                }
                 dosePerDayName.text!!.isEmpty() -> {
                     showSuccessPopup("Please enter Doses details")
                     !allValid
@@ -118,9 +124,9 @@ class AddMedicationActivity : BaseActivity(), AdapterView.OnItemSelectedListener
                 }
                 allValid -> {
                     patient_id = AppPrefences.getUserID(this)
-                    medication_type = ""
+                    medication_type = prescribedBy.selectedItem.toString()
                     drug_name = medicineName.text.toString()
-                    dosage_instructions = ""
+                    dosage_instructions = instructionsName.text.isNullOrEmpty().toString()
                     days = prescribedForName.text.toString()
                     dose_per_day = dosePerDayName.text.toString()
                     other_instruction = instructionsName.text.isNullOrEmpty().toString()

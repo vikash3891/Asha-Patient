@@ -219,14 +219,13 @@ object RequestModel {
     ): HashMap<String, Any> {
         var map = HashMap<String, Any>()
 
-        map.put(Constants.APPOINTMENT_ID, appointment_id)
-        map.put(Constants.PATIENT_ID, patient_id)
+       // map.put(Constants.APPOINTMENT_ID, appointment_id.toInt())
+        map.put(Constants.PATIENT_ID, patient_id.toInt())
         map.put(Constants.MEDICATION_TYPE, medication_type)
         map.put(Constants.DRUG_NAME, drug_name)
         map.put(Constants.DOSAGE_INSTRUCTIONS, dosage_instructions)
-        map.put(Constants.DAYS, days)
-        map.put(Constants.DRUG_NAME, drug_name)
-        map.put(Constants.DOSE_PER_DAY, dose_per_day)
+        map.put(Constants.DAYS, days.toInt())
+        map.put(Constants.DOSE_PER_DAY, dose_per_day.toInt())
         map.put(Constants.OTHER_INSTRUCTION, other_instruction)
         map.put(Constants.STATUS, status)
         Log.d("AddMedicationRequest: ", "" + Gson().toJson(map))
