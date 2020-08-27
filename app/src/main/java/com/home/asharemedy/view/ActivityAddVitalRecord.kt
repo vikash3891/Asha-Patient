@@ -253,7 +253,7 @@ class ActivityAddVitalRecord : BaseActivity() {
                     AppPrefences.getUserID(this), selectedVitalName,
                     Utils.getJSONRequestBodyAny(
                         RequestModel.setVitalRequestModel(
-                            vital_date, vital_reading.toFloat(), vital_unit
+                            vital_date, vital_reading, vital_unit
                         )
                     )
                 )
@@ -269,7 +269,16 @@ class ActivityAddVitalRecord : BaseActivity() {
                             Log.v("Error code 400", response.errorBody().toString())
                         }
                         if (response.body() != null) {
-                            showSuccessPopup("Vital Saved Successfully.")
+                            var alertDialog = AlertDialog.Builder(this@ActivityAddVitalRecord)
+                            alertDialog.setTitle(getString(R.string.app_name))
+                            alertDialog.setMessage("Vital Saved Successfully.")
+
+                            alertDialog.setPositiveButton("OK") { dialog, which ->
+                                dialog.dismiss()
+                                finish()
+                            }
+
+                            alertDialog.show()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

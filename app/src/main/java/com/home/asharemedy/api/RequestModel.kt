@@ -59,13 +59,13 @@ object RequestModel {
 
     fun setVitalRequestModel(
         vital_date: String,
-        vital_reading: Float,
+        vital_reading: String,
         vital_unit: String
     ): HashMap<String, Any> {
         var map = HashMap<String, Any>()
 
         map.put(Constants.VITAL_DATE, vital_date)
-        map.put(Constants.VITAL_READING, arrayOf(vital_reading))
+        map.put(Constants.VITAL_READING, vital_reading)
         map.put(Constants.VITAL_UNIT, vital_unit)
         Log.d("VitalUpdateRequest: ", "" + Gson().toJson(map))
         return map;
@@ -219,7 +219,7 @@ object RequestModel {
     ): HashMap<String, Any> {
         var map = HashMap<String, Any>()
 
-       // map.put(Constants.APPOINTMENT_ID, appointment_id.toInt())
+        // map.put(Constants.APPOINTMENT_ID, appointment_id.toInt())
         map.put(Constants.PATIENT_ID, patient_id.toInt())
         map.put(Constants.MEDICATION_TYPE, medication_type)
         map.put(Constants.DRUG_NAME, drug_name)
