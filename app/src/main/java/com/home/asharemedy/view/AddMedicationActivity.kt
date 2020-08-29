@@ -43,7 +43,7 @@ class AddMedicationActivity : BaseActivity(), AdapterView.OnItemSelectedListener
     private var status = ""
 
     private var medicationStatus = arrayOf("Active", "Inactive")
-    private var prescribedByArray = arrayOf("Prescribed off Platform", "Prescribed on Platform")
+    private var prescribedByArray = arrayOf("Off Platform", "On Platform")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

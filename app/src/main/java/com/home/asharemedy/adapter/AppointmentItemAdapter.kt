@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_clinic_visit.view.*
 
 class AppointmentItemAdapter(
     private val context: Context,
-    private val list: List<ResponseModelClasses.GetFacilityListResponseModel>
+    private val list: List<ResponseModelClasses.GetFacilityListResponseModel.TableData1>
 ) :
     RecyclerView.Adapter<AppointmentItemViewHolder>() {
 
@@ -26,7 +26,7 @@ class AppointmentItemAdapter(
     }
 
     override fun onBindViewHolder(holder: AppointmentItemViewHolder, position: Int) {
-        val movie: ResponseModelClasses.GetFacilityListResponseModel = list[position]
+        val movie: ResponseModelClasses.GetFacilityListResponseModel.TableData1 = list[position]
         holder.bind(movie)
 
         holder.itemView.listDoctorDetails.setOnClickListener {

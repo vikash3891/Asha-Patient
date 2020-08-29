@@ -39,6 +39,7 @@ class AddAppointmentListActivity : BaseActivity() {
 
     var adapter: AppointmentItemAdapter? = null
     var isDoctor = true
+    var selectedAilmentOrServiceID = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -319,20 +320,20 @@ class AddAppointmentListActivity : BaseActivity() {
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>> =
+            val call: Call<ResponseModelClasses.GetFacilityListResponseModel> =
                 apiService.getFacilitiesList()
             call.enqueue(object :
-                Callback<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>> {
+                Callback<ResponseModelClasses.GetFacilityListResponseModel> {
                 override fun onResponse(
-                    call: Call<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>>,
-                    response: Response<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>>
+                    call: Call<ResponseModelClasses.GetFacilityListResponseModel>,
+                    response: Response<ResponseModelClasses.GetFacilityListResponseModel>
                 ) {
                     try {
                         dismissDialog()
                         Log.d("FacResponse: ", response.body().toString())
                         if (response.body() != null) {
                             Utils.doctorFacilityList.clear()
-                            Utils.doctorFacilityList = response.body()!!
+                            Utils.doctorFacilityList = response.body()!!.data
                             loadList()
                         }
                     } catch (e: Exception) {
@@ -341,7 +342,55 @@ class AddAppointmentListActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>>,
+                    call: Call<ResponseModelClasses.GetFacilityListResponseModel>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
+    private fun getFacilityListByService() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ResponseModelClasses.GetFacilityListResponseModel> =
+                apiService.getFacilitiesListByService(
+                    selectedAilmentOrServiceID,
+                    Utils.profileData!!.patient_city
+                )
+            call.enqueue(object :
+                Callback<ResponseModelClasses.GetFacilityListResponseModel> {
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.GetFacilityListResponseModel>,
+                    response: Response<ResponseModelClasses.GetFacilityListResponseModel>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("FacResponse: ", response.body().toString())
+                        if (response.body() != null) {
+                            Utils.doctorFacilityList.clear()
+                            Utils.doctorFacilityList = response.body()!!.data
+                            loadList()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.GetFacilityListResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())
@@ -364,13 +413,13 @@ class AddAppointmentListActivity : BaseActivity() {
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>> =
+            val call: Call<ResponseModelClasses.GetFacilityListResponseModel> =
                 apiService.getDoctorsList()
             call.enqueue(object :
-                Callback<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>> {
+                Callback<ResponseModelClasses.GetFacilityListResponseModel> {
                 override fun onResponse(
-                    call: Call<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>>,
-                    response: Response<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>>
+                    call: Call<ResponseModelClasses.GetFacilityListResponseModel>,
+                    response: Response<ResponseModelClasses.GetFacilityListResponseModel>
                 ) {
                     try {
                         dismissDialog()
@@ -378,7 +427,7 @@ class AddAppointmentListActivity : BaseActivity() {
 
                         if (response.body() != null) {
                             Utils.doctorFacilityList.clear()
-                            Utils.doctorFacilityList = response.body()!!
+                            Utils.doctorFacilityList = response.body()!!.data
 
                             loadList()
                         }
@@ -388,7 +437,57 @@ class AddAppointmentListActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ArrayList<ResponseModelClasses.GetFacilityListResponseModel>>,
+                    call: Call<ResponseModelClasses.GetFacilityListResponseModel>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
+    private fun getDoctorListByAilment() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ResponseModelClasses.GetFacilityListResponseModel> =
+                apiService.getDoctorsListByAilment(
+                    selectedAilmentOrServiceID,
+                    Utils.profileData!!.patient_city
+                )
+            call.enqueue(object :
+                Callback<ResponseModelClasses.GetFacilityListResponseModel> {
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.GetFacilityListResponseModel>,
+                    response: Response<ResponseModelClasses.GetFacilityListResponseModel>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("DocResponse: ", response.body().toString())
+
+                        if (response.body() != null) {
+                            Utils.doctorFacilityList.clear()
+                            Utils.doctorFacilityList = response.body()!!.data
+
+                            loadList()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.GetFacilityListResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())
@@ -434,12 +533,14 @@ class AddAppointmentListActivity : BaseActivity() {
             val mAdapter = UtilitiesListAdapter() { position ->
                 if (isAilmentOrService) {
                     val data = AilmentArrayData.getArrayItem(position)
-                    //utilityID = data.ailment_id.toString()
                     textView.text = data.ailment
+                    selectedAilmentOrServiceID = data.ailment_id
+                    getDoctorListByAilment()
                 } else {
                     val data = AilmentArrayData.getServicesArrayItem(position)
-                    //utilityID = data.ailment_id.toString()
                     textView.text = data.service
+                    selectedAilmentOrServiceID = data.service_id.toString()
+                    getFacilityListByService()
                 }
                 textView.setTextColor(resources.getColor(R.color.colorBlack))
                 dialog.dismiss()

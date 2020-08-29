@@ -23,7 +23,7 @@ class AppointmentItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         consultationFees = itemView.findViewById(R.id.consultationFees)
     }
 
-    fun bind(movie: ResponseModelClasses.GetFacilityListResponseModel) {
+    fun bind(movie: ResponseModelClasses.GetFacilityListResponseModel.TableData1) {
         doctorName?.text = movie.name
         doctorSpeciality?.text = movie.specialization
         consultationFees?.text = getString(R.string.rupees_symbol) + movie.fees

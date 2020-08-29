@@ -1,5 +1,6 @@
 package com.home.asharemedy.view
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -239,6 +240,7 @@ class ActivityAddVitalRecord : BaseActivity() {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun updateVital() = if (Utils.isConnected(this)) {
         showDialog()
         try {
@@ -250,7 +252,7 @@ class ActivityAddVitalRecord : BaseActivity() {
             )
             val call: Call<ResponseModelClasses.SetVitalResponseModel> =
                 apiService.getSingleUnitVital(
-                    AppPrefences.getUserID(this), selectedVitalName,
+                    AppPrefences.getUserID(this), selectedVitalName.toLowerCase(),
                     Utils.getJSONRequestBodyAny(
                         RequestModel.setVitalRequestModel(
                             vital_date, vital_reading, vital_unit
@@ -275,7 +277,7 @@ class ActivityAddVitalRecord : BaseActivity() {
 
                             alertDialog.setPositiveButton("OK") { dialog, which ->
                                 dialog.dismiss()
-                                finish()
+                                //finish()
                             }
 
                             alertDialog.show()

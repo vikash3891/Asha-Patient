@@ -35,170 +35,186 @@ import kotlin.random.Random
 
 class MyVitalsActivity : BaseActivity() {
 
-    var cDate = ""
-    var selectedVitalName = ""
+    private var cDate = ""
+    private var selectedVitalName = ""
     var foodsList = ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>()
-    var selectedVitalIndex = -1
+    private var selectedVitalIndex = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_vitals)
 
-        initView()
-        checkOnClick()
-        selectedVitalIndex = 0
-        selectedVital.text = getString(R.string.temperature)
+        try {
+            selectedVitalIndex = 0
+            selectedVital.text = getString(R.string.temperature)
+            selectedVitalName = getString(R.string.temperature)
+
+            initView()
+            checkOnClick()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun initView() {
 
-        topbar.screenName.text = getString(R.string.my_vitals)
-        lineChart.setTouchEnabled(true)
-        lineChart.setPinchZoom(false)
+        try {
+            topbar.screenName.text = getString(R.string.my_vitals)
+            lineChart.setTouchEnabled(true)
+            lineChart.setPinchZoom(false)
 
-        getPatientVitalList()
+            getPatientVitalList()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun checkOnClick() {
-        topbar.imageBack.setOnClickListener {
-            finish()
-        }
-        selectedVital.setOnClickListener {
-            showDialogAilment()
-        }
-        startDate.setOnClickListener {
-            openCalendar(1)
-        }
-        endDate.setOnClickListener {
-            openCalendar(2)
-        }
+        try {
+            topbar.imageBack.setOnClickListener {
+                finish()
+            }
+            selectedVital.setOnClickListener {
+                showDialogAilment()
+            }
+            startDate.setOnClickListener {
+                openCalendar(1)
+            }
+            endDate.setOnClickListener {
+                openCalendar(2)
+            }
 
-        bottomBar.layoutSettings.setOnClickListener {
-            logoutAlertDialog()
-        }
-        bottomBar.layoutHome.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@MyVitalsActivity,
-                    DashboardActivity::class.java
+            bottomBar.layoutSettings.setOnClickListener {
+                logoutAlertDialog()
+            }
+            bottomBar.layoutHome.setOnClickListener {
+                startActivity(
+                    Intent(
+                        this@MyVitalsActivity,
+                        DashboardActivity::class.java
+                    )
                 )
-            )
-            finish()
-        }
+                finish()
+            }
 
-        floatingActionButton.setOnClickListener {
-            startActivity(Intent(this, ActivityAddVitalRecord::class.java))
+            floatingActionButton.setOnClickListener {
+                startActivity(Intent(this, ActivityAddVitalRecord::class.java))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     private fun drawLineChart(lineChart: LineChart) {
 
-        var xAxisValues = ArrayList<String>()
-        var yAxisValues = ArrayList<Entry>()
+        try {
+            var xAxisValues = ArrayList<String>()
+            var yAxisValues = ArrayList<Entry>()
 
-        for (i in 0 until foodsList.size) {
-/*Entry(
-                    foodsList[i].vital_reading!!.toFloat(),
-                    foodsList[i].vital_reading!!.toFloat()
-                )*/
-            yAxisValues.add(
-                Entry(
-                    i.toFloat(),
-                    i.toFloat()
+            for (i in 0 until foodsList.size) {
+
+                yAxisValues.add(
+                    Entry(
+                        foodsList[i].vital_reading.toFloat(),
+                        foodsList[i].vital_reading.toFloat()
+                    )
                 )
-            )
-            xAxisValues.add(foodsList[i].vital_date!!)
+                xAxisValues.add(foodsList[i].vital_date)
+            }
+            val xAxis = lineChart.xAxis
+            xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.granularity = 1f
+            xAxis.setDrawGridLines(false)
+            xAxis.isGranularityEnabled = true
+            xAxis.textSize = 7f
+            xAxis.labelRotationAngle = -45f
+
+            var lds = LineDataSet(yAxisValues, selectedVitalName)
+            lds.lineWidth = 2f
+
+            lds.setColor(Color.RED, 100)
+
+            lds.valueTextSize = 10f
+            var lineData = LineData(lds)
+            lineChart.data = lineData
+            lineChart.setDrawGridBackground(false)
+            lineChart.xAxis.textColor = Color.BLACK
+            lineChart.axisLeft.textColor = Color.BLACK
+            lineChart.description.text = ""
+            lineChart.moveViewToX(5F);
+            lineChart.axisRight.textColor = Color.BLACK
+            lineChart.legend.isEnabled = false
+            lineChart.data.setValueTextColor(Color.BLACK)
+            lineChart.isEnabled = true
+            lineChart.axisRight.isEnabled = false
+            lineChart.setVisibleXRangeMaximum(5f)
+            lineChart.isHorizontalScrollBarEnabled = true
+            lineChart.canScrollHorizontally(1)
+            val leftAxis = lineChart.axisLeft
+            leftAxis.setDrawGridLines(false)
+            leftAxis.spaceTop = 35f
+            leftAxis.axisMinimum = 0f
+            lineChart.invalidate()
+            lineChart.refreshDrawableState()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        val xAxis = lineChart.xAxis
-        xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.granularity = 1f
-        xAxis.setDrawGridLines(false)
-        xAxis.isGranularityEnabled = true
-        xAxis.textSize = 7f
-        xAxis.labelRotationAngle = -45f
-
-        var lds = LineDataSet(yAxisValues, selectedVitalName)
-        lds.lineWidth = 2f
-
-        lds.setColor(Color.RED, 100)
-
-        lds.valueTextSize = 10f
-        var lineData = LineData(lds)
-        lineChart.data = lineData
-        lineChart.setDrawGridBackground(false)
-        lineChart.xAxis.textColor = Color.BLACK
-        lineChart.axisLeft.textColor = Color.BLACK
-        lineChart.description.text = ""
-        lineChart.moveViewToX(5F);
-        lineChart.axisRight.textColor = Color.BLACK
-        lineChart.legend.isEnabled = false
-        lineChart.data.setValueTextColor(Color.BLACK)
-        lineChart.isEnabled = true
-        lineChart.axisRight.isEnabled = false
-        lineChart.setVisibleXRangeMaximum(5f)
-        lineChart.isHorizontalScrollBarEnabled = true
-        lineChart.canScrollHorizontally(1)
-        val leftAxis = lineChart.axisLeft
-        leftAxis.setDrawGridLines(false)
-        leftAxis.spaceTop = 35f
-        leftAxis.axisMinimum = 0f
-        lineChart.invalidate()
-        lineChart.refreshDrawableState()
 
     }
 
     private fun drawBPLineChart(lineChart: LineChart) {
 
-        val arr1 = ArrayList<String>(10)
+        try {
+            val arr1 = ArrayList<String>(10)
 
-        var entries = ArrayList<Entry>()
-        var entry = ArrayList<Entry>()
-        var lines = ArrayList<LineDataSet>()
-        var xAxisValues = ArrayList<String>()
-        for (i in 0 until 15) {
+            var entries = ArrayList<Entry>()
+            var entry = ArrayList<Entry>()
+            var lines = ArrayList<LineDataSet>()
+            var xAxisValues = ArrayList<String>()
+            for (i in 0 until 15) {
 
-            entries.add(Entry(i.toFloat(), i.toFloat()))
-            entry.add(Entry((i.toFloat() + 2), i.toFloat()))
-            xAxisValues.add(i.toString())
+                entries.add(Entry(i.toFloat(), i.toFloat()))
+                entry.add(Entry((i.toFloat() + 2), i.toFloat()))
+                xAxisValues.add(i.toString())
+            }
+            val xAxis = lineChart.xAxis
+            xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.granularity = 1f
+            xAxis.textSize = 7f
+            xAxis.labelRotationAngle = -45f
+
+            xAxis.isGranularityEnabled = true
+            var lDataSet1 = LineDataSet(entries, selectedVitalName)
+            lDataSet1.setDrawFilled(true)
+            lines.add(lDataSet1)
+
+            var lDataSet2 = LineDataSet(entry, selectedVitalName)
+            lDataSet2.setDrawFilled(true)
+            lines.add(lDataSet2)
+
+            lineChart.data = LineData(lines as List<ILineDataSet>?)
+            lineChart.xAxis.textColor = Color.BLACK
+            lineChart.axisLeft.textColor = Color.BLACK
+            lineChart.description.text = ""
+            lineChart.moveViewToX(5F);
+            lineChart.axisRight.isEnabled = false
+            lineChart.legend.isEnabled = false
+            lineChart.data.setValueTextColor(Color.BLACK)
+            lineChart.isEnabled = true
+            lineChart.setVisibleXRangeMaximum(5f)
+            lineChart.isHorizontalScrollBarEnabled = true
+            lineChart.canScrollHorizontally(1)
+            lineChart.invalidate()
+            lineChart.refreshDrawableState()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        val xAxis = lineChart.xAxis
-        xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.granularity = 1f
-        xAxis.textSize = 7f
-        xAxis.labelRotationAngle = -45f
-
-        xAxis.isGranularityEnabled = true
-        var lDataSet1 = LineDataSet(entries, selectedVitalName)
-        lDataSet1.setDrawFilled(true)
-        lines.add(lDataSet1)
-
-        var lDataSet2 = LineDataSet(entry, selectedVitalName)
-        lDataSet2.setDrawFilled(true)
-        lines.add(lDataSet2)
-
-        lineChart.data = LineData(lines as List<ILineDataSet>?)
-        lineChart.xAxis.textColor = Color.BLACK
-        lineChart.axisLeft.textColor = Color.BLACK
-        lineChart.description.text = ""
-        lineChart.moveViewToX(5F);
-        lineChart.axisRight.isEnabled = false
-        lineChart.legend.isEnabled = false
-        lineChart.data.setValueTextColor(Color.BLACK)
-        lineChart.isEnabled = true
-        lineChart.setVisibleXRangeMaximum(5f)
-        lineChart.isHorizontalScrollBarEnabled = true
-        lineChart.canScrollHorizontally(1)
-        lineChart.invalidate()
-        lineChart.refreshDrawableState()
     }
 
     private fun showDialogAilment() {
         try {
-
-
-
             lateinit var dialog: AlertDialog
 
             val builder = AlertDialog.Builder(this)
@@ -209,12 +225,51 @@ class MyVitalsActivity : BaseActivity() {
 
                 selectedVitalIndex = which
                 selectedVital.text = Utils.arrayColors[which]
-                selectedVitalName = Utils.arrayColors[which]
-                if (selectedVitalName.equals("Blood Pressure"))
-                    drawBPLineChart(lineChart)
-                else {
-                    drawLineChart(lineChart)
+
+                when (Utils.arrayColors[which]) {
+                    getString(R.string.temperature) -> {
+                        selectedVitalName = getString(R.string.temperature)
+                    }
+                    getString(R.string.blood_pressure) -> {
+                        selectedVitalName = "bloodpressure"
+
+                    }
+                    getString(R.string.pulse) -> {
+                        selectedVitalName = getString(R.string.pulse)
+                    }
+                    getString(R.string.height) -> {
+                        selectedVitalName = getString(R.string.height)
+
+                    }
+                    getString(R.string.weight) -> {
+                        selectedVitalName = getString(R.string.weight)
+
+                    }
+                    getString(R.string.respiration_rate) -> {
+                        selectedVitalName = "respiration_rate"
+
+
+                    }
+                    getString(R.string.calories_burned) -> {
+
+                        selectedVitalName = "calories_burned"
+
+                    }
+                    getString(R.string.blood_sugar) -> {
+
+                        selectedVitalName = "bloodsugar"
+
+                    }
+                    getString(R.string.oxygen_saturation) -> {
+
+                        selectedVitalName = "oxygen_saturation"
+
+                    }
                 }
+
+                getPatientVitalList()
+
+
 
                 dialog.dismiss()
             }
@@ -227,49 +282,54 @@ class MyVitalsActivity : BaseActivity() {
     }
 
     private fun openCalendar(dateID: Int) {
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        try {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
 
-        val dpd = DatePickerDialog(
-            this,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val dpd = DatePickerDialog(
+                this,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                try {
-                    val date = Date(year - 1900, monthOfYear, dayOfMonth)
-                    val formatter = SimpleDateFormat("yyyy-MM-dd")
-                    cDate = formatter.format(date)
+                    try {
+                        val date = Date(year - 1900, monthOfYear, dayOfMonth)
+                        val formatter = SimpleDateFormat("yyyy-MM-dd")
+                        cDate = formatter.format(date)
 
-                    if (dateID == 1) {
-                        startDate.text =
-                            "" + dayOfMonth + " " + Utils.setMonth(monthOfYear + 1) + ", " + year
-                    } else {
-                        endDate.text =
-                            "" + dayOfMonth + " " + Utils.setMonth(monthOfYear + 1) + ", " + year
+                        if (dateID == 1) {
+                            startDate.text =
+                                "" + dayOfMonth + " " + Utils.setMonth(monthOfYear + 1) + ", " + year
+                        } else {
+                            endDate.text =
+                                "" + dayOfMonth + " " + Utils.setMonth(monthOfYear + 1) + ", " + year
+                        }
+
+                    } catch (e1: ParseException) {
+                        e1.printStackTrace()
                     }
-
-                } catch (e1: ParseException) {
-                    e1.printStackTrace()
-                }
-            },
-            year,
-            month,
-            day
-        )
-        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
-        dpd.show()
+                },
+                year,
+                month,
+                day
+            )
+            dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+            dpd.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun getPatientVitalList() = if (Utils.isConnected(this)) {
         showDialog()
         try {
+            Log.d("selectedVitalName: ", selectedVitalName.toLowerCase())
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>> =
                 apiService.getPatientVitalsList(
                     AppPrefences.getUserID(this),
-                    "temperature"
+                    selectedVitalName.toLowerCase()
                 )
             call.enqueue(object :
                 Callback<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>> {
@@ -282,7 +342,11 @@ class MyVitalsActivity : BaseActivity() {
                         Log.d("VitalResponse: ", response.body().toString())
                         if (response.body() != null) {
                             foodsList = response.body()!!
-                            drawLineChart(lineChart)
+                            if (selectedVitalName.equals("bloodsugar"))
+                                drawBPLineChart(lineChart)
+                            else {
+                                drawLineChart(lineChart)
+                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

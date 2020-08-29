@@ -48,13 +48,13 @@ object Utils {
     var selectedOrderID = ""
     var isAilmentOrService = true
     var selectedDoctorFacitiyID = ""
-    var selectedDoctorFacility: ResponseModelClasses.GetFacilityListResponseModel? = null
+    var selectedDoctorFacility: ResponseModelClasses.GetFacilityListResponseModel.TableData1? = null
     var fileUploadBase64 = ""
     var userfileUploadBase64 = ""
     var selectedHealthIssues = ""
 
     var appointmentSlotList = java.util.ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
-    var doctorFacilityList = ArrayList<ResponseModelClasses.GetFacilityListResponseModel>()
+    var doctorFacilityList = ArrayList<ResponseModelClasses.GetFacilityListResponseModel.TableData1>()
     var selectedAppointmentDetails =
         ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
 

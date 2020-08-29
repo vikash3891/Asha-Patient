@@ -62,29 +62,39 @@ object ResponseModelClasses {
     )
 
     /*Facility List*/
+
+
     data class GetFacilityListResponseModel(
 
-        val address1: String,
-        val address2: String,
-        val city: String,
-        val country: String,
-        val doe: String,
-        val dob: String,
-        val doctor_id: String,
-        val email: String,
-        val experience: String,
-        val facility_id: String,
-        val fees: String,
-        val gender: String,
-        val name: String,
-        val phone: String,
-        val pincode: String,
-        val profession: String,
-        val specialization: String,
-        val state: String,
-        val type: String
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: ArrayList<TableData1>
+    ) {
+        data class TableData1(
 
-    )
+            val address1: String,
+            val address2: String,
+            val city: String,
+            val country: String,
+            val doe: String,
+            val dob: String,
+            val doctor_id: String,
+            val email: String,
+            val experience: String,
+            val facility_id: String,
+            val fees: String,
+            val gender: String,
+            val name: String,
+            val phone: String,
+            val pincode: String,
+            val profession: String,
+            val specialization: String,
+            val state: String,
+            val type: String
+
+        )
+    }
 
     /*Slot List*/
     data class GetSlotListResponseModel(
