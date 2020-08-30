@@ -27,6 +27,7 @@ import com.home.asharemedy.model.AilmentArrayData
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.isAilmentOrService
+import com.home.asharemedy.utils.Utils.selectedAilmentOrServiceName
 import kotlinx.android.synthetic.main.activity_add_appointment_list.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.dialog_layout.*
@@ -40,6 +41,7 @@ class AddAppointmentListActivity : BaseActivity() {
     var adapter: AppointmentItemAdapter? = null
     var isDoctor = true
     var selectedAilmentOrServiceID = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -535,11 +537,13 @@ class AddAppointmentListActivity : BaseActivity() {
                     val data = AilmentArrayData.getArrayItem(position)
                     textView.text = data.ailment
                     selectedAilmentOrServiceID = data.ailment_id
+                    selectedAilmentOrServiceName = data.ailment
                     getDoctorListByAilment()
                 } else {
                     val data = AilmentArrayData.getServicesArrayItem(position)
                     textView.text = data.service
                     selectedAilmentOrServiceID = data.service_id.toString()
+                    selectedAilmentOrServiceName = data.service
                     getFacilityListByService()
                 }
                 textView.setTextColor(resources.getColor(R.color.colorBlack))

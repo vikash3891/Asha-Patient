@@ -119,10 +119,12 @@ object ResponseModelClasses {
 
     /*User MyRecord List*/
     data class GetMyRecordResponseModel(
+
         val category: String,
         val file_content: String,
         val medical_record_id: String,
         val patient_id: String,
+        val record_name: String,
         val storage_link: String
     )
 

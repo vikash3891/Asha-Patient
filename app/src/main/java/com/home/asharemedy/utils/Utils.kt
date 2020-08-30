@@ -36,16 +36,11 @@ import kotlin.collections.ArrayList
 
 object Utils {
 
-    private val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123
+    private const val PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123
     var isRegisterSuccess = false
 
     private var userDetails = ArrayList<LoginModel>()
-    private var selectedItem = ListItemModel()
-    var cartTotalAmount = 0.0
-    var cartTotalItem = 0
-    var selectedCategory = 0
-    var isOrderToCart = false
-    var selectedOrderID = ""
+
     var isAilmentOrService = true
     var selectedDoctorFacitiyID = ""
     var selectedDoctorFacility: ResponseModelClasses.GetFacilityListResponseModel.TableData1? = null
@@ -59,6 +54,8 @@ object Utils {
         ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
 
     var profileData: ResponseModelClasses.GetPatientProfileResponseModel? = null
+
+    var selectedAilmentOrServiceName = ""
 
     val teachers: Array<SpiritualTeacher>
         get() =

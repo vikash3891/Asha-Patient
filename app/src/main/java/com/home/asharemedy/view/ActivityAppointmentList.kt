@@ -29,8 +29,11 @@ import kotlin.collections.ArrayList
 class ActivityAppointmentList : BaseActivity() {
 
     var adapter: ListItemAdapter? = null
-    var appointmentList = ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
+    var appointmentList =
+        ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
     var cDate = ""
+    var startDateFormatted: Date? = null
+    var endDateFormatted: Date? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +64,18 @@ class ActivityAppointmentList : BaseActivity() {
             openCalendar(1)
         }
         endDate.setOnClickListener {
-            openCalendar(2)
+            if (startDate.text.isEmpty())
+                showSuccessPopup("Please select Start Date first.")
+            else
+                openCalendar(2)
+        }
+        buttonSearch.setOnClickListener {
+
+            if (startDate.text.isNotEmpty() && endDate.text.isNotEmpty()) {
+                getAppointmentListByDate()
+            } else {
+                showSuccessPopup("Please select Start & End Date.")
+            }
         }
 
         bottomBar.layoutSettings.setOnClickListener {
@@ -87,7 +101,7 @@ class ActivityAppointmentList : BaseActivity() {
 
         val dpd = DatePickerDialog(
             this,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
 
                 try {
                     val date = Date(year - 1900, monthOfYear, dayOfMonth)
@@ -95,11 +109,18 @@ class ActivityAppointmentList : BaseActivity() {
                     cDate = formatter.format(date)
 
                     if (dateID == 1) {
+                        startDateFormatted = date
                         startDate.text =
                             "" + dayOfMonth + " " + Utils.setMonth(monthOfYear + 1) + ", " + year
                     } else {
-                        endDate.text =
-                            "" + dayOfMonth + " " + Utils.setMonth(monthOfYear + 1) + ", " + year
+                        if (startDateFormatted!!.before(date)) {
+                            endDateFormatted = date
+                            endDate.text =
+                                "" + dayOfMonth + " " + Utils.setMonth(monthOfYear + 1) + ", " + year
+                        } else {
+                            showSuccessPopup("Please select a date after Start Date.")
+                        }
+
                     }
 
                 } catch (e1: ParseException) {
@@ -110,7 +131,7 @@ class ActivityAppointmentList : BaseActivity() {
             month,
             day
         )
-        dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+        dpd.datePicker.maxDate = System.currentTimeMillis() - 1000;
         dpd.show()
     }
 
@@ -120,7 +141,62 @@ class ActivityAppointmentList : BaseActivity() {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.GetMyAppointmentsResponseModel> =
-                apiService.getMyAppointmentList(AppPrefences.getUserID(this),"patients")
+                apiService.getMyAppointmentList(
+                    AppPrefences.getUserID(this),
+                    Constants.PATIENT_REGISTRATION
+                )
+            call.enqueue(object :
+                Callback<ResponseModelClasses.GetMyAppointmentsResponseModel> {
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.GetMyAppointmentsResponseModel>,
+                    response: Response<ResponseModelClasses.GetMyAppointmentsResponseModel>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("MyAppointmentResponse: ", response.body().toString())
+
+                        if (response.body() != null) {
+                            appointmentList.clear()
+                            appointmentList = response.body()!!.data
+
+                            loadList()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.GetMyAppointmentsResponseModel>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
+    private fun getAppointmentListByDate() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ResponseModelClasses.GetMyAppointmentsResponseModel> =
+                apiService.getMyAppointmentListByDate(
+                    AppPrefences.getUserID(this),
+                    Constants.PATIENT_REGISTRATION,
+                    startDateFormatted!!,
+                    endDateFormatted!!
+                )
             call.enqueue(object :
                 Callback<ResponseModelClasses.GetMyAppointmentsResponseModel> {
                 override fun onResponse(

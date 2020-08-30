@@ -76,11 +76,11 @@ class ActivityAddVitalRecord : BaseActivity() {
             saveVitalRecord.setOnClickListener {
 
                 vital_date = vitalRecordDate.text.toString()
-                vital_reading = if (selectedVitalName.equals(getString(R.string.blood_pressure))) {
-                    arrayOf(
-                        bpSystolic.text.toString() + "/120",
-                        bpDaistolic.text.toString() + "/140"
-                    ).toString()
+                vital_reading = if (selectedVitalName.equals("bloodpressure")) {
+
+                    bpSystolic.text.toString() + "/120" + "," +
+                            bpDaistolic.text.toString() + "/140"
+
                 } else {
                     heightWeightValue.text.toString()
                 }

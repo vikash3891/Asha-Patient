@@ -99,6 +99,7 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
             emailValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getEmail());
             amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getFees());
 
+            ailmentValue.setText(Utils.INSTANCE.getSelectedAilmentOrServiceName());
             dateValue.setText(Utils.INSTANCE.getDate());
             timeValue.setText(Utils.INSTANCE.getTime());
             AppCompatRadioButton radio_btn_sandbox = findViewById(R.id.radio_btn_sandbox);

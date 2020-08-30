@@ -47,6 +47,7 @@ public class PaymentsActivity extends FragmentActivity {
     private String merchantKey;
     private PayUChecksum checksum;
     private String salt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

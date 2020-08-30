@@ -22,8 +22,8 @@ class MyReportViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
     fun bind(movie: ResponseModelClasses.GetMyRecordResponseModel) {
         //visitDate?.text = movie.date
-        reportDate?.text = movie.medical_record_id
-        reportName?.text = movie.category
+        reportDate?.text = movie.storage_link
+        reportName?.text = movie.record_name
         reportLink?.text = movie.medical_record_id
 
     }

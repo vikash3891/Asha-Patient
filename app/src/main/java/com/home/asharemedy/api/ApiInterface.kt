@@ -5,6 +5,8 @@ import com.home.asharemedy.utils.Constants
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface ApiInterface {
 
@@ -79,6 +81,11 @@ interface ApiInterface {
     /*Get Appointment List */
     @GET(Constants.APPOINTMENTS)// + Constants.USER_ID + "={userId}&" + Constants.USER_TYPE + "={userType}")
     fun getMyAppointmentList(@Query("userId") userId: String, @Query("userType") userType: String): Call<ResponseModelClasses.GetMyAppointmentsResponseModel>
+
+    /*Get Appointment List */
+    @GET(Constants.APPOINTMENTS)// + Constants.USER_ID + "={userId}&" + Constants.USER_TYPE + "={userType}") startDate=2020-08-10&endDate=2020-08-22
+    fun getMyAppointmentListByDate(@Query("userId") userId: String, @Query("userType") userType: String,
+                                   @Query("startDate") startDate: Date, @Query("endDate") endDate: Date): Call<ResponseModelClasses.GetMyAppointmentsResponseModel>
 
     /*Get PaymentHistory */
     @GET(Constants.PAYMENT_HISTORY)// + "/{patientID}")   //@Path("patientID") id: String
