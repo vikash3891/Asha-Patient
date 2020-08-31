@@ -23,11 +23,11 @@ class MyMedicationViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         medicinePrice = itemView.findViewById(R.id.medicinePrice)
     }
 
-    fun bind(movie: ResponseModelClasses.GetMyMedicationResponseModel) {
+    fun bind(movie: ResponseModelClasses.GetMyMedicationResponseModel.TableData) {
 
         medicineName?.text = movie.drug_name
         daysCount?.text = movie.days + " days"
-        medicineCourse?.text = movie.dosage_instructions
+        medicineCourse?.text = movie.dosage_instructions.trim()
         //medicinePrice?.text = getString(R.string.rupees_symbol)+movie.medicinePrice
 
     }

@@ -122,7 +122,7 @@ class MyVitalsActivity : BaseActivity() {
                 xAxisValues.add(foodsList[i].vital_date)
             }
             val xAxis = lineChart.xAxis
-            xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
+            //xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.granularity = 1f
             xAxis.setDrawGridLines(false)

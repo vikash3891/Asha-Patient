@@ -84,9 +84,10 @@ class ActivityAddVitalRecord : BaseActivity() {
                 } else {
                     heightWeightValue.text.toString()
                 }
-                if (vital_reading.isNotEmpty())
+                if (vital_reading.isNotEmpty()) {
+                    Log.d("Response:", vital_reading)
                     updateVital()
-                else
+                } else
                     showSuccessPopup("Please enter Vital Reading.")
             }
 

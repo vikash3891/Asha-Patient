@@ -200,6 +200,7 @@
         <activity android:name=".view.CheckListActivity" />
         <activity android:name=".payu.ActivityPayU" />
         <activity android:name=".view.AddMedicationActivity" />
+        <activity android:name=".view.UserMoodActivity" />
 
 
         <service android:name=".video.services.LoginService" />

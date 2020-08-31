@@ -111,7 +111,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/quicksand_medium"
             android:padding="@dimen/dp_5"
-            android:text="Status: "
+            android:text="Type: "
             android:textColor="@color/black"
             android:textSize="@dimen/sp_16" />
 

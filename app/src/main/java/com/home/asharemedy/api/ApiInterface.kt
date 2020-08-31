@@ -76,7 +76,7 @@ interface ApiInterface {
 
     /*Get MedicationsList */
     @GET(Constants.PATIENT_REG + "/{patientID}" + Constants.MEDICATIONS)
-    fun getMyMedicationsList(@Path("patientID") id: String): Call<ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>>
+    fun getMyMedicationsList(@Path("patientID") id: String): Call<ResponseModelClasses.GetMyMedicationResponseModel>
 
     /*Get Appointment List */
     @GET(Constants.APPOINTMENTS)// + Constants.USER_ID + "={userId}&" + Constants.USER_TYPE + "={userType}")

@@ -152,14 +152,24 @@ object ResponseModelClasses {
 
     /*User Medication List*/
     data class GetMyMedicationResponseModel(
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: ArrayList<TableData>
+    ) {
+        data class TableData(
 
-        val appointment_id: String,
-        val days: String,
-        val dosage_instructions: String,
-        val drug_name: String,
-        val medication_id: String,
-        val patient_id: String
-    )
+            val appointment_id: String,
+            val days: String,
+            val dosage_instructions: String,
+            val drug_name: String,
+            val medication_id: String,
+            val medication_type: String,
+            val other_instruction: String,
+            val patient_id: String
+        )
+    }
+
 
     /*User Appointments List*/
     data class GetMyAppointmentsResponseModel(

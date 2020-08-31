@@ -30,7 +30,7 @@ import kotlin.collections.ArrayList
 class MyMedicationsActivity : BaseActivity() {
 
     var adapter: MyMedicationListAdapter? = null
-    var medicationsList = ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>()
+    var medicationsList = ArrayList<ResponseModelClasses.GetMyMedicationResponseModel.TableData>()
     var cDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,10 +43,10 @@ class MyMedicationsActivity : BaseActivity() {
 
     private fun initView() {
         topbar.screenName.text = getString(R.string.my_medications)
-        layoutDates.visibility = View.GONE
+        header.visibility = View.GONE
         floatingActionButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
         floatingActionButton.visibility = View.VISIBLE
-        for (i in 0..10) {
+        /*for (i in 0..10) {
 
             medicationsList.add(
                 ResponseModelClasses.GetMyMedicationResponseModel(
@@ -62,9 +62,9 @@ class MyMedicationsActivity : BaseActivity() {
             layoutManager = LinearLayoutManager(this@MyMedicationsActivity)
             // set the custom adapter to the RecyclerView
             adapter = MyMedicationListAdapter(this@MyMedicationsActivity, medicationsList)
-        }
+        }*/
 
-        //getMyMedicationsList()
+        getMyMedicationsList()
     }
 
     private fun checkOnClick() {
@@ -138,21 +138,21 @@ class MyMedicationsActivity : BaseActivity() {
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>> =
+            val call: Call<ResponseModelClasses.GetMyMedicationResponseModel> =
                 apiService.getMyMedicationsList(
                     AppPrefences.getUserID(this)
                 )
             call.enqueue(object :
-                Callback<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>> {
+                Callback<ResponseModelClasses.GetMyMedicationResponseModel> {
                 override fun onResponse(
-                    call: Call<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>>,
-                    response: Response<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>>
+                    call: Call<ResponseModelClasses.GetMyMedicationResponseModel>,
+                    response: Response<ResponseModelClasses.GetMyMedicationResponseModel>
                 ) {
                     try {
                         dismissDialog()
                         Log.d("MedicationResponse: ", response.body().toString())
                         if (response.body() != null) {
-                            medicationsList = response.body()!!
+                            medicationsList = response.body()!!.data
                             loadList()
                         }
                     } catch (e: Exception) {
@@ -161,7 +161,7 @@ class MyMedicationsActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<java.util.ArrayList<ResponseModelClasses.GetMyMedicationResponseModel>>,
+                    call: Call<ResponseModelClasses.GetMyMedicationResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())

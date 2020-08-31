@@ -140,7 +140,7 @@ class AppLoginActivity : BaseActivity() {
                                 startActivity(
                                     Intent(
                                         this@AppLoginActivity,
-                                        DashboardActivity::class.java
+                                        UserMoodActivity::class.java
                                     )
                                 )
 

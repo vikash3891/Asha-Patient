@@ -79,13 +79,7 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun setNavigationalDrawer() {
-
-
         val navigationView = findViewById<NavigationView>(R.id.navView)
-        //val headerView = navigationView.getHeaderView(0)
-
-//        val layout = headerView.findViewById<RelativeLayout>(R.id.nav_header_layout)
-
     }
 
     private fun checkClicks() {

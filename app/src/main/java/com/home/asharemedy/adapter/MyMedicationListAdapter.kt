@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.item_clinic_visit.view.*
 
 class MyMedicationListAdapter(
     private val context: Context,
-    private val list: List<ResponseModelClasses.GetMyMedicationResponseModel>
+    private val list: List<ResponseModelClasses.GetMyMedicationResponseModel.TableData>
 ) :
     RecyclerView.Adapter<MyMedicationViewHolder>() {
 
@@ -34,7 +34,7 @@ class MyMedicationListAdapter(
     }
 
     override fun onBindViewHolder(holder: MyMedicationViewHolder, position: Int) {
-        val movie: ResponseModelClasses.GetMyMedicationResponseModel = list[position]
+        val movie: ResponseModelClasses.GetMyMedicationResponseModel.TableData = list[position]
         holder.bind(movie)
 
         holder.itemView.listItemLayout.setOnClickListener {
@@ -61,7 +61,7 @@ class MyMedicationListAdapter(
         daysValue.text = list[position].days
         doseValue.text = list[position].dosage_instructions
         instructionValue.text = list[position].dosage_instructions
-        //statusValue.text = list[position].days
+        statusValue.text = list[position].medication_type
         layoutOk.setOnClickListener { dialog.dismiss() }
         dialog.show()
 
