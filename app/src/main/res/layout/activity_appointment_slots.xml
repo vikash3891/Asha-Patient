@@ -273,8 +273,6 @@
                         android:verticalSpacing="@dimen/dp_10" />
 
                 </LinearLayout>
-
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

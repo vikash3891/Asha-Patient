@@ -50,7 +50,8 @@ class AppointmentSlotActivity : BaseActivity() {
         slotCalendar.text = Utils.getDate()
         doctorName.text = Utils.selectedDoctorFacility!!.name
         doctorSpeciality.text = Utils.selectedDoctorFacility!!.specialization
-        consultationFees.text = getString(R.string.rupees_symbol) + Utils.selectedDoctorFacility!!.fees
+        consultationFees.text =
+            getString(R.string.rupees_symbol) + Utils.selectedDoctorFacility!!.fees
         address.text =
             Utils.selectedDoctorFacility!!.address1 + " " + Utils.selectedDoctorFacility!!.address2
         cdate = Utils.getDate()
@@ -73,7 +74,11 @@ class AppointmentSlotActivity : BaseActivity() {
                 for (i in 0 until Utils.appointmentSlotList.size) {
                     Log.d("SelSlotList", Utils.appointmentSlotList[i].isSelected.toString())
                 }
-                startActivity(Intent(this@AppointmentSlotActivity, ActivityPayU::class.java))
+                if (Utils.selectedGridList.size > 0)
+                    startActivity(Intent(this@AppointmentSlotActivity, ActivityPayU::class.java))
+                else{
+
+                }
             }
 
             slotCalendar.setOnClickListener() {

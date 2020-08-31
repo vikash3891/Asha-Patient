@@ -48,14 +48,17 @@ object Utils {
     var userfileUploadBase64 = ""
     var selectedHealthIssues = ""
 
-    var appointmentSlotList = java.util.ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
-    var doctorFacilityList = ArrayList<ResponseModelClasses.GetFacilityListResponseModel.TableData1>()
+    var appointmentSlotList = ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
+    var doctorFacilityList =
+        ArrayList<ResponseModelClasses.GetFacilityListResponseModel.TableData1>()
     var selectedAppointmentDetails =
         ArrayList<ResponseModelClasses.GetMyAppointmentsResponseModel.TableData4>()
 
     var profileData: ResponseModelClasses.GetPatientProfileResponseModel? = null
 
     var selectedAilmentOrServiceName = ""
+
+    var selectedGridList = ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
 
     val teachers: Array<SpiritualTeacher>
         get() =
@@ -347,6 +350,41 @@ object Utils {
         private fun isInRange(a: Int, b: Int, c: Int): Boolean {
             return if (b > a) c in a..b else c in b..a
         }
+    }
+
+    fun addSlot(item: ResponseModelClasses.GetSlotListResponseModel) {
+        try {
+
+            selectedGridList.add(item)
+
+            /*if (foodsList.contains(item)) {
+                var itemPosition = foodsList.indexOf(item)
+                foodsList.get(itemPosition).quantity = (foodsList[itemPosition].quantity!! + 1)
+
+            } else {
+                foodsList.add(item)
+            }*/
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun removeSlot(item: ResponseModelClasses.GetSlotListResponseModel) {
+        try {
+            selectedGridList.remove(item)
+
+            /*if (foodsList.contains(item)) {
+                val itemPosition = foodsList.indexOf(item)
+                foodsList[itemPosition].quantity = (foodsList[itemPosition].quantity!! - 1)
+
+            } else {
+                foodsList.remove(item)
+            }*/
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
 }

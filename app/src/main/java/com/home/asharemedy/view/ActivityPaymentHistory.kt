@@ -10,6 +10,7 @@ import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_clinic_visit.*
@@ -73,7 +74,10 @@ class ActivityPaymentHistory : BaseActivity() {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>> =
-                apiService.getPaymentHistoryList()
+                apiService.getPaymentHistoryList(
+                    AppPrefences.getUserID(this),
+                    Constants.PATIENT_REGISTRATION
+                )
             call.enqueue(object :
                 Callback<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>> {
                 override fun onResponse(

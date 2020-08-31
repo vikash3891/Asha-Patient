@@ -89,7 +89,7 @@ interface ApiInterface {
 
     /*Get PaymentHistory */
     @GET(Constants.PAYMENT_HISTORY)// + "/{patientID}")   //@Path("patientID") id: String
-    fun getPaymentHistoryList(): Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>>
+    fun getPaymentHistoryList(@Query("userId") userId: String, @Query("userType") userType: String): Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>>
 
     /*Get Habit*/
     @POST(Constants.PATIENT_REG + "/{patientID}" + Constants.HABIT)/*/patients/17/habits*/

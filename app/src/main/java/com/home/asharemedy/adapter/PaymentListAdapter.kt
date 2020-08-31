@@ -26,38 +26,46 @@ class PaymentListAdapter(
     }
 
     override fun onBindViewHolder(holder: PaymentListViewHolder, position: Int) {
-        val movie: ResponseModelClasses.GetPaymentHistoryResponseModel = list[position]
-        holder.bind(movie)
+        try {
+            val movie: ResponseModelClasses.GetPaymentHistoryResponseModel = list[position]
+            holder.bind(movie)
 
-        holder.itemView.listItemLayout.setOnClickListener {
-            showPaymentDetailDialog(position)
-            //context.startActivity(Intent(context, ListItemDetailActivity::class.java))
+            holder.itemView.listItemLayout.setOnClickListener {
+                showPaymentDetailDialog(position)
+                //context.startActivity(Intent(context, ListItemDetailActivity::class.java))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     override fun getItemCount(): Int = list.size
 
     private fun showPaymentDetailDialog(position: Int) {
-        var dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_payment_details)
+        try {
+            var dialog = Dialog(context)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.dialog_payment_details)
 
-        val amountValue = dialog.findViewById(R.id.amountValue) as TextView
-        val discountValue = dialog.findViewById(R.id.discountValue) as TextView
-        val convenienceValue = dialog.findViewById(R.id.convenienceValue) as TextView
-        val grossTotalValue = dialog.findViewById(R.id.grossTotalValue) as TextView
-        val statusValue = dialog.findViewById(R.id.statusValue) as TextView
-        val layoutOk = dialog.findViewById(R.id.layoutOk) as LinearLayout
+            val amountValue = dialog.findViewById(R.id.amountValue) as TextView
+            val discountValue = dialog.findViewById(R.id.discountValue) as TextView
+            val convenienceValue = dialog.findViewById(R.id.convenienceValue) as TextView
+            val grossTotalValue = dialog.findViewById(R.id.grossTotalValue) as TextView
+            val statusValue = dialog.findViewById(R.id.statusValue) as TextView
+            val layoutOk = dialog.findViewById(R.id.layoutOk) as LinearLayout
 
 
-        amountValue.text = list[position].amount
-        discountValue.text = list[position].discount_percentage
-        convenienceValue.text = list[position].convenience_fee
-        grossTotalValue.text = list[position].gross_total
-        statusValue.text = list[position].status
-        layoutOk.setOnClickListener { dialog.dismiss() }
-        dialog.show()
+            amountValue.text = list[position].amount
+            discountValue.text = list[position].discount_percentage
+            convenienceValue.text = list[position].convenience_fee
+            grossTotalValue.text = list[position].gross_total
+            statusValue.text = list[position].status
+            layoutOk.setOnClickListener { dialog.dismiss() }
+            dialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 

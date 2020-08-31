@@ -36,8 +36,8 @@ class AppointSlotListAdapter(
         val parseFormat = SimpleDateFormat("hh:mm:ss")
         val date = parseFormat.parse(gridItem.start_time)
         val date2 = parseFormat.parse(gridItem.end_time)
-            //.toString() + " - " + parseFormat.parse(gridItem.end_time).toString()
-        var slot = displayFormat.format(date)+" - "+displayFormat.format(date2)
+        //.toString() + " - " + parseFormat.parse(gridItem.end_time).toString()
+        var slot = displayFormat.format(date) + " - " + displayFormat.format(date2)
         Log.d("SlotDate: ", slot)
         gridItemView.appointmentSlotRange.text = slot
 
@@ -91,7 +91,7 @@ class AppointSlotListAdapter(
 
             try {
                 if (gridItem.slot_status.equals("available")) {
-                    if (gridItem.isSelected == null || gridItem.isSelected == false) {
+                    if (!gridItem.isSelected) {
                         gridItem.isSelected = true
                         //Utils.appointmentSlotList[position].isSelected = true
                         gridItemView.listItemLayout.background = ContextCompat.getDrawable(
@@ -104,6 +104,7 @@ class AppointSlotListAdapter(
                                 R.color.white
                             )
                         )
+                        Utils.addSlot(gridItem)
                     } else {
                         gridItem.isSelected = false
                         //Utils.appointmentSlotList[position].isSelected = false
@@ -117,6 +118,7 @@ class AppointSlotListAdapter(
                                 R.color.black
                             )
                         )
+                        Utils.removeSlot(gridItem)
                     }
                 }
             } catch (e: Exception) {
