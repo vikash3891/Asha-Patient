@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.core.app.ActivityCompat
@@ -26,6 +27,7 @@ import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.profileData
+import kotlinx.android.synthetic.main.activity_my_vitals.view.*
 import kotlinx.android.synthetic.main.activity_profile_editable.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
@@ -496,7 +498,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
         try {
             for (i in 0 until habitData.size) {
-                if (habitData[i].patient_habit_id.equals("4")) {
+                /*if (habitData[i].patient_habit_id.equals("4")) {
                     if (habitData[i].status.equals("active")) {
                         smokingYes.isChecked = true
                         smokingNo.isChecked = false
@@ -522,7 +524,20 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                     }
                 } else if (habitData[i].patient_habit_id.equals("4")) {
 
-                }
+                }*/
+
+                var itemLinearLayout = LinearLayout(this)
+                var itemHabitLabel = TextView(this)
+                var itemHabitValue = TextView(this)
+
+                itemLinearLayout.orientation = LinearLayout.HORIZONTAL
+                itemHabitLabel.text = habitData[i].habit_name
+                itemHabitValue.text = habitData[i].habit_frequency
+
+                itemLinearLayout.addView(itemHabitLabel)
+                itemLinearLayout.addView(itemHabitValue)
+
+                layoutHabits.addView(itemLinearLayout)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -536,30 +551,13 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setCancelable(true)
             dialog.setContentView(R.layout.dialog_add_habit)
-            val spinnerHabit = dialog.findViewById(R.id.spinnerHabit) as Spinner
+
             val radioGroupHabit = dialog.findViewById(R.id.radioGroupHabit) as RadioGroup
+            val habitName = dialog.findViewById(R.id.habitName) as EditText
             val habitFrequency = dialog.findViewById(R.id.habitFrequency) as EditText
-            val habitYes = dialog.findViewById(R.id.habitYes) as RadioButton
-            val habitNo = dialog.findViewById(R.id.habitNo) as RadioButton
-
-            spinnerHabit.onItemSelectedListener = this
-
-            val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, languages)
-            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerHabit.adapter = aa
-
-            radioGroupHabit.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
-
-                try {
-                    if (i == R.id.habitYes) {
-                        habitFrequency.visibility = View.VISIBLE
-                    } else if (i == R.id.habitNo) {
-                        habitFrequency.visibility = View.GONE
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
+            val habitDaily = dialog.findViewById(R.id.habitDaily) as RadioButton
+            val habitWeekly = dialog.findViewById(R.id.habitWeekly) as RadioButton
+            val habitMonthly = dialog.findViewById(R.id.habitMonthly) as RadioButton
 
             val cancel = dialog.findViewById(R.id.cancel) as TextView
             val submit = dialog.findViewById(R.id.submit) as TextView
@@ -571,21 +569,19 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             submit.setOnClickListener {
 
                 try {
-                    if (habitYes.isChecked && habitFrequency.text.toString().isEmpty()) {
-                        showSuccessPopup("Please enter habit frequency.")
-                    } else if (!habitYes.isChecked) {
-                        dialog.dismiss()
+                    if (habitName.text.toString().isEmpty()) {
+                        showSuccessPopup("Please enter Habit Name.")
+                    } else if (habitFrequency.text.toString().isEmpty()) {
+                        showSuccessPopup("Please enter Habit Frequency.")
                     } else {
                         habitFrequencyValue = habitFrequency.text.toString().toInt()
                         Log.e("Frequency: ", habitFrequencyValue.toString())
                         habitFrequencyUnit = "per Day"
 
-                        habitStatus = if (habitYes.isChecked)
-                            "active"
-                        else
-                            "inactive"
-
-                        updateAddHabitView(spinnerHabit.selectedItem.toString(), habitYes.isChecked)
+                        updateAddHabitView(
+                            habitName.text.toString(),
+                            habitFrequency.text.toString()
+                        )
                         dialog.dismiss()
                     }
                 } catch (e: Exception) {
@@ -599,10 +595,10 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     }
 
-    private fun updateAddHabitView(selectedHabit: String, isChecked: Boolean) {
+    private fun updateAddHabitView(selectedHabit: String, habitFrequency: String) {
         try {
 
-            when (selectedHabit) {
+            /*when (selectedHabit) {
                 "Smoking" -> {
                     isSmokingAdded = isChecked
                     habitName = "Smoking"
@@ -630,7 +626,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                     addHabitApi()
 
                 }
-            }
+            }*/
         } catch (e: Exception) {
             e.printStackTrace()
         }

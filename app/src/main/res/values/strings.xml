@@ -662,5 +662,6 @@
     <string name="instructions">Instructions</string>
     <string name="precautions">Precautions</string>
     <string name="save_medication_detail">Save Medication Detail</string>
+    <string name="frequency_unit">Frequency Unit</string>
 
 </resources>

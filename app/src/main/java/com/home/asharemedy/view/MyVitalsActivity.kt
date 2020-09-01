@@ -109,6 +109,7 @@ class MyVitalsActivity : BaseActivity() {
 
         try {
             var xAxisValues = ArrayList<String>()
+            val labels = arrayOf("S", "M", "T", "W", "T", "F", "S")
             var yAxisValues = ArrayList<Entry>()
 
             for (i in 0 until foodsList.size) {
@@ -121,12 +122,13 @@ class MyVitalsActivity : BaseActivity() {
                 )
                 xAxisValues.add(foodsList[i].vital_date)
             }
+
             val xAxis = lineChart.xAxis
-            //xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
+            xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.granularity = 1f
+            //xAxis.granularity = 1f
             xAxis.setDrawGridLines(false)
-            xAxis.isGranularityEnabled = true
+            //xAxis.isGranularityEnabled = true
             xAxis.textSize = 7f
             xAxis.labelRotationAngle = -45f
 
@@ -138,23 +140,27 @@ class MyVitalsActivity : BaseActivity() {
             lds.valueTextSize = 10f
             var lineData = LineData(lds)
             lineChart.data = lineData
-            lineChart.setDrawGridBackground(false)
-            lineChart.xAxis.textColor = Color.BLACK
-            lineChart.axisLeft.textColor = Color.BLACK
-            lineChart.description.text = ""
-            lineChart.moveViewToX(5F);
-            lineChart.axisRight.textColor = Color.BLACK
-            lineChart.legend.isEnabled = false
-            lineChart.data.setValueTextColor(Color.BLACK)
-            lineChart.isEnabled = true
+            /* lineChart.setDrawGridBackground(false)
+             lineChart.xAxis.textColor = Color.BLACK
+             lineChart.axisLeft.textColor = Color.BLACK
+             lineChart.description.text = "Vital Reading"
+             lineChart.moveViewToX(5F);
+             lineChart.axisRight.textColor = Color.BLACK
+             lineChart.legend.isEnabled = false
+             lineChart.data.setValueTextColor(Color.BLACK)
+             lineChart.isEnabled = true
+             lineChart.axisRight.isEnabled = false
+             lineChart.setVisibleXRangeMaximum(5f)
+             lineChart.isHorizontalScrollBarEnabled = true
+             lineChart.canScrollHorizontally(1)
+             val leftAxis = lineChart.axisLeft
+             leftAxis.setDrawGridLines(false)
+             leftAxis.spaceTop = 35f
+             leftAxis.axisMinimum = 0f*/
+
             lineChart.axisRight.isEnabled = false
-            lineChart.setVisibleXRangeMaximum(5f)
-            lineChart.isHorizontalScrollBarEnabled = true
-            lineChart.canScrollHorizontally(1)
-            val leftAxis = lineChart.axisLeft
-            leftAxis.setDrawGridLines(false)
-            leftAxis.spaceTop = 35f
-            leftAxis.axisMinimum = 0f
+
+
             lineChart.invalidate()
             lineChart.refreshDrawableState()
         } catch (e: Exception) {
@@ -172,11 +178,30 @@ class MyVitalsActivity : BaseActivity() {
             var entry = ArrayList<Entry>()
             var lines = ArrayList<LineDataSet>()
             var xAxisValues = ArrayList<String>()
-            for (i in 0 until 15) {
+            /*for (i in 0 until 15) {
 
                 entries.add(Entry(i.toFloat(), i.toFloat()))
                 entry.add(Entry((i.toFloat() + 2), i.toFloat()))
                 xAxisValues.add(i.toString())
+            }*/
+
+            for (i in 0 until foodsList.size) {
+                val parts = foodsList[i].vital_reading.split(",")
+                val partsLow = parts[0].split("/")
+                val partsHigh = parts[1].split("/")
+                entries.add(
+                    Entry(
+                        partsLow[0].toFloat(),
+                        partsLow[0].toFloat()
+                    )
+                )
+                entry.add(
+                    Entry(
+                        partsHigh[0].toFloat(),
+                        partsHigh[0].toFloat()
+                    )
+                )
+                xAxisValues.add(foodsList[i].vital_date)
             }
             val xAxis = lineChart.xAxis
             xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
@@ -341,6 +366,7 @@ class MyVitalsActivity : BaseActivity() {
                         dismissDialog()
                         Log.d("VitalResponse: ", response.body().toString())
                         if (response.body() != null) {
+                            foodsList.clear()
                             foodsList = response.body()!!
                             if (selectedVitalName.equals("bloodsugar"))
                                 drawBPLineChart(lineChart)
