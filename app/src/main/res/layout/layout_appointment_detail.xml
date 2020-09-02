@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,416 +11,442 @@
             type="com.home.asharemedy.model.DashboardViewModel" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvProfileDetails"
+    <androidx.drawerlayout.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        android:elevation="@dimen/dp_10"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvProfileDetails"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/dp_10"
+            android:orientation="vertical">
 
-            <include
-                android:id="@+id/topbar"
-                layout="@layout/topbar_layout"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:layout_alignParentTop="true" />
+                android:layout_height="match_parent">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/view"
-                android:layout_below="@+id/topbar">
+                <include
+                    android:id="@+id/headerLayout"
+                    layout="@layout/toolbar" />
+
+                <include
+                    android:id="@+id/topbar"
+                    layout="@layout/topbar_layout"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_alignParentTop="true" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/view"
+                    android:layout_below="@+id/headerLayout">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/appointmentStatusHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="center_horizontal"
+                            android:padding="@dimen/dp_10"
+                            android:text="Appointment Details"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        <!--Appointment Status-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/appointmentStatusLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text="Appointment Status :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/appointmentStatusValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text=""
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                        <!--Facility Name-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/facilityNameLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_2"
+                                android:text="Facility Name :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/facilityNameValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text="@string/american_hospital"
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                        <!--Address-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/addressLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_2"
+                                android:text="Address :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/addressValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:maxLines="3"
+                                android:padding="@dimen/dp_2"
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                        <!--Date-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/dateLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_2"
+                                android:text="Date :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/dateValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text="@string/_03_june_2020"
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                        <!--Time-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/timeLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_2"
+                                android:text="Time :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/timeValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text="@string/_1430"
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                        <!--Clinician-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/clinicianLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_2"
+                                android:text="Clinician :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/clinicianValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text=""
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                        <!--Speciality-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/specialityLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_2"
+                                android:text="Speciality :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/specialityValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text="@string/ent"
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                        <!--Complaints-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/complaintsLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_2"
+                                android:text="Complaints :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/complaintsValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text="@string/frequent_vomiting"
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                        <!--Coordinator-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/coordinatorLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_2"
+                                android:text="Coordinator :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/coordinatorValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text="@string/dr_anna_johnson"
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                        <!--Remarks-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/remarksLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
+                                android:drawablePadding="@dimen/dp_20"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_2"
+                                android:text="Remarks :"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_15" />
+
+                            <TextView
+                                android:id="@+id/remarksValue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:padding="@dimen/dp_2"
+                                android:text="@string/frequent_vomiting"
+                                android:textSize="@dimen/sp_15" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </ScrollView>
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_above="@+id/layoutDisclaimer"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@color/colorAccent"
+                    android:gravity="bottom" />
 
                 <LinearLayout
+                    android:id="@+id/layoutDisclaimer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_above="@+id/bottomBar"
+                    android:layout_margin="@dimen/dp_5"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/appointmentStatusHeader"
-                        android:layout_width="match_parent"
+                        android:id="@+id/disclaimer"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="4"
                         android:fontFamily="@font/quicksand_medium"
-                        android:gravity="center_horizontal"
                         android:padding="@dimen/dp_10"
-                        android:visibility="gone"
-                        android:text="Appointment Details"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/sp_16"
-                        android:textStyle="bold" />
+                        android:text="@string/for_any_change_comments_related_to_this_appointment_please_contact_your_health_manager"
+                        android:textSize="@dimen/sp_10" />
 
-                    <!--Appointment Status-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/appointmentStatusLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text="Appointment Status :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/appointmentStatusValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text=""
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <!--Facility Name-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/facilityNameLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_2"
-                            android:text="Facility Name :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/facilityNameValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/american_hospital"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <!--Address-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/addressLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_2"
-                            android:text="Address :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/addressValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:maxLines="3"
-                            android:padding="@dimen/dp_2"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <!--Date-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/dateLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_2"
-                            android:text="Date :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/dateValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/_03_june_2020"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <!--Time-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/timeLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_2"
-                            android:text="Time :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/timeValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/_1430"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <!--Clinician-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/clinicianLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_2"
-                            android:text="Clinician :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/clinicianValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text=""
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <!--Speciality-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/specialityLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_2"
-                            android:text="Speciality :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/specialityValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/ent"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <!--Complaints-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/complaintsLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_2"
-                            android:text="Complaints :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/complaintsValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/frequent_vomiting"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <!--Coordinator-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/coordinatorLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_2"
-                            android:text="Coordinator :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/coordinatorValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/dr_anna_johnson"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
-                    <!--Remarks-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/remarksLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_hdr_weak_black_24dp"
-                            android:drawablePadding="@dimen/dp_20"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_2"
-                            android:text="Remarks :"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_15" />
-
-                        <TextView
-                            android:id="@+id/remarksValue"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/frequent_vomiting"
-                            android:textSize="@dimen/sp_15" />
-                    </LinearLayout>
-
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_launcher" />
                 </LinearLayout>
-            </ScrollView>
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_above="@+id/layoutDisclaimer"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:background="@color/colorAccent"
-                android:gravity="bottom" />
+                <include
+                    android:id="@+id/bottomBar"
+                    layout="@layout/bottombar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:id="@+id/layoutDisclaimer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/bottomBar"
-                android:layout_margin="@dimen/dp_5"
-                android:orientation="horizontal">
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navView"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:fitsSystemWindows="false"
+            app:headerLayout="@layout/nav_header_home"
+            app:itemIconTint="@color/colorAccent"
+            app:itemTextColor="@color/colorAccent"
+            app:menu="@menu/home_activity_drawer" />
 
-                <TextView
-                    android:id="@+id/disclaimer"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:padding="@dimen/dp_10"
-                    android:text="@string/for_any_change_comments_related_to_this_appointment_please_contact_your_health_manager"
-                    android:textSize="@dimen/sp_10" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:src="@mipmap/ic_launcher" />
-            </LinearLayout>
-
-            <include
-                android:id="@+id/bottomBar"
-                layout="@layout/bottombar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:layout_alignParentBottom="true" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

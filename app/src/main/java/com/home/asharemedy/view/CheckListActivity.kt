@@ -21,13 +21,8 @@ import java.util.*
 
 class CheckListActivity : AppCompatActivity() {
 
-
-
-
     internal var sb: StringBuilder? = null
     internal lateinit var adapter: MyAdapter
-
-
 
     internal class MyAdapter(var c: Context, var teachers: Array<Utils.SpiritualTeacher>) :
         RecyclerView.Adapter<MyAdapter.MyHolder>() {

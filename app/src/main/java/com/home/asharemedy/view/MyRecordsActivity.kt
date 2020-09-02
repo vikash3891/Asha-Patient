@@ -25,18 +25,13 @@ import retrofit2.Response
 class MyRecordsActivity : BaseActivity() {
 
     var adapter: MyReportsListAdapter? = null
-    var myReportList = ArrayList<ResponseModelClasses.GetMyRecordResponseModel>()
-    var cDate = ""
+    var myReportList = ArrayList<ResponseModelClasses.GetMyRecordResponseModel.TableData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_records)
         initView()
         checkOnClick()
-
-    }
-
-    fun showImage(bitmap: Bitmap){
 
     }
 
@@ -77,19 +72,19 @@ class MyRecordsActivity : BaseActivity() {
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ArrayList<ResponseModelClasses.GetMyRecordResponseModel>> =
+            val call: Call<ResponseModelClasses.GetMyRecordResponseModel> =
                 apiService.getMyRecordsList(AppPrefences.getUserID(this))
             call.enqueue(object :
-                Callback<ArrayList<ResponseModelClasses.GetMyRecordResponseModel>> {
+                Callback<ResponseModelClasses.GetMyRecordResponseModel> {
                 override fun onResponse(
-                    call: Call<ArrayList<ResponseModelClasses.GetMyRecordResponseModel>>,
-                    response: Response<ArrayList<ResponseModelClasses.GetMyRecordResponseModel>>
+                    call: Call<ResponseModelClasses.GetMyRecordResponseModel>,
+                    response: Response<ResponseModelClasses.GetMyRecordResponseModel>
                 ) {
                     try {
                         dismissDialog()
                         Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
-                            myReportList = response.body()!!
+                            myReportList = response.body()!!.data
                             loadList()
                         }
                     } catch (e: Exception) {
@@ -98,7 +93,7 @@ class MyRecordsActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ArrayList<ResponseModelClasses.GetMyRecordResponseModel>>,
+                    call: Call<ResponseModelClasses.GetMyRecordResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())

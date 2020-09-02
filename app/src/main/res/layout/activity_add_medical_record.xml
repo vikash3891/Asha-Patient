@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,273 +11,299 @@
             type="com.home.asharemedy.model.DashboardViewModel" />
     </data>
 
-    <RelativeLayout
+    <androidx.drawerlayout.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/drawable_background_gradient"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <include
-            android:id="@+id/topbar"
-            layout="@layout/topbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50" />
-
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottomBar"
-            android:layout_below="@+id/topbar"
-            android:background="@drawable/drawable_round_corner"
-            android:fadeScrollbars="true">
+            android:background="@drawable/drawable_background_gradient"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/header"
+            <include
+                android:id="@+id/headerLayout"
+                layout="@layout/toolbar" />
+
+            <include
+                android:id="@+id/topbar"
+                layout="@layout/topbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_5"
-                android:orientation="vertical">
+                android:layout_height="@dimen/dp_50"
+                android:visibility="gone" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottomBar"
+                android:layout_below="@+id/headerLayout"
+                android:background="@drawable/drawable_round_corner"
+                android:fadeScrollbars="true">
 
                 <LinearLayout
-                    android:id="@+id/layoutSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_15"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_15"
-                        android:layout_marginEnd="@dimen/dp_15"
-                        android:background="@drawable/drawable_round_corner"
-                        android:drawableEnd="@drawable/ic_add_green_50dp"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="start|center"
-                        android:paddingStart="@dimen/dp_10"
-                        android:text="Select Document Type"
-                        android:textSize="@dimen/sp_16"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <Spinner
-                        android:id="@+id/spinnerHabit"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_40"
-                        android:drawableEnd="@drawable/ic_add_green_50dp"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:tooltipText="Select Document Type" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutAppointmentList"
+                    android:id="@+id/header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_5"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layoutSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_15"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_15"
+                            android:layout_marginEnd="@dimen/dp_15"
+                            android:background="@drawable/drawable_round_corner"
+                            android:drawableEnd="@drawable/ic_add_green_50dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start|center"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="Select Document Type"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        <Spinner
+                            android:id="@+id/spinnerHabit"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_40"
+                            android:drawableEnd="@drawable/ic_add_green_50dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:tooltipText="Select Document Type" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutAppointmentList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_50"
+                            android:layout_marginStart="@dimen/dp_15"
+                            android:layout_marginEnd="@dimen/dp_15"
+                            android:background="@drawable/round_corner_green"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start|center"
+                            android:paddingStart="@dimen/dp_10"
+                            android:text="Select Appointment (Optional)"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutAttachmentType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_7"
+                        android:orientation="horizontal">
+
+                        <!--Capture from Camera-->
+                        <LinearLayout
+                            android:id="@+id/layoutCamera"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingBottom="@dimen/dp_5">
+
+                            <ImageView
+                                android:id="@+id/imageCamera"
+                                android:layout_width="@dimen/dp_50"
+                                android:layout_height="@dimen/dp_50"
+                                android:layout_margin="@dimen/dp_7"
+                                android:src="@drawable/camera" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Camera"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <!--Get from Gallery-->
+                        <LinearLayout
+                            android:id="@+id/layoutGallery"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingBottom="@dimen/dp_5">
+
+                            <ImageView
+                                android:id="@+id/imageGallery"
+                                android:layout_width="@dimen/dp_50"
+                                android:layout_height="@dimen/dp_50"
+                                android:layout_margin="@dimen/dp_7"
+                                android:src="@drawable/gallery" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Gallery"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <!--Get from Cloud-->
+                        <LinearLayout
+                            android:id="@+id/layoutCloud"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingBottom="@dimen/dp_5">
+
+                            <ImageView
+                                android:id="@+id/imageCloud"
+                                android:layout_width="@dimen/dp_50"
+                                android:layout_height="@dimen/dp_50"
+                                android:layout_margin="@dimen/dp_7"
+                                android:src="@drawable/cloud" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Document"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_50"
-                        android:layout_marginStart="@dimen/dp_15"
-                        android:layout_marginEnd="@dimen/dp_15"
-                        android:background="@drawable/round_corner_green"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="start|center"
-                        android:paddingStart="@dimen/dp_10"
-                        android:text="Select Appointment (Optional)"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_16"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutAttachmentType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp_7"
-                    android:orientation="horizontal">
-
-                    <!--Capture from Camera-->
-                    <LinearLayout
-                        android:id="@+id/layoutCamera"
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:fontFamily="@font/quicksand_medium"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingBottom="@dimen/dp_5">
+                        android:text="OR"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_14" />
+
+                    <!--Document Link-->
+                    <LinearLayout
+                        android:id="@+id/layoutEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_4">
+
+                        <TextView
+                            android:id="@+id/emailLabel"
+                            android:layout_width="@dimen/dp_150"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:padding="@dimen/dp_5"
+                            android:text="@string/document_link"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/sp_15"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/emailValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_border"
+                            android:ellipsize="end"
+                            android:enabled="false"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:hint="@string/paste_url_for_medical_record_here"
+                            android:imeOptions="actionNext|flagNavigateNext"
+                            android:maxLines="1"
+                            android:padding="@dimen/dp_5"
+                            android:text=""
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageCamera"
-                            android:layout_width="@dimen/dp_50"
-                            android:layout_height="@dimen/dp_50"
+                            android:id="@+id/imagePreview"
+                            android:layout_width="@dimen/dp_100"
+                            android:layout_height="@dimen/dp_150"
                             android:layout_margin="@dimen/dp_7"
+                            android:padding="@dimen/dp_20"
                             android:src="@drawable/camera" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:text="Camera"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:text="@string/attachment_name"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_18"
+                            android:visibility="gone" />
                     </LinearLayout>
-
-                    <!--Get from Gallery-->
-                    <LinearLayout
-                        android:id="@+id/layoutGallery"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingBottom="@dimen/dp_5">
-
-                        <ImageView
-                            android:id="@+id/imageGallery"
-                            android:layout_width="@dimen/dp_50"
-                            android:layout_height="@dimen/dp_50"
-                            android:layout_margin="@dimen/dp_7"
-                            android:src="@drawable/gallery" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:text="Gallery"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-
-                    <!--Get from Cloud-->
-                    <LinearLayout
-                        android:id="@+id/layoutCloud"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingBottom="@dimen/dp_5">
-
-                        <ImageView
-                            android:id="@+id/imageCloud"
-                            android:layout_width="@dimen/dp_50"
-                            android:layout_height="@dimen/dp_50"
-                            android:layout_margin="@dimen/dp_7"
-                            android:src="@drawable/cloud" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:text="Document"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:gravity="center"
-                    android:text="OR"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
-
-                <!--Document Link-->
-                <LinearLayout
-                    android:id="@+id/layoutEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/dp_4">
 
                     <TextView
-                        android:id="@+id/emailLabel"
-                        android:layout_width="@dimen/dp_150"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="start"
-                        android:padding="@dimen/dp_5"
-                        android:text="@string/document_link"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/sp_15"
-                        android:textStyle="bold" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/emailValue"
+                        android:id="@+id/uploadAttachment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edittext_border"
-                        android:ellipsize="end"
-                        android:enabled="false"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="start"
-                        android:hint="@string/paste_url_for_medical_record_here"
-                        android:imeOptions="actionNext|flagNavigateNext"
-                        android:maxLines="1"
-                        android:padding="@dimen/dp_5"
-                        android:text=""
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/sp_14" />
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginStart="@dimen/dp_30"
+                        android:layout_marginTop="@dimen/dp_50"
+                        android:layout_marginEnd="@dimen/dp_30"
+                        android:background="@drawable/round_corner_green"
+                        android:gravity="center"
+                        android:text="Upload Attachment"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_18" />
                 </LinearLayout>
+            </ScrollView>
 
-                <LinearLayout
-                    android:id="@+id/layoutPreview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:gravity="center"
-                    android:orientation="vertical">
+            <include
+                android:id="@+id/bottomBar"
+                layout="@layout/bottombar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom" />
 
-                    <ImageView
-                        android:id="@+id/imagePreview"
-                        android:layout_width="@dimen/dp_100"
-                        android:layout_height="@dimen/dp_150"
-                        android:layout_margin="@dimen/dp_7"
-                        android:padding="@dimen/dp_20"
-                        android:src="@drawable/camera" />
+        </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:text="@string/attachment_name"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_18"
-                        android:visibility="gone" />
-                </LinearLayout>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navView"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:fitsSystemWindows="false"
+            app:headerLayout="@layout/nav_header_home"
+            app:itemIconTint="@color/colorAccent"
+            app:itemTextColor="@color/colorAccent"
+            app:menu="@menu/home_activity_drawer" />
 
-                <TextView
-                    android:id="@+id/uploadAttachment"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40"
-                    android:layout_marginStart="@dimen/dp_30"
-                    android:layout_marginTop="@dimen/dp_50"
-                    android:layout_marginEnd="@dimen/dp_30"
-                    android:background="@drawable/round_corner_green"
-                    android:gravity="center"
-                    android:text="Upload Attachment"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_18" />
-            </LinearLayout>
-        </ScrollView>
-
-        <include
-            android:id="@+id/bottomBar"
-            layout="@layout/bottombar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom" />
-
-    </RelativeLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

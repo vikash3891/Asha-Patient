@@ -63,11 +63,11 @@ interface ApiInterface {
 
     /*Get RecordsList */
     @GET(Constants.PATIENT_REG + "/{patientID}" + Constants.MEDICAL_REPORTS)
-    fun getMyRecordsList(@Path("patientID") id: String): Call<ArrayList<ResponseModelClasses.GetMyRecordResponseModel>>
+    fun getMyRecordsList(@Path("patientID") id: String): Call<ResponseModelClasses.GetMyRecordResponseModel>
 
     /*Get MyCarePlan */
     @GET(Constants.PATIENT_REG + "/{patientID}" + Constants.CARE_PLANS)
-    fun getMyCarePlanList(@Path("patientID") id: String): Call<ArrayList<ResponseModelClasses.GetMyCarePlanResponseModel>>
+    fun getMyCarePlanList(@Path("patientID") id: String): Call<ResponseModelClasses.GetMyCarePlanResponseModel>
 
     /*Get VitalsList */
     @GET(Constants.PATIENT_REG + "{patientID}" + Constants.VITALS + "{vitalName}" + "?")

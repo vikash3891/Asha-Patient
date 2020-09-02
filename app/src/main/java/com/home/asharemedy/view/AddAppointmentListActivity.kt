@@ -7,14 +7,18 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
 import com.home.asharemedy.R
 import com.home.asharemedy.adapter.AppointmentItemAdapter
 import com.home.asharemedy.adapter.UtilitiesListAdapter
@@ -31,17 +35,17 @@ import com.home.asharemedy.utils.Utils.selectedAilmentOrServiceName
 import kotlinx.android.synthetic.main.activity_add_appointment_list.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.dialog_layout.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddAppointmentListActivity : BaseActivity() {
+class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var adapter: AppointmentItemAdapter? = null
     var isDoctor = true
     var selectedAilmentOrServiceID = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +57,7 @@ class AddAppointmentListActivity : BaseActivity() {
 
     private fun initView() {
         try {
+            setupToolDrawer()
             getAilmentList()
             searchByLabel.text = "Search By Ailment: "
             ailmentSelectedValues.hint = "Choose Ailment"
@@ -181,7 +186,7 @@ class AddAppointmentListActivity : BaseActivity() {
                 finish()
             }
             bottomBar.layoutSettings.setOnClickListener {
-                logoutAlertDialog()
+                drawerLayout.openDrawer(GravityCompat.START)
             }
             bottomBar.layoutHome.setOnClickListener {
                 startActivity(
@@ -554,6 +559,74 @@ class AddAppointmentListActivity : BaseActivity() {
             e.printStackTrace()
         }
 
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        try {
+            Log.e("item.itemId", item.itemId.toString())
+            when (item.itemId) {
+
+                R.id.logout -> {
+                    logoutAlertDialog()
+                }
+
+                R.id.navProfile -> {
+                    startActivity(Intent(this, MyProfile::class.java))
+                }
+
+                R.id.navChangePassword -> {
+                    startWebActivity(getString(R.string.privacy_policy), Constants.FAQ)
+                }
+
+                R.id.navPayment -> {
+                    startActivity(Intent(this, ActivityPaymentHistory::class.java))
+                }
+
+                R.id.navFaq -> {
+                    startWebActivity(getString(R.string.privacy_policy), Constants.FAQ)
+                }
+
+                R.id.navTerms -> {
+                    startWebActivity(
+                        getString(R.string.terms_and_conditions),
+                        Constants.TERMS_AND_CONDITION
+                    )
+                }
+
+                R.id.navPrivacy -> {
+                    startWebActivity(getString(R.string.privacy_policy), Constants.PRIVACY_POLICY)
+                }
+
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+
+        }
+    }
+
+    private fun setupToolDrawer() {
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            headerLayout!!.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+
+        headerLayout!!.title.text = getString(R.string.appointments)
+
+        toggle.isDrawerIndicatorEnabled = false
+        toggle.setHomeAsUpIndicator(R.drawable.ic_drawer_icon)
+        toggle.setToolbarNavigationClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener(this)
     }
 
 }

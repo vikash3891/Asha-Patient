@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,367 +11,393 @@
             type="com.home.asharemedy.model.DashboardGridModel" />
     </data>
 
-    <RelativeLayout
+    <androidx.drawerlayout.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <include
-            android:id="@+id/topbarAppointment"
-            layout="@layout/topbar_layout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50" />
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardDoctorDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/topbarAppointment"
-            android:layout_margin="@dimen/dp_5"
-            android:elevation="@dimen/dp_5">
+            <include
+                android:id="@+id/headerLayout"
+                layout="@layout/toolbar" />
 
-            <LinearLayout
-                android:id="@+id/listDoctorDetails"
+            <include
+                android:id="@+id/topbarAppointment"
+                layout="@layout/topbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:visibility="gone" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardDoctorDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_2"
-                android:orientation="horizontal">
+                android:layout_below="@+id/headerLayout"
+                android:layout_margin="@dimen/dp_5"
+                android:elevation="@dimen/dp_5">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/listDoctorDetails"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_5">
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:orientation="horizontal">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="@dimen/dp_80"
-                        android:layout_height="@dimen/dp_80"
-                        android:background="@drawable/ic_emoticon_50dp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:gravity="center_vertical|start">
-
-                    <TextView
-                        android:id="@+id/doctorName"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
+                        android:padding="@dimen/dp_5">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="@dimen/dp_80"
+                            android:layout_height="@dimen/dp_80"
+                            android:background="@drawable/ic_emoticon_50dp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|start">
+
+                        <TextView
+                            android:id="@+id/doctorName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="center_horizontal"
+                            android:maxLines="1"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/doctorSpeciality"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/doctorName"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="center_horizontal"
+                            android:maxLines="1"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/doctorSpeciality"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="center_horizontal"
+                            android:maxLines="1"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@color/colorAppGray"
+                            android:textSize="@dimen/sp_13" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/consultationFees"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:fontFamily="@font/quicksand_medium"
-                        android:gravity="center_horizontal"
-                        android:maxLines="1"
-                        android:padding="@dimen/dp_2"
-                        android:text=""
-                        android:textColor="@color/colorBlack"
+                        android:gravity="center"
+                        android:textColor="@color/colorProgress"
                         android:textSize="@dimen/sp_16"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/doctorSpeciality"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/doctorName"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="center_horizontal"
-                        android:maxLines="1"
-                        android:padding="@dimen/dp_2"
-                        android:text=""
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                    <TextView
-                        android:id="@+id/address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/doctorSpeciality"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="center_horizontal"
-                        android:maxLines="1"
-                        android:padding="@dimen/dp_2"
-                        android:text=""
-                        android:textColor="@color/colorAppGray"
-                        android:textSize="@dimen/sp_13" />
-                </RelativeLayout>
+            <TextView
+                android:id="@+id/slotCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_35"
+                android:layout_below="@+id/cardDoctorDetails"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:background="@drawable/drawable_round_blue_stroke"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_5"
+                android:text=""
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/sp_17" />
 
-                <TextView
-                    android:id="@+id/consultationFees"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:gravity="center"
-                    android:textColor="@color/colorProgress"
-                    android:textSize="@dimen/sp_16"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/slotCalendar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_35"
-            android:layout_below="@+id/cardDoctorDetails"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:background="@drawable/drawable_round_blue_stroke"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="center"
-            android:paddingTop="@dimen/dp_5"
-            android:paddingBottom="@dimen/dp_5"
-            android:text=""
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/sp_17" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardSlotDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/layoutLegend"
-            android:layout_below="@+id/slotCalendar"
-            android:layout_margin="@dimen/dp_5"
-            android:elevation="@dimen/dp_5"
-            android:padding="@dimen/dp_5">
-
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardSlotDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pickTimeSlotLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:gravity="center"
-                    android:padding="@dimen/dp_10"
-                    android:text="Pick Time"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
+                android:layout_above="@+id/layoutLegend"
+                android:layout_below="@+id/slotCalendar"
+                android:layout_margin="@dimen/dp_5"
+                android:elevation="@dimen/dp_5"
+                android:padding="@dimen/dp_5">
 
                 <LinearLayout
-                    android:id="@+id/slotInDay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/pickTimeSlotLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_10"
+                        android:text="Pick Time"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
 
                     <LinearLayout
-                        android:id="@+id/slotsMorningButton"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/dp_80"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/drawable_selected"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingBottom="@dimen/dp_5">
-
-                        <ImageView
-                            android:id="@+id/imageMorning"
-                            android:layout_width="@dimen/dp_40"
-                            android:layout_height="@dimen/dp_40"
-                            android:layout_margin="@dimen/dp_7"
-                            android:padding="@dimen/dp_7"
-                            android:src="@drawable/morning" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:text="Morning"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/slotsAfternoonButton"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/dp_80"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/drawable_unselected"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingBottom="@dimen/dp_5">
-
-                        <ImageView
-                            android:id="@+id/imageAfternoon"
-                            android:layout_width="@dimen/dp_40"
-                            android:layout_height="@dimen/dp_40"
-                            android:layout_margin="@dimen/dp_7"
-                            android:padding="@dimen/dp_7"
-                            android:src="@drawable/afternoon" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:text="Afternoon"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/slotsEveningButton"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/dp_80"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/drawable_unselected"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingBottom="@dimen/dp_5">
-
-                        <ImageView
-                            android:id="@+id/imageEvening"
-                            android:layout_width="@dimen/dp_40"
-                            android:layout_height="@dimen/dp_40"
-                            android:layout_margin="@dimen/dp_7"
-                            android:padding="@dimen/dp_7"
-                            android:src="@drawable/night" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:text="Evening"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/slotInDayTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:orientation="horizontal">
-
-                    <GridView
-                        android:id="@+id/gvSlots"
+                        android:id="@+id/slotInDay"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_marginBottom="@dimen/dp_50"
-                        android:columnWidth="@dimen/dp_150"
-                        android:horizontalSpacing="@dimen/dp_10"
-                        android:numColumns="auto_fit"
-                        android:verticalSpacing="@dimen/dp_10" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
+                        <LinearLayout
+                            android:id="@+id/slotsMorningButton"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_80"
+                            android:layout_margin="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/drawable_selected"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingBottom="@dimen/dp_5">
+
+                            <ImageView
+                                android:id="@+id/imageMorning"
+                                android:layout_width="@dimen/dp_40"
+                                android:layout_height="@dimen/dp_40"
+                                android:layout_margin="@dimen/dp_7"
+                                android:padding="@dimen/dp_7"
+                                android:src="@drawable/morning" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Morning"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/slotsAfternoonButton"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_80"
+                            android:layout_margin="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/drawable_unselected"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingBottom="@dimen/dp_5">
+
+                            <ImageView
+                                android:id="@+id/imageAfternoon"
+                                android:layout_width="@dimen/dp_40"
+                                android:layout_height="@dimen/dp_40"
+                                android:layout_margin="@dimen/dp_7"
+                                android:padding="@dimen/dp_7"
+                                android:src="@drawable/afternoon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Afternoon"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/slotsEveningButton"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_80"
+                            android:layout_margin="@dimen/dp_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/drawable_unselected"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingBottom="@dimen/dp_5">
+
+                            <ImageView
+                                android:id="@+id/imageEvening"
+                                android:layout_width="@dimen/dp_40"
+                                android:layout_height="@dimen/dp_40"
+                                android:layout_margin="@dimen/dp_7"
+                                android:padding="@dimen/dp_7"
+                                android:src="@drawable/night" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:text="Evening"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/slotInDayTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:orientation="horizontal">
+
+                        <GridView
+                            android:id="@+id/gvSlots"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/dp_5"
+                            android:layout_marginBottom="@dimen/dp_50"
+                            android:columnWidth="@dimen/dp_150"
+                            android:horizontalSpacing="@dimen/dp_10"
+                            android:numColumns="auto_fit"
+                            android:verticalSpacing="@dimen/dp_10" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/layoutLegend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30"
+                android:layout_above="@+id/proceedToPay"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_5">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:paddingStart="@dimen/dp_10"
+                        android:text="Available"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_5">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:paddingStart="@dimen/dp_10"
+                        android:text="Booked"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_5">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:paddingStart="@dimen/dp_10"
+                        android:text="Completed"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:id="@+id/layoutLegend"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_30"
-            android:layout_above="@+id/proceedToPay"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/proceedToPay"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:background="@drawable/round_corner_green"
+                android:fontFamily="@font/quicksand_medium"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp_5">
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/proceed_to_pay"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_info" />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navView"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:fitsSystemWindows="false"
+            app:headerLayout="@layout/nav_header_home"
+            app:itemIconTint="@color/colorAccent"
+            app:itemTextColor="@color/colorAccent"
+            app:menu="@menu/home_activity_drawer" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:paddingStart="@dimen/dp_10"
-                    android:text="Available"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_12" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp_5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_info" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:paddingStart="@dimen/dp_10"
-                    android:text="Booked"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_12" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp_5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_info" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:paddingStart="@dimen/dp_10"
-                    android:text="Completed"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_12" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/proceedToPay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_5"
-            android:background="@drawable/round_corner_green"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="center"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingBottom="@dimen/dp_10"
-            android:text="@string/proceed_to_pay"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
-    </RelativeLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

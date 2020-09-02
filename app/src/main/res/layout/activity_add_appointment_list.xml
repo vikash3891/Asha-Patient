@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,219 +11,245 @@
             type="com.home.asharemedy.model.DashboardViewModel" />
     </data>
 
-    <RelativeLayout
+    <androidx.drawerlayout.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/drawable_background_gradient"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <include
-            android:id="@+id/topbar"
-            layout="@layout/topbar_layout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50" />
-
-        <LinearLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/topbar"
-            android:layout_margin="@dimen/dp_5"
-            android:background="@drawable/drawable_round_corner"
+            android:layout_height="match_parent"
+            android:background="@drawable/drawable_background_gradient"
             android:orientation="vertical">
 
+            <include
+                android:id="@+id/headerLayout"
+                layout="@layout/toolbar" />
+
+            <include
+                android:id="@+id/topbar"
+                layout="@layout/topbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:visibility="gone" />
+
             <LinearLayout
-                android:id="@+id/layoutSearchByAilment"
+                android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
+                android:layout_below="@+id/headerLayout"
+                android:layout_margin="@dimen/dp_5"
+                android:background="@drawable/drawable_round_corner"
+                android:orientation="vertical">
 
-                <!--Layout End Date-->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/layoutSearchByAilment"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start|center">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
 
-                    <TextView
-                        android:id="@+id/searchByLabel"
-                        android:layout_width="wrap_content"
+                    <!--Layout End Date-->
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_2"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:text="Search By Ailment: "
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/sp_14"
-                        android:textStyle="bold" />
+                        android:layout_weight="1"
+                        android:gravity="start|center">
+
+                        <TextView
+                            android:id="@+id/searchByLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:padding="@dimen/dp_2"
+                            android:text="Search By Ailment: "
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/ailmentLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:background="@drawable/rounded_corner_blue"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:paddingStart="@dimen/dp_15"
+                            android:paddingTop="@dimen/dp_5"
+                            android:paddingEnd="@dimen/dp_15"
+                            android:paddingBottom="@dimen/dp_5"
+                            android:text="Ailment"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/sp_14"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/ailmentSelectedValues"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_30dp"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:background="@drawable/edittext_border"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start|center"
+                            android:paddingStart="@dimen/dp_10"
+                            android:paddingEnd="@dimen/dp_10"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="@color/colorAppGray"
+                            android:textSize="@dimen/sp_13" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/slotInDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/ailmentLabel"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/appointmentForDoctor"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginEnd="@dimen/dp_10"
-                        android:background="@drawable/rounded_corner_blue"
-                        android:paddingStart="@dimen/dp_15"
-                        android:paddingTop="@dimen/dp_5"
-                        android:paddingEnd="@dimen/dp_15"
-                        android:paddingBottom="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_green"
                         android:fontFamily="@font/quicksand_medium"
-                        android:text="Ailment"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/sp_14"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:text="Doctor"
+                        android:textColor="@color/colorWhite" />
+
+
+                    <TextView
+                        android:id="@+id/appointmentForInstitution"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_border"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:text="Institution"
                         android:visibility="gone" />
 
                     <TextView
-                        android:id="@+id/ailmentSelectedValues"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_30dp"
+                        android:id="@+id/appointmentForFacility"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_weight="1"
                         android:background="@drawable/edittext_border"
-                        android:ellipsize="end"
-                        android:gravity="start|center"
                         android:fontFamily="@font/quicksand_medium"
-                        android:paddingStart="@dimen/dp_10"
-                        android:paddingEnd="@dimen/dp_10"
-                        android:singleLine="true"
-                        android:text=""
-                        android:textColor="@color/colorAppGray"
-                        android:textSize="@dimen/sp_13" />
+                        android:gravity="center"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:text="Facility" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_15"
+                        android:layout_weight="2"
+                        android:background="@drawable/drawable_round_corner"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:hint="Type search keyword"
+                        android:padding="@dimen/dp_8"
+                        android:textSize="@dimen/sp_14" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonSearch"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_corner_blue"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:text="Search"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/slotInDay"
+            <RelativeLayout
+                android:id="@+id/layoutList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:orientation="horizontal">
+                android:layout_below="@+id/header"
+                android:layout_marginStart="@dimen/dp_5"
+                android:layout_marginEnd="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_50"
+                android:background="@drawable/drawable_round_corner">
 
-                <TextView
-                    android:id="@+id/appointmentForDoctor"
-                    android:layout_width="0dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/addAppointmentRecyc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:layout_marginEnd="@dimen/dp_5" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_corner_green"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/dp_5"
-                    android:paddingBottom="@dimen/dp_5"
-                    android:text="Doctor"
-                    android:textColor="@color/colorWhite" />
-
-
-                <TextView
-                    android:id="@+id/appointmentForInstitution"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_border"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/dp_5"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:paddingBottom="@dimen/dp_5"
-                    android:text="Institution"
+                    android:layout_centerInParent="true"
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/appointmentForFacility"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_border"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/dp_5"
+                    android:layout_centerInParent="true"
                     android:fontFamily="@font/quicksand_medium"
-                    android:paddingBottom="@dimen/dp_5"
-                    android:text="Facility" />
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="gone" />
+            </RelativeLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutSearch"
+            <include
+                android:id="@+id/bottomBar"
+                layout="@layout/bottombar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:orientation="horizontal">
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom" />
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_15"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:layout_weight="2"
-                    android:background="@drawable/drawable_round_corner"
-                    android:hint="Type search keyword"
-                    android:padding="@dimen/dp_8"
-                    android:textSize="@dimen/sp_14" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/buttonSearch"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corner_blue"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:text="Search"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/sp_14" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/layoutList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/header"
-            android:layout_marginStart="@dimen/dp_5"
-            android:layout_marginEnd="@dimen/dp_5"
-            android:layout_marginBottom="@dimen/dp_50"
-            android:background="@drawable/drawable_round_corner">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/addAppointmentRecyc"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_5"
-                android:layout_marginEnd="@dimen/dp_5" />
-
-            <ProgressBar
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/quicksand_medium"
-                android:textSize="@dimen/sp_18"
-                android:visibility="gone" />
         </RelativeLayout>
 
-        <include
-            android:id="@+id/bottomBar"
-            layout="@layout/bottombar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom" />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navView"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:fitsSystemWindows="false"
+            app:headerLayout="@layout/nav_header_home"
+            app:itemIconTint="@color/colorAccent"
+            app:itemTextColor="@color/colorAccent"
+            app:menu="@menu/home_activity_drawer" />
 
-    </RelativeLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

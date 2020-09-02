@@ -119,27 +119,41 @@ object ResponseModelClasses {
 
     /*User MyRecord List*/
     data class GetMyRecordResponseModel(
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: ArrayList<TableData>
+    ) {
+        data class TableData(
 
-        val category: String,
-        val file_content: String,
-        val medical_record_id: String,
-        val patient_id: String,
-        val record_name: String,
-        val storage_link: String
-    )
+            val category: String,
+            val file_content: String,
+            val medical_record_id: String,
+            val patient_id: String,
+            val record_name: String,
+            val storage_link: String
+        )
+    }
 
     /*User MyCarePlan List*/
     data class GetMyCarePlanResponseModel(
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: ArrayList<TableData>
+    ) {
+        data class TableData(
 
-        val care_plan_id: String,
-        val details_four: String,
-        val details_one: String,
-        val details_three: String,
-        val details_two: String,
-        val name: String,
-        val patient_id: String,
-        val status: String
-    )
+            val care_plan_id: String,
+            val details_four: String,
+            val details_one: String,
+            val details_three: String,
+            val details_two: String,
+            val name: String,
+            val patient_id: String,
+            val status: String
+        )
+    }
 
     /*User Vitals List*/
     data class GetMyVitalsSingleResponseModel(

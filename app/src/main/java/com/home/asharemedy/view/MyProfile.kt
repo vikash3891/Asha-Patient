@@ -10,14 +10,18 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.*
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
@@ -33,6 +37,7 @@ import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.profileData
 import kotlinx.android.synthetic.main.activity_profile_editable.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +46,8 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
+class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
+    NavigationView.OnNavigationItemSelectedListener {
 
     var isEditable = false
     lateinit var dialog: Dialog
@@ -79,6 +85,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             layoutHabits.isEnabled = false
             setupPermissions()
 
+            setupToolDrawer()
             getPatientProfile()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -133,7 +140,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             }
 
             bottomBar.layoutSettings.setOnClickListener {
-                logoutAlertDialog()
+                drawerLayout.openDrawer(GravityCompat.START)
             }
             bottomBar.layoutHome.setOnClickListener {
                 startActivity(
@@ -806,6 +813,74 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
             101
         )
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        try {
+            Log.e("item.itemId", item.itemId.toString())
+            when (item.itemId) {
+
+                R.id.logout -> {
+                    logoutAlertDialog()
+                }
+
+                R.id.navProfile -> {
+                    startActivity(Intent(this, MyProfile::class.java))
+                }
+
+                R.id.navChangePassword -> {
+                    startWebActivity(getString(R.string.privacy_policy), Constants.FAQ)
+                }
+
+                R.id.navPayment -> {
+                    startActivity(Intent(this, ActivityPaymentHistory::class.java))
+                }
+
+                R.id.navFaq -> {
+                    startWebActivity(getString(R.string.privacy_policy), Constants.FAQ)
+                }
+
+                R.id.navTerms -> {
+                    startWebActivity(
+                        getString(R.string.terms_and_conditions),
+                        Constants.TERMS_AND_CONDITION
+                    )
+                }
+
+                R.id.navPrivacy -> {
+                    startWebActivity(getString(R.string.privacy_policy), Constants.PRIVACY_POLICY)
+                }
+
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+
+        }
+    }
+
+    private fun setupToolDrawer() {
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            header!!.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+
+        header!!.title.text = "My Profile"
+
+        toggle.isDrawerIndicatorEnabled = false
+        toggle.setHomeAsUpIndicator(R.drawable.ic_drawer_icon)
+        toggle.setToolbarNavigationClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener(this)
     }
 
 }

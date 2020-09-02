@@ -25,7 +25,7 @@ import retrofit2.Response
 class MyCarePlansActivity : BaseActivity() {
 
     var adapter: MyCarePlansListAdapter? = null
-    var myReportList = ArrayList<ResponseModelClasses.GetMyCarePlanResponseModel>()
+    var myReportList = ArrayList<ResponseModelClasses.GetMyCarePlanResponseModel.TableData>()
     var cDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,19 +73,19 @@ class MyCarePlansActivity : BaseActivity() {
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ArrayList<ResponseModelClasses.GetMyCarePlanResponseModel>> =
+            val call: Call<ResponseModelClasses.GetMyCarePlanResponseModel> =
                 apiService.getMyCarePlanList(AppPrefences.getUserID(this))
             call.enqueue(object :
-                Callback<ArrayList<ResponseModelClasses.GetMyCarePlanResponseModel>> {
+                Callback<ResponseModelClasses.GetMyCarePlanResponseModel> {
                 override fun onResponse(
-                    call: Call<ArrayList<ResponseModelClasses.GetMyCarePlanResponseModel>>,
-                    response: Response<ArrayList<ResponseModelClasses.GetMyCarePlanResponseModel>>
+                    call: Call<ResponseModelClasses.GetMyCarePlanResponseModel>,
+                    response: Response<ResponseModelClasses.GetMyCarePlanResponseModel>
                 ) {
                     try {
                         dismissDialog()
                         Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
-                            myReportList = response.body()!!
+                            myReportList = response.body()!!.data
                             loadList()
                         }
                     } catch (e: Exception) {
@@ -94,7 +94,7 @@ class MyCarePlansActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ArrayList<ResponseModelClasses.GetMyCarePlanResponseModel>>,
+                    call: Call<ResponseModelClasses.GetMyCarePlanResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())

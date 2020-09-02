@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_clinic_visit.view.*
 
 class MyCarePlansListAdapter(
     private val context: Context,
-    private val list: List<ResponseModelClasses.GetMyCarePlanResponseModel>
+    private val list: List<ResponseModelClasses.GetMyCarePlanResponseModel.TableData>
 ) :
     RecyclerView.Adapter<MyCarePlanViewHolder>() {
 
@@ -27,7 +27,7 @@ class MyCarePlansListAdapter(
     }
 
     override fun onBindViewHolder(holder: MyCarePlanViewHolder, position: Int) {
-        val movie: ResponseModelClasses.GetMyCarePlanResponseModel = list[position]
+        val movie: ResponseModelClasses.GetMyCarePlanResponseModel.TableData = list[position]
         holder.bind(movie)
 
         holder.itemView.listItemLayout.setOnClickListener {

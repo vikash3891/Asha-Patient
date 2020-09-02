@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,36 +11,62 @@
             type="com.home.asharemedy.model.DashboardViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.drawerlayout.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <include
-            android:id="@+id/topbar"
-            layout="@layout/topbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_50dp" />
-
-        <GridView
-            android:id="@+id/gvDashboard"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/bottomBar"
-            android:layout_below="@+id/topbar"
-            android:layout_margin="@dimen/dp_5"
-            android:columnWidth="150dp"
-            android:horizontalSpacing="@dimen/dp_10"
-            android:numColumns="auto_fit"
-            android:verticalSpacing="@dimen/dp_10" />
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
 
-        <include
-            android:id="@+id/bottomBar"
-            layout="@layout/bottombar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_50dp"
-            android:layout_alignParentBottom="true" />
+            <include
+                android:id="@+id/headerLayout"
+                layout="@layout/toolbar" />
 
-    </RelativeLayout>
+            <include
+                android:id="@+id/topbar"
+                layout="@layout/topbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50dp"
+                android:visibility="gone" />
+
+            <GridView
+                android:id="@+id/gvDashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bottomBar"
+                android:layout_below="@+id/headerLayout"
+                android:layout_margin="@dimen/dp_5"
+                android:columnWidth="150dp"
+                android:horizontalSpacing="@dimen/dp_10"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="@dimen/dp_10" />
+
+            <include
+                android:id="@+id/bottomBar"
+                layout="@layout/bottombar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50dp"
+                android:layout_alignParentBottom="true" />
+
+        </RelativeLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navView"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:fitsSystemWindows="false"
+            app:headerLayout="@layout/nav_header_home"
+            app:itemIconTint="@color/colorAccent"
+            app:itemTextColor="@color/colorAccent"
+            app:menu="@menu/home_activity_drawer" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

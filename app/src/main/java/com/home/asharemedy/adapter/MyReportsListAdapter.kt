@@ -12,7 +12,7 @@ import com.home.asharemedy.view.ViewDocumentActivity
 import com.home.asharemedy.viewHolder.MyReportViewHolder
 import kotlinx.android.synthetic.main.item_clinic_visit.view.*
 
-class MyReportsListAdapter(private val context: Context, private val list: List<ResponseModelClasses.GetMyRecordResponseModel>) :
+class MyReportsListAdapter(private val context: Context, private val list: List<ResponseModelClasses.GetMyRecordResponseModel.TableData>) :
     RecyclerView.Adapter<MyReportViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReportViewHolder {
@@ -21,7 +21,7 @@ class MyReportsListAdapter(private val context: Context, private val list: List<
     }
 
     override fun onBindViewHolder(holder: MyReportViewHolder, position: Int) {
-        val movie: ResponseModelClasses.GetMyRecordResponseModel = list[position]
+        val movie: ResponseModelClasses.GetMyRecordResponseModel.TableData = list[position]
         holder.bind(movie)
 
         holder.itemView.listItemLayout.setOnClickListener {

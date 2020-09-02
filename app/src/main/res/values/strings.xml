@@ -645,6 +645,7 @@
     <string name="paste_url_for_medical_record_here">Paste URL for Medical Record here</string>
     <string name="document_link">Document Link :</string>
     <string name="review_payment">Review Payment</string>
+    <string name="medical_record">Medical Record</string>
     <string name="payment">Payment</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

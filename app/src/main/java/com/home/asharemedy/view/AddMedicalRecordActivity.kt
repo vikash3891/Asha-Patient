@@ -9,11 +9,15 @@ import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import com.google.android.material.navigation.NavigationView
 import com.home.asharemedy.R
 import com.home.asharemedy.adapter.AddMedicalRecordAdapter
 import com.home.asharemedy.api.ApiClient
@@ -30,13 +34,15 @@ import kotlinx.android.synthetic.main.activity_add_medical_record.*
 import kotlinx.android.synthetic.main.activity_dashboard.bottomBar
 import kotlinx.android.synthetic.main.activity_dashboard.gvDashboard
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 
-class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
+class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
+    NavigationView.OnNavigationItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -71,7 +77,8 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
 
     private fun initView() {
         try {
-            topbar.screenName.text = getString(R.string.dashboard)
+            setupToolDrawer()
+            topbar.screenName.text = getString(R.string.medical_record)
             topbar.imageBack.visibility = View.GONE
             setupPermissions()
 
@@ -112,7 +119,7 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                 finish()
             }
             bottomBar.layoutSettings.setOnClickListener {
-                logoutAlertDialog()
+                drawerLayout.openDrawer(GravityCompat.START)
             }
             bottomBar.layoutHome.setOnClickListener {
                 startActivity(
@@ -272,6 +279,74 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
     } else {
         dismissDialog()
         showToast(getString(R.string.internet))
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        try {
+            Log.e("item.itemId", item.itemId.toString())
+            when (item.itemId) {
+
+                R.id.logout -> {
+                    logoutAlertDialog()
+                }
+
+                R.id.navProfile -> {
+                    startActivity(Intent(this, MyProfile::class.java))
+                }
+
+                R.id.navChangePassword -> {
+                    startWebActivity(getString(R.string.privacy_policy), Constants.FAQ)
+                }
+
+                R.id.navPayment -> {
+                    startActivity(Intent(this, ActivityPaymentHistory::class.java))
+                }
+
+                R.id.navFaq -> {
+                    startWebActivity(getString(R.string.privacy_policy), Constants.FAQ)
+                }
+
+                R.id.navTerms -> {
+                    startWebActivity(
+                        getString(R.string.terms_and_conditions),
+                        Constants.TERMS_AND_CONDITION
+                    )
+                }
+
+                R.id.navPrivacy -> {
+                    startWebActivity(getString(R.string.privacy_policy), Constants.PRIVACY_POLICY)
+                }
+
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+
+        }
+    }
+
+    private fun setupToolDrawer() {
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            headerLayout!!.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+
+        headerLayout!!.title.text = getString(R.string.medical_record)
+
+        toggle.isDrawerIndicatorEnabled = false
+        toggle.setHomeAsUpIndicator(R.drawable.ic_drawer_icon)
+        toggle.setToolbarNavigationClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener(this)
     }
 
 }

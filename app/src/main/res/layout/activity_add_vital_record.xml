@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -11,212 +10,239 @@
             type="com.home.asharemedy.model.DashboardViewModel" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/mainLayout"
+    <androidx.drawerlayout.widget.DrawerLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <include
-            android:id="@+id/topbar"
-            layout="@layout/topbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50" />
-
-        <LinearLayout
-            android:id="@+id/layoutVitalHeader"
+        <RelativeLayout
+            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/topbar"
-            android:layout_marginBottom="@dimen/dp_50"
-            android:background="@color/colorBlackTransparent"
             android:orientation="vertical">
 
-            <!--Select Vital Name-->
-            <LinearLayout
-                android:id="@+id/layoutVitalName"
+            <include
+                android:id="@+id/header"
+                layout="@layout/toolbar" />
+
+            <include
+                android:id="@+id/topbar"
+                layout="@layout/topbar_layout"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_60"
-                android:orientation="horizontal">
+                android:layout_height="@dimen/dp_50" />
 
-                <TextView
-                    android:id="@+id/vitalNameLabel"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_30"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/select_vital"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/vitalName"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_corner_green"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_17" />
-            </LinearLayout>
-
-
-            <!--Date/Time-->
             <LinearLayout
-                android:id="@+id/dateTime"
+                android:id="@+id/layoutVitalHeader"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_below="@+id/header"
+                android:layout_marginBottom="@dimen/dp_50"
+                android:background="@color/colorBlackTransparent"
+                android:orientation="vertical">
+
+                <!--Select Vital Name-->
+                <LinearLayout
+                    android:id="@+id/layoutVitalName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_60"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/vitalNameLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:text="@string/select_vital"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_18"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vitalName"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_green"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_17" />
+                </LinearLayout>
+
+
+                <!--Date/Time-->
+                <LinearLayout
+                    android:id="@+id/dateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/vitalRecordDate"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_green"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_15" />
+
+                    <TextView
+                        android:id="@+id/vitalRecordTime"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_green"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_15" />
+                </LinearLayout>
+
+                <!--BP Systolic/Daistolic-->
+                <LinearLayout
+                    android:id="@+id/bpLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/bpSystolic"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_transparent_edittext"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:hint="@string/systolic"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="@dimen/sp_15" />
+
+                    <EditText
+                        android:id="@+id/bpDaistolic"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_transparent_edittext"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:hint="@string/daistolic"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="@dimen/sp_15" />
+                </LinearLayout>
+
+                <!--Height/Weight/Calories Burned-->
+                <LinearLayout
+                    android:id="@+id/heightWeightLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/heightWeightLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/heightWeightValue"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_weight="1"
+                        android:background="@drawable/drawable_transparent_edittext"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="center"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="@dimen/sp_15" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/vitalRecordDate"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_corner_green"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_15" />
-
-                <TextView
-                    android:id="@+id/vitalRecordTime"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_corner_green"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_15" />
-            </LinearLayout>
-
-            <!--BP Systolic/Daistolic-->
-            <LinearLayout
-                android:id="@+id/bpLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <EditText
-                    android:id="@+id/bpSystolic"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:layout_weight="1"
-                    android:background="@drawable/drawable_transparent_edittext"
-                    android:gravity="center"
-                    android:hint="@string/systolic"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textSize="@dimen/sp_15" />
-
-                <EditText
-                    android:id="@+id/bpDaistolic"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:layout_weight="1"
-                    android:background="@drawable/drawable_transparent_edittext"
-                    android:gravity="center"
-                    android:hint="@string/daistolic"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textSize="@dimen/sp_15" />
-            </LinearLayout>
-
-            <!--Height/Weight/Calories Burned-->
-            <LinearLayout
-                android:id="@+id/heightWeightLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/heightWeightLabel"
-                    android:layout_width="0dp"
+                    android:id="@+id/saveVitalRecord"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_60"
                     android:layout_marginEnd="@dimen/dp_20"
+                    android:background="@drawable/round_corner_green"
                     android:fontFamily="@font/quicksand_medium"
-                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text=""
+                    android:text="@string/save_record"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/heightWeightValue"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:layout_weight="1"
-                    android:background="@drawable/drawable_transparent_edittext"
-                    android:gravity="center"
-                    android:importantForAutofill="no"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:inputType="number"
-                    android:maxLength="5"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textSize="@dimen/sp_15" />
+                    android:textSize="@dimen/sp_16" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/saveVitalRecord"
+
+            <include
+                android:id="@+id/bottomBar"
+                layout="@layout/bottombar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:layout_marginStart="@dimen/dp_15"
-                android:layout_marginTop="@dimen/dp_60"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:background="@drawable/round_corner_green"
-                android:gravity="center"
-                android:fontFamily="@font/quicksand_medium"
-                android:text="@string/save_record"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
+                android:layout_height="@dimen/dp_50"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom" />
 
+        </RelativeLayout>
 
-        <include
-            android:id="@+id/bottomBar"
-            layout="@layout/bottombar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom" />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navView"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:fitsSystemWindows="false"
+            app:headerLayout="@layout/nav_header_home"
+            app:itemIconTint="@color/colorAccent"
+            app:itemTextColor="@color/colorAccent"
+            app:menu="@menu/home_activity_drawer" />
 
-    </RelativeLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

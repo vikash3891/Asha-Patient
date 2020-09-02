@@ -10,93 +10,345 @@
             type="com.home.asharemedy.model.DashboardViewModel" />
     </data>
 
-    <RelativeLayout
+    <androidx.drawerlayout.widget.DrawerLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/drawable_round_corner"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <include
-            android:id="@+id/topBarLayout"
-            layout="@layout/topbar_layout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:layout_alignParentTop="true" />
+            android:layout_height="match_parent"
+            android:background="@drawable/drawable_round_corner"
+            android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/bottomBar"
-            android:layout_below="@+id/topBarLayout"
-            android:fadeScrollbars="true">
+            <include
+                android:id="@+id/header"
+                layout="@layout/toolbar" />
 
-            <LinearLayout
+            <include
+                android:id="@+id/topBarLayout"
+                layout="@layout/topbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_alignParentTop="true"
+                android:visibility="gone" />
+
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_5"
-                android:layout_marginEnd="@dimen/dp_5"
-                android:orientation="vertical">
+                android:layout_above="@+id/bottomBar"
+                android:layout_below="@+id/header"
+                android:fadeScrollbars="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorWhite"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:layout_marginEnd="@dimen/dp_5"
                     android:orientation="vertical">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:orientation="vertical">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/userProfileImage"
-                            android:layout_width="@dimen/dp_100"
-                            android:layout_height="@dimen/dp_100"
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/userProfileImage"
+                                android:layout_width="@dimen/dp_100"
+                                android:layout_height="@dimen/dp_100"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:src="@drawable/ic_emoticon_50dp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_toEndOf="@+id/userProfileImage"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/captureImage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/dp_5"
+                                    android:background="@drawable/round_corner_green"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="center|start"
+                                    android:paddingStart="@dimen/dp_10"
+                                    android:paddingTop="@dimen/dp_5"
+                                    android:paddingEnd="@dimen/dp_10"
+                                    android:paddingBottom="@dimen/dp_5"
+                                    android:text="@string/capture_image"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_11" />
+
+                                <TextView
+                                    android:id="@+id/chooseImage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/dp_5"
+                                    android:background="@drawable/round_corner_green"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="center|start"
+                                    android:paddingStart="@dimen/dp_10"
+                                    android:paddingTop="@dimen/dp_5"
+                                    android:paddingEnd="@dimen/dp_10"
+                                    android:paddingBottom="@dimen/dp_5"
+                                    android:text="@string/choose_image"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_11" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_7"
                             android:layout_marginTop="@dimen/dp_10"
-                            android:src="@drawable/ic_emoticon_50dp" />
+                            android:paddingStart="@dimen/dp_7"
+                            android:paddingEnd="@dimen/dp_7">
+
+                            <TextView
+                                android:id="@+id/communicationDeatailsHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start|center"
+                                android:text="@string/communication_details"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_15"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/communicationEdit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/round_corner_green"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center|start"
+                                android:paddingStart="@dimen/dp_30"
+                                android:paddingTop="@dimen/dp_5"
+                                android:paddingEnd="@dimen/dp_30"
+                                android:paddingBottom="@dimen/dp_5"
+                                android:text="@string/edit"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:layout_toEndOf="@+id/userProfileImage"
+                            android:layout_margin="@dimen/dp_7"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/captureImage"
-                                android:layout_width="wrap_content"
+                            <RelativeLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/dp_5"
-                                android:background="@drawable/round_corner_green"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center|start"
-                                android:paddingStart="@dimen/dp_10"
-                                android:paddingTop="@dimen/dp_5"
-                                android:paddingEnd="@dimen/dp_10"
-                                android:paddingBottom="@dimen/dp_5"
-                                android:text="@string/capture_image"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/sp_11" />
+                                android:padding="@dimen/dp_4">
 
-                            <TextView
-                                android:id="@+id/chooseImage"
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/userName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:padding="@dimen/dp_2"
+                                    android:text=""
+                                    android:textColor="@color/colorLightBlack"
+                                    android:textSize="@dimen/sp_16"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/patientID"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:padding="@dimen/dp_2"
+                                    android:text=""
+                                    android:textColor="@color/colorLightBlack"
+                                    android:textSize="@dimen/sp_15"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/brandPartnerName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/patientID"
+                                    android:layout_alignParentEnd="true"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="end"
+                                    android:padding="@dimen/dp_2"
+                                    android:text=""
+                                    android:textColor="@color/colorLightBlack"
+                                    android:textSize="@dimen/sp_14" />
+                            </RelativeLayout>
+
+                            <!--DOB-->
+                            <LinearLayout
+                                android:id="@+id/layoutDOB"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/dp_5"
-                                android:background="@drawable/round_corner_green"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center|start"
-                                android:paddingStart="@dimen/dp_10"
-                                android:paddingTop="@dimen/dp_5"
-                                android:paddingEnd="@dimen/dp_10"
-                                android:paddingBottom="@dimen/dp_5"
-                                android:text="@string/choose_image"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/sp_11" />
+                                android:orientation="horizontal"
+                                android:padding="@dimen/dp_4">
+
+                                <TextView
+                                    android:id="@+id/dobLabel"
+                                    android:layout_width="@dimen/dp_150"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="start"
+                                    android:padding="@dimen/dp_5"
+                                    android:text="@string/date_of_birth"
+                                    android:textColor="@color/colorAccent" />
+
+                                <TextView
+                                    android:id="@+id/dobValue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:ellipsize="end"
+                                    android:enabled="false"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="start"
+                                    android:hint="@string/mandatory"
+                                    android:imeOptions="actionNext|flagNavigateNext"
+                                    android:maxLength="50"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/dp_5"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/sp_14" />
+                            </LinearLayout>
+
+                            <!--PhoneNumber-->
+                            <LinearLayout
+                                android:id="@+id/layoutPhoneNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/dp_4">
+
+                                <TextView
+                                    android:id="@+id/phoneNumberLabel"
+                                    android:layout_width="@dimen/dp_150"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="start"
+                                    android:padding="@dimen/dp_5"
+                                    android:text="@string/phone_number"
+                                    android:textColor="@color/colorAccent" />
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/phoneNumberValue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:ellipsize="end"
+                                    android:enabled="false"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="start"
+                                    android:hint="@string/mandatory"
+                                    android:imeOptions="actionNext|flagNavigateNext"
+                                    android:maxLength="50"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/dp_5"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/sp_14" />
+                            </LinearLayout>
+
+                            <!--Email ID-->
+                            <LinearLayout
+                                android:id="@+id/layoutEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/dp_4">
+
+                                <TextView
+                                    android:id="@+id/emailLabel"
+                                    android:layout_width="@dimen/dp_150"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="start"
+                                    android:padding="@dimen/dp_5"
+                                    android:text="@string/email_address"
+                                    android:textColor="@color/colorAccent" />
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/emailValue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:ellipsize="end"
+                                    android:enabled="false"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="start"
+                                    android:hint="@string/mandatory"
+                                    android:imeOptions="actionNext|flagNavigateNext"
+                                    android:inputType="textEmailAddress"
+                                    android:maxLength="50"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/dp_5"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/sp_14" />
+                            </LinearLayout>
+
+                            <!--Emergency Contact-->
+                            <LinearLayout
+                                android:id="@+id/layoutEmergencyContact"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/dp_4">
+
+                                <TextView
+                                    android:id="@+id/emergencyContactLabel"
+                                    android:layout_width="@dimen/dp_150"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="start"
+                                    android:padding="@dimen/dp_5"
+                                    android:text="@string/emergency_contact"
+                                    android:textColor="@color/colorAccent" />
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/emergencyContactValue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:ellipsize="end"
+                                    android:enabled="false"
+                                    android:fontFamily="@font/quicksand_medium"
+                                    android:gravity="start"
+                                    android:hint="@string/optional"
+                                    android:imeOptions="actionNext|flagNavigateNext"
+                                    android:maxLength="50"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/dp_5"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/sp_14" />
+                            </LinearLayout>
+
                         </LinearLayout>
-                    </RelativeLayout>
+
+                    </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -107,20 +359,19 @@
                         android:paddingEnd="@dimen/dp_7">
 
                         <TextView
-                            android:id="@+id/communicationDeatailsHeader"
+                            android:id="@+id/basicDetailsHeader"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
                             android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start|center"
-                            android:text="@string/communication_details"
+                            android:gravity="start"
+                            android:text="@string/basic_details"
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp_15"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/communicationEdit"
+                            android:id="@+id/edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -133,7 +384,8 @@
                             android:paddingEnd="@dimen/dp_30"
                             android:paddingBottom="@dimen/dp_5"
                             android:text="@string/edit"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -142,68 +394,142 @@
                         android:layout_margin="@dimen/dp_7"
                         android:orientation="vertical">
 
-                        <RelativeLayout
+                        <!--Nationality-->
+                        <LinearLayout
+                            android:id="@+id/layoutNationality"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:orientation="horizontal"
                             android:padding="@dimen/dp_4">
 
                             <TextView
-                                android:id="@+id/userName"
+                                android:id="@+id/nationalityLabel"
+                                android:layout_width="@dimen/dp_150"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_5"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/nationality"
+                                android:textColor="@color/colorAccent" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/nationalityValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:enabled="false"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:hint="@string/mandatory"
+                                android:imeOptions="actionNext|flagNavigateNext"
+                                android:maxLength="50"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp_5"
+                                android:text=""
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <!--Religion-->
+                        <LinearLayout
+                            android:id="@+id/layoutReligion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_4"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/religionLabel"
+                                android:layout_width="@dimen/dp_150"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_5"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/religion"
+                                android:textColor="@color/colorAccent" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/religionValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/quicksand_medium"
-                                android:padding="@dimen/dp_2"
+                                android:gravity="start"
+                                android:hint="@string/mandatory"
+                                android:imeOptions="actionNext|flagNavigateNext"
+                                android:maxLength="50"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp_10"
                                 android:text=""
-                                android:textColor="@color/colorLightBlack"
-                                android:textSize="@dimen/sp_16"
-                                android:textStyle="bold" />
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <!--Membership-->
+                        <LinearLayout
+                            android:id="@+id/layoutMembership"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_4"
+                            android:visibility="gone">
 
                             <TextView
-                                android:id="@+id/patientID"
+                                android:id="@+id/membershipLabel"
+                                android:layout_width="@dimen/dp_150"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/membership"
+                                android:textColor="@color/colorAccent" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/membershipValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:enabled="false"
                                 android:fontFamily="@font/quicksand_medium"
-                                android:padding="@dimen/dp_2"
-                                android:text=""
-                                android:textColor="@color/colorLightBlack"
-                                android:textSize="@dimen/sp_15"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/brandPartnerName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/patientID"
-                                android:layout_alignParentEnd="true"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="end"
-                                android:padding="@dimen/dp_2"
-                                android:text=""
-                                android:textColor="@color/colorLightBlack"
+                                android:gravity="center"
+                                android:hint="@string/mandatory"
+                                android:imeOptions="actionNext|flagNavigateNext"
+                                android:maxLength="50"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp_5"
+                                android:text="MRN: THB888868"
+                                android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/sp_14" />
-                        </RelativeLayout>
+                        </LinearLayout>
 
-                        <!--DOB-->
+                        <!--Address-->
                         <LinearLayout
-                            android:id="@+id/layoutDOB"
+                            android:id="@+id/layoutAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:padding="@dimen/dp_4">
 
                             <TextView
-                                android:id="@+id/dobLabel"
+                                android:id="@+id/addressLabel"
                                 android:layout_width="@dimen/dp_150"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/quicksand_medium"
                                 android:gravity="start"
                                 android:padding="@dimen/dp_5"
-                                android:text="@string/date_of_birth"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/address_"
                                 android:textColor="@color/colorAccent" />
 
-                            <TextView
-                                android:id="@+id/dobValue"
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/addressValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
@@ -221,26 +547,27 @@
                                 android:textSize="@dimen/sp_14" />
                         </LinearLayout>
 
-                        <!--PhoneNumber-->
+                        <!--City-->
                         <LinearLayout
-                            android:id="@+id/layoutPhoneNumber"
+                            android:id="@+id/layoutCity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:padding="@dimen/dp_4">
 
                             <TextView
-                                android:id="@+id/phoneNumberLabel"
+                                android:id="@+id/cityLabel"
                                 android:layout_width="@dimen/dp_150"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/quicksand_medium"
                                 android:gravity="start"
                                 android:padding="@dimen/dp_5"
-                                android:text="@string/phone_number"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/city"
                                 android:textColor="@color/colorAccent" />
 
                             <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/phoneNumberValue"
+                                android:id="@+id/cityValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
@@ -258,26 +585,104 @@
                                 android:textSize="@dimen/sp_14" />
                         </LinearLayout>
 
-                        <!--Email ID-->
+                        <!--State-->
                         <LinearLayout
-                            android:id="@+id/layoutEmail"
+                            android:id="@+id/layoutState"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:padding="@dimen/dp_4">
 
                             <TextView
-                                android:id="@+id/emailLabel"
+                                android:id="@+id/stateLabel"
                                 android:layout_width="@dimen/dp_150"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/quicksand_medium"
                                 android:gravity="start"
                                 android:padding="@dimen/dp_5"
-                                android:text="@string/email_address"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/state"
                                 android:textColor="@color/colorAccent" />
 
                             <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/emailValue"
+                                android:id="@+id/stateValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:enabled="false"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:hint="@string/mandatory"
+                                android:imeOptions="actionNext|flagNavigateNext"
+                                android:maxLength="50"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp_5"
+                                android:text=""
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <!--Pincode-->
+                        <LinearLayout
+                            android:id="@+id/layoutPincode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_4"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/pincodeLabel"
+                                android:layout_width="@dimen/dp_150"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_5"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/pincode"
+                                android:textColor="@color/colorAccent" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/pincodeValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:enabled="false"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:hint="@string/mandatory"
+                                android:imeOptions="actionNext|flagNavigateNext"
+                                android:maxLength="50"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp_5"
+                                android:text=""
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <!--Communication-->
+                        <LinearLayout
+                            android:id="@+id/layoutCommunication"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_4">
+
+                            <TextView
+                                android:id="@+id/communicationLabel"
+                                android:layout_width="@dimen/dp_150"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_5"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/communication"
+                                android:textColor="@color/colorAccent" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/communicationValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
@@ -287,7 +692,6 @@
                                 android:gravity="start"
                                 android:hint="@string/mandatory"
                                 android:imeOptions="actionNext|flagNavigateNext"
-                                android:inputType="textEmailAddress"
                                 android:maxLength="50"
                                 android:maxLines="1"
                                 android:padding="@dimen/dp_5"
@@ -296,26 +700,27 @@
                                 android:textSize="@dimen/sp_14" />
                         </LinearLayout>
 
-                        <!--Emergency Contact-->
+                        <!--Insurance-->
                         <LinearLayout
-                            android:id="@+id/layoutEmergencyContact"
+                            android:id="@+id/layoutInsurance"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:padding="@dimen/dp_4">
 
                             <TextView
-                                android:id="@+id/emergencyContactLabel"
+                                android:id="@+id/insuranceLabel"
                                 android:layout_width="@dimen/dp_150"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/quicksand_medium"
                                 android:gravity="start"
                                 android:padding="@dimen/dp_5"
-                                android:text="@string/emergency_contact"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/insurance"
                                 android:textColor="@color/colorAccent" />
 
                             <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/emergencyContactValue"
+                                android:id="@+id/insuranceValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
@@ -333,759 +738,381 @@
                                 android:textSize="@dimen/sp_14" />
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_7"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:paddingStart="@dimen/dp_7"
-                    android:paddingEnd="@dimen/dp_7">
-
-                    <TextView
-                        android:id="@+id/basicDetailsHeader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="start"
-                        android:text="@string/basic_details"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_15"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/round_corner_green"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="center|start"
-                        android:paddingStart="@dimen/dp_30"
-                        android:paddingTop="@dimen/dp_5"
-                        android:paddingEnd="@dimen/dp_30"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:text="@string/edit"
-                        android:textColor="@color/white"
-                        android:visibility="gone" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp_7"
-                    android:orientation="vertical">
-
-                    <!--Nationality-->
-                    <LinearLayout
-                        android:id="@+id/layoutNationality"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4">
-
-                        <TextView
-                            android:id="@+id/nationalityLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/nationality"
-                            android:textColor="@color/colorAccent" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/nationalityValue"
+                        <!--EmiratesID-->
+                        <LinearLayout
+                            android:id="@+id/layoutEmiratesID"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_4"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/emiratesIDLabel"
+                                android:layout_width="@dimen/dp_150"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_5"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="@string/emirates_id"
+                                android:textColor="@color/colorAccent" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/emiratesIDValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:enabled="false"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:hint="@string/mandatory"
+                                android:imeOptions="actionNext|flagNavigateNext"
+                                android:maxLength="50"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp_5"
+                                android:text="9971-923-1234"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <!--Primary Health Issues-->
+                        <LinearLayout
+                            android:id="@+id/layoutPrimaryHealthIssues"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_5"
-                            android:text=""
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_4">
+
+                            <TextView
+                                android:id="@+id/primaryHealthIssuesLabel"
+                                android:layout_width="@dimen/dp_150"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:padding="@dimen/dp_5"
+                                android:paddingStart="@dimen/dp_10"
+                                android:text="Primary Health Issues :"
+                                android:textColor="@color/colorAccent" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/primaryHealthIssuesValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:enabled="false"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="start"
+                                android:hint="@string/mandatory"
+                                android:imeOptions="actionNext|flagNavigateNext"
+                                android:maxLength="50"
+                                android:maxLines="2"
+                                android:padding="@dimen/dp_5"
+                                android:text=""
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/sp_14" />
+
+                            <Spinner
+                                android:id="@+id/spinnerPrimaryHealthIssues"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dp_25"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:tooltipText="Select"
+                                android:visibility="gone" />
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <!--Religion-->
-                    <LinearLayout
-                        android:id="@+id/layoutReligion"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4"
+                        android:layout_marginStart="@dimen/dp_7"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_7"
+                        android:paddingEnd="@dimen/dp_7">
+
+                        <TextView
+                            android:id="@+id/habitsHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="start"
+                            android:padding="@dimen/dp_7"
+                            android:text="@string/habits"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/habitEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/round_corner_green"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:gravity="center|start"
+                            android:paddingStart="@dimen/dp_30"
+                            android:paddingTop="@dimen/dp_5"
+                            android:paddingEnd="@dimen/dp_30"
+                            android:paddingBottom="@dimen/dp_5"
+                            android:text="@string/add"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/habitRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_7"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_7"
+                        android:paddingEnd="@dimen/dp_7" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutHabits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_10"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/religionLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/religion"
-                            android:textColor="@color/colorAccent" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/religionValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_10"
-                            android:text=""
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-
-                    <!--Membership-->
-                    <LinearLayout
-                        android:id="@+id/layoutMembership"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/membershipLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/membership"
-                            android:textColor="@color/colorAccent" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/membershipValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_5"
-                            android:text="MRN: THB888868"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-
-                    <!--Address-->
-                    <LinearLayout
-                        android:id="@+id/layoutAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4">
-
-                        <TextView
-                            android:id="@+id/addressLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/address_"
-                            android:textColor="@color/colorAccent" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/addressValue"
+                        <!--Smoking-->
+                        <LinearLayout
+                            android:id="@+id/layoutSmoking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_5"
-                            android:text=""
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
+                            android:gravity="start|center"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
-                    <!--City-->
-                    <LinearLayout
-                        android:id="@+id/layoutCity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4">
+                            <TextView
+                                android:id="@+id/smokingLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="2"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:padding="@dimen/dp_3"
+                                android:text="Smoking: "
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_13" />
 
-                        <TextView
-                            android:id="@+id/cityLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/city"
-                            android:textColor="@color/colorAccent" />
+                            <RadioGroup
+                                android:id="@+id/radioGroupSmoking"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center"
+                                android:layout_weight="4"
+                                android:gravity="start|center"
+                                android:orientation="horizontal">
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/cityValue"
+                                <RadioButton
+                                    android:id="@+id/smokingYes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:padding="@dimen/dp_3"
+                                    android:text="Yes"
+                                    android:textSize="@dimen/sp_12" />
+
+                                <RadioButton
+                                    android:id="@+id/smokingNo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:checked="true"
+                                    android:enabled="false"
+                                    android:padding="@dimen/dp_3"
+                                    android:text="NO"
+                                    android:textSize="@dimen/sp_12" />
+                            </RadioGroup>
+
+                            <EditText
+                                android:id="@+id/smokingFrequency"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/dimen_30dp"
+                                android:layout_weight="2"
+                                android:background="@drawable/edittext_border"
+                                android:enabled="false"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:hint=" per Day"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp_2"
+                                android:textSize="@dimen/sp_11"
+                                android:visibility="invisible" />
+                        </LinearLayout>
+
+                        <!--Drinking-->
+                        <LinearLayout
+                            android:id="@+id/layoutDrinking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_5"
-                            android:text=""
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
+                            android:gravity="start|center"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
-                    <!--State-->
-                    <LinearLayout
-                        android:id="@+id/layoutState"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4">
+                            <TextView
+                                android:id="@+id/drinkingLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="2"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:padding="@dimen/dp_3"
+                                android:text="Drinking: "
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_13" />
 
-                        <TextView
-                            android:id="@+id/stateLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/state"
-                            android:textColor="@color/colorAccent" />
+                            <RadioGroup
+                                android:id="@+id/radioGroupDrinking"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/dp_40"
+                                android:layout_gravity="start"
+                                android:layout_weight="4"
+                                android:gravity="start|center"
+                                android:orientation="horizontal">
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/stateValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_5"
-                            android:text=""
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
+                                <RadioButton
+                                    android:id="@+id/drinkingYes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:padding="@dimen/dp_3"
+                                    android:text="Yes"
+                                    android:textSize="@dimen/sp_12" />
 
-                    <!--Pincode-->
-                    <LinearLayout
-                        android:id="@+id/layoutPincode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4"
-                        android:visibility="gone">
+                                <RadioButton
+                                    android:id="@+id/drinkingNo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:checked="true"
+                                    android:enabled="false"
+                                    android:padding="@dimen/dp_3"
+                                    android:text="NO"
+                                    android:textSize="@dimen/sp_12" />
+                            </RadioGroup>
 
-                        <TextView
-                            android:id="@+id/pincodeLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/pincode"
-                            android:textColor="@color/colorAccent" />
+                            <EditText
+                                android:id="@+id/drinkingFrequency"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/dimen_30dp"
+                                android:layout_weight="2"
+                                android:background="@drawable/edittext_border"
+                                android:enabled="false"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:hint=" per Day"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp_2"
+                                android:textSize="@dimen/sp_11"
+                                android:visibility="invisible" />
+                        </LinearLayout>
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/pincodeValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_5"
-                            android:text=""
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-
-                    <!--Communication-->
-                    <LinearLayout
-                        android:id="@+id/layoutCommunication"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4">
-
-                        <TextView
-                            android:id="@+id/communicationLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/communication"
-                            android:textColor="@color/colorAccent" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/communicationValue"
+                        <!--Exercise-->
+                        <LinearLayout
+                            android:id="@+id/layoutExercise"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_5"
-                            android:text=""
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
+                            android:gravity="start|center"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
-                    <!--Insurance-->
-                    <LinearLayout
-                        android:id="@+id/layoutInsurance"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4">
+                            <TextView
+                                android:id="@+id/exerciseLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/dp_40"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="2"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:padding="@dimen/dp_3"
+                                android:text="Exercise: "
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/sp_13" />
 
-                        <TextView
-                            android:id="@+id/insuranceLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/insurance"
-                            android:textColor="@color/colorAccent" />
+                            <RadioGroup
+                                android:id="@+id/radioGroupExercise"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/dp_40"
+                                android:layout_gravity="start|center"
+                                android:layout_weight="4"
+                                android:gravity="start|center"
+                                android:orientation="horizontal">
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/insuranceValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/optional"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_5"
-                            android:text=""
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
+                                <RadioButton
+                                    android:id="@+id/exerciseYes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:padding="@dimen/dp_3"
+                                    android:text="Yes"
+                                    android:textSize="@dimen/sp_12" />
 
-                    <!--EmiratesID-->
-                    <LinearLayout
-                        android:id="@+id/layoutEmiratesID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4"
-                        android:visibility="gone">
+                                <RadioButton
+                                    android:id="@+id/exerciseNo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:checked="true"
+                                    android:enabled="false"
+                                    android:padding="@dimen/dp_3"
+                                    android:text="NO"
+                                    android:textSize="@dimen/sp_12" />
+                            </RadioGroup>
 
-                        <TextView
-                            android:id="@+id/emiratesIDLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="@string/emirates_id"
-                            android:textColor="@color/colorAccent" />
+                            <EditText
+                                android:id="@+id/exerciseFrequency"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/dimen_30dp"
+                                android:layout_weight="2"
+                                android:background="@drawable/edittext_border"
+                                android:enabled="false"
+                                android:fontFamily="@font/quicksand_medium"
+                                android:gravity="center"
+                                android:hint=" hours per Day"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp_2"
+                                android:textSize="@dimen/sp_11"
+                                android:visibility="invisible" />
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/emiratesIDValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_5"
-                            android:text="9971-923-1234"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
+                        </LinearLayout>
 
-                    <!--Primary Health Issues-->
-                    <LinearLayout
-                        android:id="@+id/layoutPrimaryHealthIssues"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_4">
-
-                        <TextView
-                            android:id="@+id/primaryHealthIssuesLabel"
-                            android:layout_width="@dimen/dp_150"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:padding="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_10"
-                            android:text="Primary Health Issues :"
-                            android:textColor="@color/colorAccent" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/primaryHealthIssuesValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="start"
-                            android:hint="@string/mandatory"
-                            android:imeOptions="actionNext|flagNavigateNext"
-                            android:maxLength="50"
-                            android:maxLines="2"
-                            android:padding="@dimen/dp_5"
-                            android:text=""
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/sp_14" />
-
-                        <Spinner
-                            android:id="@+id/spinnerPrimaryHealthIssues"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_25"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:tooltipText="Select"
-                            android:visibility="gone" />
                     </LinearLayout>
                 </LinearLayout>
+            </ScrollView>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_7"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:paddingStart="@dimen/dp_7"
-                    android:paddingEnd="@dimen/dp_7">
+            <include
+                android:id="@+id/bottomBar"
+                layout="@layout/bottombar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom" />
+        </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/habitsHeader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="start"
-                        android:padding="@dimen/dp_7"
-                        android:text="@string/habits"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_16"
-                        android:textStyle="bold" />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navView"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:fitsSystemWindows="false"
+            app:headerLayout="@layout/nav_header_home"
+            app:itemIconTint="@color/colorAccent"
+            app:itemTextColor="@color/colorAccent"
+            app:menu="@menu/home_activity_drawer" />
 
-                    <TextView
-                        android:id="@+id/habitEdit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/round_corner_green"
-                        android:fontFamily="@font/quicksand_medium"
-                        android:gravity="center|start"
-                        android:paddingStart="@dimen/dp_30"
-                        android:paddingTop="@dimen/dp_5"
-                        android:paddingEnd="@dimen/dp_30"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:text="@string/edit"
-                        android:textColor="@color/white" />
-                </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/habitRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/dp_7"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:paddingStart="@dimen/dp_7"
-                    android:paddingEnd="@dimen/dp_7" />
-
-                <LinearLayout
-                    android:id="@+id/layoutHabits"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_10"
-                    android:visibility="gone">
-
-                    <!--Smoking-->
-                    <LinearLayout
-                        android:id="@+id/layoutSmoking"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="start|center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/smokingLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="2"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:padding="@dimen/dp_3"
-                            android:text="Smoking: "
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_13" />
-
-                        <RadioGroup
-                            android:id="@+id/radioGroupSmoking"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start|center"
-                            android:layout_weight="4"
-                            android:gravity="start|center"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/smokingYes"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:padding="@dimen/dp_3"
-                                android:text="Yes"
-                                android:textSize="@dimen/sp_12" />
-
-                            <RadioButton
-                                android:id="@+id/smokingNo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="true"
-                                android:enabled="false"
-                                android:padding="@dimen/dp_3"
-                                android:text="NO"
-                                android:textSize="@dimen/sp_12" />
-                        </RadioGroup>
-
-                        <EditText
-                            android:id="@+id/smokingFrequency"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dimen_30dp"
-                            android:layout_weight="2"
-                            android:background="@drawable/edittext_border"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:hint=" per Day"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_2"
-                            android:textSize="@dimen/sp_11"
-                            android:visibility="invisible" />
-                    </LinearLayout>
-
-                    <!--Drinking-->
-                    <LinearLayout
-                        android:id="@+id/layoutDrinking"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="start|center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/drinkingLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="2"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:padding="@dimen/dp_3"
-                            android:text="Drinking: "
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_13" />
-
-                        <RadioGroup
-                            android:id="@+id/radioGroupDrinking"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dp_40"
-                            android:layout_gravity="start"
-                            android:layout_weight="4"
-                            android:gravity="start|center"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/drinkingYes"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:padding="@dimen/dp_3"
-                                android:text="Yes"
-                                android:textSize="@dimen/sp_12" />
-
-                            <RadioButton
-                                android:id="@+id/drinkingNo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="true"
-                                android:enabled="false"
-                                android:padding="@dimen/dp_3"
-                                android:text="NO"
-                                android:textSize="@dimen/sp_12" />
-                        </RadioGroup>
-
-                        <EditText
-                            android:id="@+id/drinkingFrequency"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dimen_30dp"
-                            android:layout_weight="2"
-                            android:background="@drawable/edittext_border"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:hint=" per Day"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_2"
-                            android:textSize="@dimen/sp_11"
-                            android:visibility="invisible" />
-                    </LinearLayout>
-
-                    <!--Exercise-->
-                    <LinearLayout
-                        android:id="@+id/layoutExercise"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="start|center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/exerciseLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dp_40"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="2"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:padding="@dimen/dp_3"
-                            android:text="Exercise: "
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/sp_13" />
-
-                        <RadioGroup
-                            android:id="@+id/radioGroupExercise"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dp_40"
-                            android:layout_gravity="start|center"
-                            android:layout_weight="4"
-                            android:gravity="start|center"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/exerciseYes"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:padding="@dimen/dp_3"
-                                android:text="Yes"
-                                android:textSize="@dimen/sp_12" />
-
-                            <RadioButton
-                                android:id="@+id/exerciseNo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="true"
-                                android:enabled="false"
-                                android:padding="@dimen/dp_3"
-                                android:text="NO"
-                                android:textSize="@dimen/sp_12" />
-                        </RadioGroup>
-
-                        <EditText
-                            android:id="@+id/exerciseFrequency"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dimen_30dp"
-                            android:layout_weight="2"
-                            android:background="@drawable/edittext_border"
-                            android:enabled="false"
-                            android:fontFamily="@font/quicksand_medium"
-                            android:gravity="center"
-                            android:hint=" hours per Day"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:maxLines="1"
-                            android:padding="@dimen/dp_2"
-                            android:textSize="@dimen/sp_11"
-                            android:visibility="invisible" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-
-        <include
-            android:id="@+id/bottomBar"
-            layout="@layout/bottombar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom" />
-    </RelativeLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

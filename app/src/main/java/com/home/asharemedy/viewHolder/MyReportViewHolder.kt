@@ -1,6 +1,5 @@
 package com.home.asharemedy.viewHolder
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,8 +19,8 @@ class MyReportViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         reportLink = itemView.findViewById(R.id.reportLink)
     }
 
-    fun bind(movie: ResponseModelClasses.GetMyRecordResponseModel) {
-        //visitDate?.text = movie.date
+    fun bind(movie: ResponseModelClasses.GetMyRecordResponseModel.TableData) {
+
         reportDate?.text = movie.storage_link
         reportName?.text = movie.record_name
         reportLink?.text = movie.medical_record_id

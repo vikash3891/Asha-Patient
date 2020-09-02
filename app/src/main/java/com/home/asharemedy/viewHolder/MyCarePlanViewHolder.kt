@@ -19,7 +19,7 @@ class MyCarePlanViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         carePlanStatus = itemView.findViewById(R.id.carePlanStatus)
     }
 
-    fun bind(movie: ResponseModelClasses.GetMyCarePlanResponseModel) {
+    fun bind(movie: ResponseModelClasses.GetMyCarePlanResponseModel.TableData) {
         //visitDate?.text = movie.date
         carePlanID?.text = movie.care_plan_id
         carePlanName?.text = movie.name

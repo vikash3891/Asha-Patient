@@ -17,10 +17,11 @@
             app:collapseIcon="@drawable/ic_back_new">
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:paddingStart="@dimen/dp_20"
+                android:paddingStart="@dimen/dp_40"
                 android:text="@string/dashboard"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/sp_18"
