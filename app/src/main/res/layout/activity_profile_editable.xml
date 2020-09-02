@@ -851,12 +851,22 @@
                         android:textColor="@color/white" />
                 </RelativeLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/habitRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dp_7"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:paddingStart="@dimen/dp_7"
+                    android:paddingEnd="@dimen/dp_7" />
+
                 <LinearLayout
                     android:id="@+id/layoutHabits"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/dp_10">
+                    android:padding="@dimen/dp_10"
+                    android:visibility="gone">
 
                     <!--Smoking-->
                     <LinearLayout
@@ -864,8 +874,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start|center"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/smokingLabel"
@@ -1002,8 +1012,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start|center"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/exerciseLabel"

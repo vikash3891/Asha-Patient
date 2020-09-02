@@ -11,11 +11,13 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
@@ -23,11 +25,12 @@ import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.chat.utils.getFilePath
+import com.home.asharemedy.test.Adapter
+import com.home.asharemedy.test.SwipeHelper
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.profileData
-import kotlinx.android.synthetic.main.activity_my_vitals.view.*
 import kotlinx.android.synthetic.main.activity_profile_editable.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
@@ -49,6 +52,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
     var habitFrequencyValue = 0
     var habitFrequencyUnit = ""
     var habitStatus = ""
+    var habitData = ArrayList<ResponseModelClasses.GetHabitResponseModel>()
 
     var cDate = ""
     var isPrimaryClicked = false
@@ -441,8 +445,8 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
                         dismissDialog()
                         Log.d("HabitResponse: ", response.body().toString())
                         if (response.body() != null) {
-
-                            updateHabitView(response.body()!!)
+                            habitData = response.body()!!
+                            updateHabitView()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -494,54 +498,73 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    fun updateHabitView(habitData: ArrayList<ResponseModelClasses.GetHabitResponseModel>) {
+    fun updateHabitView() {
 
         try {
-            for (i in 0 until habitData.size) {
-                /*if (habitData[i].patient_habit_id.equals("4")) {
-                    if (habitData[i].status.equals("active")) {
-                        smokingYes.isChecked = true
-                        smokingNo.isChecked = false
-                        smokingFrequency.visibility = View.VISIBLE
-                        smokingFrequency.setText(habitData[i].habit_frequency)
-                        smokingFrequency.hint = habitData[i].habit_frequency_unit
-                    } else {
-                        smokingYes.isChecked = false
-                        smokingNo.isChecked = true
-                        smokingFrequency.visibility = View.GONE
-                    }
-                } else if (habitData[i].patient_habit_id.equals("5")) {
-                    if (habitData[i].status.equals("active")) {
-                        exerciseYes.isChecked = true
-                        exerciseNo.isChecked = false
-                        exerciseFrequency.visibility = View.VISIBLE
-                        exerciseFrequency.setText(habitData[i].habit_frequency)
-                        exerciseFrequency.hint = habitData[i].habit_frequency_unit
-                    } else {
-                        exerciseYes.isChecked = false
-                        exerciseNo.isChecked = true
-                        exerciseFrequency.visibility = View.GONE
-                    }
-                } else if (habitData[i].patient_habit_id.equals("4")) {
+            setUpRecyclerView()
 
-                }*/
-
-                var itemLinearLayout = LinearLayout(this)
-                var itemHabitLabel = TextView(this)
-                var itemHabitValue = TextView(this)
-
-                itemLinearLayout.orientation = LinearLayout.HORIZONTAL
-                itemHabitLabel.text = habitData[i].habit_name
-                itemHabitValue.text = habitData[i].habit_frequency
-
-                itemLinearLayout.addView(itemHabitLabel)
-                itemLinearLayout.addView(itemHabitValue)
-
-                layoutHabits.addView(itemLinearLayout)
-            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun setUpRecyclerView() {
+        habitRecyclerView.adapter = Adapter(
+            habitData
+        )
+        /* habitRecyclerView.addItemDecoration(
+             DividerItemDecoration(
+                 this,
+                 DividerItemDecoration.VERTICAL
+             )
+         )*/
+        habitRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(habitRecyclerView) {
+            override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
+                var buttons = listOf<UnderlayButton>()
+                val deleteButton = deleteButton(position)
+                val editButton = editButton(position)
+                for (i in 0 until habitData.size) {
+                    buttons = listOf(deleteButton, editButton)
+                }
+                /*when (position) {
+                    1 -> buttons = listOf(deleteButton, editButton)
+                    2 -> buttons = listOf(deleteButton, editButton)
+                    3 -> */
+                /*//else -> Unit
+            }*/
+                return buttons
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(habitRecyclerView)
+    }
+
+    private fun deleteButton(position: Int): SwipeHelper.UnderlayButton {
+        return SwipeHelper.UnderlayButton(
+            this,
+            "Delete",
+            14.0f,
+            R.color.colorComparePreviousYear,
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+                    //toast("Deleted item $position")
+                }
+            })
+    }
+
+    private fun editButton(position: Int): SwipeHelper.UnderlayButton {
+        return SwipeHelper.UnderlayButton(
+            this,
+            "Edit",
+            14.0f,
+            R.color.colorAccent,
+            object : SwipeHelper.UnderlayButtonClickListener {
+                override fun onClick() {
+                    showHabitDialog()
+                }
+            })
     }
 
     private fun showHabitDialog() {

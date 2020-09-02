@@ -201,6 +201,7 @@
         <activity android:name=".payu.ActivityPayU" />
         <activity android:name=".view.AddMedicationActivity" />
         <activity android:name=".view.UserMoodActivity" />
+        <activity android:name=".test.TestActivity" />
 
 
         <service android:name=".video.services.LoginService" />
