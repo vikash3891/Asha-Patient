@@ -202,8 +202,7 @@
                                 android:id="@+id/layoutDOB"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/dp_4">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/dobLabel"
@@ -211,7 +210,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/quicksand_medium"
                                     android:gravity="start"
-                                    android:padding="@dimen/dp_5"
+                                    android:padding="@dimen/dp_3"
                                     android:text="@string/date_of_birth"
                                     android:textColor="@color/colorAccent" />
 
@@ -239,8 +238,7 @@
                                 android:id="@+id/layoutPhoneNumber"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/dp_4">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/phoneNumberLabel"
@@ -276,8 +274,7 @@
                                 android:id="@+id/layoutEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/dp_4">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/emailLabel"
@@ -314,8 +311,7 @@
                                 android:id="@+id/layoutEmergencyContact"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/dp_4">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/emergencyContactLabel"
@@ -399,8 +395,7 @@
                             android:id="@+id/layoutNationality"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/dp_4">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/nationalityLabel"
@@ -514,8 +509,7 @@
                             android:id="@+id/layoutAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/dp_4">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/addressLabel"
@@ -552,8 +546,7 @@
                             android:id="@+id/layoutCity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/dp_4">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/cityLabel"
@@ -590,8 +583,7 @@
                             android:id="@+id/layoutState"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/dp_4">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/stateLabel"
@@ -629,7 +621,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:padding="@dimen/dp_4"
                             android:visibility="gone">
 
                             <TextView
@@ -667,8 +658,7 @@
                             android:id="@+id/layoutCommunication"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/dp_4">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/communicationLabel"
@@ -705,8 +695,7 @@
                             android:id="@+id/layoutInsurance"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/dp_4">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/insuranceLabel"
@@ -744,7 +733,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:padding="@dimen/dp_4"
                             android:visibility="gone">
 
                             <TextView
@@ -783,8 +771,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:enabled="false"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/dp_4">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/primaryHealthIssuesLabel"
@@ -829,7 +816,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_7"
-                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:paddingStart="@dimen/dp_7"
                         android:paddingEnd="@dimen/dp_7">
 
@@ -873,223 +860,6 @@
                         android:paddingStart="@dimen/dp_7"
                         android:paddingEnd="@dimen/dp_7" />
 
-                    <LinearLayout
-                        android:id="@+id/layoutHabits"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/dp_10"
-                        android:visibility="gone">
-
-                        <!--Smoking-->
-                        <LinearLayout
-                            android:id="@+id/layoutSmoking"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="start|center"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:id="@+id/smokingLabel"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="2"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:padding="@dimen/dp_3"
-                                android:text="Smoking: "
-                                android:textColor="@color/colorAccent"
-                                android:textSize="@dimen/sp_13" />
-
-                            <RadioGroup
-                                android:id="@+id/radioGroupSmoking"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="start|center"
-                                android:layout_weight="4"
-                                android:gravity="start|center"
-                                android:orientation="horizontal">
-
-                                <RadioButton
-                                    android:id="@+id/smokingYes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:enabled="false"
-                                    android:padding="@dimen/dp_3"
-                                    android:text="Yes"
-                                    android:textSize="@dimen/sp_12" />
-
-                                <RadioButton
-                                    android:id="@+id/smokingNo"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:checked="true"
-                                    android:enabled="false"
-                                    android:padding="@dimen/dp_3"
-                                    android:text="NO"
-                                    android:textSize="@dimen/sp_12" />
-                            </RadioGroup>
-
-                            <EditText
-                                android:id="@+id/smokingFrequency"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/dimen_30dp"
-                                android:layout_weight="2"
-                                android:background="@drawable/edittext_border"
-                                android:enabled="false"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:hint=" per Day"
-                                android:inputType="number"
-                                android:maxLength="2"
-                                android:maxLines="1"
-                                android:padding="@dimen/dp_2"
-                                android:textSize="@dimen/sp_11"
-                                android:visibility="invisible" />
-                        </LinearLayout>
-
-                        <!--Drinking-->
-                        <LinearLayout
-                            android:id="@+id/layoutDrinking"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="start|center"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:id="@+id/drinkingLabel"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="2"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:padding="@dimen/dp_3"
-                                android:text="Drinking: "
-                                android:textColor="@color/colorAccent"
-                                android:textSize="@dimen/sp_13" />
-
-                            <RadioGroup
-                                android:id="@+id/radioGroupDrinking"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/dp_40"
-                                android:layout_gravity="start"
-                                android:layout_weight="4"
-                                android:gravity="start|center"
-                                android:orientation="horizontal">
-
-                                <RadioButton
-                                    android:id="@+id/drinkingYes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:enabled="false"
-                                    android:padding="@dimen/dp_3"
-                                    android:text="Yes"
-                                    android:textSize="@dimen/sp_12" />
-
-                                <RadioButton
-                                    android:id="@+id/drinkingNo"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:checked="true"
-                                    android:enabled="false"
-                                    android:padding="@dimen/dp_3"
-                                    android:text="NO"
-                                    android:textSize="@dimen/sp_12" />
-                            </RadioGroup>
-
-                            <EditText
-                                android:id="@+id/drinkingFrequency"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/dimen_30dp"
-                                android:layout_weight="2"
-                                android:background="@drawable/edittext_border"
-                                android:enabled="false"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:hint=" per Day"
-                                android:inputType="number"
-                                android:maxLength="2"
-                                android:maxLines="1"
-                                android:padding="@dimen/dp_2"
-                                android:textSize="@dimen/sp_11"
-                                android:visibility="invisible" />
-                        </LinearLayout>
-
-                        <!--Exercise-->
-                        <LinearLayout
-                            android:id="@+id/layoutExercise"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="start|center"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:id="@+id/exerciseLabel"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/dp_40"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="2"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:padding="@dimen/dp_3"
-                                android:text="Exercise: "
-                                android:textColor="@color/colorAccent"
-                                android:textSize="@dimen/sp_13" />
-
-                            <RadioGroup
-                                android:id="@+id/radioGroupExercise"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/dp_40"
-                                android:layout_gravity="start|center"
-                                android:layout_weight="4"
-                                android:gravity="start|center"
-                                android:orientation="horizontal">
-
-                                <RadioButton
-                                    android:id="@+id/exerciseYes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:enabled="false"
-                                    android:padding="@dimen/dp_3"
-                                    android:text="Yes"
-                                    android:textSize="@dimen/sp_12" />
-
-                                <RadioButton
-                                    android:id="@+id/exerciseNo"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:checked="true"
-                                    android:enabled="false"
-                                    android:padding="@dimen/dp_3"
-                                    android:text="NO"
-                                    android:textSize="@dimen/sp_12" />
-                            </RadioGroup>
-
-                            <EditText
-                                android:id="@+id/exerciseFrequency"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/dimen_30dp"
-                                android:layout_weight="2"
-                                android:background="@drawable/edittext_border"
-                                android:enabled="false"
-                                android:fontFamily="@font/quicksand_medium"
-                                android:gravity="center"
-                                android:hint=" hours per Day"
-                                android:inputType="number"
-                                android:maxLength="2"
-                                android:maxLines="1"
-                                android:padding="@dimen/dp_2"
-                                android:textSize="@dimen/sp_11"
-                                android:visibility="invisible" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
 
@@ -1105,6 +875,7 @@
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navView"
             android:layout_width="300dp"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@color/colorWhite"

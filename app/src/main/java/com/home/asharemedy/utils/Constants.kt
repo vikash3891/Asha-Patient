@@ -83,6 +83,7 @@ class Constants {
         const val HABIT_FREQUENCY = "habit_frequency"
         const val HABIT_FREQUENCY_UNIT = "habit_frequency_unit"
         const val STATUS = "status"
+        const val PATIENT_HABIT_ID = "patient_habit_id"
 
         const val APPOINTMENT_ID = "appointment_id"
         const val CATEGORY = "category"

@@ -27,7 +27,7 @@ class MyReportsListAdapter(private val context: Context, private val list: List<
         holder.itemView.listItemLayout.setOnClickListener {
 
             val intent = Intent(context, ViewDocumentActivity::class.java)
-            intent.putExtra("fileContent", list[position].file_content)
+            intent.putExtra("medical_record_id", list[position].medical_record_id)
             context.startActivity(intent)
         }
     }

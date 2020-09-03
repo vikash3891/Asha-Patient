@@ -2,6 +2,7 @@ package com.home.asharemedy.view
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
@@ -51,19 +52,17 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
 
     var isEditable = false
     lateinit var dialog: Dialog
-    var isSmokingAdded = false
-    var isDrinkingAdded = false
-    var isExerciseAdded = false
-    var habitName = ""
+
+    var habitNameValue = ""
     var habitFrequencyValue = 0
     var habitFrequencyUnit = ""
-    var habitStatus = ""
+    var habitStatus = "active"
+    var patient_habit_id = ""
+    var patient_id = ""
     var habitData = ArrayList<ResponseModelClasses.GetHabitResponseModel>()
 
     var cDate = ""
     var isPrimaryClicked = false
-
-    var languages = arrayOf("Smoking", "Exercise")
 
     private val REQUEST_CODE = 100
     private val CAMERA_REQUEST_CODE = 200
@@ -82,7 +81,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
 
     private fun initView() {
         try {
-            layoutHabits.isEnabled = false
             setupPermissions()
 
             setupToolDrawer()
@@ -114,31 +112,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                 }
             }
 
-            radioGroupSmoking.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
-
-                if (i == R.id.smokingYes) {
-                    smokingFrequency.visibility = View.VISIBLE
-                } else if (i == R.id.smokingNo) {
-                    smokingFrequency.visibility = View.GONE
-                }
-            }
-            radioGroupDrinking.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
-
-                if (i == R.id.drinkingYes) {
-                    drinkingFrequency.visibility = View.VISIBLE
-                } else if (i == R.id.drinkingNo) {
-                    drinkingFrequency.visibility = View.GONE
-                }
-            }
-            radioGroupExercise.setOnCheckedChangeListener { _: RadioGroup, i: Int ->
-
-                if (i == R.id.exerciseYes) {
-                    exerciseFrequency.visibility = View.VISIBLE
-                } else if (i == R.id.exerciseNo) {
-                    exerciseFrequency.visibility = View.GONE
-                }
-            }
-
             bottomBar.layoutSettings.setOnClickListener {
                 drawerLayout.openDrawer(GravityCompat.START)
             }
@@ -156,7 +129,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                 finish()
             }
             habitEdit.setOnClickListener {
-                showHabitDialog()
+                showHabitDialog(-1)
             }
 
             dobValue.setOnClickListener {
@@ -361,11 +334,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                                 showSuccessPopup(response.body()!!.message)
                             } else {
                                 showSuccessPopup("Profile Updated Successfully")
-                                when {
-                                    isSmokingAdded -> layoutSmoking.visibility = View.VISIBLE
-                                    isDrinkingAdded -> layoutDrinking.visibility = View.VISIBLE
-                                    else -> layoutExercise.visibility = View.VISIBLE
-                                }
                             }
                         }
                     } catch (e: Exception) {
@@ -509,7 +477,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
 
         try {
             setUpRecyclerView()
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -556,7 +523,25 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
             R.color.colorComparePreviousYear,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
-                    //toast("Deleted item $position")
+                    Log.d("Delete Button: ", "Delete Button Clicked")
+                    val alertDialog = AlertDialog.Builder(this@MyProfile)
+                    alertDialog.setTitle(getString(R.string.app_name))
+                    alertDialog.setMessage("Are you sure you want to delete this Habit? ")
+                    alertDialog.setNeutralButton("Cancel") { _, _ ->
+                    }
+
+                    alertDialog.setPositiveButton("Yes") { dialog, which ->
+                        dialog.dismiss()
+                        habitNameValue = habitData[position].habit_name
+                        habitFrequencyValue = habitData[position].habit_frequency.toInt()
+                        habitFrequencyUnit = habitData[position].habit_frequency_unit
+                        patient_habit_id = habitData[position].patient_habit_id
+                        deleteHabitApi()
+                    }
+
+                    alertDialog.show()
+
+
                 }
             })
     }
@@ -569,12 +554,13 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
             R.color.colorAccent,
             object : SwipeHelper.UnderlayButtonClickListener {
                 override fun onClick() {
-                    showHabitDialog()
+                    Log.d("Edit Button: ", "Edit Button Clicked")
+                    showHabitDialog(position)
                 }
             })
     }
 
-    private fun showHabitDialog() {
+    private fun showHabitDialog(position: Int) {
 
         try {
             dialog = Dialog(this)
@@ -592,6 +578,20 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
             val cancel = dialog.findViewById(R.id.cancel) as TextView
             val submit = dialog.findViewById(R.id.submit) as TextView
 
+            if (position > -1) {
+                habitName.setText(habitData[position].habit_name)
+                habitFrequency.setText(habitData[position].habit_frequency)
+
+                when {
+                    habitData[position].habit_frequency_unit.equals("Per Day") -> habitDaily.isChecked =
+                        true
+                    habitData[position].habit_frequency_unit.equals("Per Week") -> habitWeekly.isChecked =
+                        true
+                    habitData[position].habit_frequency_unit.equals("Per Month") -> habitMonthly.isChecked =
+                        true
+                }
+            }
+
             cancel.setOnClickListener {
                 dialog.dismiss()
             }
@@ -599,20 +599,29 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
             submit.setOnClickListener {
 
                 try {
-                    if (habitName.text.toString().isEmpty()) {
-                        showSuccessPopup("Please enter Habit Name.")
-                    } else if (habitFrequency.text.toString().isEmpty()) {
-                        showSuccessPopup("Please enter Habit Frequency.")
-                    } else {
-                        habitFrequencyValue = habitFrequency.text.toString().toInt()
-                        Log.e("Frequency: ", habitFrequencyValue.toString())
-                        habitFrequencyUnit = "per Day"
+                    when {
+                        habitName.text.toString().isEmpty() -> showSuccessPopup("Please enter Habit Name.")
+                        habitFrequency.text.toString().isEmpty() -> showSuccessPopup("Please enter Habit Frequency.")
+                        else -> {
+                            habitNameValue = habitName.text.toString()
+                            habitFrequencyValue = habitFrequency.text.toString().toInt()
+                            Log.e("Frequency: ", habitFrequencyValue.toString())
 
-                        updateAddHabitView(
-                            habitName.text.toString(),
-                            habitFrequency.text.toString()
-                        )
-                        dialog.dismiss()
+                            when {
+                                habitDaily.isChecked -> habitFrequencyUnit = "Per Day"
+                                habitWeekly.isChecked -> habitFrequencyUnit = "Per Week"
+                                habitMonthly.isChecked -> habitFrequencyUnit = "Per Month"
+                            }
+
+                            if (position > -1) {
+                                patient_habit_id = habitData[position].patient_habit_id
+                                patient_id = AppPrefences.getUserID(this)
+                                editHabitApi()
+                            } else {
+                                addHabitApi()
+                            }
+                            dialog.dismiss()
+                        }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -625,43 +634,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
 
     }
 
-    private fun updateAddHabitView(selectedHabit: String, habitFrequency: String) {
-        try {
-
-            /*when (selectedHabit) {
-                "Smoking" -> {
-                    isSmokingAdded = isChecked
-                    habitName = "Smoking"
-                    layoutSmoking.visibility = View.VISIBLE
-                    smokingYes.isChecked = isChecked
-                    smokingFrequency.setText(habitFrequencyValue)
-                    addHabitApi()
-
-                }
-                "Drinking" -> {
-                    isDrinkingAdded = isChecked
-                    habitName = "Drinking"
-                    layoutDrinking.visibility = View.VISIBLE
-                    this.drinkingYes.isChecked = isChecked
-                    this.drinkingFrequency.setText(habitFrequencyValue)
-                    addHabitApi()
-
-                }
-                else -> {
-                    isExerciseAdded = isChecked
-                    habitName = "Exercise"
-                    layoutExercise.visibility = View.VISIBLE
-                    exerciseYes.isChecked = isChecked
-                    exerciseFrequency.setText(habitFrequencyValue)
-                    addHabitApi()
-
-                }
-            }*/
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
 
     }
@@ -670,17 +642,17 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
 
     }
 
-    private fun addHabitApi() = if (Utils.isConnected(this)) {
+    private fun deleteHabitApi() = if (Utils.isConnected(this)) {
         showDialog()
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.LoginResponseModel> =
-                apiService.getHabit(
-                    AppPrefences.getUserID(this),
+                apiService.deleteHabit(
+                    AppPrefences.getUserID(this), patient_habit_id,
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getHabitRequestModel(
-                            habitName, habitFrequencyValue, habitFrequencyUnit, habitStatus
+                            habitNameValue, habitFrequencyValue, habitFrequencyUnit, habitStatus
                         )
                     )
                 )
@@ -699,14 +671,8 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                             if (response.body()!!.message == "fail") {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
-
-                                when {
-                                    isSmokingAdded -> layoutSmoking.visibility = View.VISIBLE
-                                    isDrinkingAdded -> layoutDrinking.visibility = View.VISIBLE
-                                    isExerciseAdded -> layoutExercise.visibility = View.VISIBLE
-                                }
-
-                                showSuccessPopup("Habit added Successfully.")
+                                //showSuccessPopup("Habit added Successfully.")
+                                getPatientHabit()
                             }
                         }
                     } catch (e: Exception) {
@@ -733,6 +699,125 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
         showToast(getString(R.string.internet))
     }
 
+    private fun addHabitApi() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ResponseModelClasses.LoginResponseModel> =
+                apiService.getHabit(
+                    AppPrefences.getUserID(this),
+                    Utils.getJSONRequestBodyAny(
+                        RequestModel.getHabitRequestModel(
+                            habitNameValue, habitFrequencyValue, habitFrequencyUnit, habitStatus
+                        )
+                    )
+                )
+            call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    response: Response<ResponseModelClasses.LoginResponseModel>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("Response:", response.body().toString())
+                        if (response.code() == 400) {
+                            Log.v("Error code 400", response.errorBody().toString())
+                        }
+                        if (response.body() != null) {
+                            if (response.body()!!.message == "fail") {
+                                showSuccessPopup(response.body()!!.message)
+                            } else {
+                                //showSuccessPopup("Habit added Successfully.")
+                                getPatientHabit()
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
+    private fun editHabitApi() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val call: Call<ResponseModelClasses.GetHabitResponseModel> =
+                apiService.editHabit(
+                    AppPrefences.getUserID(this),
+                    Utils.getJSONRequestBodyAny(
+                        RequestModel.editHabitRequestModel(
+                            habitNameValue,
+                            habitFrequencyValue,
+                            habitFrequencyUnit,
+                            patient_habit_id,
+                            patient_id,
+                            habitStatus
+                        )
+                    )
+                )
+            call.enqueue(object : Callback<ResponseModelClasses.GetHabitResponseModel> {
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.GetHabitResponseModel>,
+                    response: Response<ResponseModelClasses.GetHabitResponseModel>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("Response:", response.body().toString())
+                        if (response.code() == 400) {
+                            Log.v("Error code 400", response.errorBody().toString())
+                        }
+                        if (response.body() != null) {
+                            /*if (response.body()!!.message == "fail") {
+                                showSuccessPopup(response.body()!!.message)
+                            } else {*/
+                                //showSuccessPopup("Habit added Successfully.")
+                                getPatientHabit()
+                            /*}*/
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.GetHabitResponseModel>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
     private fun openCalendar(selectedView: View) {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -741,7 +826,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
 
         val dpd = DatePickerDialog(
             this,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
 
                 try {
                     val date = Date(year - 1900, monthOfYear, dayOfMonth)
@@ -851,7 +936,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                 R.id.navPrivacy -> {
                     startWebActivity(getString(R.string.privacy_policy), Constants.PRIVACY_POLICY)
                 }
-
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return true

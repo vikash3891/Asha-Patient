@@ -49,7 +49,7 @@ interface ApiInterface {
     fun getDoctorsList(): Call<ResponseModelClasses.GetFacilityListResponseModel>
 
     /*Get Doctor List*/
-    @GET(Constants.DOCTOR_LIST)//ailmentId=1&city=Delhi
+    @GET(Constants.DOCTOR_LIST)
     fun getDoctorsListByAilment(@Query("ailmentId") ailmentId: String, @Query("city") city: String): Call<ResponseModelClasses.GetFacilityListResponseModel>
 
     /*Get Slot  List*/
@@ -61,9 +61,13 @@ interface ApiInterface {
     @GET(Constants.PATIENT_REG + "/{patientID}" + Constants.HABIT)
     fun getAppointmentSlotList(@Path("patientID") id: String): Call<ArrayList<AppointSlotListModel>>
 
-    /*Get RecordsList */
+    /*Get MedicalRecords List */
     @GET(Constants.PATIENT_REG + "/{patientID}" + Constants.MEDICAL_REPORTS)
     fun getMyRecordsList(@Path("patientID") id: String): Call<ResponseModelClasses.GetMyRecordResponseModel>
+
+    /*Get Medical Record By ID */
+    @GET(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICAL_REPORTS + "/{medical_record_id}")
+    fun getMedicalRecordByID(@Path("patientID") id: String, @Path("medical_record_id") medical_record_id: String): Call<ResponseModelClasses.GetMyRecordItemResponseModel>
 
     /*Get MyCarePlan */
     @GET(Constants.PATIENT_REG + "/{patientID}" + Constants.CARE_PLANS)
@@ -79,24 +83,38 @@ interface ApiInterface {
     fun getMyMedicationsList(@Path("patientID") id: String): Call<ResponseModelClasses.GetMyMedicationResponseModel>
 
     /*Get Appointment List */
-    @GET(Constants.APPOINTMENTS)// + Constants.USER_ID + "={userId}&" + Constants.USER_TYPE + "={userType}")
+    @GET(Constants.APPOINTMENTS)
     fun getMyAppointmentList(@Query("userId") userId: String, @Query("userType") userType: String): Call<ResponseModelClasses.GetMyAppointmentsResponseModel>
 
     /*Get Appointment List */
-    @GET(Constants.APPOINTMENTS)// + Constants.USER_ID + "={userId}&" + Constants.USER_TYPE + "={userType}") startDate=2020-08-10&endDate=2020-08-22
-    fun getMyAppointmentListByDate(@Query("userId") userId: String, @Query("userType") userType: String,
-                                   @Query("startDate") startDate: Date, @Query("endDate") endDate: Date): Call<ResponseModelClasses.GetMyAppointmentsResponseModel>
+    @GET(Constants.APPOINTMENTS)
+    fun getMyAppointmentListByDate(
+        @Query("userId") userId: String, @Query("userType") userType: String,
+        @Query("startDate") startDate: Date, @Query("endDate") endDate: Date
+    ): Call<ResponseModelClasses.GetMyAppointmentsResponseModel>
 
     /*Get PaymentHistory */
-    @GET(Constants.PAYMENT_HISTORY)// + "/{patientID}")   //@Path("patientID") id: String
+    @GET(Constants.PAYMENT_HISTORY)
     fun getPaymentHistoryList(@Query("userId") userId: String, @Query("userType") userType: String): Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>>
 
     /*Get Habit*/
-    @POST(Constants.PATIENT_REG + "/{patientID}" + Constants.HABIT)/*/patients/17/habits*/
+    @POST(Constants.PATIENT_REG + "{patientID}" + Constants.HABIT)
     fun getHabit(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
 
+    /*Delete Habit*/
+    @HTTP(
+        method = "DELETE",
+        path = Constants.PATIENT_REG + "{patientID}" + Constants.HABIT + "/{habit_id}",
+        hasBody = true
+    )
+    fun deleteHabit(@Path("patientID") id: String, @Path("habit_id") habit_id: String, @Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
+
+    /*Edit Habit*/
+    @PUT(Constants.PATIENT_REG + "{patientID}" + Constants.HABIT)
+    fun editHabit(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.GetHabitResponseModel>
+
     /*Get Single Unit Vital*/
-    @POST(Constants.PATIENT_REG + "{patientID}" + Constants.VITALS + "{vitalName}")/*patients/13/vitals/temperature?*/
+    @POST(Constants.PATIENT_REG + "{patientID}" + Constants.VITALS + "{vitalName}")
     fun getSingleUnitVital(@Path("patientID") id: String, @Path("vitalName") vitalName: String, @Body body: RequestBody): Call<ResponseModelClasses.SetVitalResponseModel>
 
     @POST(Constants.FORGOT_PASSWORD)
@@ -105,7 +123,7 @@ interface ApiInterface {
     @POST(Constants.FORGOT_PASSWORD)
     fun setPaymentStepOne(@Body body: RequestBody): Call<ResponseModelClasses.RegistrationResponse>
 
-    @POST(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICATIONS)/*/patients/17/habits*/
+    @POST(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICATIONS)
     fun setMedication(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.SetVitalResponseModel>
 
 }
