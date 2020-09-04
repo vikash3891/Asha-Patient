@@ -36,10 +36,17 @@ import kotlinx.android.synthetic.main.activity_dashboard.gvDashboard
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import java.io.IOException
+
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 
 class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
     NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +66,7 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
     var appointmentID = ""
     var category = ""
     var storageLink = ""
+    private var compressedImageFile: File? = null
 
     var reportType =
         arrayOf("CT/MRI Report", "X-Ray Report", "Blood Reports", "Prescription", "Other Reports")
@@ -95,22 +103,22 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
     }
 
     private fun loadList() {
-        try {
-            for (i in 0..1) {
-                foodsList.add(
-                    DashboardGridModel(
-                        "Document " + i + 1,
-                        R.drawable.doc_icon
-                    )
-                )
-            }
+        /* try {
+             for (i in 0..1) {
+                 foodsList.add(
+                     DashboardGridModel(
+                         "Document " + i + 1,
+                         R.drawable.doc_icon
+                     )
+                 )
+             }
 
-            adapter = AddMedicalRecordAdapter(this, foodsList)
+             adapter = AddMedicalRecordAdapter(this, foodsList)
 
-            gvDashboard.adapter = adapter
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+             gvDashboard.adapter = adapter
+         } catch (e: Exception) {
+             e.printStackTrace()
+         }*/
     }
 
     private fun checkClicks() {
@@ -148,8 +156,9 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                 startActivityForResult(Intent.createChooser(intent, "Select a file"), 111)
             }
             uploadAttachment.setOnClickListener {
-                if (category.isNotEmpty() && storageLink.isNotEmpty() && Utils.fileUploadBase64.isNotEmpty()) {
-                    addRecordApi()
+                if (category.isNotEmpty() && storageLink.isNotEmpty() && compressedImageFile != null) {
+                    //addRecordApi()
+                    uploadProfileImage()
                 } else {
                     showSuccessPopup("Please select from provided options.")
                 }
@@ -169,6 +178,8 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                 storageLink = "capturedImage"
                 Utils.fileUploadBase64 =
                     Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
+                //compressedImageFile = File(data.data!!.path)
+                compressedImageFile = File(getFilePath(applicationContext, data.data!!)!!)
             }
             if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
                 layoutPreview.visibility = View.VISIBLE
@@ -179,6 +190,8 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                 storageLink = getFilePath(applicationContext, data.data!!)!!
                 Utils.fileUploadBase64 =
                     Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
+                //compressedImageFile = File(data.data!!.path)
+                compressedImageFile = File(getFilePath(applicationContext, data.data!!)!!)
             }
             if (resultCode == Activity.RESULT_OK && requestCode == DOCUMENT_REQUEST_CODE) {
                 val selectedFile = data?.data //The uri with the location of the file
@@ -189,7 +202,9 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                         selectedFile
                     )
                     val thumbBitmap = ThumbnailUtils.extractThumbnail(bitmap, 120, 120)
-                    imagePreview.setImageBitmap(thumbBitmap);
+                    imagePreview.setImageBitmap(thumbBitmap)
+                    //compressedImageFile = File(data.data!!.path)
+                    compressedImageFile = File(getFilePath(applicationContext, data.data!!)!!)
                 } catch (ex: IOException) {
                     ex.printStackTrace()
                 }
@@ -349,4 +364,45 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
         navView.setNavigationItemSelectedListener(this)
     }
 
+    private fun uploadProfileImage() {
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+            val imageFile =
+                compressedImageFile!!.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+            val imgBody = MultipartBody.Part.createFormData(
+                "profileImg",
+                compressedImageFile?.name,
+                imageFile
+            )
+            val call = apiService.addProfileImage(
+                AppPrefences.getUserID(this),
+                category,
+
+                imgBody
+            )//storageLink,
+            call.enqueue(object : Callback<ResponseModelClasses.GetUploadRecordResponseModel> {
+                override fun onFailure(
+                    call: Call<ResponseModelClasses.GetUploadRecordResponseModel>,
+                    t: Throwable
+                ) {
+                    Log.d("Failure: ", t.message)
+                }
+
+                override fun onResponse(
+                    call: Call<ResponseModelClasses.GetUploadRecordResponseModel>,
+                    response: Response<ResponseModelClasses.GetUploadRecordResponseModel>
+                ) {
+                    try {
+                        Log.d("Response: ", response.body()!!.message)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }

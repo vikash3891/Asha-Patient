@@ -135,6 +135,24 @@ object ResponseModelClasses {
         )
     }
 
+    /*User MyRecord List*/
+    data class GetUploadRecordResponseModel(
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: TableData
+    ) {
+        data class TableData(
+
+            val category: String,
+            val file_content: String,
+            val medical_record_id: String,
+            val patient_id: String,
+            val record_name: String,
+            val storage_link: String
+        )
+    }
+
     /*User MyRecord*/
     data class GetMyRecordItemResponseModel(
         val description: String,

@@ -2,6 +2,7 @@ package com.home.asharemedy.api
 
 import com.home.asharemedy.model.AppointSlotListModel
 import com.home.asharemedy.utils.Constants
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -125,5 +126,10 @@ interface ApiInterface {
 
     @POST(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICATIONS)
     fun setMedication(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.SetVitalResponseModel>
+
+    @Multipart
+    @POST(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICAL_REPORTS)// @Part("storage_link")  storage_link: String,
+    fun addProfileImage(@Path("patientID") id: String, @Part("category")  category: String,
+                        @Part file: MultipartBody.Part?): Call<ResponseModelClasses.GetUploadRecordResponseModel>
 
 }
