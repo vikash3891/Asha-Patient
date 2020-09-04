@@ -128,8 +128,8 @@ interface ApiInterface {
     fun setMedication(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.SetVitalResponseModel>
 
     @Multipart
-    @POST(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICAL_REPORTS)// @Part("storage_link")  storage_link: String,
-    fun addProfileImage(@Path("patientID") id: String, @Part("category")  category: String,
+    @POST(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICAL_REPORTS)
+    fun addProfileImage(@Path("patientID") id: String, @Part("category")  category: String,@Part("storage_link")  storage_link: String,
                         @Part file: MultipartBody.Part?): Call<ResponseModelClasses.GetUploadRecordResponseModel>
 
 }

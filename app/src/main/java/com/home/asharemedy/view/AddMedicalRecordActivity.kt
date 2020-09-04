@@ -178,7 +178,7 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                 storageLink = "capturedImage"
                 Utils.fileUploadBase64 =
                     Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
-                //compressedImageFile = File(data.data!!.path)
+
                 compressedImageFile = File(getFilePath(applicationContext, data.data!!)!!)
             }
             if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
@@ -368,19 +368,21 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+
             val imageFile =
                 compressedImageFile!!.asRequestBody("multipart/form-data".toMediaTypeOrNull())
             val imgBody = MultipartBody.Part.createFormData(
-                "profileImg",
+                "file_content",
                 compressedImageFile?.name,
                 imageFile
             )
+
             val call = apiService.addProfileImage(
                 AppPrefences.getUserID(this),
                 category,
-
+                storageLink,
                 imgBody
-            )//storageLink,
+            )
             call.enqueue(object : Callback<ResponseModelClasses.GetUploadRecordResponseModel> {
                 override fun onFailure(
                     call: Call<ResponseModelClasses.GetUploadRecordResponseModel>,
@@ -395,6 +397,7 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                 ) {
                     try {
                         Log.d("Response: ", response.body()!!.message)
+                        showSuccessPopup("Medical Record added Successfully.")
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

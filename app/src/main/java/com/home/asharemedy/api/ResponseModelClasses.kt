@@ -137,19 +137,28 @@ object ResponseModelClasses {
 
     /*User MyRecord List*/
     data class GetUploadRecordResponseModel(
-        val description: String,
+        //val description: String,
         val message: String,
         val type: String,
         val data: TableData
     ) {
         data class TableData(
-
+/*"category": "CT Scan",
+        "created_at": "2020-09-04",
+        "file_content":
+"medical_record_id": 146,
+        "patient_id": 68,
+        "record_name": "Simulator Screen Shot - iPhone SE (2nd generation) - 2020-09-01 at 10.34.01.png",
+        "status": "active",
+        "uploaded_by": " "*/
             val category: String,
+            val created_at: String,
             val file_content: String,
             val medical_record_id: String,
             val patient_id: String,
             val record_name: String,
-            val storage_link: String
+            val status: String,
+            val uploaded_by: String
         )
     }
 
