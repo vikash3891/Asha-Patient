@@ -186,7 +186,7 @@ class AddMedicationActivity : BaseActivity(), AdapterView.OnItemSelectedListener
                             Log.v("Error code 400", response.errorBody().toString())
                         }
                         if (response.body() != null) {
-                            showSuccessPopup("Vital Saved Successfully.")
+                            showSuccessPopup("Medication Saved Successfully.")
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

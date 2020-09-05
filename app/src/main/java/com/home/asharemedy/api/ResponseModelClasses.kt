@@ -202,12 +202,19 @@ object ResponseModelClasses {
 
     /*User Vitals List*/
     data class GetMyVitalsSingleResponseModel(
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: ArrayList<TableData>
+    ) {
+        data class TableData(
 
-        val vital_date: String,
-        val vital_id: String,
-        val vital_reading: String,
-        val vital_unit: String
-    )
+            val vital_date: String,
+            val vital_id: String,
+            val vital_reading: String,
+            val vital_unit: String
+        )
+    }
 
     /*User Medication List*/
     data class GetMyMedicationResponseModel(
@@ -290,11 +297,18 @@ object ResponseModelClasses {
 
     /* Set Vital History Response*/
     data class SetVitalResponseModel(
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: TableData
+    ) {
+        data class TableData(
 
-        val vital_date: String,
-        val vital_id: Int,
-        val vital_reading: String,
-        val vital_unit: String
-    )
+            val vital_date: String,
+            val vital_id: String,
+            val vital_reading: String,
+            val vital_unit: String
+        )
+    }
 
 }

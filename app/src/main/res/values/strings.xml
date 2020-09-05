@@ -183,6 +183,7 @@
     <string name="username">Username</string>
     <string name="my_health_record">My Health Record</string>
     <string name="appointments">Appointments</string>
+    <string name="appointment_detail">Appointment Detail</string>
     <string name="_247_doctor">24/7 Doctor</string>
     <string name="talk_to_thb">Talk to THB</string>
     <string name="payment_history">Payment History</string>
@@ -666,5 +667,19 @@
     <string name="frequency_unit">Frequency Unit</string>
     <string name="habit_name">Habit Name</string>
     <string name="habit_frequency">Habit Frequency</string>
+    <string name="purpose_of_appointment">Purpose Of Appointment :</string>
+    <string name="remarks">Remarks :</string>
+    <string name="service_provider_information">Service Provider Information</string>
+    <string name="provider_name">Provider Name :</string>
+    <string name="view_profile">View Profile</string>
+    <string name="amount">Amount :</string>
+    <string name="date_amp_time_information"><![CDATA[Date & Time Information]]></string>
+    <string name="start_time_colon">Start Time :</string>
+    <string name="end_time_colon">End Time :</string>
+    <string name="view_details">View Details</string>
+    <string name="general_information">General Information</string>
+    <string name="provider_type">Provider Type :</string>
+    <string name="payment_information">Payment Information</string>
+    <string name="date">Date :</string>
 
 </resources>

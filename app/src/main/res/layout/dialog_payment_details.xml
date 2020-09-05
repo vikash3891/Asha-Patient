@@ -17,21 +17,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/sp_18"
         android:textStyle="bold" />
-    <!--val amount: String,
-            val cgst_percentage: String,
-            val convenience_fee: String,
-            val discount_percentage: String,
-            val grossTotal: String,
-            val igst_percentage: String,
-            val payer_id: String,
-            val payer_type: String,
-            val payment_id: String,
-            val receiver_id: String,
-            val receiver_type: String,
-            val sgst_percentage: String,
-            val status: String,
-            val transanction_id: String-->
-    <!--Amount-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -38,11 +38,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.random.Random
 
-class MyVitalsActivity : BaseActivity() , NavigationView.OnNavigationItemSelectedListener{
+class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var cDate = ""
     private var selectedVitalName = ""
-    var foodsList = ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>()
+    var foodsList = ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel.TableData>()
     private var selectedVitalIndex = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,15 +117,19 @@ class MyVitalsActivity : BaseActivity() , NavigationView.OnNavigationItemSelecte
             val labels = arrayOf("S", "M", "T", "W", "T", "F", "S")
             var yAxisValues = ArrayList<Entry>()
 
-            for (i in 0 until foodsList.size) {
+            try {
+                for (i in 0 until foodsList.size) {
 
-                yAxisValues.add(
-                    Entry(
-                        foodsList[i].vital_reading.toFloat(),
-                        foodsList[i].vital_reading.toFloat()
+                    yAxisValues.add(
+                        Entry(
+                            foodsList[i].vital_reading.toFloat(),
+                            foodsList[i].vital_reading.toFloat()
+                        )
                     )
-                )
-                xAxisValues.add(foodsList[i].vital_date)
+                    xAxisValues.add(foodsList[i].vital_date)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
 
             val xAxis = lineChart.xAxis
@@ -136,6 +140,7 @@ class MyVitalsActivity : BaseActivity() , NavigationView.OnNavigationItemSelecte
             //xAxis.isGranularityEnabled = true
             xAxis.textSize = 7f
             xAxis.labelRotationAngle = -45f
+           // xAxis.axisMinimum = 0f
 
             var lds = LineDataSet(yAxisValues, selectedVitalName)
             lds.lineWidth = 2f
@@ -149,25 +154,28 @@ class MyVitalsActivity : BaseActivity() , NavigationView.OnNavigationItemSelecte
              lineChart.xAxis.textColor = Color.BLACK
              lineChart.axisLeft.textColor = Color.BLACK
              lineChart.description.text = "Vital Reading"
-             lineChart.moveViewToX(5F);
+
              lineChart.axisRight.textColor = Color.BLACK
-             lineChart.legend.isEnabled = false
+
              lineChart.data.setValueTextColor(Color.BLACK)
              lineChart.isEnabled = true
              lineChart.axisRight.isEnabled = false
-             lineChart.setVisibleXRangeMaximum(5f)
-             lineChart.isHorizontalScrollBarEnabled = true
-             lineChart.canScrollHorizontally(1)
-             val leftAxis = lineChart.axisLeft
-             leftAxis.setDrawGridLines(false)
-             leftAxis.spaceTop = 35f
-             leftAxis.axisMinimum = 0f*/
 
+             */
+            val leftAxis = lineChart.axisLeft
+            leftAxis.setDrawGridLines(false)
+            leftAxis.spaceTop = 35f
+            leftAxis.axisMinimum = 0f
+
+            //lineChart.setVisibleXRangeMaximum(20f)
+            //lineChart.moveViewToX(5F);
+            lineChart.legend.isEnabled = false
+            lineChart.isHorizontalScrollBarEnabled = true
+            lineChart.canScrollHorizontally(1)
             lineChart.axisRight.isEnabled = false
 
-
             lineChart.invalidate()
-            lineChart.refreshDrawableState()
+            //lineChart.refreshDrawableState()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -192,18 +200,18 @@ class MyVitalsActivity : BaseActivity() , NavigationView.OnNavigationItemSelecte
 
             for (i in 0 until foodsList.size) {
                 val parts = foodsList[i].vital_reading.split(",")
-                val partsLow = parts[0].split("/")
-                val partsHigh = parts[1].split("/")
+//                val partsLow = parts[0].split("/")
+//                val partsHigh = parts[1].split("/")
                 entries.add(
                     Entry(
-                        partsLow[0].toFloat(),
-                        partsLow[0].toFloat()
+                        parts[0].toFloat(),
+                        parts[0].toFloat()
                     )
                 )
                 entry.add(
                     Entry(
-                        partsHigh[0].toFloat(),
-                        partsHigh[0].toFloat()
+                        parts[0].toFloat(),
+                        parts[1].toFloat()
                     )
                 )
                 xAxisValues.add(foodsList[i].vital_date)
@@ -356,24 +364,25 @@ class MyVitalsActivity : BaseActivity() , NavigationView.OnNavigationItemSelecte
             Log.d("selectedVitalName: ", selectedVitalName.toLowerCase())
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>> =
+            val call: Call<ResponseModelClasses.GetMyVitalsSingleResponseModel> =
                 apiService.getPatientVitalsList(
                     AppPrefences.getUserID(this),
                     selectedVitalName.toLowerCase()
                 )
             call.enqueue(object :
-                Callback<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>> {
+                Callback<ResponseModelClasses.GetMyVitalsSingleResponseModel> {
                 override fun onResponse(
-                    call: Call<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>>,
-                    response: Response<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>>
+                    call: Call<ResponseModelClasses.GetMyVitalsSingleResponseModel>,
+                    response: Response<ResponseModelClasses.GetMyVitalsSingleResponseModel>
                 ) {
                     try {
                         dismissDialog()
                         Log.d("VitalResponse: ", response.body().toString())
                         if (response.body() != null) {
                             foodsList.clear()
-                            foodsList = response.body()!!
-                            if (selectedVitalName.equals("bloodsugar"))
+                            foodsList = response.body()!!.data
+                            Log.d("VitalResponseSize: ", response.body()!!.data.size.toString())
+                            if (selectedVitalName.equals("bloodpressure"))
                                 drawBPLineChart(lineChart)
                             else {
                                 drawLineChart(lineChart)
@@ -385,7 +394,7 @@ class MyVitalsActivity : BaseActivity() , NavigationView.OnNavigationItemSelecte
                 }
 
                 override fun onFailure(
-                    call: Call<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>>,
+                    call: Call<ResponseModelClasses.GetMyVitalsSingleResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())

@@ -84,8 +84,8 @@ class ActivityAddVitalRecord : BaseActivity(), NavigationView.OnNavigationItemSe
                 vital_date = vitalRecordDate.text.toString()
                 vital_reading = if (selectedVitalName.equals("bloodpressure")) {
 
-                    bpSystolic.text.toString() + "/120" + "," +
-                            bpDaistolic.text.toString() + "/140"
+                    bpSystolic.text.toString() + "," +
+                            bpDaistolic.text.toString()
 
                 } else {
                     heightWeightValue.text.toString()
@@ -148,7 +148,7 @@ class ActivityAddVitalRecord : BaseActivity(), NavigationView.OnNavigationItemSe
             getString(R.string.temperature) -> {
 
                 vital_unit = "C"
-                selectedVitalName = getString(R.string.temperature)
+                selectedVitalName = getString(R.string.temperature).toLowerCase()
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -167,7 +167,7 @@ class ActivityAddVitalRecord : BaseActivity(), NavigationView.OnNavigationItemSe
             getString(R.string.pulse) -> {
                 vital_unit = getString(R.string.pr_min)
 
-                selectedVitalName = getString(R.string.pulse)
+                selectedVitalName = getString(R.string.pulse).toLowerCase()
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -177,7 +177,7 @@ class ActivityAddVitalRecord : BaseActivity(), NavigationView.OnNavigationItemSe
             getString(R.string.height) -> {
                 vital_unit = "ft.inch"
 
-                selectedVitalName = getString(R.string.height)
+                selectedVitalName = getString(R.string.height).toLowerCase()
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -186,9 +186,9 @@ class ActivityAddVitalRecord : BaseActivity(), NavigationView.OnNavigationItemSe
 
             }
             getString(R.string.weight) -> {
-                vital_unit = "kg"
+                vital_unit = "kgs"
 
-                selectedVitalName = getString(R.string.weight)
+                selectedVitalName = getString(R.string.weight).toLowerCase()
                 bpLayout.visibility = View.GONE
                 heightWeightLayout.visibility = View.VISIBLE
 
@@ -277,7 +277,7 @@ class ActivityAddVitalRecord : BaseActivity(), NavigationView.OnNavigationItemSe
                         if (response.code() == 400) {
                             Log.v("Error code 400", response.errorBody().toString())
                         }
-                        if (response.body() != null) {
+                        if (response.body()!!.data.vital_reading != null) {
                             var alertDialog = AlertDialog.Builder(this@ActivityAddVitalRecord)
                             alertDialog.setTitle(getString(R.string.app_name))
                             alertDialog.setMessage("Vital Saved Successfully.")

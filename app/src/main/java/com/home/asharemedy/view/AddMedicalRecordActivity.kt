@@ -408,4 +408,5 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
             e.printStackTrace()
         }
     }
+
 }

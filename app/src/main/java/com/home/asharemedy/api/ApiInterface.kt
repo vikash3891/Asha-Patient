@@ -76,7 +76,8 @@ interface ApiInterface {
 
     /*Get VitalsList */
     @GET(Constants.PATIENT_REG + "{patientID}" + Constants.VITALS + "{vitalName}" + "?")
-    fun getPatientVitalsList(@Path("patientID") id: String, @Path("vitalName") vitalName: String): Call<ArrayList<ResponseModelClasses.GetMyVitalsSingleResponseModel>>
+    fun getPatientVitalsList(@Path("patientID") id: String, @Path("vitalName") vitalName: String):
+            Call<ResponseModelClasses.GetMyVitalsSingleResponseModel>
 
 
     /*Get MedicationsList */
@@ -129,7 +130,20 @@ interface ApiInterface {
 
     @Multipart
     @POST(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICAL_REPORTS)
-    fun addProfileImage(@Path("patientID") id: String, @Part("category")  category: String,@Part("storage_link")  storage_link: String,
-                        @Part file: MultipartBody.Part?): Call<ResponseModelClasses.GetUploadRecordResponseModel>
+    fun addProfileImage(
+        @Path("patientID") id: String, @Part("category") category: String, @Part("storage_link") storage_link: String,
+        @Part file: MultipartBody.Part?
+    ): Call<ResponseModelClasses.GetUploadRecordResponseModel>
+
+
+    /*Get Doctor By ID*/
+    /*http://104.215.179.29/v1/doctors/17*/
+    @GET(Constants.DOCTOR_SLOT_LIST + "/{doctorID}")
+    fun getDoctorByID(@Path("doctorID") id: String): Call<ResponseModelClasses.GetFacilityListResponseModel.TableData1>
+
+    /*Get Payment By ID*/
+    /*http://104.215.179.29/v1/payments/12*/
+    @GET(Constants.PAYMENTS + "/{payment_id}")
+    fun getPaymentDetailsByID(@Path("payment_id") id: String): Call<ResponseModelClasses.GetPaymentHistoryResponseModel>
 
 }

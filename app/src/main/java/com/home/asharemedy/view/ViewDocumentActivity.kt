@@ -104,6 +104,8 @@ class ViewDocumentActivity : BaseActivity() {
                             )
                             val imageBytes =
                                 Base64.decode(myReportList!!.file_content, Base64.DEFAULT)
+
+                            /* .docx, .pdf, .txt */
                             val decodedImage =
                                 BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                             imageDocument.setImageBitmap(decodedImage)
