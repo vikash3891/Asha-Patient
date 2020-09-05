@@ -60,7 +60,7 @@ class AppointmentSlotActivity : BaseActivity(), NavigationView.OnNavigationItemS
             consultationFees.text =
                 getString(R.string.rupees_symbol) + Utils.selectedDoctorFacility!!.fees
             address.text =
-                Utils.selectedDoctorFacility!!.address1 + " " + Utils.selectedDoctorFacility!!.address2
+                Utils.selectedDoctorFacility!!.city + ", " + Utils.selectedDoctorFacility!!.country
             cdate = Utils.getDate()
             getSlotList()
         } catch (e: Exception) {

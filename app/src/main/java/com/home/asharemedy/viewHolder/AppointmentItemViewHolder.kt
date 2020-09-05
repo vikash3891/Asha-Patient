@@ -27,7 +27,7 @@ class AppointmentItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         doctorName?.text = movie.name
         doctorSpeciality?.text = movie.specialization
         consultationFees?.text = getString(R.string.rupees_symbol) + movie.fees
-        address?.text = movie.address1 + " " + movie.address2
+        address?.text = movie.city + ", " + movie.country
     }
 
 }

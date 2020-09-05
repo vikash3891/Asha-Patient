@@ -7,6 +7,7 @@ import com.home.asharemedy.R
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_mood.*
+import java.util.*
 
 class UserMoodActivity : BaseActivity() {
 
@@ -15,7 +16,13 @@ class UserMoodActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mood)
-        moodDate.text = Utils.getDate()
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        moodDate.text = "" + day + " " + Utils.setMonth(month + 1) + ", " + year
+        //moodDate.text = Utils.getDate()
     }
 
     fun onClick(view: View) {

@@ -681,5 +681,12 @@
     <string name="provider_type">Provider Type :</string>
     <string name="payment_information">Payment Information</string>
     <string name="date">Date :</string>
+    <string name="booked">Booked</string>
+    <string name="completed">Completed</string>
+    <string name="morning">Morning</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="afternoon">Afternoon</string>
+    <string name="evening">Evening</string>
+    <string name="available">Available</string>
 
 </resources>
