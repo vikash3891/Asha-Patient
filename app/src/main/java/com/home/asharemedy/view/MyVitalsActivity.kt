@@ -114,7 +114,6 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 
         try {
             var xAxisValues = ArrayList<String>()
-            val labels = arrayOf("S", "M", "T", "W", "T", "F", "S")
             var yAxisValues = ArrayList<Entry>()
 
             try {

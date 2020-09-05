@@ -5,6 +5,8 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.RadioGroup
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
@@ -23,7 +25,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RegistrationActivity : BaseActivity() {
+class RegistrationActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     var name = ""
     var DOB = ""
@@ -39,6 +41,22 @@ class RegistrationActivity : BaseActivity() {
     var refCode = ""
     var gender = ""
     var pincode = ""
+
+    var stateList =
+        arrayOf("Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh",
+            "Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya",
+            "Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","TamilNadu","Telangana","Tripura","Uttarakhand","Uttar Pradesh",
+            "West Bengal","Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli","Daman and Diu","Delhi","Lakshadweep","Puducherry")
+
+    var selectedState = ""
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        selectedState = stateList[position]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +88,13 @@ class RegistrationActivity : BaseActivity() {
                 }
             }
         })
+
+        spinnerState.onItemSelectedListener = this@RegistrationActivity
+
+        val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, stateList)
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerState.adapter = aa
+        selectedState = stateList[0]
     }
 
     override fun onResume() {
@@ -145,11 +170,11 @@ class RegistrationActivity : BaseActivity() {
                 showSuccessPopup("Please enter City")
                 !allValid
                 return
-            } else if (editState.text!!.isEmpty()) {
+            }/* else if (editState.text!!.isEmpty()) {
                 showSuccessPopup("Please enter State")
                 !allValid
                 return
-            } else if (editPincode.text!!.isEmpty()) {
+            }*/ else if (editPincode.text!!.isEmpty()) {
                 showSuccessPopup("Please enter Pin Code.")
                 !allValid
                 return
@@ -190,7 +215,7 @@ class RegistrationActivity : BaseActivity() {
             street = editStreet.text!!.toString().trim()
             password = editPassword.text!!.toString().trim()
             city = editCity.text!!.toString().trim()
-            state = editState.text!!.toString().trim()
+            state = spinnerState.selectedItem.toString().trim()
             country = txtUtilityName.text!!.toString().trim()
             refCode = editReferralCode.text!!.toString().trim()
             pincode = editPincode.text!!.toString().trim()

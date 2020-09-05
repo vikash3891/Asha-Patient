@@ -13,9 +13,11 @@
         android:layout_height="match_parent"
         android:background="@drawable/drawable_background_gradient"
         android:orientation="vertical">
+
         <include
             android:id="@+id/headerLayout"
             layout="@layout/toolbar" />
+
         <include
             android:id="@+id/topbar"
             layout="@layout/topbar_layout"
@@ -149,7 +151,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dp_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <!--Layout Start Date-->
                         <RelativeLayout

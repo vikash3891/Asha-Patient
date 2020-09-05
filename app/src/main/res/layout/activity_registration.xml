@@ -306,9 +306,9 @@
                 android:fontFamily="@font/quicksand_medium"
                 android:hint="@string/mandatory"
                 android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
                 android:maxLength="50"
                 android:maxLines="1"
-                android:inputType="textEmailAddress"
                 android:padding="@dimen/dp_10"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/sp_14" />
@@ -475,7 +475,22 @@
                 android:maxLines="1"
                 android:padding="@dimen/dp_10"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_border">
+
+                <Spinner
+                    android:id="@+id/spinnerState"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:drawableEnd="@drawable/ic_add_green_50dp"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:tooltipText="Select State" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -512,8 +527,8 @@
                 android:fontFamily="@font/quicksand_medium"
                 android:hint="@string/mandatory"
                 android:imeOptions="actionNext|flagNavigateNext"
-                android:maxLength="6"
                 android:inputType="number"
+                android:maxLength="6"
                 android:padding="@dimen/dp_10"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/sp_14" />
@@ -708,8 +723,8 @@
                     android:hint="@string/optional"
                     android:imeOptions="actionNext"
                     android:maxLength="7"
-                    android:padding="@dimen/dp_10"
                     android:maxLines="1"
+                    android:padding="@dimen/dp_10"
                     android:textAllCaps="true"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/sp_14" />
@@ -731,8 +746,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/i_agree_to_the_asha"
                     android:fontFamily="@font/quicksand_medium"
+                    android:text="@string/i_agree_to_the_asha"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_11" />
 
