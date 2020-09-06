@@ -17,7 +17,9 @@ import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.chat.ui.activity.ChatLoginActivity
 import com.home.asharemedy.databinding.LayoutAppointmentDetailBinding
+import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
@@ -88,6 +90,11 @@ class ListItemDetailActivity : BaseActivity(), NavigationView.OnNavigationItemSe
         }
         viewProfile.setOnClickListener {
             getDoctorByID()
+        }
+        ivChat.setOnClickListener {
+            val intent = Intent(this@ListItemDetailActivity, ChatLoginActivity::class.java);
+            intent.putExtra("Username", AppPrefences.getUserName(this))
+            startActivity(intent)
         }
         topbar.imageBack.setOnClickListener {
             finish()

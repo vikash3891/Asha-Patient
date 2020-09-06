@@ -2,10 +2,12 @@ package com.home.asharemedy.view
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.ThumbnailUtils
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -29,6 +31,7 @@ import com.home.asharemedy.chat.utils.getFilePath
 import com.home.asharemedy.model.DashboardGridModel
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
+import com.home.asharemedy.utils.ManagePermissions
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_add_medical_record.*
 import kotlinx.android.synthetic.main.activity_dashboard.bottomBar
@@ -47,6 +50,7 @@ import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.ByteArrayOutputStream
 
 class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
     NavigationView.OnNavigationItemSelectedListener {
@@ -71,6 +75,15 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
     var reportType =
         arrayOf("CT/MRI Report", "X-Ray Report", "Blood Reports", "Prescription", "Other Reports")
 
+    val list = listOf<String>(
+        Manifest.permission.CAMERA,
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
+    private val PermissionsRequestCode = 123
+    private lateinit var managePermissions: ManagePermissions
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_medical_record)
@@ -88,8 +101,9 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
             setupToolDrawer()
             topbar.screenName.text = getString(R.string.medical_record)
             topbar.imageBack.visibility = View.GONE
-            setupPermissions()
-
+            //setupPermissions()
+            managePermissions = ManagePermissions(this,list,PermissionsRequestCode)
+            managePermissions.checkPermissions()
             spinnerHabit.onItemSelectedListener = this@AddMedicalRecordActivity
 
             val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, reportType)
@@ -99,6 +113,25 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
             loadList()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    // Receive the permissions request result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            grantResults: IntArray) {
+        when (requestCode) {
+            PermissionsRequestCode ->{
+                val isPermissionsGranted = managePermissions
+                    .processPermissionsResult(requestCode,permissions,grantResults)
+
+                if(isPermissionsGranted){
+                    // Do the task now
+                    ///toast("Permissions granted.")
+                }else{
+                    //toast("Permissions denied.")
+                }
+                return
+            }
         }
     }
 
@@ -140,6 +173,7 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
             }
 
             layoutCamera.setOnClickListener {
+
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
             }
@@ -176,10 +210,11 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                 layoutPreview.visibility = View.VISIBLE
                 imagePreview.setImageBitmap(data!!.extras?.get("data") as Bitmap)
                 storageLink = "capturedImage"
+                var imageUri = getImageUriFromBitmap(this, data.extras?.get("data") as Bitmap)
                 Utils.fileUploadBase64 =
-                    Utils.encoder(getFilePath(applicationContext, data.data!!)!!)
+                    Utils.encoder(getFilePath(applicationContext, imageUri)!!)
 
-                compressedImageFile = File(getFilePath(applicationContext, data.data!!)!!)
+                compressedImageFile = File(getFilePath(applicationContext, imageUri)!!)
             }
             if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
                 layoutPreview.visibility = View.VISIBLE
@@ -215,14 +250,21 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
         }
     }
 
+    private fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path =
+            MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "Title", null)
+        return Uri.parse(path.toString())
+    }
+
     private fun setupPermissions() {
         try {
-            val permission = ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+            val permission = Utils.checkPermission(
+                this
             )
 
-            if (permission != PackageManager.PERMISSION_GRANTED) {
+            if (permission) {
                 Log.i("Permission", "Permission to record denied")
                 makeRequest()
             }
@@ -409,4 +451,4 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
         }
     }
 
-}
+   }

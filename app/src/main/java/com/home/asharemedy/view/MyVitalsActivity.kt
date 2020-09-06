@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
@@ -121,7 +122,7 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 
                     yAxisValues.add(
                         Entry(
-                            foodsList[i].vital_reading.toFloat(),
+                            i.toFloat(),
                             foodsList[i].vital_reading.toFloat()
                         )
                     )
@@ -132,6 +133,7 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             }
 
             val xAxis = lineChart.xAxis
+            Log.d("Size: ", yAxisValues.size.toString() + " " + xAxisValues.size)
             xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             //xAxis.granularity = 1f
@@ -139,42 +141,34 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             //xAxis.isGranularityEnabled = true
             xAxis.textSize = 7f
             xAxis.labelRotationAngle = -45f
-           // xAxis.axisMinimum = 0f
+            xAxis.axisMinimum = 0f
+            xAxis.labelCount = xAxisValues.size
 
             var lds = LineDataSet(yAxisValues, selectedVitalName)
             lds.lineWidth = 2f
 
-            lds.setColor(Color.RED, 100)
+            lds.setColor(ContextCompat.getColor(this, R.color.colorAccent), 100)
 
             lds.valueTextSize = 10f
             var lineData = LineData(lds)
             lineChart.data = lineData
-            /* lineChart.setDrawGridBackground(false)
-             lineChart.xAxis.textColor = Color.BLACK
-             lineChart.axisLeft.textColor = Color.BLACK
-             lineChart.description.text = "Vital Reading"
+            lineChart.animateXY(1000, 1000)
 
-             lineChart.axisRight.textColor = Color.BLACK
-
-             lineChart.data.setValueTextColor(Color.BLACK)
-             lineChart.isEnabled = true
-             lineChart.axisRight.isEnabled = false
-
-             */
             val leftAxis = lineChart.axisLeft
             leftAxis.setDrawGridLines(false)
             leftAxis.spaceTop = 35f
             leftAxis.axisMinimum = 0f
 
-            //lineChart.setVisibleXRangeMaximum(20f)
-            //lineChart.moveViewToX(5F);
             lineChart.legend.isEnabled = false
             lineChart.isHorizontalScrollBarEnabled = true
             lineChart.canScrollHorizontally(1)
             lineChart.axisRight.isEnabled = false
 
+            lineChart.setVisibleXRangeMaximum(5f)
+
+            lineChart.refreshDrawableState()
             lineChart.invalidate()
-            //lineChart.refreshDrawableState()
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -184,32 +178,23 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     private fun drawBPLineChart(lineChart: LineChart) {
 
         try {
-            val arr1 = ArrayList<String>(10)
-
             var entries = ArrayList<Entry>()
             var entry = ArrayList<Entry>()
             var lines = ArrayList<LineDataSet>()
             var xAxisValues = ArrayList<String>()
-            /*for (i in 0 until 15) {
-
-                entries.add(Entry(i.toFloat(), i.toFloat()))
-                entry.add(Entry((i.toFloat() + 2), i.toFloat()))
-                xAxisValues.add(i.toString())
-            }*/
 
             for (i in 0 until foodsList.size) {
                 val parts = foodsList[i].vital_reading.split(",")
-//                val partsLow = parts[0].split("/")
-//                val partsHigh = parts[1].split("/")
+
                 entries.add(
                     Entry(
-                        parts[0].toFloat(),
+                        i.toFloat(),
                         parts[0].toFloat()
                     )
                 )
                 entry.add(
                     Entry(
-                        parts[0].toFloat(),
+                        i.toFloat(),
                         parts[1].toFloat()
                     )
                 )
@@ -224,11 +209,13 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 
             xAxis.isGranularityEnabled = true
             var lDataSet1 = LineDataSet(entries, selectedVitalName)
-            lDataSet1.setDrawFilled(true)
+            lDataSet1.setDrawFilled(false)
+            lDataSet1.setColors(ContextCompat.getColor(this, R.color.colorComparePreviousYear))
             lines.add(lDataSet1)
 
             var lDataSet2 = LineDataSet(entry, selectedVitalName)
-            lDataSet2.setDrawFilled(true)
+            lDataSet2.setDrawFilled(false)
+            lDataSet2.setColors(ContextCompat.getColor(this, R.color.colorAccent))
             lines.add(lDataSet2)
 
             lineChart.data = LineData(lines as List<ILineDataSet>?)
@@ -243,8 +230,9 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             lineChart.setVisibleXRangeMaximum(5f)
             lineChart.isHorizontalScrollBarEnabled = true
             lineChart.canScrollHorizontally(1)
-            lineChart.invalidate()
             lineChart.refreshDrawableState()
+            lineChart.invalidate()
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
