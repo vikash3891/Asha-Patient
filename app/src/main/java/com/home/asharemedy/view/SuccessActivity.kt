@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
@@ -13,6 +14,7 @@ import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
+import kotlinx.android.synthetic.main.activity_success.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,12 +46,13 @@ class SuccessActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_success)
 
-        Handler().postDelayed(Runnable {
+        /*Handler().postDelayed(Runnable {
 
             startActivity(Intent(this, DashboardActivity::class.java))
             finish()
 
-        }, 5000)
+        }, 5000)*/
+        setPaymentDetailsStepOne()
     }
 
     private fun setPaymentDetailsStepOne() = if (Utils.isConnected(this)) {
@@ -98,16 +101,7 @@ class SuccessActivity : BaseActivity() {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
 
-                                var alertDialog = AlertDialog.Builder(this@SuccessActivity)
-                                alertDialog.setTitle(getString(R.string.app_name))
-                                alertDialog.setMessage("User Registered Successfully")
-
-                                alertDialog.setPositiveButton("OK") { dialog, _ ->
-                                    dialog.dismiss()
-                                    finish()
-                                }
-
-                                alertDialog.show()
+                                setPaymentDetailsStepTwo()
                             }
                         }
                     } catch (e: Exception) {
@@ -160,16 +154,17 @@ class SuccessActivity : BaseActivity() {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
 
-                                var alertDialog = AlertDialog.Builder(this@SuccessActivity)
+                                /*var alertDialog = AlertDialog.Builder(this@SuccessActivity)
                                 alertDialog.setTitle(getString(R.string.app_name))
-                                alertDialog.setMessage("User Registered Successfully")
+                                alertDialog.setMessage("Appointment booked successfully.")
 
                                 alertDialog.setPositiveButton("OK") { dialog, _ ->
                                     dialog.dismiss()
                                     finish()
                                 }
 
-                                alertDialog.show()
+                                alertDialog.show()*/
+                                successLayout.visibility = View.VISIBLE
                             }
                         }
                     } catch (e: Exception) {

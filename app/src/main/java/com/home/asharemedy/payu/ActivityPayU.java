@@ -30,6 +30,7 @@ import com.home.asharemedy.R;
 import com.home.asharemedy.base.BaseActivity;
 import com.home.asharemedy.utils.Constants;
 import com.home.asharemedy.utils.Utils;
+import com.home.asharemedy.view.SuccessActivity;
 import com.payumoney.core.PayUmoneyConfig;
 import com.payumoney.core.PayUmoneyConstants;
 import com.payumoney.core.PayUmoneySdkInitializer;
@@ -248,6 +249,8 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
                 if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
                     if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
                         //Success Transaction
+                        Intent i = new Intent(getApplicationContext(), SuccessActivity.class);
+                        startActivity(i);
                     } else {
                         //Failure Transaction
                     }
