@@ -55,7 +55,7 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             selectedVital.text = getString(R.string.temperature)
             selectedVitalName = getString(R.string.temperature)
 
-            initView()
+            //initView()
             checkOnClick()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -73,6 +73,11 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initView()
     }
 
     private fun checkOnClick() {

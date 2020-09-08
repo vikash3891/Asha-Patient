@@ -284,7 +284,7 @@ class ActivityAddVitalRecord : BaseActivity(), NavigationView.OnNavigationItemSe
 
                             alertDialog.setPositiveButton("OK") { dialog, which ->
                                 dialog.dismiss()
-                                //finish()
+                                finish()
                             }
 
                             alertDialog.show()

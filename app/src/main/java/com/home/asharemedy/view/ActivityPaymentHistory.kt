@@ -28,7 +28,7 @@ import retrofit2.Response
 class ActivityPaymentHistory : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var adapter: PaymentListAdapter? = null
-    var paymentHistoryList = ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>()
+    var paymentHistoryList = ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel.TableData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,16 +79,16 @@ class ActivityPaymentHistory : BaseActivity(), NavigationView.OnNavigationItemSe
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>> =
+            val call: Call<ResponseModelClasses.GetPaymentHistoryResponseModel> =
                 apiService.getPaymentHistoryList(
                     AppPrefences.getUserID(this),
                     Constants.PATIENT_REGISTRATION
                 )
             call.enqueue(object :
-                Callback<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>> {
+                Callback<ResponseModelClasses.GetPaymentHistoryResponseModel> {
                 override fun onResponse(
-                    call: Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>>,
-                    response: Response<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>>
+                    call: Call<ResponseModelClasses.GetPaymentHistoryResponseModel>,
+                    response: Response<ResponseModelClasses.GetPaymentHistoryResponseModel>
                 ) {
                     try {
                         dismissDialog()
@@ -96,7 +96,7 @@ class ActivityPaymentHistory : BaseActivity(), NavigationView.OnNavigationItemSe
 
                         if (response.body() != null) {
                             paymentHistoryList.clear()
-                            paymentHistoryList = response.body()!!
+                            paymentHistoryList = response.body()!!.data
 
                             loadList()
                         }
@@ -106,7 +106,7 @@ class ActivityPaymentHistory : BaseActivity(), NavigationView.OnNavigationItemSe
                 }
 
                 override fun onFailure(
-                    call: Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>>,
+                    call: Call<ResponseModelClasses.GetPaymentHistoryResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())

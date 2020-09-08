@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_clinic_visit.view.*
 
 class PaymentListAdapter(
     private val context: Context,
-    private val list: List<ResponseModelClasses.GetPaymentHistoryResponseModel>
+    private val list: List<ResponseModelClasses.GetPaymentHistoryResponseModel.TableData>
 ) :
     RecyclerView.Adapter<PaymentListViewHolder>() {
 
@@ -27,7 +27,7 @@ class PaymentListAdapter(
 
     override fun onBindViewHolder(holder: PaymentListViewHolder, position: Int) {
         try {
-            val movie: ResponseModelClasses.GetPaymentHistoryResponseModel = list[position]
+            val movie: ResponseModelClasses.GetPaymentHistoryResponseModel.TableData = list[position]
             holder.bind(movie)
 
             holder.itemView.listItemLayout.setOnClickListener {

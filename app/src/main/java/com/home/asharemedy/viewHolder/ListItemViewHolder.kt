@@ -17,6 +17,8 @@ class ListItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private var clinicianSpecName: TextView? = null
     private var complaint: TextView? = null
     private var appointmentTime: TextView? = null
+    private var startTime: TextView? = null
+    private var endTime: TextView? = null
     private var appointmentStatus: TextView? = null
 
     init {
@@ -28,6 +30,8 @@ class ListItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             clinicianSpecName = itemView.findViewById(R.id.clinicianSpecName)
             complaint = itemView.findViewById(R.id.complaint)
             appointmentTime = itemView.findViewById(R.id.appointmentTime)
+            startTime = itemView.findViewById(R.id.startTime)
+            endTime = itemView.findViewById(R.id.endTime)
             appointmentStatus = itemView.findViewById(R.id.appointmentStatus)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -48,6 +52,8 @@ class ListItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             visitYear?.text = parts[0]
             complaint?.text = movie.appointment_info.purpose
             appointmentTime?.text = movie.appointment_slot_info.start_time
+            startTime?.text = Utils.get12HourTime(movie.appointment_slot_info.start_time)
+            endTime?.text = "- " + Utils.get12HourTime(movie.appointment_slot_info.end_time)
             appointmentStatus?.text = movie.appointment_info.status
         } catch (e: Exception) {
             e.printStackTrace()

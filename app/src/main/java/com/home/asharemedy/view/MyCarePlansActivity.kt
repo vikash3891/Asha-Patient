@@ -60,7 +60,7 @@ class MyCarePlansActivity : BaseActivity(), NavigationView.OnNavigationItemSelec
         }
 
         bottomBar.layoutSettings.setOnClickListener {
-            logoutAlertDialog()
+            drawerLayout.openDrawer(GravityCompat.START)
         }
         bottomBar.layoutHome.setOnClickListener {
             startActivity(

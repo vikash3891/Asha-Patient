@@ -27,13 +27,11 @@ class PaymentListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         paymentID = itemView.findViewById(R.id.paymentID)
     }
 
-    fun bind(movie: ResponseModelClasses.GetPaymentHistoryResponseModel) {
+    fun bind(movie: ResponseModelClasses.GetPaymentHistoryResponseModel.TableData) {
 
-        if (movie.payment_date != null) {
-            val parts = movie.payment_date.split("-")
-            paymentDate?.text = parts[2]
-            paymentMonth?.text = Utils.setMonth(parts[1].toInt())
-        }
+        val parts = movie.payment_date.split("-")
+        paymentDate?.text = parts[2]
+        paymentMonth?.text = Utils.setMonth(parts[1].toInt())
 
         paymentAmount?.text = getString(R.string.rupees_symbol) + movie.amount
         paymentStatus?.text = movie.status

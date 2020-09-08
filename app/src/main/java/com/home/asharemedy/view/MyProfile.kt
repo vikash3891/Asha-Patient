@@ -279,13 +279,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                 !allValid
                 return
             } else if (allValid) {
-                profileData!!.patient_name = userName.text.toString()
-                profileData!!.patient_mobile = phoneNumberValue.text.toString()
-                profileData!!.patient_email = emailValue.text.toString()
-                profileData!!.patient_address1 = addressValue.text.toString()
-                profileData!!.patient_address2 = stateValue.text.toString()
-                profileData!!.patient_city = cityValue.text.toString()
-
                 updateProfileApi()
             }
         } catch (e: Exception) {
@@ -304,12 +297,14 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
             profileData!!.emergency_contact_number = emergencyContactValue.text.toString()
             profileData!!.patient_city = cityValue.text.toString()
             profileData!!.patient_state = stateValue.text.toString()
+            profileData!!.patient_email = emailValue.text.toString()
+            profileData!!.emergency_contact_number = emergencyContactValue.text.toString()
             profileData!!.primary_health_issue = primaryHealthIssuesValue.text.toString()
-            profileData!!.photo = Utils.userfileUploadBase64
+            //profileData!!.photo = Utils.userfileUploadBase64
 
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ResponseModelClasses.LoginResponseModel> =
+            val call: Call<ResponseModelClasses.GetPatientProfileResponseModel> =
                 apiService.updateProfile(
                     AppPrefences.getUserID(this),
                     Utils.getJSONRequestBodyAny(
@@ -318,23 +313,24 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                         )
                     )
                 )
-            call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
+            call.enqueue(object : Callback<ResponseModelClasses.GetPatientProfileResponseModel> {
                 override fun onResponse(
-                    call: Call<ResponseModelClasses.LoginResponseModel>,
-                    response: Response<ResponseModelClasses.LoginResponseModel>
+                    call: Call<ResponseModelClasses.GetPatientProfileResponseModel>,
+                    response: Response<ResponseModelClasses.GetPatientProfileResponseModel>
                 ) {
                     try {
                         dismissDialog()
                         Log.d("UpdateProfileResponse:", response.body().toString())
-                        if (response.code() == 400) {
-                            Log.v("Error code 400", response.errorBody().toString())
-                        }
-                        if (response.body() != null) {
-                            if (response.body()!!.message == "fail") {
-                                showSuccessPopup(response.body()!!.message)
-                            } else {
-                                showSuccessPopup("Profile Updated Successfully")
-                            }
+                        /*if (response.code() == 400) {
+                            Log.v(
+                                "Profile not updated. Please try again later.",
+                                response.errorBody().toString()
+                            )
+                        }*/
+                        if (response.code() == 200) {
+                            showSuccessPopup("Profile Updated Successfully")
+                        }else {
+                            showSuccessPopup("Profile not updated. Please try again later.")
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -342,7 +338,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseModelClasses.LoginResponseModel>,
+                    call: Call<ResponseModelClasses.GetPatientProfileResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())
@@ -494,11 +490,11 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
          )*/
         habitRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        val itemTouchHelper = ItemTouchHelper(object : SwipeHelper(habitRecyclerView) {
+        var itemTouchHelper = ItemTouchHelper(object : SwipeHelper(habitRecyclerView) {
             override fun instantiateUnderlayButton(position: Int): List<UnderlayButton> {
                 var buttons = listOf<UnderlayButton>()
-                val deleteButton = deleteButton(position)
-                val editButton = editButton(position)
+                var deleteButton = deleteButton(position)
+                var editButton = editButton(position)
                 for (i in 0 until habitData.size) {
                     buttons = listOf(deleteButton, editButton)
                 }
@@ -540,8 +536,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                     }
 
                     alertDialog.show()
-
-
                 }
             })
     }
@@ -790,8 +784,8 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                             /*if (response.body()!!.message == "fail") {
                                 showSuccessPopup(response.body()!!.message)
                             } else {*/
-                                //showSuccessPopup("Habit added Successfully.")
-                                getPatientHabit()
+                            //showSuccessPopup("Habit added Successfully.")
+                            getPatientHabit()
                             /*}*/
                         }
                     } catch (e: Exception) {

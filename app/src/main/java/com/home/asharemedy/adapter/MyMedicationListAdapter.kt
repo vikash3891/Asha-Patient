@@ -45,12 +45,13 @@ class MyMedicationListAdapter(
 
     override fun getItemCount(): Int = list.size
 
-    private fun showMedicationDialog(position:Int) {
+    private fun showMedicationDialog(position: Int) {
         var dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.medication_listitem_details)
 
+        val drugNameValue = dialog.findViewById(R.id.drugNameValue) as TextView
         val daysValue = dialog.findViewById(R.id.daysValue) as TextView
         val doseValue = dialog.findViewById(R.id.doseValue) as TextView
         val instructionValue = dialog.findViewById(R.id.instructionValue) as TextView
@@ -58,6 +59,7 @@ class MyMedicationListAdapter(
         val layoutOk = dialog.findViewById(R.id.layoutOk) as LinearLayout
 
 
+        drugNameValue.text = list[position].drug_name
         daysValue.text = list[position].days
         doseValue.text = list[position].dosage_instructions
         instructionValue.text = list[position].dosage_instructions

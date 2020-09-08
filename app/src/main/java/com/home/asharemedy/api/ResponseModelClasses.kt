@@ -127,11 +127,14 @@ object ResponseModelClasses {
         data class TableData(
 
             val category: String,
+            val created_at: String,
             val file_content: String,
             val medical_record_id: String,
             val patient_id: String,
             val record_name: String,
-            val storage_link: String
+            val storage_link: String,
+            val status: String,
+            val uploaded_by: String
         )
     }
 
@@ -143,14 +146,7 @@ object ResponseModelClasses {
         val data: TableData
     ) {
         data class TableData(
-/*"category": "CT Scan",
-        "created_at": "2020-09-04",
-        "file_content":
-"medical_record_id": 146,
-        "patient_id": 68,
-        "record_name": "Simulator Screen Shot - iPhone SE (2nd generation) - 2020-09-01 at 10.34.01.png",
-        "status": "active",
-        "uploaded_by": " "*/
+
             val category: String,
             val created_at: String,
             val file_content: String,
@@ -189,7 +185,9 @@ object ResponseModelClasses {
     ) {
         data class TableData(
 
+            val appointment_id: String,
             val care_plan_id: String,
+            val careplan_date: String,
             val details_four: String,
             val details_one: String,
             val details_three: String,
@@ -277,7 +275,32 @@ object ResponseModelClasses {
 
     /*User PaymentHistory List*/
     data class GetPaymentHistoryResponseModel(
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: ArrayList<TableData>
+    ) {
+        data class TableData(
 
+            val amount: String,
+            val cgst_percentage: String,
+            val convenience_fee: String,
+            val discount_percentage: String,
+            val gross_total: String,
+            val igst_percentage: String,
+            val payer_id: String,
+            val payer_type: String,
+            val payment_date: String,
+            val payment_id: String,
+            val receiver_id: String,
+            val receiver_type: String,
+            val sgst_percentage: String,
+            val status: String,
+            val transanction_id: String
+        )
+    }
+
+    data class GetPaymentHistoryByIDResponseModel(
         val amount: String,
         val cgst_percentage: String,
         val convenience_fee: String,

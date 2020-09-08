@@ -36,7 +36,7 @@ class ListItemDetailActivity : BaseActivity(), NavigationView.OnNavigationItemSe
     var doctorFacilityDetails:
             ResponseModelClasses.GetFacilityListResponseModel.TableData1? = null
     var paymentDetails:
-            ResponseModelClasses.GetPaymentHistoryResponseModel? = null
+            ResponseModelClasses.GetPaymentHistoryByIDResponseModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,25 +58,27 @@ class ListItemDetailActivity : BaseActivity(), NavigationView.OnNavigationItemSe
         try {
             setupToolDrawer()
             purposeValue.text =
-                Utils.selectedAppointmentDetails[0].appointment_info.purpose
+                Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_info.purpose
             remarksValue.text =
-                Utils.selectedAppointmentDetails[0].appointment_info.remarks
+                Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_info.remarks
             statusValue.text =
-                Utils.selectedAppointmentDetails[0].appointment_info.status
+                Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_info.status
 
             providerTypeValue.text =
-                Utils.selectedAppointmentDetails[0].appointment_provider_info.provider_type
+                Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_provider_info.provider_type
             facilityNameValue.text =
-                Utils.selectedAppointmentDetails[0].appointment_provider_info.provider_name
+                Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_provider_info.provider_name
 
 
             amountValue.text =
-                getString(R.string.rupees_symbol) + " " + Utils.selectedAppointmentDetails[0].appointment_info.payment_amount
+                getString(R.string.rupees_symbol) + "" + Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_info.payment_amount
 
-            dateValue.text = Utils.selectedAppointmentDetails[0].appointment_slot_info.slot_date
+            dateValue.text =
+                Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_slot_info.slot_date
             startTimeValue.text =
-                Utils.selectedAppointmentDetails[0].appointment_slot_info.start_time
-            endTimeValue.text = Utils.selectedAppointmentDetails[0].appointment_slot_info.end_time
+                Utils.get12HourTime(Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_slot_info.start_time)
+            endTimeValue.text =
+                Utils.get12HourTime(Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_slot_info.end_time)
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -189,7 +191,7 @@ class ListItemDetailActivity : BaseActivity(), NavigationView.OnNavigationItemSe
 
             val call: Call<ResponseModelClasses.GetFacilityListResponseModel.TableData1> =
                 apiService.getDoctorByID(
-                    Utils.selectedAppointmentDetails[0].appointment_provider_info.provider_id
+                    Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_provider_info.provider_id
                 )
             call.enqueue(object :
                 Callback<ResponseModelClasses.GetFacilityListResponseModel.TableData1> {
@@ -235,15 +237,15 @@ class ListItemDetailActivity : BaseActivity(), NavigationView.OnNavigationItemSe
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
 
-            val call: Call<ResponseModelClasses.GetPaymentHistoryResponseModel> =
+            val call: Call<ResponseModelClasses.GetPaymentHistoryByIDResponseModel> =
                 apiService.getPaymentDetailsByID(
-                    Utils.selectedAppointmentDetails[0].appointment_info.payment_id
+                    Utils.selectedAppointmentDetails[Utils.selectedAppointment].appointment_info.payment_id
                 )
             call.enqueue(object :
-                Callback<ResponseModelClasses.GetPaymentHistoryResponseModel> {
+                Callback<ResponseModelClasses.GetPaymentHistoryByIDResponseModel> {
                 override fun onResponse(
-                    call: Call<ResponseModelClasses.GetPaymentHistoryResponseModel>,
-                    response: Response<ResponseModelClasses.GetPaymentHistoryResponseModel>
+                    call: Call<ResponseModelClasses.GetPaymentHistoryByIDResponseModel>,
+                    response: Response<ResponseModelClasses.GetPaymentHistoryByIDResponseModel>
                 ) {
                     try {
                         dismissDialog()
@@ -259,7 +261,7 @@ class ListItemDetailActivity : BaseActivity(), NavigationView.OnNavigationItemSe
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseModelClasses.GetPaymentHistoryResponseModel>,
+                    call: Call<ResponseModelClasses.GetPaymentHistoryByIDResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())
@@ -295,8 +297,9 @@ class ListItemDetailActivity : BaseActivity(), NavigationView.OnNavigationItemSe
             doctorName.text = doctorFacilityDetails!!.name
             doctorGender.text = doctorFacilityDetails!!.gender
             doctorSpeciality.text = doctorFacilityDetails!!.specialization
-            experience.text = "Experience: " + doctorFacilityDetails!!.experience
-            consultationFees.text = doctorFacilityDetails!!.fees
+            experience.text = doctorFacilityDetails!!.experience + " years experience"
+            consultationFees.text =
+                Utils.getString(R.string.rupees_symbol) + doctorFacilityDetails!!.fees + " per consultation"
 
             layoutOk.setOnClickListener { dialog.dismiss() }
             dialog.show()
@@ -320,10 +323,12 @@ class ListItemDetailActivity : BaseActivity(), NavigationView.OnNavigationItemSe
             val statusValue = dialog.findViewById(R.id.statusValue) as TextView
             val layoutOk = dialog.findViewById(R.id.layoutOk) as LinearLayout
 
-            amountValue.text = paymentDetails!!.amount
+            amountValue.text = Utils.getString(R.string.rupees_symbol) + paymentDetails!!.amount
             discountValue.text = paymentDetails!!.discount_percentage
-            convenienceValue.text = paymentDetails!!.convenience_fee
-            grossTotalValue.text = paymentDetails!!.gross_total
+            convenienceValue.text =
+                Utils.getString(R.string.rupees_symbol) + paymentDetails!!.convenience_fee
+            grossTotalValue.text =
+                Utils.getString(R.string.rupees_symbol) + paymentDetails!!.gross_total
             statusValue.text = paymentDetails!!.status
             layoutOk.setOnClickListener { dialog.dismiss() }
             dialog.show()

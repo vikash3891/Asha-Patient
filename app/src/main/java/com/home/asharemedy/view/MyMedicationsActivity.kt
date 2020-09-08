@@ -41,9 +41,14 @@ class MyMedicationsActivity : BaseActivity(), NavigationView.OnNavigationItemSel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clinic_visit)
-        initView()
+
         checkOnClick()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initView()
     }
 
     private fun initView() {
@@ -51,23 +56,7 @@ class MyMedicationsActivity : BaseActivity(), NavigationView.OnNavigationItemSel
         header.visibility = View.GONE
         floatingActionButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
         floatingActionButton.visibility = View.VISIBLE
-        /*for (i in 0..10) {
 
-            medicationsList.add(
-                ResponseModelClasses.GetMyMedicationResponseModel(
-                    "Paracetamol", "10", "2", "14", "For Fever", "1"
-                )
-            )
-        }
-        adapter = MyMedicationListAdapter(this, medicationsList)
-
-        listRecyc.apply {
-            // set a LinearLayoutManager to handle Android
-            // RecyclerView behavior
-            layoutManager = LinearLayoutManager(this@MyMedicationsActivity)
-            // set the custom adapter to the RecyclerView
-            adapter = MyMedicationListAdapter(this@MyMedicationsActivity, medicationsList)
-        }*/
         setupToolDrawer()
         getMyMedicationsList()
     }
@@ -90,7 +79,7 @@ class MyMedicationsActivity : BaseActivity(), NavigationView.OnNavigationItemSel
         }
 
         bottomBar.layoutSettings.setOnClickListener {
-            logoutAlertDialog()
+            drawerLayout.openDrawer(GravityCompat.START)
         }
         bottomBar.layoutHome.setOnClickListener {
             startActivity(

@@ -1,5 +1,6 @@
 package com.home.asharemedy.view
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
@@ -186,7 +187,16 @@ class AddMedicationActivity : BaseActivity(), AdapterView.OnItemSelectedListener
                             Log.v("Error code 400", response.errorBody().toString())
                         }
                         if (response.body() != null) {
-                            showSuccessPopup("Medication Saved Successfully.")
+                            var alertDialog = AlertDialog.Builder(this@AddMedicationActivity)
+                            alertDialog.setTitle(getString(R.string.app_name))
+                            alertDialog.setMessage("Medication Saved Successfully.")
+
+                            alertDialog.setPositiveButton("OK") { dialog, which ->
+                                dialog.dismiss()
+                                finish()
+                            }
+
+                            alertDialog.show()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

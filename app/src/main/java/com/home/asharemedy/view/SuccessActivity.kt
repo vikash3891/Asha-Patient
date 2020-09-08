@@ -60,7 +60,7 @@ class SuccessActivity : BaseActivity() {
         try {
             var payment_id = "1"
             payment_date = Utils.getDate()
-            var setPaymentRequestOne = ResponseModelClasses.GetPaymentHistoryResponseModel(
+            var setPaymentRequestOne = ResponseModelClasses.GetPaymentHistoryResponseModel.TableData(
                 amount,
                 cgst_percentage,
                 convenience_fee,

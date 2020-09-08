@@ -112,7 +112,7 @@ object RequestModel {
         var map = HashMap<String, String>()
         map.put(Constants.PATIENT_NAME, patient_name)
         map.put(Constants.PATIENT_DOB, patient_dob)
-        map.put(Constants.PATIENT_GENDER, patient_gender.toLowerCase())
+        map.put(Constants.PATIENT_GENDER, patient_gender)
         map.put(Constants.PATIENT_EMAIL, patient_email)
         map.put(Constants.PATIENT_MOBILE, patient_mobile)
         map.put(Constants.PATIENT_PASSWORD, patient_password)
@@ -135,6 +135,8 @@ object RequestModel {
         var map = HashMap<String, Any>()
 
         map.put(Constants.PATIENT_NAME, data.patient_name)
+        map.put(Constants.PATIENT_EMAIL, data.patient_email)
+        map.put(Constants.PATIENT_ID, data.patient_id.toInt())
         map.put(Constants.PATIENT_DOB, data.patient_dob)
         map.put(Constants.PATIENT_GENDER, data.patient_gender)
         map.put(Constants.PATIENT_MOBILE, data.patient_mobile)
@@ -145,17 +147,17 @@ object RequestModel {
         map.put(Constants.PATIENT_STATE, data.patient_state)
         map.put(Constants.PATIENT_PINCODE, "12345")
         map.put(Constants.PATIENT_COUNTRY, data.patient_country)
-        map.put(Constants.PATIENT_REFCODE, "AE9384SD")
-        map.put(Constants.MEMBERSHIP_NUMBER, "cdj23727Jn")
-        map.put(Constants.EMERGENCY_CONTACT_NAME, "John Doe")
-        map.put(Constants.EMERGENCY_CONTACT_RELATION, "Father")
-        map.put(Constants.EMERGENCY_CONTACT_NUMBER, "911234567890")
-        map.put(Constants.PHOTO, "string")
-        //map.put(Constants.ALLERGIES, data.allergies)
-        map.put(Constants.INSURED, true)
-        map.put(Constants.INSURANCE_COMPANY_NAME, "ABC")
-        map.put(Constants.INSURANCE_VALIDITY, "2020-08-03")
-        map.put(Constants.PRIMARY_HEALTH_ISSUE, "XYZ")
+        map.put(Constants.PATIENT_REFCODE, data.patient_refcode)
+        map.put(Constants.MEMBERSHIP_NUMBER, data.membership_number)
+        map.put(Constants.EMERGENCY_CONTACT_NAME, data.emergency_contact_name)
+        map.put(Constants.EMERGENCY_CONTACT_RELATION, data.emergency_contact_relation)
+        map.put(Constants.EMERGENCY_CONTACT_NUMBER, data.emergency_contact_number)
+        map.put(Constants.PHOTO, data.photo)
+        map.put(Constants.ALLERGIES, data.allergies)
+        map.put(Constants.INSURED, data.insured.toBoolean())
+        map.put(Constants.INSURANCE_COMPANY_NAME, data.insurance_company_name)
+        map.put(Constants.INSURANCE_VALIDITY, data.insurance_company_name)
+        map.put(Constants.PRIMARY_HEALTH_ISSUE, data.primary_health_issue)
         map.put(Constants.PARENT_ID, 1)
         map.put(Constants.VERIFIED, true)
         map.put(Constants.VERIFICATION_TOKEN, "dfsgasdgsertgszdf66fdga1dg51a6dga21d1g65adfg")
@@ -193,7 +195,7 @@ object RequestModel {
     }
 
     fun getPaymentStep1RequestModel(
-        data: ResponseModelClasses.GetPaymentHistoryResponseModel
+        data: ResponseModelClasses.GetPaymentHistoryResponseModel.TableData
     ): HashMap<String, Any> {
         var map = HashMap<String, Any>()
 

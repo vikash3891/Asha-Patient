@@ -13,7 +13,7 @@
     <LinearLayout
         android:id="@+id/listItemLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_2"
         android:background="@drawable/drawable_round_corner"
         android:orientation="horizontal">
@@ -21,16 +21,18 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5">
 
             <TextView
                 android:id="@+id/visitDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:fontFamily="@font/quicksand_medium"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_3"
-                android:fontFamily="@font/quicksand_medium"
                 android:text=""
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/sp_14" />
@@ -64,13 +66,6 @@
 
         </RelativeLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:background="@color/colorAccent" />
-
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -82,8 +77,8 @@
                 android:id="@+id/facilityName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:fontFamily="@font/quicksand_medium"
+                android:gravity="center_horizontal"
                 android:padding="@dimen/dp_2"
                 android:text=""
                 android:textColor="@color/colorBlack"
@@ -95,10 +90,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/facilityName"
-                android:gravity="center_horizontal"
                 android:fontFamily="@font/quicksand_medium"
+                android:gravity="center_horizontal"
                 android:padding="@dimen/dp_2"
                 android:text=""
+                android:visibility="gone"
                 android:textColor="@color/colorAppGray"
                 android:textSize="@dimen/sp_14" />
 
@@ -107,12 +103,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/clinicianSpecName"
+                android:fontFamily="@font/quicksand_medium"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/dp_2"
-                android:fontFamily="@font/quicksand_medium"
                 android:text=""
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_14" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/complaint">
+
+                <TextView
+                    android:id="@+id/startTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/dp_3"
+                    android:text=""
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/endTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@+id/startTime"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/dp_3"
+                    android:text=""
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp_14" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -133,12 +159,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:gravity="center_horizontal"
                 android:fontFamily="@font/quicksand_medium"
+                android:gravity="center_horizontal"
                 android:padding="@dimen/dp_3"
                 android:text=""
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/appointmentStatus"
@@ -146,8 +173,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/appointmentTime"
                 android:layout_centerHorizontal="true"
-                android:padding="@dimen/dp_3"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/quicksand_medium"
+                android:padding="@dimen/dp_3"
                 android:text=""
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_10" />

@@ -35,9 +35,14 @@ class MyRecordsActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_records)
-        initView()
+
         checkOnClick()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initView()
     }
 
     private fun initView() {
@@ -60,7 +65,7 @@ class MyRecordsActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         bottomBar.layoutSettings.setOnClickListener {
-            logoutAlertDialog()
+            drawerLayout.openDrawer(GravityCompat.START)
         }
         bottomBar.layoutHome.setOnClickListener {
             startActivity(

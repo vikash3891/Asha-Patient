@@ -18,8 +18,8 @@ interface ApiInterface {
     @POST(Constants.PATIENT_REGISTRATION)
     fun registerUser(@Body body: RequestBody): Call<ResponseModelClasses.RegistrationResponse>
 
-    @PUT(Constants.PATIENT_REG + "{userid}")
-    fun updateProfile(@Path("userid") id: String, @Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
+    @PUT(Constants.PATIENT_REG + "{patientID}")
+    fun updateProfile(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.GetPatientProfileResponseModel>
 
     /*Get Patient Profile*/
     @GET(Constants.PATIENT_REG + "/{patientID}")
@@ -97,7 +97,7 @@ interface ApiInterface {
 
     /*Get PaymentHistory */
     @GET(Constants.PAYMENT_HISTORY)
-    fun getPaymentHistoryList(@Query("userId") userId: String, @Query("userType") userType: String): Call<ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel>>
+    fun getPaymentHistoryList(@Query("userId") userId: String, @Query("userType") userType: String): Call<ResponseModelClasses.GetPaymentHistoryResponseModel>
 
     /*Get Habit*/
     @POST(Constants.PATIENT_REG + "{patientID}" + Constants.HABIT)
@@ -144,6 +144,6 @@ interface ApiInterface {
     /*Get Payment By ID*/
     /*http://104.215.179.29/v1/payments/12*/
     @GET(Constants.PAYMENTS + "/{payment_id}")
-    fun getPaymentDetailsByID(@Path("payment_id") id: String): Call<ResponseModelClasses.GetPaymentHistoryResponseModel>
+    fun getPaymentDetailsByID(@Path("payment_id") id: String): Call<ResponseModelClasses.GetPaymentHistoryByIDResponseModel>
 
 }

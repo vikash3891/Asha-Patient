@@ -2,6 +2,7 @@ package com.home.asharemedy.view
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -102,7 +103,7 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
             topbar.screenName.text = getString(R.string.medical_record)
             topbar.imageBack.visibility = View.GONE
             //setupPermissions()
-            managePermissions = ManagePermissions(this,list,PermissionsRequestCode)
+            managePermissions = ManagePermissions(this, list, PermissionsRequestCode)
             managePermissions.checkPermissions()
             spinnerHabit.onItemSelectedListener = this@AddMedicalRecordActivity
 
@@ -117,17 +118,19 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
     }
 
     // Receive the permissions request result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
-            PermissionsRequestCode ->{
+            PermissionsRequestCode -> {
                 val isPermissionsGranted = managePermissions
-                    .processPermissionsResult(requestCode,permissions,grantResults)
+                    .processPermissionsResult(requestCode, permissions, grantResults)
 
-                if(isPermissionsGranted){
+                if (isPermissionsGranted) {
                     // Do the task now
                     ///toast("Permissions granted.")
-                }else{
+                } else {
                     //toast("Permissions denied.")
                 }
                 return
@@ -192,7 +195,7 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
             uploadAttachment.setOnClickListener {
                 if (category.isNotEmpty() && storageLink.isNotEmpty() && compressedImageFile != null) {
                     //addRecordApi()
-                    uploadProfileImage()
+                    uploadMedicalRecord()
                 } else {
                     showSuccessPopup("Please select from provided options.")
                 }
@@ -281,63 +284,6 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
         )
     }
 
-    private fun addRecordApi() = if (Utils.isConnected(this)) {
-        showDialog()
-        try {
-            val apiService =
-                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ResponseModelClasses.LoginResponseModel> =
-                apiService.getHabit(
-                    AppPrefences.getUserID(this),
-                    Utils.getJSONRequestBodyAny(
-                        RequestModel.getRecordUploadRequestModel(
-                            appointmentID, category, storageLink, Utils.fileUploadBase64
-                        )
-                    )
-                )
-            call.enqueue(object : Callback<ResponseModelClasses.LoginResponseModel> {
-                override fun onResponse(
-                    call: Call<ResponseModelClasses.LoginResponseModel>,
-                    response: Response<ResponseModelClasses.LoginResponseModel>
-                ) {
-                    try {
-                        dismissDialog()
-                        Log.d("Response:", response.body().toString())
-                        if (response.code() == 400) {
-                            Log.v("Error code 400", response.errorBody().toString())
-                        }
-                        if (response.body() != null) {
-                            if (response.body()!!.message == "fail") {
-                                showSuccessPopup(response.body()!!.message)
-                            } else {
-
-                                showSuccessPopup("Habit added Successfully.")
-                            }
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                override fun onFailure(
-                    call: Call<ResponseModelClasses.LoginResponseModel>,
-                    t: Throwable
-                ) {
-                    Log.d("Throws:", t.message.toString())
-                    dismissDialog()
-                }
-            })
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            dismissDialog()
-        }
-
-    } else {
-        dismissDialog()
-        showToast(getString(R.string.internet))
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         try {
@@ -406,7 +352,8 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
         navView.setNavigationItemSelectedListener(this)
     }
 
-    private fun uploadProfileImage() {
+    private fun uploadMedicalRecord() {
+        showDialog()
         try {
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
@@ -438,17 +385,29 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
                     response: Response<ResponseModelClasses.GetUploadRecordResponseModel>
                 ) {
                     try {
+                        dismissDialog()
                         Log.d("Response: ", response.body()!!.message)
-                        showSuccessPopup("Medical Record added Successfully.")
+                        var alertDialog = AlertDialog.Builder(this@AddMedicalRecordActivity)
+                        alertDialog.setTitle(getString(R.string.app_name))
+                        alertDialog.setMessage("Medical Record added Successfully.")
+
+                        alertDialog.setPositiveButton("OK") { dialog, which ->
+                            dialog.dismiss()
+                            finish()
+                        }
+
+                        alertDialog.show()
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        dismissDialog()
                     }
 
                 }
             })
         } catch (e: Exception) {
             e.printStackTrace()
+            dismissDialog()
         }
     }
 
-   }
+}

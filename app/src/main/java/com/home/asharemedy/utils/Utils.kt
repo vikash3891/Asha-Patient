@@ -57,6 +57,7 @@ object Utils {
     var profileData: ResponseModelClasses.GetPatientProfileResponseModel? = null
 
     var selectedAilmentOrServiceName = ""
+    var selectedAppointment = 0
 
     var selectedGridList = ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
 
@@ -247,6 +248,15 @@ object Utils {
         val date = Date()
         println("Current Time is: $date.time")
         return inputFormat.format(date.time)
+    }
+
+    fun get12HourTime(inputTime: String): String {
+        val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("HH:mm a", Locale.getDefault())
+
+        val outputDate = inputFormat.parse(inputTime)
+        println("Time is: $outputDate")
+        return outputFormat.format(outputDate)
     }
 
     fun getDate(): String {

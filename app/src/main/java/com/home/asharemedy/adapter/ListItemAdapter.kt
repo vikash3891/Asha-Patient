@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.model.ListItemModel
+import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.selectedAppointmentDetails
 import com.home.asharemedy.view.ListItemDetailActivity
 import com.home.asharemedy.viewHolder.ListItemViewHolder
@@ -26,6 +27,7 @@ class ListItemAdapter(private val context: Context, private val list: List<Respo
         holder.bind(movie)
 
         holder.itemView.listItemLayout.setOnClickListener {
+            Utils.selectedAppointment = position
             context.startActivity(Intent(context, ListItemDetailActivity::class.java))
         }
     }

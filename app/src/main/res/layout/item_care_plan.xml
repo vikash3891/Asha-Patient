@@ -18,24 +18,45 @@
         android:background="@drawable/drawable_round_corner"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/carePlanID"
+                android:id="@+id/carePlanDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:padding="@dimen/dp_3"
-                android:text="ID: 187"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="center_horizontal|center"
+                android:text=""
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/sp_14"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp_14" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/carePlanMonth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="center_horizontal|center"
+                android:text=""
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/carePlanYear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="center_horizontal|center"
+                android:text=""
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="@dimen/dp_1"

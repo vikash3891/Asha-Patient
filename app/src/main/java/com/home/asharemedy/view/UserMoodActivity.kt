@@ -50,6 +50,7 @@ class UserMoodActivity : BaseActivity() {
                         DashboardActivity::class.java
                     )
                 )
+                finish()
             }
             R.id.btn_submit -> {
                 startActivity(
