@@ -51,7 +51,7 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
 
         setNavigationalDrawer()
         setupToolDrawer()
-        getPatientProfile()
+
 
         foodsList.add(
             DashboardGridModel(
@@ -76,6 +76,11 @@ class DashboardActivity : BaseActivity(), NavigationView.OnNavigationItemSelecte
         adapter = DashboardGridAapter(this, foodsList)
 
         gvDashboard.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getPatientProfile()
     }
 
     private fun setNavigationalDrawer() {

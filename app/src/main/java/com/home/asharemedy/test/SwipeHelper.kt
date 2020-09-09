@@ -128,11 +128,11 @@ abstract class SwipeHelper(
     }
 
     class UnderlayButton(
-        private val context: Context,
-        private val title: String,
+        private var context: Context,
+        private var title: String,
         textSize: Float,
         @ColorRes private val colorRes: Int,
-        private val clickListener: UnderlayButtonClickListener
+        private var clickListener: UnderlayButtonClickListener
     ) {
         private var clickableRegion: RectF? = null
         private val textSizeInPixel: Float = textSize * context.resources.displayMetrics.density // dp to px

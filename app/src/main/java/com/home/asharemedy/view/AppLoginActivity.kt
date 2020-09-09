@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import org.json.JSONObject
+
 
 class AppLoginActivity : BaseActivity() {
 
@@ -68,7 +70,12 @@ class AppLoginActivity : BaseActivity() {
             }
 
             txtForgotPassword.setOnClickListener {
-                startActivity(Intent(this@AppLoginActivity, ForgotPasswordFirstActivity::class.java))
+                startActivity(
+                    Intent(
+                        this@AppLoginActivity,
+                        ForgotPasswordFirstActivity::class.java
+                    )
+                )
             }
 
             btnLogin.setOnClickListener {
@@ -89,7 +96,6 @@ class AppLoginActivity : BaseActivity() {
             e.printStackTrace()
         }
     }
-
 
 
     private fun loginApi() = if (Utils.isConnected(this)) {
@@ -114,11 +120,16 @@ class AppLoginActivity : BaseActivity() {
                     try {
                         dismissDialog()
                         Log.d("Response:", response.body().toString())
-                        if (response.body() != null) {
-                            if (response.body()!!.message == "fail") {
-                                showSuccessPopup(response.body()!!.message)
-                            } else {
 
+                        if (response.code() != 200) {
+
+                            var jsonObject = JSONObject(response.errorBody()!!.string().trim { it <= ' ' })
+
+                            var jsonObjectStr = jsonObject.getString("description")
+
+                            showSuccessPopup(jsonObjectStr)
+                        } else {
+                            if (response.body() != null) {
                                 AppPrefences.setLogin(this@AppLoginActivity, true)
                                 AppPrefences.setRememberMe(this@AppLoginActivity, true)
                                 AppPrefences.setUserName(
@@ -148,6 +159,7 @@ class AppLoginActivity : BaseActivity() {
                                 //showSuccessPopup(response.body()!!.message)
                             }
                         }
+
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

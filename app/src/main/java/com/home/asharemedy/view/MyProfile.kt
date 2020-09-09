@@ -498,12 +498,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                 for (i in 0 until habitData.size) {
                     buttons = listOf(deleteButton, editButton)
                 }
-                /*when (position) {
-                    1 -> buttons = listOf(deleteButton, editButton)
-                    2 -> buttons = listOf(deleteButton, editButton)
-                    3 -> */
-                /*//else -> Unit
-            }*/
+
                 return buttons
             }
         })

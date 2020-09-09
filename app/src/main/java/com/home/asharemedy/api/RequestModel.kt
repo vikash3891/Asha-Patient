@@ -156,7 +156,7 @@ object RequestModel {
         map.put(Constants.ALLERGIES, data.allergies)
         map.put(Constants.INSURED, data.insured.toBoolean())
         map.put(Constants.INSURANCE_COMPANY_NAME, data.insurance_company_name)
-        map.put(Constants.INSURANCE_VALIDITY, data.insurance_company_name)
+        map.put(Constants.INSURANCE_VALIDITY, data.insurance_validity)
         map.put(Constants.PRIMARY_HEALTH_ISSUE, data.primary_health_issue)
         map.put(Constants.PARENT_ID, 1)
         map.put(Constants.VERIFIED, true)
