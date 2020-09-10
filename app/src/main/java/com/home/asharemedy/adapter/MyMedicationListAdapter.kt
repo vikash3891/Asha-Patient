@@ -61,7 +61,7 @@ class MyMedicationListAdapter(
 
         drugNameValue.text = list[position].drug_name
         daysValue.text = list[position].days
-        doseValue.text = list[position].dosage_instructions
+        doseValue.text = list[position].dose_per_day
         instructionValue.text = list[position].dosage_instructions
         statusValue.text = list[position].medication_type
         layoutOk.setOnClickListener { dialog.dismiss() }

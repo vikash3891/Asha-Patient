@@ -154,14 +154,14 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
             isEditable = true
             communicationEdit.text = getString(R.string.save)
 
-            dobValue.isEnabled = true
+            /*dobValue.isEnabled = true
             phoneNumberValue.isEnabled = true
             phoneNumberValue.background =
                 ContextCompat.getDrawable(this, R.drawable.edittext_border)
 
             emailValue.isEnabled = true
             emailValue.background =
-                ContextCompat.getDrawable(this, R.drawable.edittext_border)
+                ContextCompat.getDrawable(this, R.drawable.edittext_border)*/
 
             emergencyContactValue.isEnabled = true
             emergencyContactValue.background =
@@ -752,7 +752,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.GetHabitResponseModel> =
                 apiService.editHabit(
-                    AppPrefences.getUserID(this),
+                    AppPrefences.getUserID(this),patient_habit_id,
                     Utils.getJSONRequestBodyAny(
                         RequestModel.editHabitRequestModel(
                             habitNameValue,

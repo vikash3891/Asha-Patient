@@ -96,8 +96,8 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
             doctorSpeciality.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getSpecialization());
             address.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getAddress1() + " " +
                     Utils.INSTANCE.getSelectedDoctorFacility().getAddress2());
-            mobileValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getPhone());
-            emailValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getEmail());
+            mobileValue.setText(Objects.requireNonNull(Utils.INSTANCE.getProfileData()).getPatient_mobile());
+            emailValue.setText(Objects.requireNonNull(Utils.INSTANCE.getProfileData()).getPatient_email());
             amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getFees());
 
             ailmentValue.setText(Utils.INSTANCE.getSelectedAilmentOrServiceName());
@@ -172,7 +172,7 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
             userEmail = userDetailsPreference.getString(AppPreference.USER_EMAIL, Objects.requireNonNull(Utils.INSTANCE.getProfileData()).getPatient_email());
             userMobile = userDetailsPreference.getString(AppPreference.USER_MOBILE, Objects.requireNonNull(Utils.INSTANCE.getProfileData()).getPatient_mobile());
 
-            amountValue.setText(mAppPreference.getDummyAmount());
+            amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getFees());
 
         } catch (Exception e) {
             e.printStackTrace();

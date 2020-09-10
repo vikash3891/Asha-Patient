@@ -54,8 +54,8 @@ object RequestModel {
         map.put(Constants.HABIT_NAME, habit_name)
         map.put(Constants.HABIT_FREQUENCY, habit_frequency)
         map.put(Constants.HABIT_FREQUENCY_UNIT, habit_frequency_unit)
-        map.put(Constants.PATIENT_HABIT_ID, patient_habit_id)
-        map.put(Constants.PATIENT_ID, patient_id)
+        map.put(Constants.PATIENT_HABIT_ID, patient_habit_id.toInt())
+        map.put(Constants.PATIENT_ID, patient_id.toInt())
         map.put(Constants.STATUS, status)
         Log.d("Habit Request: ", "" + Gson().toJson(map))
         return map;

@@ -112,8 +112,8 @@ interface ApiInterface {
     fun deleteHabit(@Path("patientID") id: String, @Path("habit_id") habit_id: String, @Body body: RequestBody): Call<ResponseModelClasses.LoginResponseModel>
 
     /*Edit Habit*/
-    @PUT(Constants.PATIENT_REG + "{patientID}" + Constants.HABIT)
-    fun editHabit(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.GetHabitResponseModel>
+    @PUT(Constants.PATIENT_REG + "{patientID}" + Constants.HABIT + "/{habit_id}")
+    fun editHabit(@Path("patientID") id: String, @Path("habit_id") vitalName: String, @Body body: RequestBody): Call<ResponseModelClasses.GetHabitResponseModel>
 
     /*Get Single Unit Vital*/
     @POST(Constants.PATIENT_REG + "{patientID}" + Constants.VITALS + "{vitalName}")

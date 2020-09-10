@@ -135,10 +135,10 @@ class AddMedicationActivity : BaseActivity(), AdapterView.OnItemSelectedListener
                     patient_id = AppPrefences.getUserID(this)
                     medication_type = prescribedBy.selectedItem.toString()
                     drug_name = medicineName.text.toString()
-                    dosage_instructions = instructionsName.text.isNullOrEmpty().toString()
+                    dosage_instructions = instructionsName.text.toString()
                     days = prescribedForName.text.toString()
                     dose_per_day = dosePerDayName.text.toString()
-                    other_instruction = instructionsName.text.isNullOrEmpty().toString()
+                    other_instruction = instructionsName.text.toString()
                     status = statusValue.selectedItem.toString()
 
                     updateMedication()
@@ -166,11 +166,11 @@ class AddMedicationActivity : BaseActivity(), AdapterView.OnItemSelectedListener
                             appointment_id,
                             patient_id,
                             medication_type,
-                            drug_name,
-                            dosage_instructions,
+                            drug_name.trim(),
+                            dosage_instructions.trim(),
                             days,
                             dose_per_day,
-                            other_instruction,
+                            other_instruction.trim(),
                             status
                         )
                     )

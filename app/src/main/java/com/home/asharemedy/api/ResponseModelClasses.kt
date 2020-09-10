@@ -224,6 +224,7 @@ object ResponseModelClasses {
         data class TableData(
 
             val appointment_id: String,
+            val dose_per_day: String,
             val days: String,
             val dosage_instructions: String,
             val drug_name: String,

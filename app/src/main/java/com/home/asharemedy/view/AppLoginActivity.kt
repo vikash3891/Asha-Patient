@@ -26,8 +26,8 @@ class AppLoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
 
         try {
-            editUserName.setText("john@doe.com")
-            editUserPass.setText("password")
+//            editUserName.setText("testuser@android.com")
+//            editUserPass.setText("testuser")
             clickPerform()
 
         } catch (e: Exception) {
@@ -123,7 +123,8 @@ class AppLoginActivity : BaseActivity() {
 
                         if (response.code() != 200) {
 
-                            var jsonObject = JSONObject(response.errorBody()!!.string().trim { it <= ' ' })
+                            var jsonObject =
+                                JSONObject(response.errorBody()!!.string().trim { it <= ' ' })
 
                             var jsonObjectStr = jsonObject.getString("description")
 
