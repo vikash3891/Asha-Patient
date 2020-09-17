@@ -39,7 +39,7 @@ interface ApiInterface {
 
     /*Get Facility List*/
     @GET(Constants.FACILITIES)
-    fun getFacilitiesList(): Call<ResponseModelClasses.GetFacilityListResponseModel>
+    fun getFacilitiesList(@Query("city") city: String): Call<ResponseModelClasses.GetFacilityListResponseModel>
 
     /*Get Facility List*/
     @GET(Constants.FACILITIES)
@@ -47,7 +47,7 @@ interface ApiInterface {
 
     /*Get Doctor List*/
     @GET(Constants.DOCTOR_LIST)
-    fun getDoctorsList(): Call<ResponseModelClasses.GetFacilityListResponseModel>
+    fun getDoctorsList(@Query("city") city: String): Call<ResponseModelClasses.GetFacilityListResponseModel>
 
     /*Get Doctor List*/
     @GET(Constants.DOCTOR_LIST)
@@ -122,8 +122,11 @@ interface ApiInterface {
     @POST(Constants.FORGOT_PASSWORD)
     fun forgotPassword(@Body body: RequestBody): Call<ResponseModelClasses.RegistrationResponse>
 
-    @POST(Constants.FORGOT_PASSWORD)
-    fun setPaymentStepOne(@Body body: RequestBody): Call<ResponseModelClasses.RegistrationResponse>
+    @POST(Constants.PAYMENTS)
+    fun setPaymentStepOne(@Body body: RequestBody): Call<ResponseModelClasses.SetPaymentStepOneResponseModel>
+
+    @POST(Constants.SET_APPOINTMENTS)
+    fun setPaymentStepTwo(@Body body: RequestBody): Call<ResponseModelClasses.RegistrationResponse>
 
     @POST(Constants.PATIENT_REG + "{patientID}" + Constants.MEDICATIONS)
     fun setMedication(@Path("patientID") id: String, @Body body: RequestBody): Call<ResponseModelClasses.SetVitalResponseModel>

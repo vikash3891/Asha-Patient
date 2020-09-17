@@ -158,6 +158,33 @@ object ResponseModelClasses {
         )
     }
 
+    /*User Payment Step One*/
+    data class SetPaymentStepOneResponseModel(
+        val description: String,
+        val message: String,
+        val type: String,
+        val data: TableData
+    ) {
+        data class TableData(
+
+            val amount: String,
+            val cgst_percentage: String,
+            val convenience_fee: String,
+            val discount_percentage: String,
+            val gross_total: String,
+            val igst_percentage: String,
+            val payer_id: String,
+            val payer_type: String,
+            val payment_date: String,
+            val payment_id: String,
+            val receiver_id: String,
+            val receiver_type: String,
+            val sgst_percentage: String,
+            val status: String,
+            val transanction_id: String
+        )
+    }
+
     /*User MyRecord*/
     data class GetMyRecordItemResponseModel(
         val description: String,

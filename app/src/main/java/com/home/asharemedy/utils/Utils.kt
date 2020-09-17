@@ -61,6 +61,8 @@ object Utils {
 
     var selectedGridList = ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
 
+    var isDoctor = true
+
     val teachers: Array<SpiritualTeacher>
         get() =
             arrayOf(

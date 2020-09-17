@@ -251,6 +251,7 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
                         //Success Transaction
                         Intent i = new Intent(getApplicationContext(), SuccessActivity.class);
                         startActivity(i);
+                        finish();
                     } else {
                         //Failure Transaction
                     }

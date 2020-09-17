@@ -209,7 +209,7 @@ object RequestModel {
         map.put(Constants.DISCOUNT_PERCENT, data.discount_percentage)
         map.put(Constants.CONVENIENCE_FEE, data.convenience_fee)
         map.put(Constants.PAYER_ID, data.payer_id)
-        map.put(Constants.PAYER_TYPE, data.payer_type)
+        map.put(Constants.PAYER_TYPE, "patient")
         map.put(Constants.RECEIVER_ID, data.receiver_id)
         map.put(Constants.RECEIVER_TYPE, data.receiver_type)
         Log.d("PaymentStep1Request: ", "" + Gson().toJson(map))
@@ -221,10 +221,10 @@ object RequestModel {
     ): HashMap<String, Any> {
         var map = HashMap<String, Any>()
 
-        map.put(Constants.PATIENT_ID, patient_id)
-        map.put(Constants.DOCTOR_SLOT_ID, doctor_slot_id)
-        map.put(Constants.PAYMENT_ID, payment_id)
-        map.put(Constants.PURPOSE, purpose)
+        map.put(Constants.PATIENT_ID, patient_id.toInt())
+        map.put(Constants.DOCTOR_SLOT_ID, doctor_slot_id.toInt())
+        map.put(Constants.PAYMENT_ID, payment_id.toInt())
+        map.put(Constants.STATUS, purpose)
         Log.d("PaymentStepTwoRequest: ", "" + Gson().toJson(map))
         return map;
     }

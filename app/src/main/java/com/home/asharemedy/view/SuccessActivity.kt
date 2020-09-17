@@ -1,9 +1,7 @@
 package com.home.asharemedy.view
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import com.home.asharemedy.R
@@ -12,6 +10,7 @@ import com.home.asharemedy.api.ApiInterface
 import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
+import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import kotlinx.android.synthetic.main.activity_success.*
@@ -27,60 +26,58 @@ class SuccessActivity : BaseActivity() {
     var cgst_percentage = "5"
     var sgst_percentage = "10"
     var igst_percentage = "15"
-    var gross_total = "2500"
     var discount_percentage = "0"
     var convenience_fee = "50"
-    var payer_id = ""
     var payer_type = "patient"
     var payment_date = ""
-    var receiver_id = ""
-    var receiver_type = ""
-
-
-    var patient_id = ""
-    var doctor_slot_id = ""
-    var payment_id = ""
-    var purpose = ""
+    var payment_id = "1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_success)
-
-        /*Handler().postDelayed(Runnable {
-
-            startActivity(Intent(this, DashboardActivity::class.java))
-            finish()
-
-        }, 5000)*/
+        checkOnClick()
         setPaymentDetailsStepOne()
+    }
+
+    private fun checkOnClick() {
+
+        close.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@SuccessActivity,
+                    DashboardActivity::class.java
+                )
+            )
+            finish()
+        }
+
     }
 
     private fun setPaymentDetailsStepOne() = if (Utils.isConnected(this)) {
         showDialog()
         try {
-            var payment_id = "1"
             payment_date = Utils.getDate()
-            var setPaymentRequestOne = ResponseModelClasses.GetPaymentHistoryResponseModel.TableData(
-                amount,
-                cgst_percentage,
-                convenience_fee,
-                discount_percentage,
-                gross_total,
-                igst_percentage,
-                payer_id,
-                payer_type,
-                payment_date,
-                payment_id,
-                receiver_id,
-                receiver_type,
-                sgst_percentage,
-                status,
-                transanction_id
-
-            )
+            var setPaymentRequestOne =
+                ResponseModelClasses.GetPaymentHistoryResponseModel.TableData(
+                    Utils.selectedDoctorFacility!!.fees,
+                    cgst_percentage,
+                    convenience_fee,
+                    discount_percentage,
+                    Utils.selectedDoctorFacility!!.fees,
+                    igst_percentage,
+                    AppPrefences.getUserID(this),
+                    payer_type,
+                    payment_date,
+                    payment_id,
+                    Utils.selectedDoctorFacility!!.doctor_id,
+                    if (Utils.isDoctor) "doctor" else "facility",
+                    sgst_percentage,
+                    "successful",
+                    transanction_id
+                )
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
-            val call: Call<ResponseModelClasses.RegistrationResponse> =
+            val call: Call<ResponseModelClasses.SetPaymentStepOneResponseModel> =
                 apiService.setPaymentStepOne(
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getPaymentStep1RequestModel(
@@ -88,10 +85,10 @@ class SuccessActivity : BaseActivity() {
                         )
                     )
                 )
-            call.enqueue(object : Callback<ResponseModelClasses.RegistrationResponse> {
+            call.enqueue(object : Callback<ResponseModelClasses.SetPaymentStepOneResponseModel> {
                 override fun onResponse(
-                    call: Call<ResponseModelClasses.RegistrationResponse>,
-                    response: Response<ResponseModelClasses.RegistrationResponse>
+                    call: Call<ResponseModelClasses.SetPaymentStepOneResponseModel>,
+                    response: Response<ResponseModelClasses.SetPaymentStepOneResponseModel>
                 ) {
                     try {
                         dismissDialog()
@@ -100,7 +97,11 @@ class SuccessActivity : BaseActivity() {
                             if (response.body()!!.message == "0") {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
-
+                                payment_id = response.body()!!.data.payment_id
+                                Log.d(
+                                    "payment_id:",
+                                    response.body()!!.data.payment_id + ":" + payment_id
+                                )
                                 setPaymentDetailsStepTwo()
                             }
                         }
@@ -110,7 +111,7 @@ class SuccessActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseModelClasses.RegistrationResponse>,
+                    call: Call<ResponseModelClasses.SetPaymentStepOneResponseModel>,
                     t: Throwable
                 ) {
                     Log.d("Throws:", t.message.toString())
@@ -127,17 +128,31 @@ class SuccessActivity : BaseActivity() {
         showToast(getString(R.string.internet))
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(
+            Intent(
+                this@SuccessActivity,
+                DashboardActivity::class.java
+            )
+        )
+        finish()
+    }
+
     private fun setPaymentDetailsStepTwo() = if (Utils.isConnected(this)) {
         showDialog()
         try {
-            /*patient_id, doctor_slot_id, payment_id,purpose*/
+
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.RegistrationResponse> =
-                apiService.setPaymentStepOne(
+                apiService.setPaymentStepTwo(
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getPaymentStepTwoRequestModel(
-                            patient_id, doctor_slot_id, payment_id, purpose
+                            AppPrefences.getUserID(this),
+                            Utils.selectedGridList[0].slot_id,
+                            payment_id,
+                            "scheduled"
                         )
                     )
                 )
@@ -153,17 +168,6 @@ class SuccessActivity : BaseActivity() {
                             if (response.body()!!.message == "0") {
                                 showSuccessPopup(response.body()!!.message)
                             } else {
-
-                                /*var alertDialog = AlertDialog.Builder(this@SuccessActivity)
-                                alertDialog.setTitle(getString(R.string.app_name))
-                                alertDialog.setMessage("Appointment booked successfully.")
-
-                                alertDialog.setPositiveButton("OK") { dialog, _ ->
-                                    dialog.dismiss()
-                                    finish()
-                                }
-
-                                alertDialog.show()*/
                                 successLayout.visibility = View.VISIBLE
                             }
                         }

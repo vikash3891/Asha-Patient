@@ -31,6 +31,7 @@ import com.home.asharemedy.model.AilmentArrayData
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.isAilmentOrService
+import com.home.asharemedy.utils.Utils.isDoctor
 import com.home.asharemedy.utils.Utils.selectedAilmentOrServiceName
 import kotlinx.android.synthetic.main.activity_add_appointment_list.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
@@ -44,7 +45,7 @@ import retrofit2.Response
 class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var adapter: AppointmentItemAdapter? = null
-    var isDoctor = true
+
     var selectedAilmentOrServiceID = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -328,7 +329,7 @@ class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationIt
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.GetFacilityListResponseModel> =
-                apiService.getFacilitiesList()
+                apiService.getFacilitiesList(Utils.profileData!!.patient_city)
             call.enqueue(object :
                 Callback<ResponseModelClasses.GetFacilityListResponseModel> {
                 override fun onResponse(
@@ -421,7 +422,7 @@ class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationIt
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.GetFacilityListResponseModel> =
-                apiService.getDoctorsList()
+                apiService.getDoctorsList(Utils.profileData!!.patient_city)
             call.enqueue(object :
                 Callback<ResponseModelClasses.GetFacilityListResponseModel> {
                 override fun onResponse(

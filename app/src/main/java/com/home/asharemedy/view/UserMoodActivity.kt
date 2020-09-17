@@ -59,6 +59,7 @@ class UserMoodActivity : BaseActivity() {
                         DashboardActivity::class.java
                     )
                 )
+                finish()
             }
 
         }

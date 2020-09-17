@@ -24,6 +24,7 @@ class Constants {
         const val REGISTRATION_USER = "registration/user"
         const val LOGIN_USER = "sessions"
         const val APPOINTMENTS = "appointments?"
+        const val SET_APPOINTMENTS = "appointments"
         const val PAYMENT_HISTORY = "payments?"
         const val PAYMENTS = "payments"
 
