@@ -55,6 +55,7 @@ class MyMedicationListAdapter(
         val daysValue = dialog.findViewById(R.id.daysValue) as TextView
         val doseValue = dialog.findViewById(R.id.doseValue) as TextView
         val instructionValue = dialog.findViewById(R.id.instructionValue) as TextView
+        val otherInstructionValue = dialog.findViewById(R.id.otherInstructionValue) as TextView
         val statusValue = dialog.findViewById(R.id.statusValue) as TextView
         val layoutOk = dialog.findViewById(R.id.layoutOk) as LinearLayout
 
@@ -63,6 +64,7 @@ class MyMedicationListAdapter(
         daysValue.text = list[position].days
         doseValue.text = list[position].dose_per_day
         instructionValue.text = list[position].dosage_instructions
+        otherInstructionValue.text = list[position].other_instruction
         statusValue.text = list[position].medication_type
         layoutOk.setOnClickListener { dialog.dismiss() }
         dialog.show()

@@ -30,7 +30,10 @@ class AppointmentItemAdapter(
         holder.bind(movie)
 
         holder.itemView.listDoctorDetails.setOnClickListener {
-            Utils.selectedDoctorFacitiyID = position.toString()
+            if (Utils.isDoctor)
+                Utils.selectedDoctorFacitiyID = list[position].doctor_id
+            else
+                Utils.selectedDoctorFacitiyID = list[position].facility_id
             Utils.selectedDoctorFacility = list[position]
             context.startActivity(Intent(context, AppointmentSlotActivity::class.java))
         }

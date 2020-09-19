@@ -84,10 +84,10 @@ class AppointmentSlotActivity : BaseActivity(), NavigationView.OnNavigationItemS
                 for (i in 0 until Utils.appointmentSlotList.size) {
                     Log.d("SelSlotList", Utils.appointmentSlotList[i].isSelected.toString())
                 }
-                if (Utils.selectedGridList.size > 0)
+                if (Utils.selectedGridList != null)
                     startActivity(Intent(this@AppointmentSlotActivity, ActivityPayU::class.java))
                 else {
-
+                    showSuccessPopup("Please select a Slot to proceed.")
                 }
             }
 

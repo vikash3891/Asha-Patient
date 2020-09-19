@@ -224,7 +224,8 @@ object RequestModel {
         map.put(Constants.PATIENT_ID, patient_id.toInt())
         map.put(Constants.DOCTOR_SLOT_ID, doctor_slot_id.toInt())
         map.put(Constants.PAYMENT_ID, payment_id.toInt())
-        map.put(Constants.STATUS, purpose)
+        map.put(Constants.PURPOSE, purpose)
+        map.put(Constants.STATUS, "scheduled")
         Log.d("PaymentStepTwoRequest: ", "" + Gson().toJson(map))
         return map;
     }

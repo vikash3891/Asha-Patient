@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +29,8 @@ import retrofit2.Response
 class ActivityPaymentHistory : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var adapter: PaymentListAdapter? = null
-    var paymentHistoryList = ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel.TableData>()
+    var paymentHistoryList =
+        ArrayList<ResponseModelClasses.GetPaymentHistoryResponseModel.TableData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,10 +97,18 @@ class ActivityPaymentHistory : BaseActivity(), NavigationView.OnNavigationItemSe
                         Log.d("PayHisRes: ", response.body().toString())
 
                         if (response.body() != null) {
-                            paymentHistoryList.clear()
-                            paymentHistoryList = response.body()!!.data
 
-                            loadList()
+                            if (response.body()!!.data != null && response.body()!!.data.size > 0) {
+                                paymentHistoryList.clear()
+                                paymentHistoryList = response.body()!!.data
+                                loadList()
+                            } else {
+                                Toast.makeText(
+                                    this@ActivityPaymentHistory,
+                                    "No Payment Data available",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

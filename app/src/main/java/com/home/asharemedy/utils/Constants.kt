@@ -19,7 +19,7 @@ class Constants {
         const val FACILITIES = "facilities?"
         const val DOCTOR_LIST = "doctors?"//ailmentId=0&city=Bangalore"//
         const val DOCTOR_SLOT_LIST = "doctors"//
-        const val SLOT_SLOTDATE = "/slots?slotDate="//
+        const val SLOT_SLOTDATE = "/slots?"//
         const val REQUEST_TIMEOUT_DURATION = 10
         const val REGISTRATION_USER = "registration/user"
         const val LOGIN_USER = "sessions"

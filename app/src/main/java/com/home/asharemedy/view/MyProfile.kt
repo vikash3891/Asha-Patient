@@ -34,6 +34,7 @@ import com.home.asharemedy.test.Adapter
 import com.home.asharemedy.test.SwipeHelper
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
+import com.home.asharemedy.utils.ManagePermissions
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.profileData
 import kotlinx.android.synthetic.main.activity_profile_editable.*
@@ -67,6 +68,16 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
     private val REQUEST_CODE = 100
     private val CAMERA_REQUEST_CODE = 200
 
+    private val PermissionsRequestCode = 123
+
+    val list = listOf<String>(
+        Manifest.permission.CAMERA,
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
+    private lateinit var managePermissions: ManagePermissions
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_editable)
@@ -81,8 +92,9 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
 
     private fun initView() {
         try {
-            setupPermissions()
-
+            //setupPermissions()
+            managePermissions = ManagePermissions(this, list, PermissionsRequestCode)
+            managePermissions.checkPermissions()
             setupToolDrawer()
             getPatientProfile()
         } catch (e: Exception) {
@@ -153,15 +165,6 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
         try {
             isEditable = true
             communicationEdit.text = getString(R.string.save)
-
-            /*dobValue.isEnabled = true
-            phoneNumberValue.isEnabled = true
-            phoneNumberValue.background =
-                ContextCompat.getDrawable(this, R.drawable.edittext_border)
-
-            emailValue.isEnabled = true
-            emailValue.background =
-                ContextCompat.getDrawable(this, R.drawable.edittext_border)*/
 
             emergencyContactValue.isEnabled = true
             emergencyContactValue.background =
@@ -286,6 +289,27 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
         }
     }
 
+    // Receive the permissions request result
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PermissionsRequestCode -> {
+                val isPermissionsGranted = managePermissions
+                    .processPermissionsResult(requestCode, permissions, grantResults)
+
+                if (isPermissionsGranted) {
+                    // Do the task now
+                    ///toast("Permissions granted.")
+                } else {
+                    //toast("Permissions denied.")
+                }
+                return
+            }
+        }
+    }
+
     private fun updateProfileApi() = if (Utils.isConnected(this)) {
         showDialog()
         try {
@@ -300,6 +324,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
             profileData!!.patient_email = emailValue.text.toString()
             profileData!!.emergency_contact_number = emergencyContactValue.text.toString()
             profileData!!.primary_health_issue = primaryHealthIssuesValue.text.toString()
+            profileData!!.insurance_company_name = insuranceValue.text.toString()
             //profileData!!.photo = Utils.userfileUploadBase64
 
             val apiService =
@@ -321,15 +346,10 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                     try {
                         dismissDialog()
                         Log.d("UpdateProfileResponse:", response.body().toString())
-                        /*if (response.code() == 400) {
-                            Log.v(
-                                "Profile not updated. Please try again later.",
-                                response.errorBody().toString()
-                            )
-                        }*/
+
                         if (response.code() == 200) {
                             showSuccessPopup("Profile Updated Successfully")
-                        }else {
+                        } else {
                             showSuccessPopup("Profile not updated. Please try again later.")
                         }
                     } catch (e: Exception) {
@@ -752,7 +772,7 @@ class MyProfile : BaseActivity(), AdapterView.OnItemSelectedListener,
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.GetHabitResponseModel> =
                 apiService.editHabit(
-                    AppPrefences.getUserID(this),patient_habit_id,
+                    AppPrefences.getUserID(this), patient_habit_id,
                     Utils.getJSONRequestBodyAny(
                         RequestModel.editHabitRequestModel(
                             habitNameValue,

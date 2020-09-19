@@ -31,6 +31,7 @@ class SuccessActivity : BaseActivity() {
     var payer_type = "patient"
     var payment_date = ""
     var payment_id = "1"
+    var purpose = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,9 +151,9 @@ class SuccessActivity : BaseActivity() {
                     Utils.getJSONRequestBodyAny(
                         RequestModel.getPaymentStepTwoRequestModel(
                             AppPrefences.getUserID(this),
-                            Utils.selectedGridList[0].slot_id,
+                            Utils.selectedGridList!!.slot_id,
                             payment_id,
-                            "scheduled"
+                            purpose
                         )
                     )
                 )

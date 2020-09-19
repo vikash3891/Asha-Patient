@@ -42,12 +42,10 @@ class AppointSlotListAdapter(
         gridItemView.appointmentSlotRange.text = slot
 
         when {
-            gridItem.slot_status.equals("available") -> {
-                gridItemView.listItemLayout.setBackground(
-                    ContextCompat.getDrawable(
-                        context!!,
-                        R.drawable.drawable_round_corner
-                    )
+            gridItem.slot_status == "available" -> {
+                gridItemView.listItemLayout.background = ContextCompat.getDrawable(
+                    context!!,
+                    R.drawable.drawable_round_corner
                 )
                 gridItemView.appointmentSlotRange.setTextColor(
                     ContextCompat.getColor(
@@ -56,12 +54,10 @@ class AppointSlotListAdapter(
                     )
                 )
             }
-            gridItem.slot_status.equals("booked") -> {
-                gridItemView.listItemLayout.setBackground(
-                    ContextCompat.getDrawable(
-                        context!!,
-                        R.drawable.round_corner_green_disable
-                    )
+            gridItem.slot_status == "Scheduled" -> {
+                gridItemView.listItemLayout.background = ContextCompat.getDrawable(
+                    context!!,
+                    R.drawable.round_corner_booked
                 )
                 gridItemView.appointmentSlotRange.setTextColor(
                     ContextCompat.getColor(
@@ -70,12 +66,10 @@ class AppointSlotListAdapter(
                     )
                 )
             }
-            gridItem.slot_status.equals("completed") -> {
-                gridItemView.listItemLayout.setBackground(
-                    ContextCompat.getDrawable(
-                        context!!,
-                        R.drawable.round_corner_green_disable
-                    )
+            gridItem.slot_status == "completed" -> {
+                gridItemView.listItemLayout.background = ContextCompat.getDrawable(
+                    context!!,
+                    R.drawable.round_corner_green_disable
                 )
 
                 gridItemView.appointmentSlotRange.setTextColor(
@@ -90,7 +84,7 @@ class AppointSlotListAdapter(
         gridItemView.listItemLayout.setOnClickListener {
 
             try {
-                if (gridItem.slot_status.equals("available")) {
+                if (gridItem.slot_status == "available") {
                     if (!gridItem.isSelected) {
                         gridItem.isSelected = true
                         //Utils.appointmentSlotList[position].isSelected = true

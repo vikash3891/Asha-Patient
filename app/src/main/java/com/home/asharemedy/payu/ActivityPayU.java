@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,7 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
     private EditText emailValue, mobileValue, amountValue;
     private TextView doctorName, doctorSpeciality, address, ailmentValue, dateValue, timeValue;
     private RadioGroup radioGroup_select_env;
+    private ImageView imageBack;
 
     private AppPreference mAppPreference;
 
@@ -88,6 +90,7 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
             ailmentValue = findViewById(R.id.ailmentValue);
             dateValue = findViewById(R.id.dateValue);
             timeValue = findViewById(R.id.timeValue);
+            imageBack = findViewById(R.id.imageBack);
 
             settings = getSharedPreferences("settings", MODE_PRIVATE);
 
@@ -101,8 +104,9 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
             amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getFees());
 
             ailmentValue.setText(Utils.INSTANCE.getSelectedAilmentOrServiceName());
-            dateValue.setText(Utils.INSTANCE.getDate());
-            timeValue.setText(Utils.INSTANCE.getTime());
+            dateValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedGridList()).getSlot_date());//Utils.INSTANCE.getDate());
+            timeValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedGridList().getStart_time())
+                    + " - " + Objects.requireNonNull(Utils.INSTANCE.getSelectedGridList().getEnd_time()));// Utils.INSTANCE.getTime());
             AppCompatRadioButton radio_btn_sandbox = findViewById(R.id.radio_btn_sandbox);
             AppCompatRadioButton radio_btn_production = findViewById(R.id.radio_btn_production);
             radioGroup_select_env = findViewById(R.id.radio_grp_env);
@@ -315,6 +319,10 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
                             break;
                     }
                 }
+            });
+
+            imageBack.setOnClickListener(v -> {
+                finish();
             });
         } catch (Exception e) {
             e.printStackTrace();

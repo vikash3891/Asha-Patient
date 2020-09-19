@@ -26,8 +26,8 @@ class AppLoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
 
         try {
-//            editUserName.setText("testuser@android.com")
-//            editUserPass.setText("testuser")
+            editUserName.setText("testuser@android.com")
+            editUserPass.setText("testuser")
             clickPerform()
 
         } catch (e: Exception) {

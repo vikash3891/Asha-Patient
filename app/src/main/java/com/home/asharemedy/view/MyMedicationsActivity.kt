@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -146,8 +147,16 @@ class MyMedicationsActivity : BaseActivity(), NavigationView.OnNavigationItemSel
                         dismissDialog()
                         Log.d("MedicationResponse: ", response.body().toString())
                         if (response.body() != null) {
-                            medicationsList = response.body()!!.data
-                            loadList()
+                            if (response.body()!!.data != null && response.body()!!.data.size > 0) {
+                                medicationsList = response.body()!!.data
+                                loadList()
+                            } else {
+                                Toast.makeText(
+                                    this@MyMedicationsActivity,
+                                    "No Payment Data available",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

@@ -59,7 +59,7 @@ object Utils {
     var selectedAilmentOrServiceName = ""
     var selectedAppointment = 0
 
-    var selectedGridList = ArrayList<ResponseModelClasses.GetSlotListResponseModel>()
+    var selectedGridList: ResponseModelClasses.GetSlotListResponseModel? = null
 
     var isDoctor = true
 
@@ -367,16 +367,7 @@ object Utils {
     fun addSlot(item: ResponseModelClasses.GetSlotListResponseModel) {
         try {
 
-            selectedGridList.add(item)
-
-            /*if (foodsList.contains(item)) {
-                var itemPosition = foodsList.indexOf(item)
-                foodsList.get(itemPosition).quantity = (foodsList[itemPosition].quantity!! + 1)
-
-            } else {
-                foodsList.add(item)
-            }*/
-
+            selectedGridList = item
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -384,7 +375,7 @@ object Utils {
 
     fun removeSlot(item: ResponseModelClasses.GetSlotListResponseModel) {
         try {
-            selectedGridList.remove(item)
+            selectedGridList = null
 
             /*if (foodsList.contains(item)) {
                 val itemPosition = foodsList.indexOf(item)

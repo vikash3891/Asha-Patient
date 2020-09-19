@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -27,7 +28,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MyCarePlansActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener  {
+class MyCarePlansActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var adapter: MyCarePlansListAdapter? = null
     var myReportList = ArrayList<ResponseModelClasses.GetMyCarePlanResponseModel.TableData>()
@@ -91,8 +92,17 @@ class MyCarePlansActivity : BaseActivity(), NavigationView.OnNavigationItemSelec
                         dismissDialog()
                         Log.d("Response: ", response.body().toString())
                         if (response.body() != null) {
-                            myReportList = response.body()!!.data
-                            loadList()
+                            if (response.body()!!.data != null && response.body()!!.data.size > 0) {
+                                myReportList = response.body()!!.data
+                                loadList()
+                            } else {
+                                Toast.makeText(
+                                    this@MyCarePlansActivity,
+                                    "No Care Plan Data exists",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

@@ -540,13 +540,13 @@ class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationIt
             dialog.dialogRecycleView.addItemDecoration(itemDecor)
             val mAdapter = UtilitiesListAdapter() { position ->
                 if (isAilmentOrService) {
-                    val data = AilmentArrayData.getArrayItem(position)
+                    var data = AilmentArrayData.getArrayItem(position)
                     textView.text = data.ailment
                     selectedAilmentOrServiceID = data.ailment_id
                     selectedAilmentOrServiceName = data.ailment
                     getDoctorListByAilment()
                 } else {
-                    val data = AilmentArrayData.getServicesArrayItem(position)
+                    var data = AilmentArrayData.getServicesArrayItem(position)
                     textView.text = data.service
                     selectedAilmentOrServiceID = data.service_id.toString()
                     selectedAilmentOrServiceName = data.service

@@ -64,11 +64,11 @@ class AddMedicalRecordActivity : BaseActivity(), AdapterView.OnItemSelectedListe
     }
 
     var adapter: AddMedicalRecordAdapter? = null
-    var foodsList = ArrayList<DashboardGridModel>()
+
     val REQUEST_CODE = 100
     val DOCUMENT_REQUEST_CODE = 111
     val CAMERA_REQUEST_CODE = 200
-    var appointmentID = ""
+
     var category = ""
     var storageLink = ""
     private var compressedImageFile: File? = null
