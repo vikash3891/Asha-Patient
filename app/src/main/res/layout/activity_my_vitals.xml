@@ -22,7 +22,8 @@
             android:id="@+id/topbar"
             layout="@layout/topbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50" />
+            android:layout_height="@dimen/dp_50"
+            android:visibility="gone" />
 
         <FrameLayout
             android:layout_width="match_parent"

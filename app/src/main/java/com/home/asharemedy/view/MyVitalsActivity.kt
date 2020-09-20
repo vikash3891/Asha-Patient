@@ -7,6 +7,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -21,7 +23,6 @@ import com.google.android.material.navigation.NavigationView
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ApiClient
 import com.home.asharemedy.api.ApiInterface
-import com.home.asharemedy.api.RequestModel
 import com.home.asharemedy.api.ResponseModelClasses
 import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.utils.AppPrefences
@@ -37,7 +38,6 @@ import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.random.Random
 
 class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -96,7 +96,7 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             }
 
             bottomBar.layoutSettings.setOnClickListener {
-                logoutAlertDialog()
+                drawerLayout.openDrawer(GravityCompat.START)
             }
             bottomBar.layoutHome.setOnClickListener {
                 startActivity(
@@ -141,9 +141,7 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             Log.d("Size: ", yAxisValues.size.toString() + " " + xAxisValues.size)
             xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
-            //xAxis.granularity = 1f
             xAxis.setDrawGridLines(false)
-            //xAxis.isGranularityEnabled = true
             xAxis.textSize = 7f
             xAxis.labelRotationAngle = -45f
             xAxis.axisMinimum = 0f
@@ -151,10 +149,9 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 
             var lds = LineDataSet(yAxisValues, selectedVitalName)
             lds.lineWidth = 2f
-
             lds.setColor(ContextCompat.getColor(this, R.color.colorAccent), 100)
-
             lds.valueTextSize = 10f
+
             var lineData = LineData(lds)
             lineChart.data = lineData
             lineChart.animateXY(1000, 1000)
@@ -286,20 +283,14 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 
                     }
                     getString(R.string.blood_sugar) -> {
-
                         selectedVitalName = "bloodsugar"
-
                     }
                     getString(R.string.oxygen_saturation) -> {
-
                         selectedVitalName = "oxygen_saturation"
-
                     }
                 }
 
                 getPatientVitalList()
-
-
 
                 dialog.dismiss()
             }
@@ -343,7 +334,7 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
                 month,
                 day
             )
-            dpd.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+            dpd.datePicker.maxDate = System.currentTimeMillis() - 1000;
             dpd.show()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -372,12 +363,24 @@ class MyVitalsActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
                         Log.d("VitalResponse: ", response.body().toString())
                         if (response.body() != null) {
                             foodsList.clear()
-                            foodsList = response.body()!!.data
+
                             Log.d("VitalResponseSize: ", response.body()!!.data.size.toString())
-                            if (selectedVitalName.equals("bloodpressure"))
-                                drawBPLineChart(lineChart)
-                            else {
-                                drawLineChart(lineChart)
+
+                            if (response.body()!!.data.size > 0) {
+                                lineChart.visibility = View.VISIBLE
+                                foodsList = response.body()!!.data
+                                if (selectedVitalName.equals("bloodpressure"))
+                                    drawBPLineChart(lineChart)
+                                else {
+                                    drawLineChart(lineChart)
+                                }
+                            } else {
+                                lineChart.visibility = View.GONE
+                                Toast.makeText(
+                                    this@MyVitalsActivity,
+                                    "Vital reading not available.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     } catch (e: Exception) {

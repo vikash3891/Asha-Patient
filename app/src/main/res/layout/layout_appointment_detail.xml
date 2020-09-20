@@ -543,7 +543,6 @@
             android:layout_gravity="start"
             android:background="@color/colorWhite"
             android:fitsSystemWindows="false"
-            android:visibility="gone"
             app:headerLayout="@layout/nav_header_home"
             app:itemIconTint="@color/colorAccent"
             app:itemTextColor="@color/colorAccent"
