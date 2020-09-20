@@ -91,6 +91,7 @@ object ResponseModelClasses {
             val profession: String,
             val specialization: String,
             val state: String,
+            val verification_token: String,
             val type: String
 
         )

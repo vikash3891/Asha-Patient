@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.home.asharemedy.R
 import com.home.asharemedy.api.ResponseModelClasses
+import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.getString
 
 class AppointmentItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -26,7 +27,11 @@ class AppointmentItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(movie: ResponseModelClasses.GetFacilityListResponseModel.TableData1) {
         doctorName?.text = movie.name
         doctorSpeciality?.text = movie.specialization
-        consultationFees?.text = getString(R.string.rupees_symbol) + movie.fees
+
+        if (Utils.isDoctor)
+            consultationFees?.text = getString(R.string.rupees_symbol) + movie.fees
+        else
+            consultationFees?.text = getString(R.string.rupees_symbol) + movie.verification_token
         address?.text = movie.city + ", " + movie.country
     }
 

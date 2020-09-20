@@ -65,7 +65,7 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
     private SharedPreferences.Editor editor;
     private SharedPreferences userDetailsPreference;
     private EditText emailValue, mobileValue, amountValue;
-    private TextView doctorName, doctorSpeciality, address, ailmentValue, dateValue, timeValue;
+    private TextView doctorName, doctorSpeciality, address, ailmentValue, dateValue, timeValue, ailmentLabel;
     private RadioGroup radioGroup_select_env;
     private ImageView imageBack;
 
@@ -88,6 +88,7 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
             mobileValue = findViewById(R.id.mobileValue);
             amountValue = findViewById(R.id.amountValue);
             ailmentValue = findViewById(R.id.ailmentValue);
+            ailmentLabel = findViewById(R.id.ailmentLabel);
             dateValue = findViewById(R.id.dateValue);
             timeValue = findViewById(R.id.timeValue);
             imageBack = findViewById(R.id.imageBack);
@@ -97,16 +98,23 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
 
             doctorName.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getName());
             doctorSpeciality.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getSpecialization());
-            address.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getAddress1() + " " +
-                    Utils.INSTANCE.getSelectedDoctorFacility().getAddress2());
+            address.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getCity() + ", " +
+                    Utils.INSTANCE.getSelectedDoctorFacility().getCountry());
             mobileValue.setText(Objects.requireNonNull(Utils.INSTANCE.getProfileData()).getPatient_mobile());
             emailValue.setText(Objects.requireNonNull(Utils.INSTANCE.getProfileData()).getPatient_email());
-            amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getFees());
+
+            if (Utils.INSTANCE.isDoctor()) {
+                ailmentLabel.setText("Ailment: ");
+                amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getFees());
+            } else {
+                ailmentLabel.setText("Service: ");
+                amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getVerification_token());
+            }
 
             ailmentValue.setText(Utils.INSTANCE.getSelectedAilmentOrServiceName());
             dateValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedGridList()).getSlot_date());//Utils.INSTANCE.getDate());
-            timeValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedGridList().getStart_time())
-                    + " - " + Objects.requireNonNull(Utils.INSTANCE.getSelectedGridList().getEnd_time()));// Utils.INSTANCE.getTime());
+            timeValue.setText(Utils.INSTANCE.get12HourTime(Objects.requireNonNull(Utils.INSTANCE.getSelectedGridList().getStart_time()))
+                    + " - " + Utils.INSTANCE.get12HourTime(Objects.requireNonNull(Utils.INSTANCE.getSelectedGridList().getEnd_time())));// Utils.INSTANCE.getTime());
             AppCompatRadioButton radio_btn_sandbox = findViewById(R.id.radio_btn_sandbox);
             AppCompatRadioButton radio_btn_production = findViewById(R.id.radio_btn_production);
             radioGroup_select_env = findViewById(R.id.radio_grp_env);
@@ -176,7 +184,11 @@ public class ActivityPayU extends BaseActivity implements View.OnClickListener {
             userEmail = userDetailsPreference.getString(AppPreference.USER_EMAIL, Objects.requireNonNull(Utils.INSTANCE.getProfileData()).getPatient_email());
             userMobile = userDetailsPreference.getString(AppPreference.USER_MOBILE, Objects.requireNonNull(Utils.INSTANCE.getProfileData()).getPatient_mobile());
 
-            amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getFees());
+            if (Utils.INSTANCE.isDoctor()) {
+                amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getFees());
+            } else {
+                amountValue.setText(Objects.requireNonNull(Utils.INSTANCE.getSelectedDoctorFacility()).getVerification_token());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

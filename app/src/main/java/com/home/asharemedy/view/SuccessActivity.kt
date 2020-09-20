@@ -13,6 +13,7 @@ import com.home.asharemedy.base.BaseActivity
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
+import com.home.asharemedy.utils.Utils.selectedAilmentOrServiceName
 import kotlinx.android.synthetic.main.activity_success.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,6 +37,7 @@ class SuccessActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_success)
+
         checkOnClick()
         setPaymentDetailsStepOne()
     }
@@ -58,19 +60,24 @@ class SuccessActivity : BaseActivity() {
         showDialog()
         try {
             payment_date = Utils.getDate()
+            var fees =
+                if (Utils.isDoctor) Utils.selectedDoctorFacility!!.fees else Utils.selectedDoctorFacility!!.verification_token
+            var receiver_id =
+                if (Utils.isDoctor) Utils.selectedDoctorFacility!!.doctor_id else Utils.selectedDoctorFacility!!.facility_id
+
             var setPaymentRequestOne =
                 ResponseModelClasses.GetPaymentHistoryResponseModel.TableData(
-                    Utils.selectedDoctorFacility!!.fees,
+                    fees,
                     cgst_percentage,
                     convenience_fee,
                     discount_percentage,
-                    Utils.selectedDoctorFacility!!.fees,
+                    fees,
                     igst_percentage,
                     AppPrefences.getUserID(this),
                     payer_type,
                     payment_date,
                     payment_id,
-                    Utils.selectedDoctorFacility!!.doctor_id,
+                    receiver_id,
                     if (Utils.isDoctor) "doctor" else "facility",
                     sgst_percentage,
                     "successful",
@@ -93,7 +100,7 @@ class SuccessActivity : BaseActivity() {
                 ) {
                     try {
                         dismissDialog()
-                        Log.d("Response: ", response.body().toString())
+                        Log.d("StepOneResponse: ", response.body().toString())
                         if (response.body() != null) {
                             if (response.body()!!.message == "0") {
                                 showSuccessPopup(response.body()!!.message)
@@ -143,7 +150,7 @@ class SuccessActivity : BaseActivity() {
     private fun setPaymentDetailsStepTwo() = if (Utils.isConnected(this)) {
         showDialog()
         try {
-
+            purpose = selectedAilmentOrServiceName
             val apiService =
                 ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
             val call: Call<ResponseModelClasses.RegistrationResponse> =
@@ -164,7 +171,7 @@ class SuccessActivity : BaseActivity() {
                 ) {
                     try {
                         dismissDialog()
-                        Log.d("Response: ", response.body().toString())
+                        Log.d("StepTwoResponse: ", response.body().toString())
                         if (response.body() != null) {
                             if (response.body()!!.message == "0") {
                                 showSuccessPopup(response.body()!!.message)

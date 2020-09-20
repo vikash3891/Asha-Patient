@@ -32,6 +32,7 @@ import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.isAilmentOrService
 import com.home.asharemedy.utils.Utils.isDoctor
+import com.home.asharemedy.utils.Utils.selectedAilmentOrServiceID
 import com.home.asharemedy.utils.Utils.selectedAilmentOrServiceName
 import kotlinx.android.synthetic.main.activity_add_appointment_list.*
 import kotlinx.android.synthetic.main.bottombar_layout.view.*
@@ -46,7 +47,6 @@ class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationIt
 
     var adapter: AppointmentItemAdapter? = null
 
-    var selectedAilmentOrServiceID = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,46 +68,19 @@ class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationIt
     }
 
     private fun loadList() {
-        adapter = AppointmentItemAdapter(this, Utils.doctorFacilityList)
-
-        addAppointmentRecyc.apply {
-
-            layoutManager = LinearLayoutManager(this@AddAppointmentListActivity)
-
-            adapter =
-                AppointmentItemAdapter(this@AddAppointmentListActivity, Utils.doctorFacilityList)
-        }
-    }
-
-    private fun showDialogAilment() {
         try {
-            lateinit var dialog: AlertDialog
-            val arrayColors = arrayOf("EYE", "NOSE", "EAR", "MUSCLE", "BONE", "SKIN", "STOMACH")
-            val arrayChecked = booleanArrayOf(false, false, false, false, false, false, false)
-            val builder = AlertDialog.Builder(this)
+            adapter = AppointmentItemAdapter(this, Utils.doctorFacilityList)
 
-            builder.setTitle("Choose Ailment")
+            addAppointmentRecyc.apply {
 
-            builder.setMultiChoiceItems(arrayColors, arrayChecked) { _, which, isChecked ->
-                arrayChecked[which] = isChecked
-                val color = arrayColors[which]
+                layoutManager = LinearLayoutManager(this@AddAppointmentListActivity)
+
+                adapter =
+                    AppointmentItemAdapter(
+                        this@AddAppointmentListActivity,
+                        Utils.doctorFacilityList
+                    )
             }
-
-            builder.setPositiveButton("OK") { _, _ ->
-                // Do something when click positive button
-                //text_view.text = "Your preferred colors..... \n"
-                for (i in 0 until arrayColors.size) {
-                    val checked = arrayChecked[i]
-                    if (checked) {
-                        var str = "${ailmentSelectedValues.text} ${arrayColors[i]},"
-                        ailmentSelectedValues.text = ""
-                        ailmentSelectedValues.text = str.dropLast(1)
-                    }
-                }
-            }
-
-            dialog = builder.create()
-            dialog.show()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -200,22 +173,19 @@ class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationIt
             }
             ailmentSelectedValues.setOnClickListener {
                 if (isDoctor) {
-
-                    openDialog("Choose Ailment", ailmentSelectedValues)
                     isAilmentOrService = true
-                    //showDialogAilment()
+                    openDialog("Choose Ailment", ailmentSelectedValues)
                 } else {
                     isAilmentOrService = false
                     openDialog("Choose Service", ailmentSelectedValues)
-                    //showDialogService()
                 }
-
             }
 
             appointmentForDoctor.setOnClickListener {
                 ailmentSelectedValues.text = ""
                 ailmentSelectedValues.hint = "Choose Ailment"
                 getDoctorList()
+                isAilmentOrService = true
                 changeSlotButtonBackgroundSlot(appointmentForDoctor)
             }
             appointmentForInstitution.setOnClickListener {
@@ -225,7 +195,9 @@ class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationIt
             appointmentForFacility.setOnClickListener {
                 ailmentSelectedValues.text = ""
                 ailmentSelectedValues.hint = "Choose Service"
-                getFacilityList()
+//                getFacilityList()
+                isAilmentOrService = false
+                openDialog("Choose Service", ailmentSelectedValues)
                 changeSlotButtonBackgroundSlot(appointmentForFacility)
             }
         } catch (e: Exception) {
@@ -527,7 +499,7 @@ class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationIt
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.setCancelable(true)
+            dialog.setCancelable(false)
             dialog.show()
             dialog.txtTitleTop.text = title
 
@@ -538,7 +510,7 @@ class AddAppointmentListActivity : BaseActivity(), NavigationView.OnNavigationIt
                 DividerItemDecoration.VERTICAL
             )
             dialog.dialogRecycleView.addItemDecoration(itemDecor)
-            val mAdapter = UtilitiesListAdapter() { position ->
+            val mAdapter = UtilitiesListAdapter { position ->
                 if (isAilmentOrService) {
                     var data = AilmentArrayData.getArrayItem(position)
                     textView.text = data.ailment

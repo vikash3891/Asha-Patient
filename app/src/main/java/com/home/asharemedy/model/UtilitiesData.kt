@@ -53,7 +53,7 @@ object AilmentArrayData {
     @Synchronized
     fun getServicesCount(): Int {
         var count = 0
-        count = ailmentArrayList!!.size
+        count = serviceArrayList!!.size
         return count
     }
 

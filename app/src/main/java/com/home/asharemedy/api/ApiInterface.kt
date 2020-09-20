@@ -58,6 +58,15 @@ interface ApiInterface {
     @GET(Constants.DOCTOR_SLOT_LIST + "/{doctorID}" + Constants.SLOT_SLOTDATE)
     fun getSlotList(@Path("doctorID") id: String, @Query("slotDate") date: String): Call<ArrayList<ResponseModelClasses.GetSlotListResponseModel>>
 
+    /*Get Facility Slot  List*/
+    /*http://104.215.179.29/v1/facilities/18/services/5/slots?*/
+    @GET(Constants.FACILITY + "{facilityID}/" + Constants.SERVICES + "/{serviceID}" + Constants.SLOT_SLOTDATE)
+    fun getFacilitySlotList(
+        @Path("facilityID") id: String, @Path("serviceID") serviceid: String, @Query(
+            "slotDate"
+        ) date: String
+    ): Call<ArrayList<ResponseModelClasses.GetSlotListResponseModel>>
+
     /*Get AppointmentSlotList */
     @GET(Constants.PATIENT_REG + "/{patientID}" + Constants.HABIT)
     fun getAppointmentSlotList(@Path("patientID") id: String): Call<ArrayList<AppointSlotListModel>>

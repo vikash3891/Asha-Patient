@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.home.asharemedy.model.LoginModel
 import com.home.asharemedy.utils.AppPrefences
 import com.home.asharemedy.utils.Constants
+import com.home.asharemedy.utils.Utils
 
 object RequestModel {
 
@@ -222,7 +223,10 @@ object RequestModel {
         var map = HashMap<String, Any>()
 
         map.put(Constants.PATIENT_ID, patient_id.toInt())
-        map.put(Constants.DOCTOR_SLOT_ID, doctor_slot_id.toInt())
+        if (Utils.isDoctor)
+            map.put(Constants.DOCTOR_SLOT_ID, doctor_slot_id.toInt())
+        else
+            map.put(Constants.FACILITY_SLOT_ID, doctor_slot_id.toInt())
         map.put(Constants.PAYMENT_ID, payment_id.toInt())
         map.put(Constants.PURPOSE, purpose)
         map.put(Constants.STATUS, "scheduled")

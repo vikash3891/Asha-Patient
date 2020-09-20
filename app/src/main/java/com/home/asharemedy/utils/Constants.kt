@@ -17,6 +17,8 @@ class Constants {
         const val AILMENTS = "ailments"
         const val SERVICES = "services"
         const val FACILITIES = "facilities?"
+        /*http://104.215.179.29/v1/facilities/18/services/5/slots?*/
+        const val FACILITY = "facilities/"
         const val DOCTOR_LIST = "doctors?"//ailmentId=0&city=Bangalore"//
         const val DOCTOR_SLOT_LIST = "doctors"//
         const val SLOT_SLOTDATE = "/slots?"//
@@ -115,6 +117,7 @@ class Constants {
         /* patient_id, doctor_slot_id, payment_id,purpose*/
         const val PATIENT_ID = "patient_id"
         const val DOCTOR_SLOT_ID = "doctor_slot_id"
+        const val FACILITY_SLOT_ID = "facility_slot_id"
         const val PAYMENT_ID = "payment_id"
         const val PURPOSE = "purpose"
         const val USER_ID = "userId"

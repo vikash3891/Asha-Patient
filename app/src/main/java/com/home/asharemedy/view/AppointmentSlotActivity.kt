@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -20,6 +21,7 @@ import com.home.asharemedy.payu.ActivityPayU
 import com.home.asharemedy.utils.Constants
 import com.home.asharemedy.utils.Utils
 import com.home.asharemedy.utils.Utils.appointmentSlotList
+import com.home.asharemedy.utils.Utils.isDoctor
 import kotlinx.android.synthetic.main.activity_appointment_slots.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.topbar_layout.view.*
@@ -57,12 +59,22 @@ class AppointmentSlotActivity : BaseActivity(), NavigationView.OnNavigationItemS
             slotCalendar.text = Utils.getDate()
             doctorName.text = Utils.selectedDoctorFacility!!.name
             doctorSpeciality.text = Utils.selectedDoctorFacility!!.specialization
-            consultationFees.text =
-                getString(R.string.rupees_symbol) + Utils.selectedDoctorFacility!!.fees
+
+            if (Utils.isDoctor) {
+                consultationFees.text =
+                    getString(R.string.rupees_symbol) + Utils.selectedDoctorFacility!!.fees
+            } else {
+                consultationFees.text =
+                    getString(R.string.rupees_symbol) + Utils.selectedDoctorFacility!!.verification_token
+            }
             address.text =
                 Utils.selectedDoctorFacility!!.city + ", " + Utils.selectedDoctorFacility!!.country
             cdate = Utils.getDate()
-            getSlotList()
+
+            if (isDoctor)
+                getSlotList()
+            else
+                geFacilitySlotList()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -70,9 +82,13 @@ class AppointmentSlotActivity : BaseActivity(), NavigationView.OnNavigationItemS
     }
 
     fun loadList() {
-        adapter = AppointSlotListAdapter(this, appointmentSlotList)
+        try {
+            adapter = AppointSlotListAdapter(this, appointmentSlotList)
 
-        gvSlots.adapter = adapter
+            gvSlots.adapter = adapter
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun checkClicks() {
@@ -108,6 +124,11 @@ class AppointmentSlotActivity : BaseActivity(), NavigationView.OnNavigationItemS
 
                             slotCalendar.text =
                                 "" + Utils.setMonth(monthOfYear + 1) + " " + dayOfMonth + ", " + year
+
+                            if (isDoctor)
+                                getSlotList()
+                            else
+                                geFacilitySlotList()
                         } catch (e1: ParseException) {
                             e1.printStackTrace()
                         }
@@ -212,10 +233,85 @@ class AppointmentSlotActivity : BaseActivity(), NavigationView.OnNavigationItemS
                         Log.d("SlotResponse: ", response.body().toString())
 
                         if (response.body() != null) {
-                            appointmentSlotList.clear()
-                            appointmentSlotList = response.body()!!
+                            if (response.body() != null && response.body()!!.size > 0) {
+                                appointmentSlotList.clear()
+                                appointmentSlotList = response.body()!!
 
-                            loadList()
+                                loadList()
+                            } else {
+                                Utils.selectedGridList = null
+                                appointmentSlotList.clear()
+                                loadList()
+                                Toast.makeText(
+                                    this@AppointmentSlotActivity,
+                                    "Appointment Slots not available. Please try again later.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ArrayList<ResponseModelClasses.GetSlotListResponseModel>>,
+                    t: Throwable
+                ) {
+                    Log.d("Throws:", t.message.toString())
+                    dismissDialog()
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dismissDialog()
+        }
+
+    } else {
+        dismissDialog()
+        showToast(getString(R.string.internet))
+    }
+
+    private fun geFacilitySlotList() = if (Utils.isConnected(this)) {
+        showDialog()
+        try {
+            val apiService =
+                ApiClient.getClient(Constants.BASE_URL).create(ApiInterface::class.java)
+
+            val call: Call<ArrayList<ResponseModelClasses.GetSlotListResponseModel>> =
+                apiService.getFacilitySlotList(
+                    Utils.selectedDoctorFacitiyID, Utils.selectedAilmentOrServiceID,
+                    cdate
+                )
+            call.enqueue(object :
+                Callback<ArrayList<ResponseModelClasses.GetSlotListResponseModel>> {
+                override fun onResponse(
+                    call: Call<ArrayList<ResponseModelClasses.GetSlotListResponseModel>>,
+                    response: Response<ArrayList<ResponseModelClasses.GetSlotListResponseModel>>
+                ) {
+                    try {
+                        dismissDialog()
+                        Log.d("FacilitySlotResponse: ", response.body().toString())
+
+                        if (response.body() != null) {
+                            if (response.body() != null && response.body()!!.size > 0) {
+                                appointmentSlotList.clear()
+                                appointmentSlotList = response.body()!!
+
+                                loadList()
+                            } else {
+                                Utils.selectedGridList = null
+                                appointmentSlotList.clear()
+                                loadList()
+                                Toast.makeText(
+                                    this@AppointmentSlotActivity,
+                                    "Appointment Slots not available. Please try again later.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
